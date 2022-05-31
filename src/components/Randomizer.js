@@ -1,6 +1,7 @@
 // TODO: convert this to typescript
 
-const numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
+// note that 0 represents the desert
+const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
 const terrain = [
   "fields",
   "fields",
@@ -38,25 +39,75 @@ function shuffle(setHexes) {
   }
 
   // and then numbers
-  currentIndex = numbers.length;
-  while (currentIndex > 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [numbers[currentIndex], numbers[randomIndex]] = [
-      numbers[randomIndex],
-      numbers[currentIndex],
-    ];
-  }
-
-  const hexes = [];
-  // TODO: enforce constraints
-  for (let i = 0, j = 0; i < terrain.length; i++, j++) {
-    if (terrain[i] === "desert") {
-      hexes.push({ type: terrain[i], number: null });
-      j--;
-    } else {
-      hexes.push({ type: terrain[i], number: numbers[j] });
+  let hexes;
+  numbersTopLoop: while (true) {
+    hexes = [];
+    let sawDesert = false;
+    // we need to begin by finding the 0 value and putting it at the beginning
+    // of the loop
+    const zeroIndex = numbers.indexOf(0);
+    if (zeroIndex > 0) {
+      [numbers[0], numbers[zeroIndex]] = [numbers[zeroIndex], numbers[0]];
     }
+
+    shuffleLoop: for (
+      let i = 0, j = numbers.length - 1;
+      i < terrain.length;
+      i++, j--
+    ) {
+      if (terrain[i] === "desert") {
+        hexes.push({ type: terrain[i], number: null });
+        [numbers[0], numbers[j]] = [numbers[j], numbers[0]];
+        sawDesert = true;
+        continue;
+      }
+
+      // check constraints. we may have gotten ourself into a state from which
+      // we can't meet the constraints without backtracking. so after a few
+      // tries, we bail and start over. there are obviously more disciplined
+      // ways to do this, but a succeed or bail loop works
+      tryLoop: for (let tries = 0; tries < 10; tries++) {
+        // shuffle. if we haven't seen the desert yet, we need to make sure we
+        // don't select index 0
+        randomIndex = Math.floor(Math.random() * (j - !sawDesert)) + !sawDesert;
+        [numbers[j], numbers[randomIndex]] = [numbers[randomIndex], numbers[j]];
+
+        // then check each constraint
+        if ([6, 8].includes(numbers[j])) {
+          for (const neighbor of neighbors[j]) {
+            // consider only neighbors greater than this hex, and those lower
+            // will still be shuffled
+            if (neighbor < j) continue;
+            if ([6, 8].includes(numbers[neighbor])) {
+              continue tryLoop;
+            }
+          }
+        }
+
+        if ([2, 12].includes(numbers[j])) {
+          for (const neighbor of neighbors[j]) {
+            // consider only neighbors greater than this hex, and those lower
+            // will still be shuffled
+            if (neighbor < j) continue;
+            if ([2, 12].includes(numbers[neighbor])) {
+              continue tryLoop;
+            }
+          }
+        }
+
+        // no constraints were violated. make an entry in hexes continue
+        // shuffling
+        hexes.push({ type: terrain[i], number: numbers[j] });
+        continue shuffleLoop;
+      }
+
+      // we failed to find a valid board after exhausting all tries. time to
+      // start over from the beginning
+      continue numbersTopLoop;
+    }
+
+    // we managed to create a valid board. time to break out of the loop!
+    break;
   }
 
   setHexes(hexes);
