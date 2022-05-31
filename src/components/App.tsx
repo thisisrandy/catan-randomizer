@@ -2,7 +2,13 @@ import Board from "./Board";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Board />
     </div>
   );
