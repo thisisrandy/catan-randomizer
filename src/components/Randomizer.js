@@ -73,6 +73,8 @@ function shuffle(setHexes) {
         [numbers[j], numbers[randomIndex]] = [numbers[randomIndex], numbers[j]];
 
         // then check each constraint
+
+        // no 6/8 neighbors
         if ([6, 8].includes(numbers[j])) {
           for (const neighbor of neighbors[j]) {
             // consider only neighbors greater than this hex, and those lower
@@ -84,14 +86,21 @@ function shuffle(setHexes) {
           }
         }
 
+        // no 2/12 neighbors
         if ([2, 12].includes(numbers[j])) {
           for (const neighbor of neighbors[j]) {
-            // consider only neighbors greater than this hex, and those lower
-            // will still be shuffled
             if (neighbor < j) continue;
             if ([2, 12].includes(numbers[neighbor])) {
               continue tryLoop;
             }
+          }
+        }
+
+        // no same number neighbors
+        for (const neighbor of neighbors[j]) {
+          if (neighbor < j) continue;
+          if (numbers[j] === numbers[neighbor]) {
+            continue tryLoop;
           }
         }
 
