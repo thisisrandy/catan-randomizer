@@ -90,6 +90,9 @@ const neighbors = [
  * options will be added later
  */
 export default function Randomize({ setHexes }) {
+  // TODO: add an interface to toggle the enforcement of constraints
+  // TODO: add a board history
+
   return (
     <div
       style={{
