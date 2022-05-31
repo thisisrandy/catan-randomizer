@@ -1,3 +1,4 @@
+import "../css/board.css";
 import pasture from "../images/pasture.png";
 import forest from "../images/forest.png";
 import hills from "../images/hills.png";
@@ -80,10 +81,9 @@ export default function Board() {
 
   return (
     <div
+      id="board"
       style={{
         margin: 20,
-        width: 800,
-        height: 750,
         justifyItems: "center",
         alignItems: "center",
         display: "grid",

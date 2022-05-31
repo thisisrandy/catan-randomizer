@@ -1,0 +1,13 @@
+@media (max-width: 850px) {
+    #board {
+        width: 95vw;
+        height: 90vw;
+    }
+}
+
+@media (min-width: 851px) {
+    #board {
+        width: 800px;
+        height: 750px;
+    }
+}
