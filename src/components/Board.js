@@ -18,29 +18,26 @@ import twelve from "../images/12.png";
 
 // TODO: convert this back into typescript
 
-// TODO: obviously this comes in as props. probably incoming props have a
-// simpler coordinate system that lends itself to arranging them equitably, and
-// we translate somewhere here
-const hexes = [
-  { gridArea: "1 / 3 / 4 / 5", type: "fields", number: 6 },
-  { gridArea: "1 / 7 / 4 / 9", type: "mountains", number: 2 },
-  { gridArea: "1 / 5 / 4 / 7", type: "forest", number: 3 },
-  { gridArea: "3 / 2 / 6 / 4", type: "fields", number: 12 },
-  { gridArea: "3 / 4 / 6 / 6", type: "forest", number: 11 },
-  { gridArea: "3 / 6 / 6 / 8", type: "hills", number: 8 },
-  { gridArea: "3 / 8 / 6 / 10", type: "pasture", number: 4 },
-  { gridArea: "5 / 1 / 8 / 3", type: "pasture", number: 10 },
-  { gridArea: "5 / 3 / 8 / 5", type: "pasture", number: 4 },
-  { gridArea: "5 / 5 / 8 / 7", type: "desert", number: null },
-  { gridArea: "5 / 7 / 8 / 9", type: "forest", number: 11 },
-  { gridArea: "5 / 9 / 8 / 11", type: "hills", number: 3 },
-  { gridArea: "7 / 2 / 10 / 4", type: "mountains", number: 8 },
-  { gridArea: "7 / 4 / 10 / 6", type: "mountains", number: 5 },
-  { gridArea: "7 / 6 / 10 / 8", type: "forest", number: 9 },
-  { gridArea: "7 / 8 / 10 / 10", type: "fields", number: 10 },
-  { gridArea: "9 / 3 / 12 / 5", type: "fields", number: 5 },
-  { gridArea: "9 / 7 / 12 / 9", type: "hills", number: 9 },
-  { gridArea: "9 / 5 / 12 / 7", type: "pasture", number: 6 },
+const hexToGridArea = [
+  "1 / 3 / 4 / 5",
+  "1 / 7 / 4 / 9",
+  "1 / 5 / 4 / 7",
+  "3 / 2 / 6 / 4",
+  "3 / 4 / 6 / 6",
+  "3 / 6 / 6 / 8",
+  "3 / 8 / 6 / 10",
+  "5 / 1 / 8 / 3",
+  "5 / 3 / 8 / 5",
+  "5 / 5 / 8 / 7",
+  "5 / 7 / 8 / 9",
+  "5 / 9 / 8 / 11",
+  "7 / 2 / 10 / 4",
+  "7 / 4 / 10 / 6",
+  "7 / 6 / 10 / 8",
+  "7 / 8 / 10 / 10",
+  "9 / 3 / 12 / 5",
+  "9 / 7 / 12 / 9",
+  "9 / 5 / 12 / 7",
 ];
 
 const hexNameToImg = {
@@ -72,7 +69,7 @@ const numberValToImg = [
  * `Board` is the display logic for a Catan board, it's props is an array of hexes,
  * each with a coordinate, type, and number chit value
  */
-export default function Board() {
+export default function Board({ hexes }) {
   // if we split each hex into a top triangle, a middle rectangle, and a bottom
   // triangle, this weird number is the ratio of of the height of one of the
   // triangles to that of the rectangle. more or less. it's also the number that
@@ -95,7 +92,7 @@ export default function Board() {
           .concat(`${smallRowSize}fr`),
       }}
     >
-      {hexes.map(({ gridArea, type, number }, i) => (
+      {hexes.map(({ type, number }, i) => (
         <div
           key={i}
           style={{
@@ -105,7 +102,7 @@ export default function Board() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gridArea: gridArea,
+            gridArea: hexToGridArea[i],
           }}
         >
           <img
