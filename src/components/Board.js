@@ -77,7 +77,7 @@ export default function Board() {
   // triangle, this weird number is the ratio of of the height of one of the
   // triangles to that of the rectangle. more or less. it's also the number that
   // looks right
-  const smallRowSize = 35 / 77;
+  const smallRowSize = 5 / 11;
 
   return (
     <div
