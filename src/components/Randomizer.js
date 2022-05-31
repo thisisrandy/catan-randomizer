@@ -89,7 +89,7 @@ const neighbors = [
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
  * options will be added later
  */
-export default function Randomize({ setHexes }) {
+export default function Randomizer({ setHexes }) {
   // TODO: add an interface to toggle the enforcement of constraints
   // TODO: add a board history
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Board from "./Board";
-import Randomize from "./Randomize";
+import Randomizer from "./Randomizer";
 
 function App() {
   // NOTE: this is the prescribed layout from the manual
@@ -37,7 +37,7 @@ function App() {
       }}
     >
       <Board hexes={hexes} />
-      <Randomize setHexes={setHexes} />
+      <Randomizer setHexes={setHexes} />
     </div>
   );
 }
