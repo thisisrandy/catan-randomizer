@@ -148,7 +148,7 @@ const neighbors = [
 
 type HexSetter = React.Dispatch<React.SetStateAction<HexRecord>>;
 
-interface IProps {
+interface Props {
   setHexes: HexSetter;
 }
 
@@ -157,8 +157,7 @@ interface IProps {
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
  * options will be added later
  */
-export default function Randomizer({ setHexes }: IProps) {
-  // TODO: add an interface to toggle the enforcement of constraints
+export default function Randomizer({ setHexes }: Props) {
   // TODO: add a board history
 
   return (

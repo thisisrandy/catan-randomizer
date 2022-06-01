@@ -64,7 +64,7 @@ const numberValToImg = [
   twelve,
 ];
 
-interface IProps {
+interface Props {
   hexes: HexRecord;
 }
 
@@ -72,7 +72,7 @@ interface IProps {
  * `Board` is the display logic for a Catan board, it's props is an array of hexes,
  * each with a coordinate, type, and number chit value
  */
-export default function Board({ hexes }: IProps) {
+export default function Board({ hexes }: Props) {
   // if we split each hex into a top triangle, a middle rectangle, and a bottom
   // triangle, this weird number is the ratio of of the height of one of the
   // triangles to that of the rectangle. more or less. it's also the number that
