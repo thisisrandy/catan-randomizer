@@ -15,8 +15,7 @@ import nine from "../images/9.png";
 import ten from "../images/10.png";
 import eleven from "../images/11.png";
 import twelve from "../images/12.png";
-
-// TODO: convert this back into typescript
+import { HexRecord } from "../types/hexes";
 
 const hexToGridArea = [
   "1 / 3 / 4 / 5",
@@ -65,11 +64,15 @@ const numberValToImg = [
   twelve,
 ];
 
+interface IProps {
+  hexes: HexRecord;
+}
+
 /**
  * `Board` is the display logic for a Catan board, it's props is an array of hexes,
  * each with a coordinate, type, and number chit value
  */
-export default function Board({ hexes }) {
+export default function Board({ hexes }: IProps) {
   // if we split each hex into a top triangle, a middle rectangle, and a bottom
   // triangle, this weird number is the ratio of of the height of one of the
   // triangles to that of the rectangle. more or less. it's also the number that
@@ -117,8 +120,8 @@ export default function Board({ hexes }) {
           />
           {number && (
             <img
-              src={numberValToImg[number]}
-              alt={number}
+              src={String(numberValToImg[number])}
+              alt={String(number)}
               style={{
                 width: "35%",
                 height: "30%",

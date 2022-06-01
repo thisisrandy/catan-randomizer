@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { HexRecord } from "../types/hexes";
 import Board from "./Board";
 import Randomizer from "./Randomizer";
 
 function App() {
   // NOTE: this is the prescribed layout from the manual
-  // TODO: add a hexes interface
-  let [hexes, setHexes] = useState([
+  let [hexes, setHexes] = useState<HexRecord>([
     { type: "mountains", number: 10 },
     { type: "pasture", number: 2 },
     { type: "forest", number: 9 },

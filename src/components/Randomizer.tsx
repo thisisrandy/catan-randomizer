@@ -1,8 +1,9 @@
 import React from "react";
+import { HexRecord, HexType } from "../types/hexes";
 
 // note that 0 represents the desert
 const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
-const terrain = [
+const terrain: HexType[] = [
   "fields",
   "fields",
   "fields",
@@ -24,11 +25,7 @@ const terrain = [
   "desert",
 ];
 
-function shuffle(
-  setHexes: React.Dispatch<
-    React.SetStateAction<{ type: string; number: number | null }[]>
-  >
-) {
+function shuffle(setHexes: HexSetter) {
   let currentIndex = terrain.length,
     randomIndex;
 
@@ -43,7 +40,7 @@ function shuffle(
   }
 
   // and then numbers
-  let hexes;
+  let hexes: HexRecord;
   numbersTopLoop: while (true) {
     hexes = [];
     let sawDesert = false;
@@ -149,10 +146,10 @@ const neighbors = [
   [14, 15, 17],
 ];
 
+type HexSetter = React.Dispatch<React.SetStateAction<HexRecord>>;
+
 interface IProps {
-  setHexes: React.Dispatch<
-    React.SetStateAction<{ type: string; number: number | null }[]>
-  >;
+  setHexes: HexSetter;
 }
 
 /**
