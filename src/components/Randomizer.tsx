@@ -1,4 +1,4 @@
-// TODO: convert this to typescript
+import React from "react";
 
 // note that 0 represents the desert
 const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
@@ -24,7 +24,11 @@ const terrain = [
   "desert",
 ];
 
-function shuffle(setHexes) {
+function shuffle(
+  setHexes: React.Dispatch<
+    React.SetStateAction<{ type: string; number: number | null }[]>
+  >
+) {
   let currentIndex = terrain.length,
     randomIndex;
 
@@ -69,7 +73,8 @@ function shuffle(setHexes) {
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle. if we haven't seen the desert yet, we need to make sure we
         // don't select index 0
-        randomIndex = Math.floor(Math.random() * (j - !sawDesert)) + !sawDesert;
+        const offset = Number(!sawDesert);
+        randomIndex = Math.floor(Math.random() * (j - offset)) + offset;
         [numbers[j], numbers[randomIndex]] = [numbers[randomIndex], numbers[j]];
 
         // then check each constraint
@@ -144,12 +149,18 @@ const neighbors = [
   [14, 15, 17],
 ];
 
+interface IProps {
+  setHexes: React.Dispatch<
+    React.SetStateAction<{ type: string; number: number | null }[]>
+  >;
+}
+
 /**
  * This is a button component for producing a random board within certain
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
  * options will be added later
  */
-export default function Randomizer({ setHexes }) {
+export default function Randomizer({ setHexes }: IProps) {
   // TODO: add an interface to toggle the enforcement of constraints
   // TODO: add a board history
 
