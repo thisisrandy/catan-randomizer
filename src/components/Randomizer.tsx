@@ -79,7 +79,7 @@ function shuffle(setHexes: HexSetter) {
         // no 6/8 neighbors
         if ([6, 8].includes(numbers[j])) {
           for (const neighbor of neighbors[j]) {
-            // consider only neighbors greater than this hex, and those lower
+            // consider only neighbors greater than this hex, as those lower
             // will still be shuffled
             if (neighbor < j) continue;
             if ([6, 8].includes(numbers[neighbor])) {
