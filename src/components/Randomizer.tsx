@@ -2,7 +2,7 @@ import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
 import { Constraints } from "../types/constraints";
-import ConstraintControl from "./ConstraintControl";
+import BinaryConstraintControl from "./BinaryConstraintControl";
 
 // note that 0 represents the desert
 const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
@@ -189,19 +189,19 @@ export default function Randomizer({ setHexes }: Props) {
           margin: 5,
         }}
       >
-        <ConstraintControl
+        <BinaryConstraintControl
           constraint={"noAdjacentSixEight"}
           text={"Allow adjacent 6 & 8"}
           constraints={constraints}
           setConstraints={setConstraints}
         />
-        <ConstraintControl
+        <BinaryConstraintControl
           constraint={"noAdjacentTwoTwelve"}
           text={"Allow adjacent 2 & 12"}
           constraints={constraints}
           setConstraints={setConstraints}
         />
-        <ConstraintControl
+        <BinaryConstraintControl
           constraint={"noAdjacentPairs"}
           text={"Allow adjacent number pairs"}
           constraints={constraints}

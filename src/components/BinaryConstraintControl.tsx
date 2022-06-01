@@ -8,7 +8,7 @@ interface Props {
   setConstraints: React.Dispatch<React.SetStateAction<Constraints>>;
 }
 
-export default function ConstraintControl({
+export default function BinaryConstraintControl({
   constraint,
   text,
   constraints,
