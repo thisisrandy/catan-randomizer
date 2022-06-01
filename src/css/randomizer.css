@@ -1,0 +1,11 @@
+@media (max-width: 850px) {
+    #constraints {
+        width: 80vw;
+    }
+}
+
+@media (min-width: 851px) {
+    #constraints {
+        width: 600px;
+    }
+}

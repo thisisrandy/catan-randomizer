@@ -1,5 +1,8 @@
+import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
+import { Constraints } from "../types/constraints";
+import ConstraintControl from "./ConstraintControl";
 
 // note that 0 represents the desert
 const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
@@ -154,14 +157,6 @@ interface Props {
   setHexes: HexSetter;
 }
 
-interface Constraints {
-  noAdjacentSixEight: boolean;
-  noAdjacentTwoTwelve: boolean;
-  noAdjacentPairs: boolean;
-}
-
-const labelStyle = { margin: 5 };
-
 /**
  * This is a button component for producing a random board within certain
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
@@ -185,47 +180,34 @@ export default function Randomizer({ setHexes }: Props) {
         justifyContent: "center",
       }}
     >
-      <span style={{ margin: 5 }}>
-        <label style={labelStyle}>
-          <input
-            type="checkbox"
-            checked={!constraints.noAdjacentSixEight}
-            onChange={(e) =>
-              setConstraints((c) => ({
-                ...c,
-                noAdjacentSixEight: !e.target.checked,
-              }))
-            }
-          />
-          Allow adjacent 6 &amp; 8
-        </label>
-        <label style={labelStyle}>
-          <input
-            type="checkbox"
-            checked={!constraints.noAdjacentTwoTwelve}
-            onChange={(e) =>
-              setConstraints((c) => ({
-                ...c,
-                noAdjacentTwoTwelve: !e.target.checked,
-              }))
-            }
-          />
-          Allow adjacent 2 &amp; 12
-        </label>
-        <label style={labelStyle}>
-          <input
-            type="checkbox"
-            checked={!constraints.noAdjacentPairs}
-            onChange={(e) =>
-              setConstraints((c) => ({
-                ...c,
-                noAdjacentPairs: !e.target.checked,
-              }))
-            }
-          />
-          Allow adjacent number pairs
-        </label>
-      </span>
+      <div
+        id="constraints"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          margin: 5,
+        }}
+      >
+        <ConstraintControl
+          constraint={"noAdjacentSixEight"}
+          text={"Allow adjacent 6 & 8"}
+          constraints={constraints}
+          setConstraints={setConstraints}
+        />
+        <ConstraintControl
+          constraint={"noAdjacentTwoTwelve"}
+          text={"Allow adjacent 2 & 12"}
+          constraints={constraints}
+          setConstraints={setConstraints}
+        />
+        <ConstraintControl
+          constraint={"noAdjacentPairs"}
+          text={"Allow adjacent number pairs"}
+          constraints={constraints}
+          setConstraints={setConstraints}
+        />
+      </div>
       <button
         style={{ margin: 5, padding: 10 }}
         onClick={() => shuffle(setHexes, constraints)}
