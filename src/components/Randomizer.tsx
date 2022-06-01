@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
 
 // note that 0 represents the desert
@@ -25,7 +25,7 @@ const terrain: HexType[] = [
   "desert",
 ];
 
-function shuffle(setHexes: HexSetter) {
+function shuffle(setHexes: HexSetter, constraints: Constraints) {
   let currentIndex = terrain.length,
     randomIndex;
 
@@ -77,7 +77,7 @@ function shuffle(setHexes: HexSetter) {
         // then check each constraint
 
         // no 6/8 neighbors
-        if ([6, 8].includes(numbers[j])) {
+        if (constraints.noAdjacentSixEight && [6, 8].includes(numbers[j])) {
           for (const neighbor of neighbors[j]) {
             // consider only neighbors greater than this hex, as those lower
             // will still be shuffled
@@ -89,7 +89,7 @@ function shuffle(setHexes: HexSetter) {
         }
 
         // no 2/12 neighbors
-        if ([2, 12].includes(numbers[j])) {
+        if (constraints.noAdjacentTwoTwelve && [2, 12].includes(numbers[j])) {
           for (const neighbor of neighbors[j]) {
             if (neighbor < j) continue;
             if ([2, 12].includes(numbers[neighbor])) {
@@ -99,10 +99,12 @@ function shuffle(setHexes: HexSetter) {
         }
 
         // no same number neighbors
-        for (const neighbor of neighbors[j]) {
-          if (neighbor < j) continue;
-          if (numbers[j] === numbers[neighbor]) {
-            continue tryLoop;
+        if (constraints.noAdjacentPairs) {
+          for (const neighbor of neighbors[j]) {
+            if (neighbor < j) continue;
+            if (numbers[j] === numbers[neighbor]) {
+              continue tryLoop;
+            }
           }
         }
 
@@ -152,6 +154,14 @@ interface Props {
   setHexes: HexSetter;
 }
 
+interface Constraints {
+  noAdjacentSixEight: boolean;
+  noAdjacentTwoTwelve: boolean;
+  noAdjacentPairs: boolean;
+}
+
+const labelStyle = { margin: 5 };
+
 /**
  * This is a button component for producing a random board within certain
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
@@ -160,17 +170,65 @@ interface Props {
 export default function Randomizer({ setHexes }: Props) {
   // TODO: add a board history
 
+  const [constraints, setConstraints] = useState<Constraints>({
+    noAdjacentSixEight: true,
+    noAdjacentTwoTwelve: true,
+    noAdjacentPairs: true,
+  });
+
   return (
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
+      <span style={{ margin: 5 }}>
+        <label style={labelStyle}>
+          <input
+            type="checkbox"
+            checked={!constraints.noAdjacentSixEight}
+            onChange={(e) =>
+              setConstraints((c) => ({
+                ...c,
+                noAdjacentSixEight: !e.target.checked,
+              }))
+            }
+          />
+          Allow adjacent 6 &amp; 8
+        </label>
+        <label style={labelStyle}>
+          <input
+            type="checkbox"
+            checked={!constraints.noAdjacentTwoTwelve}
+            onChange={(e) =>
+              setConstraints((c) => ({
+                ...c,
+                noAdjacentTwoTwelve: !e.target.checked,
+              }))
+            }
+          />
+          Allow adjacent 2 &amp; 12
+        </label>
+        <label style={labelStyle}>
+          <input
+            type="checkbox"
+            checked={!constraints.noAdjacentPairs}
+            onChange={(e) =>
+              setConstraints((c) => ({
+                ...c,
+                noAdjacentPairs: !e.target.checked,
+              }))
+            }
+          />
+          Allow adjacent number pairs
+        </label>
+      </span>
       <button
         style={{ margin: 5, padding: 10 }}
-        onClick={() => shuffle(setHexes)}
+        onClick={() => shuffle(setHexes, constraints)}
       >
         Randomize!
       </button>
