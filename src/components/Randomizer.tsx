@@ -1,7 +1,7 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
-import { Constraints } from "../types/constraints";
+import { BinaryConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 
 // note that 0 represents the desert
@@ -28,7 +28,7 @@ const terrain: HexType[] = [
   "desert",
 ];
 
-function shuffle(setHexes: HexSetter, constraints: Constraints) {
+function shuffle(setHexes: HexSetter, binaryConstraints: BinaryConstraints) {
   let currentIndex = terrain.length,
     randomIndex;
 
@@ -80,7 +80,10 @@ function shuffle(setHexes: HexSetter, constraints: Constraints) {
         // then check each constraint
 
         // no 6/8 neighbors
-        if (constraints.noAdjacentSixEight && [6, 8].includes(numbers[j])) {
+        if (
+          binaryConstraints.noAdjacentSixEight &&
+          [6, 8].includes(numbers[j])
+        ) {
           for (const neighbor of neighbors[j]) {
             // consider only neighbors greater than this hex, as those lower
             // will still be shuffled
@@ -92,7 +95,10 @@ function shuffle(setHexes: HexSetter, constraints: Constraints) {
         }
 
         // no 2/12 neighbors
-        if (constraints.noAdjacentTwoTwelve && [2, 12].includes(numbers[j])) {
+        if (
+          binaryConstraints.noAdjacentTwoTwelve &&
+          [2, 12].includes(numbers[j])
+        ) {
           for (const neighbor of neighbors[j]) {
             if (neighbor < j) continue;
             if ([2, 12].includes(numbers[neighbor])) {
@@ -102,7 +108,7 @@ function shuffle(setHexes: HexSetter, constraints: Constraints) {
         }
 
         // no same number neighbors
-        if (constraints.noAdjacentPairs) {
+        if (binaryConstraints.noAdjacentPairs) {
           for (const neighbor of neighbors[j]) {
             if (neighbor < j) continue;
             if (numbers[j] === numbers[neighbor]) {
@@ -165,7 +171,7 @@ interface Props {
 export default function Randomizer({ setHexes }: Props) {
   // TODO: add a board history
 
-  const [constraints, setConstraints] = useState<Constraints>({
+  const [constraints, setConstraints] = useState<BinaryConstraints>({
     noAdjacentSixEight: true,
     noAdjacentTwoTwelve: true,
     noAdjacentPairs: true,

@@ -1,11 +1,11 @@
 import React from "react";
-import { Constraints } from "../types/constraints";
+import { BinaryConstraints } from "../types/constraints";
 
 interface Props {
-  constraint: keyof Constraints;
+  constraint: keyof BinaryConstraints;
   text: string;
-  constraints: Constraints;
-  setConstraints: React.Dispatch<React.SetStateAction<Constraints>>;
+  constraints: BinaryConstraints;
+  setConstraints: React.Dispatch<React.SetStateAction<BinaryConstraints>>;
 }
 
 export default function BinaryConstraintControl({
