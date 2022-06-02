@@ -102,14 +102,10 @@ function shuffle(
       [numbers[0], numbers[zeroIndex]] = [numbers[zeroIndex], numbers[0]];
     }
 
-    shuffleLoop: for (
-      let i = 0, j = numbers.length - 1;
-      i < terrain.length;
-      i++, j--
-    ) {
+    shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
       if (terrain[i].type === "desert") {
         hexes.push({ type: terrain[i].type, number: 0 });
-        [numbers[0], numbers[j]] = [numbers[j], numbers[0]];
+        [numbers[0], numbers[i]] = [numbers[i], numbers[0]];
         sawDesert = true;
         continue;
       }
@@ -120,18 +116,18 @@ function shuffle(
         // shuffle. if we haven't seen the desert yet, we need to make sure we
         // don't select index 0
         const offset = Number(!sawDesert);
-        randomIndex = Math.floor(Math.random() * (j - offset)) + offset;
-        [numbers[j], numbers[randomIndex]] = [numbers[randomIndex], numbers[j]];
+        randomIndex = Math.floor(Math.random() * (i - offset)) + offset;
+        [numbers[i], numbers[randomIndex]] = [numbers[randomIndex], numbers[i]];
 
         // then check each constraint
 
         // no 6/8 neighbors
         if (
           binaryConstraints.noAdjacentSixEight &&
-          [6, 8].includes(numbers[j])
+          [6, 8].includes(numbers[i])
         ) {
-          for (const neighbor of board.neighbors[j]) {
-            if (neighbor < j) continue;
+          for (const neighbor of board.neighbors[i]) {
+            if (neighbor < i) continue;
             if ([6, 8].includes(numbers[neighbor])) {
               continue tryLoop;
             }
@@ -141,10 +137,10 @@ function shuffle(
         // no 2/12 neighbors
         if (
           binaryConstraints.noAdjacentTwoTwelve &&
-          [2, 12].includes(numbers[j])
+          [2, 12].includes(numbers[i])
         ) {
-          for (const neighbor of board.neighbors[j]) {
-            if (neighbor < j) continue;
+          for (const neighbor of board.neighbors[i]) {
+            if (neighbor < i) continue;
             if ([2, 12].includes(numbers[neighbor])) {
               continue tryLoop;
             }
@@ -153,9 +149,9 @@ function shuffle(
 
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
-          for (const neighbor of board.neighbors[j]) {
-            if (neighbor < j) continue;
-            if (numbers[j] === numbers[neighbor]) {
+          for (const neighbor of board.neighbors[i]) {
+            if (neighbor < i) continue;
+            if (numbers[i] === numbers[neighbor]) {
               continue tryLoop;
             }
           }
@@ -163,7 +159,7 @@ function shuffle(
 
         // no constraints were violated. make an entry in hexes continue
         // shuffling
-        hexes.push({ type: terrain[i].type, number: numbers[j] });
+        hexes.push({ type: terrain[i].type, number: numbers[i] });
         continue shuffleLoop;
       }
 
@@ -176,7 +172,12 @@ function shuffle(
     break;
   }
 
-  setHexes(hexes);
+  // we built hexes in reverse, so make sure to reverse it before committing it
+  // to state. while this doesn't really make a difference in the base Catan
+  // board due to its symettry, e.g. Explorers & Pirates neighbors are not the
+  // same in reverse order, so all of our careful constraint checking could be
+  // for naught
+  setHexes(hexes.reverse());
 }
 
 type HexSetter = React.Dispatch<React.SetStateAction<HexRecord>>;
