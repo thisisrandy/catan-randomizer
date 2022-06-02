@@ -51,7 +51,7 @@ function shuffle(
         ];
 
         // then check each constraint
-        if (numericConstraints.maxConnectedTerrainPairs < 7) {
+        if (numericConstraints.maxConnectedLikeTerrain < 7) {
           // accumulate all same type connected hexes using standard
           // breath-first search
           let chainSize = 0,
@@ -63,7 +63,7 @@ function shuffle(
             if (seen.has(hex)) continue;
             seen.add(hex);
             chainSize += 1;
-            if (chainSize > numericConstraints.maxConnectedTerrainPairs)
+            if (chainSize > numericConstraints.maxConnectedLikeTerrain)
               continue tryLoop;
             for (let neighbor of board.neighbors[hex]) {
               // consider only neighbors greater than this hex, as those lower
@@ -216,7 +216,7 @@ export default function Randomizer({ setHexes, board }: Props) {
 
   const [numericConstraints, setNumericConstraints] =
     useState<NumericConstraints>({
-      maxConnectedTerrainPairs: 1,
+      maxConnectedLikeTerrain: 1,
     });
 
   return (
@@ -256,10 +256,10 @@ export default function Randomizer({ setHexes, board }: Props) {
           setConstraints={setBinaryConstraints}
         />
         <NumericConstraintControl
-          constraint="maxConnectedTerrainPairs"
+          constraint="maxConnectedLikeTerrain"
           min={1}
           max={7}
-          text="Maximum connected terrain pairs"
+          text="Max connected like terrain"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
         />
