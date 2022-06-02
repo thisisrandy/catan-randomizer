@@ -196,20 +196,20 @@ export default function Randomizer({ setHexes }: Props) {
         }}
       >
         <BinaryConstraintControl
-          constraint={"noAdjacentSixEight"}
+          constraint="noAdjacentSixEight"
           text={"Allow adjacent 6 & 8"}
           constraints={constraints}
           setConstraints={setConstraints}
         />
         <BinaryConstraintControl
-          constraint={"noAdjacentTwoTwelve"}
+          constraint="noAdjacentTwoTwelve"
           text={"Allow adjacent 2 & 12"}
           constraints={constraints}
           setConstraints={setConstraints}
         />
         <BinaryConstraintControl
-          constraint={"noAdjacentPairs"}
-          text={"Allow adjacent number pairs"}
+          constraint="noAdjacentPairs"
+          text="Allow adjacent number pairs"
           constraints={constraints}
           setConstraints={setConstraints}
         />
