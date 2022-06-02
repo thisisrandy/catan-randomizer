@@ -1,8 +1,9 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
-import { BinaryConstraints } from "../types/constraints";
+import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
+import NumericConstraintControl from "./NumericConstraintControl";
 
 // note that 0 represents the desert
 const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
@@ -28,18 +29,68 @@ const terrain: HexType[] = [
   "desert",
 ];
 
-function shuffle(setHexes: HexSetter, binaryConstraints: BinaryConstraints) {
-  let currentIndex = terrain.length,
-    randomIndex;
+function shuffle(
+  setHexes: HexSetter,
+  binaryConstraints: BinaryConstraints,
+  numericConstraints: NumericConstraints
+) {
+  let randomIndex;
 
   // shuffle terrain first
-  while (currentIndex > 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [terrain[currentIndex], terrain[randomIndex]] = [
-      terrain[randomIndex],
-      terrain[currentIndex],
-    ];
+  terrainTopLoop: while (true) {
+    let currentIndex = terrain.length - 1;
+
+    shuffleLoop: while (currentIndex >= 0) {
+      // check constraints. we may have gotten ourself into a state from which
+      // we can't meet the constraints without backtracking. so after a few
+      // tries, we bail and start over. there are obviously more disciplined
+      // ways to do this, but a succeed or bail loop works
+      tryLoop: for (let tries = 0; tries < 10; tries++) {
+        // shuffle
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        [terrain[currentIndex], terrain[randomIndex]] = [
+          terrain[randomIndex],
+          terrain[currentIndex],
+        ];
+
+        // then check each constraint
+        if (numericConstraints.maxConnectedTerrainPairs < 7) {
+          // accumulate all same type connected hexes using standard
+          // breath-first search
+          let chainSize = 0,
+            seen = new Set(),
+            stack = [currentIndex],
+            hex: number;
+          while (stack.length > 0) {
+            hex = stack.pop()!;
+            if (seen.has(hex)) continue;
+            seen.add(hex);
+            chainSize += 1;
+            if (chainSize > numericConstraints.maxConnectedTerrainPairs)
+              continue tryLoop;
+            for (let neighbor of neighbors[hex]) {
+              // consider only neighbors greater than this hex, as those lower
+              // will still be shuffled
+              if (
+                neighbor > currentIndex &&
+                terrain[currentIndex] === terrain[neighbor]
+              )
+                stack.push(neighbor);
+            }
+          }
+        }
+
+        // no constraints were violated, so move to the next hex
+        currentIndex--;
+        continue shuffleLoop;
+      }
+
+      // we failed to find a valid board after exhausing all tries. start over
+      continue terrainTopLoop;
+    }
+
+    // we managed to create a valid board. time to move on!
+    break;
   }
 
   // and then numbers
@@ -66,10 +117,8 @@ function shuffle(setHexes: HexSetter, binaryConstraints: BinaryConstraints) {
         continue;
       }
 
-      // check constraints. we may have gotten ourself into a state from which
-      // we can't meet the constraints without backtracking. so after a few
-      // tries, we bail and start over. there are obviously more disciplined
-      // ways to do this, but a succeed or bail loop works
+      // check constraints. as with terrain, we don't attempt to backtrack and
+      // start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle. if we haven't seen the desert yet, we need to make sure we
         // don't select index 0
@@ -85,8 +134,6 @@ function shuffle(setHexes: HexSetter, binaryConstraints: BinaryConstraints) {
           [6, 8].includes(numbers[j])
         ) {
           for (const neighbor of neighbors[j]) {
-            // consider only neighbors greater than this hex, as those lower
-            // will still be shuffled
             if (neighbor < j) continue;
             if ([6, 8].includes(numbers[neighbor])) {
               continue tryLoop;
@@ -171,11 +218,18 @@ interface Props {
 export default function Randomizer({ setHexes }: Props) {
   // TODO: add a board history
 
-  const [constraints, setConstraints] = useState<BinaryConstraints>({
-    noAdjacentSixEight: true,
-    noAdjacentTwoTwelve: true,
-    noAdjacentPairs: true,
-  });
+  const [binaryConstraints, setBinaryConstraints] = useState<BinaryConstraints>(
+    {
+      noAdjacentSixEight: true,
+      noAdjacentTwoTwelve: true,
+      noAdjacentPairs: true,
+    }
+  );
+
+  const [numericConstraints, setNumericConstraints] =
+    useState<NumericConstraints>({
+      maxConnectedTerrainPairs: 1,
+    });
 
   return (
     <div
@@ -198,25 +252,33 @@ export default function Randomizer({ setHexes }: Props) {
         <BinaryConstraintControl
           constraint="noAdjacentSixEight"
           text={"Allow adjacent 6 & 8"}
-          constraints={constraints}
-          setConstraints={setConstraints}
+          constraints={binaryConstraints}
+          setConstraints={setBinaryConstraints}
         />
         <BinaryConstraintControl
           constraint="noAdjacentTwoTwelve"
           text={"Allow adjacent 2 & 12"}
-          constraints={constraints}
-          setConstraints={setConstraints}
+          constraints={binaryConstraints}
+          setConstraints={setBinaryConstraints}
         />
         <BinaryConstraintControl
           constraint="noAdjacentPairs"
           text="Allow adjacent number pairs"
-          constraints={constraints}
-          setConstraints={setConstraints}
+          constraints={binaryConstraints}
+          setConstraints={setBinaryConstraints}
+        />
+        <NumericConstraintControl
+          constraint="maxConnectedTerrainPairs"
+          min={1}
+          max={7}
+          text="Maximum connected terrain pairs"
+          constraints={numericConstraints}
+          setConstraints={setNumericConstraints}
         />
       </div>
       <button
         style={{ margin: 5, padding: 10 }}
-        onClick={() => shuffle(setHexes, constraints)}
+        onClick={() => shuffle(setHexes, binaryConstraints, numericConstraints)}
       >
         Randomize!
       </button>
