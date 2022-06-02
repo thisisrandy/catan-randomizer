@@ -92,30 +92,41 @@ function shuffle(
 
   // and then numbers
   let hexes: HexRecord;
+  let numDeserts: number = numbers.reduce(
+    (acc, v) => Number(v === 0) + acc,
+    0 as number
+  );
   numbersTopLoop: while (true) {
     hexes = [];
-    let sawDesert = false;
-    // we need to begin by finding the 0 value and putting it at the beginning
-    // of the loop
-    const zeroIndex = numbers.indexOf(0);
-    if (zeroIndex > 0) {
-      [numbers[0], numbers[zeroIndex]] = [numbers[zeroIndex], numbers[0]];
+    let desertsSeen = 0;
+    // we need to begin by finding any 0 (desert) values and putting them at the
+    // beginning of the loop
+    let zeroSearchOffset = 0,
+      zeroIndex;
+    while (
+      (zeroIndex = numbers.indexOf(0, zeroSearchOffset)) >= zeroSearchOffset
+    ) {
+      [numbers[zeroSearchOffset], numbers[zeroIndex]] = [
+        numbers[zeroIndex],
+        numbers[zeroSearchOffset],
+      ];
+      zeroSearchOffset++;
     }
 
     shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
       if (terrain[i].type === "desert") {
         hexes.push({ type: terrain[i].type, number: 0 });
-        [numbers[0], numbers[i]] = [numbers[i], numbers[0]];
-        sawDesert = true;
+        [numbers[desertsSeen], numbers[i]] = [numbers[i], numbers[desertsSeen]];
+        desertsSeen++;
         continue;
       }
 
       // check constraints. as with terrain, we don't attempt to backtrack and
       // start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
-        // shuffle. if we haven't seen the desert yet, we need to make sure we
-        // don't select index 0
-        const offset = Number(!sawDesert);
+        // shuffle. we need to make sure to skip lefthand indices equal to the
+        // number of deserts we haven't yet encountered
+        const offset = numDeserts - desertsSeen;
         randomIndex = Math.floor(Math.random() * (i - offset)) + offset;
         [numbers[i], numbers[randomIndex]] = [numbers[randomIndex], numbers[i]];
 
