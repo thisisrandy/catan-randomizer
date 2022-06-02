@@ -1,10 +1,15 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
-import { HexRecord } from "../types/hexes";
+import { HexRecord, HexType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
 import { CatanBoard } from "../types/boards";
+
+interface Terrain {
+  type: HexType;
+  fixed: boolean;
+}
 
 function shuffle(
   setHexes: HexSetter,
@@ -12,7 +17,10 @@ function shuffle(
   numericConstraints: NumericConstraints,
   board: CatanBoard
 ) {
-  const terrain = board.recommendedLayout.map((hex) => hex.type);
+  const terrain: Terrain[] = board.recommendedLayout.map((hex) => ({
+    type: hex.type,
+    fixed: typeof hex.fixed !== "undefined",
+  }));
   const numbers = board.recommendedLayout.map((hex) => hex.number);
 
   let randomIndex;
@@ -22,13 +30,21 @@ function shuffle(
     let currentIndex = terrain.length - 1;
 
     shuffleLoop: while (currentIndex >= 0) {
+      if (terrain[currentIndex].fixed) {
+        currentIndex--;
+        continue;
+      }
+
       // check constraints. we may have gotten ourself into a state from which
       // we can't meet the constraints without backtracking. so after a few
       // tries, we bail and start over. there are obviously more disciplined
       // ways to do this, but a succeed or bail loop works
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle
-        randomIndex = Math.floor(Math.random() * currentIndex);
+        while (
+          terrain[(randomIndex = Math.floor(Math.random() * currentIndex))]
+            .fixed
+        );
         [terrain[currentIndex], terrain[randomIndex]] = [
           terrain[randomIndex],
           terrain[currentIndex],
@@ -51,10 +67,10 @@ function shuffle(
               continue tryLoop;
             for (let neighbor of board.neighbors[hex]) {
               // consider only neighbors greater than this hex, as those lower
-              // will still be shuffled
+              // will still be shuffled, unless the lower neighbor is fixed
               if (
-                neighbor > currentIndex &&
-                terrain[currentIndex] === terrain[neighbor]
+                (neighbor > currentIndex || terrain[neighbor].fixed) &&
+                terrain[currentIndex].type === terrain[neighbor].type
               )
                 stack.push(neighbor);
             }
@@ -91,8 +107,8 @@ function shuffle(
       i < terrain.length;
       i++, j--
     ) {
-      if (terrain[i] === "desert") {
-        hexes.push({ type: terrain[i], number: 0 });
+      if (terrain[i].type === "desert") {
+        hexes.push({ type: terrain[i].type, number: 0 });
         [numbers[0], numbers[j]] = [numbers[j], numbers[0]];
         sawDesert = true;
         continue;
@@ -147,7 +163,7 @@ function shuffle(
 
         // no constraints were violated. make an entry in hexes continue
         // shuffling
-        hexes.push({ type: terrain[i], number: numbers[j] });
+        hexes.push({ type: terrain[i].type, number: numbers[j] });
         continue shuffleLoop;
       }
 

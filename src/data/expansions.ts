@@ -91,7 +91,7 @@ export const EXPANSIONS: Expansions = new Map([
         { type: "pasture", number: 8 },
         { type: "hills", number: 4 },
         { type: "pasture", number: 10 },
-        { type: "pasture", number: 6 },
+        { type: "pasture", number: 6, fixed: true },
         { type: "mountains", number: 12 },
         { type: "forest", number: 8 },
         { type: "fields", number: 10 },
