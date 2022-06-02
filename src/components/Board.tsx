@@ -16,28 +16,7 @@ import ten from "../images/10.png";
 import eleven from "../images/11.png";
 import twelve from "../images/12.png";
 import { HexRecord } from "../types/hexes";
-
-const hexToGridArea = [
-  "1 / 3 / 4 / 5",
-  "1 / 5 / 4 / 7",
-  "1 / 7 / 4 / 9",
-  "3 / 2 / 6 / 4",
-  "3 / 4 / 6 / 6",
-  "3 / 6 / 6 / 8",
-  "3 / 8 / 6 / 10",
-  "5 / 1 / 8 / 3",
-  "5 / 3 / 8 / 5",
-  "5 / 5 / 8 / 7",
-  "5 / 7 / 8 / 9",
-  "5 / 9 / 8 / 11",
-  "7 / 2 / 10 / 4",
-  "7 / 4 / 10 / 6",
-  "7 / 6 / 10 / 8",
-  "7 / 8 / 10 / 10",
-  "9 / 3 / 12 / 5",
-  "9 / 5 / 12 / 7",
-  "9 / 7 / 12 / 9",
-];
+import { CatanBoard } from "../types/boards";
 
 const hexNameToImg = {
   pasture: pasture,
@@ -66,19 +45,14 @@ const numberValToImg = [
 
 interface Props {
   hexes: HexRecord;
+  board: CatanBoard;
 }
 
 /**
  * `Board` is the display logic for a Catan board, it's props is an array of hexes,
  * each with a coordinate, type, and number chit value
  */
-export default function Board({ hexes }: Props) {
-  // if we split each hex into a top triangle, a middle rectangle, and a bottom
-  // triangle, this weird number is the ratio of of the height of one of the
-  // triangles to that of the rectangle. more or less. it's also the number that
-  // looks right
-  const smallRowSize = 5 / 11;
-
+export default function Board({ hexes, board }: Props) {
   return (
     <div
       id="board"
@@ -87,12 +61,8 @@ export default function Board({ hexes }: Props) {
         justifyItems: "center",
         alignItems: "center",
         display: "grid",
-        // TODO: I'm ignoring border pieces for now. they significantly
-        // complicate things
-        gridTemplateColumns: "repeat(10, 1fr)",
-        gridTemplateRows: `${smallRowSize}fr 1fr `
-          .repeat(5)
-          .concat(`${smallRowSize}fr`),
+        gridTemplateColumns: board.cssGridTemplateColumns,
+        gridTemplateRows: board.cssGridTemplateRows,
       }}
     >
       {hexes.map(({ type, number }, i) => (
@@ -105,7 +75,7 @@ export default function Board({ hexes }: Props) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gridArea: hexToGridArea[i],
+            gridArea: board.cssGridAreas[i],
           }}
         >
           <img

@@ -1,39 +1,20 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
-import { HexRecord, HexType } from "../types/hexes";
+import { HexRecord } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
-
-// note that 0 represents the desert
-const numbers = [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
-const terrain: HexType[] = [
-  "fields",
-  "fields",
-  "fields",
-  "fields",
-  "hills",
-  "hills",
-  "hills",
-  "forest",
-  "forest",
-  "forest",
-  "forest",
-  "mountains",
-  "mountains",
-  "mountains",
-  "pasture",
-  "pasture",
-  "pasture",
-  "pasture",
-  "desert",
-];
+import { CatanBoard } from "../types/boards";
 
 function shuffle(
   setHexes: HexSetter,
   binaryConstraints: BinaryConstraints,
-  numericConstraints: NumericConstraints
+  numericConstraints: NumericConstraints,
+  board: CatanBoard
 ) {
+  const terrain = board.recommendedLayout.map((hex) => hex.type);
+  const numbers = board.recommendedLayout.map((hex) => hex.number);
+
   let randomIndex;
 
   // shuffle terrain first
@@ -68,7 +49,7 @@ function shuffle(
             chainSize += 1;
             if (chainSize > numericConstraints.maxConnectedTerrainPairs)
               continue tryLoop;
-            for (let neighbor of neighbors[hex]) {
+            for (let neighbor of board.neighbors[hex]) {
               // consider only neighbors greater than this hex, as those lower
               // will still be shuffled
               if (
@@ -111,7 +92,7 @@ function shuffle(
       i++, j--
     ) {
       if (terrain[i] === "desert") {
-        hexes.push({ type: terrain[i], number: null });
+        hexes.push({ type: terrain[i], number: 0 });
         [numbers[0], numbers[j]] = [numbers[j], numbers[0]];
         sawDesert = true;
         continue;
@@ -133,7 +114,7 @@ function shuffle(
           binaryConstraints.noAdjacentSixEight &&
           [6, 8].includes(numbers[j])
         ) {
-          for (const neighbor of neighbors[j]) {
+          for (const neighbor of board.neighbors[j]) {
             if (neighbor < j) continue;
             if ([6, 8].includes(numbers[neighbor])) {
               continue tryLoop;
@@ -146,7 +127,7 @@ function shuffle(
           binaryConstraints.noAdjacentTwoTwelve &&
           [2, 12].includes(numbers[j])
         ) {
-          for (const neighbor of neighbors[j]) {
+          for (const neighbor of board.neighbors[j]) {
             if (neighbor < j) continue;
             if ([2, 12].includes(numbers[neighbor])) {
               continue tryLoop;
@@ -156,7 +137,7 @@ function shuffle(
 
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
-          for (const neighbor of neighbors[j]) {
+          for (const neighbor of board.neighbors[j]) {
             if (neighbor < j) continue;
             if (numbers[j] === numbers[neighbor]) {
               continue tryLoop;
@@ -182,32 +163,11 @@ function shuffle(
   setHexes(hexes);
 }
 
-const neighbors = [
-  [1, 3, 4],
-  [0, 2, 4, 5],
-  [1, 5, 6],
-  [0, 4, 7, 8],
-  [0, 1, 3, 5, 8, 9],
-  [1, 2, 4, 6, 9, 10],
-  [2, 5, 10, 11],
-  [3, 8, 12],
-  [3, 4, 7, 9, 12, 13],
-  [4, 5, 8, 10, 13, 14],
-  [5, 6, 9, 11, 14, 15],
-  [6, 10, 15],
-  [7, 8, 13, 16],
-  [8, 9, 12, 14, 16, 17],
-  [9, 10, 13, 15, 17, 18],
-  [10, 11, 14, 18],
-  [12, 13, 17],
-  [13, 14, 16, 18],
-  [14, 15, 17],
-];
-
 type HexSetter = React.Dispatch<React.SetStateAction<HexRecord>>;
 
 interface Props {
   setHexes: HexSetter;
+  board: CatanBoard;
 }
 
 /**
@@ -215,7 +175,7 @@ interface Props {
  * contraints. Initial contraints will just be no adjacent 6's and 8's, but
  * options will be added later
  */
-export default function Randomizer({ setHexes }: Props) {
+export default function Randomizer({ setHexes, board }: Props) {
   // TODO: add a board history
 
   const [binaryConstraints, setBinaryConstraints] = useState<BinaryConstraints>(
@@ -278,7 +238,9 @@ export default function Randomizer({ setHexes }: Props) {
       </div>
       <button
         style={{ margin: 5, padding: 10 }}
-        onClick={() => shuffle(setHexes, binaryConstraints, numericConstraints)}
+        onClick={() =>
+          shuffle(setHexes, binaryConstraints, numericConstraints, board)
+        }
       >
         Randomize!
       </button>
