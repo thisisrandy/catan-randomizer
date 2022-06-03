@@ -2,11 +2,12 @@ import { Expansions } from "../types/boards";
 
 /**
  * If we split each hex into a top triangle, a middle rectangle, and a bottom
- * triangle, this weird number is the ratio of of the height of one of the
- * triangles to that of the rectangle. more or less. It will be helpful when
- * constructing grid templates
+ * triangle, the ratio of of the height of one of the triangles to that of the
+ * rectangle, in pixels, is 50/114. This number is slightly more than that to
+ * account for unclean edges that create seams between hexes when a smaller
+ * value is used.  It will be helpful when constructing grid templates
  */
-const SMALL_ROW_SIZE = 5 / 11;
+const SMALL_ROW_SIZE = 0.48;
 
 export const EXPANSIONS: Expansions = new Map([
   [
