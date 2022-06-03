@@ -42,7 +42,10 @@ export interface CatanBoard {
   cssGridAreas: string[];
 }
 
-export type ExpansionName = "Catan" | "Explorers & Pirates";
+export type ExpansionName =
+  | "Catan"
+  | "Catan: 5-6 Player Extension"
+  | "Explorers & Pirates";
 
 /**
  * A map of expansion names to their board data
