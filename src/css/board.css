@@ -1,13 +1,13 @@
 @media (max-width: 850px) {
     #board {
-        width: 95vw;
+        width: 90vw;
         height: 90vw;
     }
 }
 
 @media (min-width: 851px) {
     #board {
-        width: 750px;
+        width: 700px;
         height: 700px;
     }
 }

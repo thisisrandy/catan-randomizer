@@ -94,7 +94,7 @@ export default function Board({ hexes, board }: Props) {
               alt={String(number)}
               style={{
                 width: "35%",
-                height: "30%",
+                height: "28%",
                 position: "absolute",
                 zIndex: 2,
               }}
