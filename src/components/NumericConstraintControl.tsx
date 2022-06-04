@@ -1,5 +1,8 @@
 import React from "react";
-import { NumericConstraints } from "../types/constraints";
+import {
+  NumericConstraints,
+  NumericConstraintValidity,
+} from "../types/constraints";
 
 interface Props {
   constraint: keyof NumericConstraints;
@@ -8,6 +11,7 @@ interface Props {
   text: string;
   constraints: NumericConstraints;
   setConstraints: React.Dispatch<React.SetStateAction<NumericConstraints>>;
+  setValid: React.Dispatch<React.SetStateAction<NumericConstraintValidity>>;
 }
 
 export default function NumericConstraintControl({
@@ -17,6 +21,7 @@ export default function NumericConstraintControl({
   text,
   constraints,
   setConstraints,
+  setValid,
 }: Props) {
   return (
     <span
@@ -35,6 +40,11 @@ export default function NumericConstraintControl({
         min={min}
         max={max}
         onChange={(e) => {
+          let val = Number(e.target.value);
+          setValid((v) => ({
+            ...v,
+            [constraint]: val <= max && val >= min,
+          }));
           setConstraints((c) => ({
             ...c,
             [constraint]: e.target.value,

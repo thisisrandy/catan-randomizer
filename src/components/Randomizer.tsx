@@ -1,7 +1,11 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
-import { BinaryConstraints, NumericConstraints } from "../types/constraints";
+import {
+  BinaryConstraints,
+  NumericConstraints,
+  NumericConstraintValidity,
+} from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
 import { CatanBoard } from "../types/boards";
@@ -244,6 +248,11 @@ export default function Randomizer({ setHexes, board }: Props) {
       maxIntersectionPipCount: 12,
     });
 
+  const [valid, setValid] = useState<NumericConstraintValidity>({
+    maxConnectedLikeTerrain: true,
+    maxIntersectionPipCount: true,
+  });
+
   return (
     <div
       style={{
@@ -287,6 +296,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           text="Max connected like terrain"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
+          setValid={setValid}
         />
         <NumericConstraintControl
           constraint="maxIntersectionPipCount"
@@ -295,6 +305,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           text="Max intersection pip count"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
+          setValid={setValid}
         />
       </div>
       <button
@@ -302,6 +313,7 @@ export default function Randomizer({ setHexes, board }: Props) {
         onClick={() =>
           shuffle(setHexes, binaryConstraints, numericConstraints, board)
         }
+        disabled={!Object.values(valid).reduce((acc, v) => acc && v)}
       >
         Randomize!
       </button>
