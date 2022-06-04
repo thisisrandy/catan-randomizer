@@ -1,11 +1,7 @@
 import "../css/randomizer.css";
 import React, { useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
-import {
-  BinaryConstraints,
-  NumericConstraints,
-  NumericConstraintValidity,
-} from "../types/constraints";
+import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
 import { CatanBoard } from "../types/boards";
@@ -55,7 +51,7 @@ function shuffle(
         ];
 
         // then check each constraint
-        if (numericConstraints.maxConnectedLikeTerrain < 7) {
+        if (numericConstraints.maxConnectedLikeTerrain.value < 7) {
           // accumulate all same type connected hexes using standard
           // breath-first search
           let chainSize = 0,
@@ -67,7 +63,7 @@ function shuffle(
             if (seen.has(hex)) continue;
             seen.add(hex);
             chainSize += 1;
-            if (chainSize > numericConstraints.maxConnectedLikeTerrain)
+            if (chainSize > numericConstraints.maxConnectedLikeTerrain.value)
               continue tryLoop;
             for (let neighbor of board.neighbors[hex]) {
               // consider only neighbors greater than this hex, as those lower
@@ -193,7 +189,7 @@ function shuffle(
           let pipCount = intersection
             .map((i) => 6 - Math.abs(7 - numbers[i]))
             .reduce((acc, n) => acc + n, 0 as number);
-          if (pipCount > numericConstraints.maxIntersectionPipCount) {
+          if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
             // eslint-disable-next-line no-extra-label
             continue tryLoop;
           }
@@ -247,14 +243,9 @@ export default function Randomizer({ setHexes, board }: Props) {
 
   const [numericConstraints, setNumericConstraints] =
     useState<NumericConstraints>({
-      maxConnectedLikeTerrain: 2,
-      maxIntersectionPipCount: 12,
+      maxConnectedLikeTerrain: { value: 2, valid: true },
+      maxIntersectionPipCount: { value: 12, valid: true },
     });
-
-  const [valid, setValid] = useState<NumericConstraintValidity>({
-    maxConnectedLikeTerrain: true,
-    maxIntersectionPipCount: true,
-  });
 
   return (
     <div
@@ -299,7 +290,6 @@ export default function Randomizer({ setHexes, board }: Props) {
           text="Max connected like terrain"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
-          setValid={setValid}
         />
         <NumericConstraintControl
           constraint="maxIntersectionPipCount"
@@ -308,7 +298,6 @@ export default function Randomizer({ setHexes, board }: Props) {
           text="Max intersection pip count"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
-          setValid={setValid}
         />
       </div>
       <button
@@ -316,7 +305,11 @@ export default function Randomizer({ setHexes, board }: Props) {
         onClick={() =>
           shuffle(setHexes, binaryConstraints, numericConstraints, board)
         }
-        disabled={!Object.values(valid).reduce((acc, v) => acc && v)}
+        disabled={
+          !Object.values(numericConstraints)
+            .map((c) => c.valid)
+            .reduce((acc, v) => acc && v)
+        }
       >
         Randomize!
       </button>
