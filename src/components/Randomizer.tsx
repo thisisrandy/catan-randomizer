@@ -115,9 +115,15 @@ function shuffle(
 
     shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
       if (terrain[i].type === "desert") {
-        hexes.push({ type: terrain[i].type, number: 0 });
-        [numbers[desertsSeen], numbers[i]] = [numbers[i], numbers[desertsSeen]];
         desertsSeen++;
+        // shuffle in the outermost 0 value. e.g. if we have 2 deserts and this
+        // is the first, shuffle in the one at index 1. then, when we encounter
+        // the second desert, we shuffle in index 0
+        [numbers[numDeserts - desertsSeen], numbers[i]] = [
+          numbers[i],
+          numbers[numDeserts - desertsSeen],
+        ];
+        hexes.push({ type: terrain[i].type, number: numbers[i] });
         continue;
       }
 
