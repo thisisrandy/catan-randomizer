@@ -240,7 +240,7 @@ export default function Randomizer({ setHexes, board }: Props) {
 
   const [numericConstraints, setNumericConstraints] =
     useState<NumericConstraints>({
-      maxConnectedLikeTerrain: 1,
+      maxConnectedLikeTerrain: 2,
       maxIntersectionPipCount: 12,
     });
 
