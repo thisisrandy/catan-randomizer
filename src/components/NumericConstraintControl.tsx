@@ -47,7 +47,7 @@ export default function NumericConstraintControl({
           }));
           setConstraints((c) => ({
             ...c,
-            [constraint]: e.target.value,
+            [constraint]: val,
           }));
         }}
       />
