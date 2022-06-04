@@ -168,6 +168,30 @@ function shuffle(
           }
         }
 
+        // constrain pip count. we don't have a concept of "intersections", but
+        // we can exploit something about the way we process numbers, i.e. last
+        // to first hex. there will be a max of 3 neighbors which have already
+        // been processed. we can call their indices min, middle, and max. the
+        // intersections formed are then (i, min, max) and (i, middle, max). for
+        // example, if we are processing index 1, we consider the intersections
+        // formed by (1, 2, 5) and (1, 4, 5). the 2 and 1 neighbor cases are not
+        // considered
+        let processedNeighbors = board.neighbors[i].filter((n) => n > i).sort();
+        if (processedNeighbors.length === 3) {
+          for (const intersection of [
+            [i, processedNeighbors[0], processedNeighbors[2]],
+            [i, processedNeighbors[1], processedNeighbors[2]],
+          ]) {
+            let pipCount = intersection
+              .map((i) => 6 - Math.abs(7 - numbers[i]))
+              .reduce((acc, n) => acc + n, 0 as number);
+            if (pipCount > numericConstraints.maxIntersectionPipCount) {
+              // eslint-disable-next-line no-extra-label
+              continue tryLoop;
+            }
+          }
+        }
+
         // no constraints were violated. make an entry in hexes continue
         // shuffling
         hexes.push({ type: terrain[i].type, number: numbers[i] });
@@ -217,6 +241,7 @@ export default function Randomizer({ setHexes, board }: Props) {
   const [numericConstraints, setNumericConstraints] =
     useState<NumericConstraints>({
       maxConnectedLikeTerrain: 1,
+      maxIntersectionPipCount: 12,
     });
 
   return (
@@ -260,6 +285,14 @@ export default function Randomizer({ setHexes, board }: Props) {
           min={1}
           max={7}
           text="Max connected like terrain"
+          constraints={numericConstraints}
+          setConstraints={setNumericConstraints}
+        />
+        <NumericConstraintControl
+          constraint="maxIntersectionPipCount"
+          min={10}
+          max={15}
+          text="Max intersection pip count"
           constraints={numericConstraints}
           setConstraints={setNumericConstraints}
         />
