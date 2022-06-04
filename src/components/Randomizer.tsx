@@ -36,7 +36,7 @@ function shuffle(
       }
 
       // check constraints. we may have gotten ourself into a state from which
-      // we can't meet the constraints without backtracking. so after a few
+      // we can't meet the constraints without backtracking, so after a few
       // tries, we bail and start over. there are obviously more disciplined
       // ways to do this, but a succeed or bail loop works
       tryLoop: for (let tries = 0; tries < 10; tries++) {
