@@ -178,21 +178,24 @@ function shuffle(
         // been processed. we can call their indices min, middle, and max. the
         // intersections formed are then (i, min, max) and (i, middle, max). for
         // example, if we are processing index 1, we consider the intersections
-        // formed by (1, 2, 5) and (1, 4, 5). the 2 and 1 neighbor cases are not
+        // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
+        // we simply consider them both, and the one neighbor case is not
         // considered
         let processedNeighbors = board.neighbors[i].filter((n) => n > i).sort();
+        let intersections: number[][] = [];
         if (processedNeighbors.length === 3) {
-          for (const intersection of [
-            [i, processedNeighbors[0], processedNeighbors[2]],
-            [i, processedNeighbors[1], processedNeighbors[2]],
-          ]) {
-            let pipCount = intersection
-              .map((i) => 6 - Math.abs(7 - numbers[i]))
-              .reduce((acc, n) => acc + n, 0 as number);
-            if (pipCount > numericConstraints.maxIntersectionPipCount) {
-              // eslint-disable-next-line no-extra-label
-              continue tryLoop;
-            }
+          intersections.push([i, processedNeighbors[0], processedNeighbors[2]]);
+          intersections.push([i, processedNeighbors[1], processedNeighbors[2]]);
+        } else {
+          intersections.push(processedNeighbors.concat(i));
+        }
+        for (const intersection of intersections) {
+          let pipCount = intersection
+            .map((i) => 6 - Math.abs(7 - numbers[i]))
+            .reduce((acc, n) => acc + n, 0 as number);
+          if (pipCount > numericConstraints.maxIntersectionPipCount) {
+            // eslint-disable-next-line no-extra-label
+            continue tryLoop;
           }
         }
 
