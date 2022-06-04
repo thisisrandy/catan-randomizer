@@ -177,7 +177,13 @@ function shuffle(
         // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
         // we simply consider them both, and the one neighbor case is not
         // considered
-        let processedNeighbors = board.neighbors[i].filter((n) => n > i).sort();
+        let processedNeighbors = board.neighbors[i]
+          .filter((n) => n > i)
+          // note that javascript sorts lexicographically by default, even for
+          // numbers. per
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description,
+          // this is the preferred way to sort numbers
+          .sort((a, b) => a - b);
         let intersections: number[][] = [];
         if (processedNeighbors.length === 3) {
           intersections.push([i, processedNeighbors[0], processedNeighbors[2]]);
