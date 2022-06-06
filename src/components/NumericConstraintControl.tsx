@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React from "react";
 import { NumericConstraints } from "../types/constraints";
 interface Props {
@@ -27,12 +28,11 @@ export default function NumericConstraintControl({
         margin: 5,
       }}
     >
-      <input
-        style={{ marginRight: 5, width: 30 }}
+      <TextField
+        style={{ marginRight: 5, minWidth: 50 }}
         type="number"
         value={constraints[constraint].value}
-        min={min}
-        max={max}
+        inputProps={{ min, max }}
         onChange={(e) => {
           let val = Number(e.target.value);
           setConstraints((c) => ({

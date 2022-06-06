@@ -5,6 +5,15 @@ import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
 import { CatanBoard } from "../types/boards";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 interface Terrain {
   type: HexType;
@@ -259,72 +268,95 @@ export default function Randomizer({ setHexes, board }: Props) {
       maxIntersectionPipCount: { value: 12, valid: true },
     });
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <>
+      <Dialog open={dialogOpen}>
+        <DialogTitle>Settings</DialogTitle>
+        <DialogContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <BinaryConstraintControl
+            constraint="noAdjacentSixEight"
+            text={"Allow adjacent 6 & 8"}
+            constraints={binaryConstraints}
+            setConstraints={setBinaryConstraints}
+          />
+          <BinaryConstraintControl
+            constraint="noAdjacentTwoTwelve"
+            text={"Allow adjacent 2 & 12"}
+            constraints={binaryConstraints}
+            setConstraints={setBinaryConstraints}
+          />
+          <BinaryConstraintControl
+            constraint="noAdjacentPairs"
+            text="Allow adjacent number pairs"
+            constraints={binaryConstraints}
+            setConstraints={setBinaryConstraints}
+          />
+          <NumericConstraintControl
+            constraint="maxConnectedLikeTerrain"
+            min={1}
+            max={7}
+            text="Max connected like terrain"
+            constraints={numericConstraints}
+            setConstraints={setNumericConstraints}
+          />
+          <NumericConstraintControl
+            constraint="maxIntersectionPipCount"
+            min={10}
+            max={15}
+            text="Max intersection pip count"
+            constraints={numericConstraints}
+            setConstraints={setNumericConstraints}
+          />
+        </DialogContent>
+        <DialogActions
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            style={{ marginBottom: 10 }}
+            variant="contained"
+            onClick={() => setDialogOpen(false)}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div
-        id="constraints"
         style={{
           display: "flex",
-          flexWrap: "wrap",
+          alignItems: "center",
           justifyContent: "center",
-          margin: 5,
         }}
       >
-        <BinaryConstraintControl
-          constraint="noAdjacentSixEight"
-          text={"Allow adjacent 6 & 8"}
-          constraints={binaryConstraints}
-          setConstraints={setBinaryConstraints}
-        />
-        <BinaryConstraintControl
-          constraint="noAdjacentTwoTwelve"
-          text={"Allow adjacent 2 & 12"}
-          constraints={binaryConstraints}
-          setConstraints={setBinaryConstraints}
-        />
-        <BinaryConstraintControl
-          constraint="noAdjacentPairs"
-          text="Allow adjacent number pairs"
-          constraints={binaryConstraints}
-          setConstraints={setBinaryConstraints}
-        />
-        <NumericConstraintControl
-          constraint="maxConnectedLikeTerrain"
-          min={1}
-          max={7}
-          text="Max connected like terrain"
-          constraints={numericConstraints}
-          setConstraints={setNumericConstraints}
-        />
-        <NumericConstraintControl
-          constraint="maxIntersectionPipCount"
-          min={10}
-          max={15}
-          text="Max intersection pip count"
-          constraints={numericConstraints}
-          setConstraints={setNumericConstraints}
-        />
+        <Button
+          variant="contained"
+          style={{ margin: 5, padding: 10 }}
+          onClick={() =>
+            shuffle(setHexes, binaryConstraints, numericConstraints, board)
+          }
+          disabled={
+            !Object.values(numericConstraints)
+              .map((c) => c.valid)
+              .reduce((acc, v) => acc && v)
+          }
+        >
+          Randomize!
+        </Button>
+        <IconButton onClick={() => setDialogOpen(true)}>
+          <SettingsIcon style={{ margin: 5 }} />
+        </IconButton>
       </div>
-      <button
-        style={{ margin: 5, padding: 10 }}
-        onClick={() =>
-          shuffle(setHexes, binaryConstraints, numericConstraints, board)
-        }
-        disabled={
-          !Object.values(numericConstraints)
-            .map((c) => c.valid)
-            .reduce((acc, v) => acc && v)
-        }
-      >
-        Randomize!
-      </button>
-    </div>
+    </>
   );
 }

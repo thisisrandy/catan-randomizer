@@ -1,3 +1,4 @@
+import { Checkbox } from "@mui/material";
 import React from "react";
 import { BinaryConstraints } from "../types/constraints";
 
@@ -24,9 +25,8 @@ export default function BinaryConstraintControl({
         margin: 5,
       }}
     >
-      <input
+      <Checkbox
         style={{ marginRight: 5 }}
-        type="checkbox"
         checked={!constraints[constraint]}
         onChange={(e) =>
           setConstraints((c) => ({

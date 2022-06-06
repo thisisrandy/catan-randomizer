@@ -17,6 +17,7 @@ import eleven from "../images/11.png";
 import twelve from "../images/12.png";
 import { HexRecord } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
+import { Paper } from "@mui/material";
 
 const hexNameToImg = {
   pasture: pasture,
@@ -54,54 +55,56 @@ interface Props {
  */
 export default function Board({ hexes, board }: Props) {
   return (
-    <div
-      id="board"
-      style={{
-        margin: 20,
-        justifyItems: "center",
-        alignItems: "center",
-        display: "grid",
-        gridTemplateColumns: board.cssGridTemplateColumns,
-        gridTemplateRows: board.cssGridTemplateRows,
-      }}
-    >
-      {hexes.map(({ type, number }, i) => (
-        <div
-          key={i}
-          style={{
-            height: "100%",
-            width: "100%",
-            position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gridArea: board.cssGridAreas[i],
-          }}
-        >
-          <img
-            src={hexNameToImg[type]}
-            alt={type}
+    <Paper elevation={20}>
+      <div
+        id="board"
+        style={{
+          margin: 20,
+          justifyItems: "center",
+          alignItems: "center",
+          display: "grid",
+          gridTemplateColumns: board.cssGridTemplateColumns,
+          gridTemplateRows: board.cssGridTemplateRows,
+        }}
+      >
+        {hexes.map(({ type, number }, i) => (
+          <div
+            key={i}
             style={{
-              width: "100%",
               height: "100%",
-              position: "absolute",
-              zIndex: 1,
+              width: "100%",
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gridArea: board.cssGridAreas[i],
             }}
-          />
-          {number && (
+          >
             <img
-              src={String(numberValToImg[number])}
-              alt={String(number)}
+              src={hexNameToImg[type]}
+              alt={type}
               style={{
-                width: "35%",
-                height: "28%",
+                width: "100%",
+                height: "100%",
                 position: "absolute",
-                zIndex: 2,
+                zIndex: 1,
               }}
-            ></img>
-          )}
-        </div>
-      ))}
-    </div>
+            />
+            {number && (
+              <img
+                src={String(numberValToImg[number])}
+                alt={String(number)}
+                style={{
+                  width: "35%",
+                  height: "28%",
+                  position: "absolute",
+                  zIndex: 2,
+                }}
+              ></img>
+            )}
+          </div>
+        ))}
+      </div>
+    </Paper>
   );
 }
