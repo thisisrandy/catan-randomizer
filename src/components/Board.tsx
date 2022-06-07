@@ -55,56 +55,56 @@ interface Props {
  */
 export default function Board({ hexes, board }: Props) {
   return (
-    <Paper elevation={20}>
-      <div
-        id="board"
-        style={{
-          margin: 20,
-          justifyItems: "center",
-          alignItems: "center",
-          display: "grid",
-          gridTemplateColumns: board.cssGridTemplateColumns,
-          gridTemplateRows: board.cssGridTemplateRows,
-        }}
-      >
-        {hexes.map(({ type, number }, i) => (
-          <div
-            key={i}
+    <Paper
+      id="board"
+      elevation={20}
+      style={{
+        margin: 10,
+        padding: 20,
+        justifyItems: "center",
+        alignItems: "center",
+        display: "grid",
+        gridTemplateColumns: board.cssGridTemplateColumns,
+        gridTemplateRows: board.cssGridTemplateRows,
+      }}
+    >
+      {hexes.map(({ type, number }, i) => (
+        <div
+          key={i}
+          style={{
+            height: "100%",
+            width: "100%",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gridArea: board.cssGridAreas[i],
+          }}
+        >
+          <img
+            src={hexNameToImg[type]}
+            alt={type}
             style={{
-              height: "100%",
               width: "100%",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gridArea: board.cssGridAreas[i],
+              height: "100%",
+              position: "absolute",
+              zIndex: 1,
             }}
-          >
+          />
+          {number && (
             <img
-              src={hexNameToImg[type]}
-              alt={type}
+              src={String(numberValToImg[number])}
+              alt={String(number)}
               style={{
-                width: "100%",
-                height: "100%",
+                width: "35%",
+                height: "28%",
                 position: "absolute",
-                zIndex: 1,
+                zIndex: 2,
               }}
-            />
-            {number && (
-              <img
-                src={String(numberValToImg[number])}
-                alt={String(number)}
-                style={{
-                  width: "35%",
-                  height: "28%",
-                  position: "absolute",
-                  zIndex: 2,
-                }}
-              ></img>
-            )}
-          </div>
-        ))}
-      </div>
+            ></img>
+          )}
+        </div>
+      ))}
     </Paper>
   );
 }
