@@ -10,9 +10,11 @@ import {
   Autocomplete,
   Paper,
   TextField,
+  IconButton,
 } from "@mui/material";
 import { brown } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
+import { GitHub } from "@mui/icons-material";
 
 function App() {
   const [expansion, setExpansion] = useState<ExpansionName>("Catan");
@@ -63,7 +65,24 @@ function App() {
               if (value !== null) setExpansion(value);
             }}
           />
-          <Randomizer setHexes={setHexes} board={board} />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: 5,
+              width: 225,
+            }}
+          >
+            <Randomizer setHexes={setHexes} board={board} />
+            <IconButton
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/thisisrandy/catan-randomizer"
+            >
+              <GitHub style={{ margin: 5 }} />
+            </IconButton>
+          </div>
         </Paper>
       </div>
     </ThemeProvider>

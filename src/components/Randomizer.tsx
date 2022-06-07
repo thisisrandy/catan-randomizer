@@ -368,29 +368,19 @@ export default function Randomizer({ setHexes, board }: Props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: 5,
-          width: 225,
-        }}
+      <Button
+        variant="contained"
+        style={{ margin: 5, padding: 10 }}
+        onClick={() =>
+          shuffle(setHexes, binaryConstraints, numericConstraints, board)
+        }
+        disabled={invalidConstraints}
       >
-        <Button
-          variant="contained"
-          style={{ margin: 5, padding: 10 }}
-          onClick={() =>
-            shuffle(setHexes, binaryConstraints, numericConstraints, board)
-          }
-          disabled={invalidConstraints}
-        >
-          Randomize!
-        </Button>
-        <IconButton onClick={() => setDialogOpen(true)}>
-          <SettingsIcon style={{ margin: 5 }} />
-        </IconButton>
-      </div>
+        Randomize!
+      </Button>
+      <IconButton onClick={() => setDialogOpen(true)}>
+        <SettingsIcon style={{ margin: 5 }} />
+      </IconButton>
     </>
   );
 }
