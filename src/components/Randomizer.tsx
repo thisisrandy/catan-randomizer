@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogActions,
   IconButton,
+  FormGroup,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -279,42 +280,66 @@ export default function Randomizer({ setHexes, board }: Props) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            paddingBottom: 0,
           }}
         >
-          <BinaryConstraintControl
-            constraint="noAdjacentSixEight"
-            text={"Allow adjacent 6 & 8"}
-            constraints={binaryConstraints}
-            setConstraints={setBinaryConstraints}
-          />
-          <BinaryConstraintControl
-            constraint="noAdjacentTwoTwelve"
-            text={"Allow adjacent 2 & 12"}
-            constraints={binaryConstraints}
-            setConstraints={setBinaryConstraints}
-          />
-          <BinaryConstraintControl
-            constraint="noAdjacentPairs"
-            text="Allow adjacent number pairs"
-            constraints={binaryConstraints}
-            setConstraints={setBinaryConstraints}
-          />
-          <NumericConstraintControl
-            constraint="maxConnectedLikeTerrain"
-            min={1}
-            max={7}
-            text="Max connected like terrain"
-            constraints={numericConstraints}
-            setConstraints={setNumericConstraints}
-          />
-          <NumericConstraintControl
-            constraint="maxIntersectionPipCount"
-            min={10}
-            max={15}
-            text="Max intersection pip count"
-            constraints={numericConstraints}
-            setConstraints={setNumericConstraints}
-          />
+          <FormGroup>
+            <BinaryConstraintControl
+              constraint="noAdjacentSixEight"
+              label={"Allow adjacent 6 & 8"}
+              toolTip={
+                "When this box is checked, the numbers 6 & 8 are allowed" +
+                " to appear next to eachother"
+              }
+              constraints={binaryConstraints}
+              setConstraints={setBinaryConstraints}
+            />
+            <BinaryConstraintControl
+              constraint="noAdjacentTwoTwelve"
+              label={"Allow adjacent 2 & 12"}
+              toolTip={
+                "When this box is checked, the numbers 2 & 12 are allowed" +
+                " to appear next to eachother"
+              }
+              constraints={binaryConstraints}
+              setConstraints={setBinaryConstraints}
+            />
+            <BinaryConstraintControl
+              constraint="noAdjacentPairs"
+              label="Allow adjacent number pairs"
+              toolTip={
+                "When this box is checked, pairs of the same number are allowed" +
+                " to appear next to eachother"
+              }
+              constraints={binaryConstraints}
+              setConstraints={setBinaryConstraints}
+            />
+            <NumericConstraintControl
+              constraint="maxConnectedLikeTerrain"
+              min={1}
+              max={7}
+              label="Max connected like terrain"
+              toolTip={
+                "Control how many terrain hexes of the same type can appear" +
+                " connected. Note that connected can mean in any shape, including a line."
+              }
+              constraints={numericConstraints}
+              setConstraints={setNumericConstraints}
+            />
+            <NumericConstraintControl
+              constraint="maxIntersectionPipCount"
+              min={10}
+              max={15}
+              label="Max intersection pip count"
+              toolTip={
+                "Control the upper limit on the sum of the pips surrounding each" +
+                " intersection. For example, if this is set to 12, an intersection surrounded" +
+                " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed."
+              }
+              constraints={numericConstraints}
+              setConstraints={setNumericConstraints}
+            />
+          </FormGroup>
         </DialogContent>
         <DialogActions
           style={{

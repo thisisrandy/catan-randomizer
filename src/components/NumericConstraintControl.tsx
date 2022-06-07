@@ -1,11 +1,17 @@
-import { TextField } from "@mui/material";
-import React from "react";
+import {
+  FormControl,
+  FormHelperText,
+  OutlinedInput,
+  InputLabel,
+  Tooltip,
+} from "@mui/material";
 import { NumericConstraints } from "../types/constraints";
 interface Props {
   constraint: keyof NumericConstraints;
   min: number;
   max: number;
-  text: string;
+  label: string;
+  toolTip: string;
   constraints: NumericConstraints;
   setConstraints: React.Dispatch<React.SetStateAction<NumericConstraints>>;
 }
@@ -14,34 +20,36 @@ export default function NumericConstraintControl({
   constraint,
   min,
   max,
-  text,
+  label,
+  toolTip,
   constraints,
   setConstraints,
 }: Props) {
   return (
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        minWidth: 200,
-        margin: 5,
-      }}
-    >
-      <TextField
-        style={{ marginRight: 5, minWidth: 50 }}
-        type="number"
-        value={constraints[constraint].value}
-        inputProps={{ min, max }}
-        onChange={(e) => {
-          let val = Number(e.target.value);
-          setConstraints((c) => ({
-            ...c,
-            [constraint]: { value: val, valid: val <= max && val >= min },
-          }));
-        }}
-      />
-      {text}
-    </span>
+    <Tooltip title={toolTip}>
+      <FormControl
+        error={!constraints[constraint].valid}
+        style={{ margin: 10 }}
+      >
+        <InputLabel htmlFor={constraint}>{label}</InputLabel>
+        <OutlinedInput
+          id={constraint}
+          label={label}
+          value={constraints[constraint].value}
+          onChange={(e) => {
+            let val = Number(e.target.value);
+            setConstraints((c) => ({
+              ...c,
+              [constraint]: { value: val, valid: val <= max && val >= min },
+            }));
+          }}
+        />
+        {!constraints[constraint].valid && (
+          <FormHelperText>
+            Must be a number between {min} and {max}
+          </FormHelperText>
+        )}
+      </FormControl>
+    </Tooltip>
   );
 }
