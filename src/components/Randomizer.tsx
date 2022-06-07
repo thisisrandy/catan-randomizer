@@ -234,7 +234,7 @@ function shuffle(
 
   // we built hexes in reverse, so make sure to reverse it before committing it
   // to state. while this doesn't really make a difference in the base Catan
-  // board due to its symettry, e.g. Explorers & Pirates neighbors are not the
+  // board due to its symmetry, e.g. Explorers & Pirates neighbors are not the
   // same in reverse order, so all of our careful constraint checking could be
   // for naught
   setHexes(hexes.reverse());
