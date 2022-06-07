@@ -1,4 +1,3 @@
-import "../css/app.css";
 import { useState } from "react";
 import { HexRecord } from "../types/hexes";
 import Board from "./Board";
@@ -27,12 +26,13 @@ function App() {
         id="app"
         style={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Randomizer setHexes={setHexes} board={board} />
         <Board hexes={hexes} board={board} />
+        <Randomizer setHexes={setHexes} board={board} />
       </div>
     </ThemeProvider>
   );
