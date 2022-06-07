@@ -13,7 +13,7 @@ import { brown } from "@mui/material/colors";
 const board = EXPANSIONS.get("Catan")!;
 
 function App() {
-  let [hexes, setHexes] = useState<HexRecord>(board.recommendedLayout);
+  const [hexes, setHexes] = useState<HexRecord>(board.recommendedLayout);
 
   const theme = unstable_createMuiStrictModeTheme({
     palette: { mode: "dark", primary: brown },
