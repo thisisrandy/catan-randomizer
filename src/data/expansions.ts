@@ -9,6 +9,7 @@ import { Expansions } from "../types/boards";
  */
 const SMALL_ROW_SIZE = 0.48;
 
+// TODO: add seafarers and anything else that makes sense
 export const EXPANSIONS: Expansions = new Map([
   [
     "Catan",

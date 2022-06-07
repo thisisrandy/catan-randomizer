@@ -17,6 +17,7 @@ import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
 
 function App() {
+  // TODO: use local storage to store settings here and elsewhere
   const [expansion, setExpansion] = useState<ExpansionName>("Catan");
   const [board, setBoard] = useState<CatanBoard>(EXPANSIONS.get(expansion)!);
   const [hexes, setHexes] = useState<HexRecord>(board.recommendedLayout);
