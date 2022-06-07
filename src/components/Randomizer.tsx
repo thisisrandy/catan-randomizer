@@ -287,9 +287,13 @@ export default function Randomizer({ setHexes, board }: Props) {
     [numericConstraints, setInvalidConstraints]
   );
 
+  const handleClose = () => {
+    if (!invalidConstraints) setDialogOpen(false);
+  };
+
   return (
     <>
-      <Dialog open={dialogOpen}>
+      <Dialog open={dialogOpen} onClose={handleClose}>
         <DialogTitle>Settings</DialogTitle>
         <DialogContent
           style={{
@@ -367,7 +371,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           <Button
             style={{ marginBottom: 10 }}
             variant="contained"
-            onClick={() => setDialogOpen(false)}
+            onClick={handleClose}
             disabled={invalidConstraints}
           >
             Close
