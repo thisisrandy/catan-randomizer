@@ -12,7 +12,6 @@ import {
   DialogActions,
   IconButton,
   FormGroup,
-  Paper,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -369,12 +368,11 @@ export default function Randomizer({ setHexes, board }: Props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Paper
-        elevation={20}
+      <div
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           padding: 5,
           width: 225,
         }}
@@ -392,7 +390,7 @@ export default function Randomizer({ setHexes, board }: Props) {
         <IconButton onClick={() => setDialogOpen(true)}>
           <SettingsIcon style={{ margin: 5 }} />
         </IconButton>
-      </Paper>
+      </div>
     </>
   );
 }
