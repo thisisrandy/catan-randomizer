@@ -1,5 +1,5 @@
 import "../css/randomizer.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
@@ -270,6 +270,17 @@ export default function Randomizer({ setHexes, board }: Props) {
     });
 
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [invalidConstraints, setInvalidConstraints] = useState(false);
+
+  useEffect(
+    () =>
+      setInvalidConstraints(
+        !Object.values(numericConstraints)
+          .map((c) => c.valid)
+          .reduce((acc, v) => acc && v)
+      ),
+    [numericConstraints, setInvalidConstraints]
+  );
 
   return (
     <>
@@ -352,6 +363,7 @@ export default function Randomizer({ setHexes, board }: Props) {
             style={{ marginBottom: 10 }}
             variant="contained"
             onClick={() => setDialogOpen(false)}
+            disabled={invalidConstraints}
           >
             Close
           </Button>
@@ -370,11 +382,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           onClick={() =>
             shuffle(setHexes, binaryConstraints, numericConstraints, board)
           }
-          disabled={
-            !Object.values(numericConstraints)
-              .map((c) => c.valid)
-              .reduce((acc, v) => acc && v)
-          }
+          disabled={invalidConstraints}
         >
           Randomize!
         </Button>
