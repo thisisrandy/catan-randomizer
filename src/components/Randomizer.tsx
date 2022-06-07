@@ -1,4 +1,3 @@
-import "../css/randomizer.css";
 import React, { useEffect, useState } from "react";
 import { HexRecord, HexType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
@@ -13,6 +12,7 @@ import {
   DialogActions,
   IconButton,
   FormGroup,
+  Paper,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -369,11 +369,14 @@ export default function Randomizer({ setHexes, board }: Props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <div
+      <Paper
+        elevation={20}
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-around",
+          padding: 5,
+          width: 225,
         }}
       >
         <Button
@@ -389,7 +392,7 @@ export default function Randomizer({ setHexes, board }: Props) {
         <IconButton onClick={() => setDialogOpen(true)}>
           <SettingsIcon style={{ margin: 5 }} />
         </IconButton>
-      </div>
+      </Paper>
     </>
   );
 }
