@@ -21,6 +21,10 @@ interface Terrain {
   fixed: boolean;
 }
 
+/**
+ * Shuffle `board` using the provided constraints and set the result using
+ * `setHexes`
+ */
 function shuffle(
   setHexes: HexSetter,
   binaryConstraints: BinaryConstraints,
@@ -248,9 +252,10 @@ interface Props {
 }
 
 /**
- * This is a button component for producing a random board within certain
- * contraints. Initial contraints will just be no adjacent 6's and 8's, but
- * options will be added later
+ * Component for producing random arrangements of hexes and number chits within
+ * certain constraints. Provides a dialog to manage constraint settings and two
+ * buttons, one to randomize the board, and the other to open the settings
+ * dialog
  */
 export default function Randomizer({ setHexes, board }: Props) {
   // TODO: add a board history
