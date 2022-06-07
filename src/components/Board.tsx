@@ -1,3 +1,4 @@
+import "../css/board.css";
 import pasture from "../images/pasture.png";
 import forest from "../images/forest.png";
 import hills from "../images/hills.png";
@@ -56,15 +57,11 @@ interface Props {
 export default function Board({ hexes, board, expansion }: Props) {
   return (
     <Paper
+      id="board-container"
       elevation={20}
       style={{
         margin: 10,
         padding: 20,
-        // TODO: this doesn't look good on really tall screens. also, it would
-        // be nice if everything were bigger on wide screens. play around with
-        // css min, etc.
-        width: "55vh",
-        height: "55vh",
         display: "flex",
         justifyContent: "center",
       }}

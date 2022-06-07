@@ -1,0 +1,33 @@
+@media only screen and (max-width: 800px) and (min-aspect-ratio: 5/9) {
+  #board-container {
+    width: 55vh;
+    height: 55vh;
+  }
+}
+@media only screen and (max-width: 800px) and (max-aspect-ratio: 5/9) {
+  #board-container {
+    width: 90vw;
+    height: 90vw;
+  }
+}
+
+@media only screen and (min-width: 801px) and (min-height: 801px) and (min-aspect-ratio: 5/6) {
+  #board-container {
+    width: 80vh;
+    height: 80vh;
+  }
+}
+
+@media only screen and (min-width: 801px) and (max-height: 800px) and (min-aspect-ratio: 5/6) {
+  #board-container {
+    width: 70vh;
+    height: 70vh;
+  }
+}
+
+@media only screen and (min-width: 801px) and (max-aspect-ratio: 5/6) {
+  #board-container {
+    width: 90vw;
+    height: 90vw;
+  }
+}
