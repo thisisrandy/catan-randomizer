@@ -41,7 +41,7 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <Board hexes={hexes} board={board} />
+        <Board hexes={hexes} board={board} expansion={expansion} />
         <Paper
           elevation={20}
           style={{
