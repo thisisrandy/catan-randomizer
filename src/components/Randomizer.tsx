@@ -325,32 +325,32 @@ export default function Randomizer({ setHexes, board }: Props) {
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
             />
-            <NumericConstraintControl
-              constraint="maxConnectedLikeTerrain"
-              min={1}
-              max={7}
-              label="Max connected like terrain"
-              toolTip={
-                "Control how many terrain hexes of the same type can appear" +
-                " connected. Note that connected can mean in any shape, including a line."
-              }
-              constraints={numericConstraints}
-              setConstraints={setNumericConstraints}
-            />
-            <NumericConstraintControl
-              constraint="maxIntersectionPipCount"
-              min={10}
-              max={15}
-              label="Max intersection pip count"
-              toolTip={
-                "Control the upper limit on the sum of the pips surrounding each" +
-                " intersection. For example, if this is set to 12, an intersection surrounded" +
-                " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed."
-              }
-              constraints={numericConstraints}
-              setConstraints={setNumericConstraints}
-            />
           </FormGroup>
+          <NumericConstraintControl
+            constraint="maxConnectedLikeTerrain"
+            min={1}
+            max={7}
+            label="Max connected like terrain"
+            toolTip={
+              "Control how many terrain hexes of the same type can appear" +
+              " connected. Note that connected can mean in any shape, including a line."
+            }
+            constraints={numericConstraints}
+            setConstraints={setNumericConstraints}
+          />
+          <NumericConstraintControl
+            constraint="maxIntersectionPipCount"
+            min={10}
+            max={15}
+            label="Max intersection pip count"
+            toolTip={
+              "Control the upper limit on the sum of the pips surrounding each" +
+              " intersection. For example, if this is set to 12, an intersection surrounded" +
+              " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed."
+            }
+            constraints={numericConstraints}
+            setConstraints={setNumericConstraints}
+          />
         </DialogContent>
         <DialogActions
           style={{
