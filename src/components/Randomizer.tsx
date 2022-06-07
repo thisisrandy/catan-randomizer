@@ -14,6 +14,7 @@ import {
   FormGroup,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 
 interface Terrain {
   type: HexType;
@@ -254,21 +255,26 @@ interface Props {
 export default function Randomizer({ setHexes, board }: Props) {
   // TODO: add a board history
 
-  const [binaryConstraints, setBinaryConstraints] = useState<BinaryConstraints>(
-    {
+  const [binaryConstraints, setBinaryConstraints] =
+    useStateWithLocalStorage<BinaryConstraints>("binaryConstraints", {
       noAdjacentSixEight: true,
       noAdjacentTwoTwelve: true,
       noAdjacentPairs: true,
-    }
-  );
+    });
 
   const [numericConstraints, setNumericConstraints] =
-    useState<NumericConstraints>({
+    useStateWithLocalStorage<NumericConstraints>("numericConstraints", {
       maxConnectedLikeTerrain: { value: 2, valid: true },
       maxIntersectionPipCount: { value: 12, valid: true },
     });
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // we want to remember this state in case the user set invalid constraints
+  // and then closed the page. it would be confusing to have the randomize
+  // button greyed out without any explanation
+  const [dialogOpen, setDialogOpen] = useStateWithLocalStorage(
+    "randomizerDialogOpen",
+    false
+  );
   const [invalidConstraints, setInvalidConstraints] = useState(false);
 
   useEffect(

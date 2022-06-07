@@ -15,10 +15,13 @@ import {
 import { brown } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
+import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 
 function App() {
-  // TODO: use local storage to store settings here and elsewhere
-  const [expansion, setExpansion] = useState<ExpansionName>("Catan");
+  const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
+    "expansion",
+    "Catan"
+  );
   const [board, setBoard] = useState<CatanBoard>(EXPANSIONS.get(expansion)!);
   const [hexes, setHexes] = useState<HexRecord>(board.recommendedLayout);
 
