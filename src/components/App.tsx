@@ -60,7 +60,7 @@ function App() {
           <Autocomplete
             style={{ margin: 10, marginBottom: 0, width: 300 }}
             disablePortal={true}
-            options={Array.from(EXPANSIONS.keys())}
+            options={Array.from(EXPANSIONS.keys()).sort()}
             renderInput={(params) => (
               <TextField {...params} label="Expansion" />
             )}
