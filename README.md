@@ -41,7 +41,7 @@ terms of terrain hexes or number chits. As such, while they aren't explicitly
 listed above or in the [app](https://catan-randomizer.vercel.app/), they are
 implicitly supported.
 
-## Contribution
+## Contributing
 
 Pull requests are welcome! In particular, I haven't played every expansion and
 kind of ran out of steam including the ones I don't even own, so if there's a
@@ -64,9 +64,10 @@ to dive into, but here are a couple of tips:
   example, there may be multiple sets of hexes and chits, some of which are
   distributed on one island, and the others of which are distributed elsewhere,
   or there may be an implicit constraint that certain hexes not receive numbers
-  which are "too favorable." The extant interfaces and shuffling function should
-  be readily modifiable to include such concepts, but they are not currently
-  implemented. Note also that hexes are rotated 90˚ in Seafarers.
+  which are "too favorable." The extant [interfaces](src/types/boards.ts) and
+  [shuffling function](src/components/Randomizer.tsx) should be readily
+  modifiable to include such concepts, but they are not currently implemented.
+  Note also that hexes are rotated 90˚ in Seafarers.
 
 ## Attribution
 
