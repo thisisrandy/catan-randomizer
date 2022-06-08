@@ -44,6 +44,7 @@ function shuffle(
     let currentIndex = terrain.length - 1;
 
     shuffleLoop: while (currentIndex >= 0) {
+      // if this hex is fixed, skip it
       if (terrain[currentIndex].fixed) {
         currentIndex--;
         continue;
@@ -52,9 +53,13 @@ function shuffle(
       // check constraints. we may have gotten ourself into a state from which
       // we can't meet the constraints without backtracking, so after a few
       // tries, we bail and start over. there are obviously more disciplined
-      // ways to do this, but a succeed or bail loop works
+      // ways to do this (our procedure isn't necessarily comprehesive, and we
+      // may test the same state multiple times), but even an aged device can
+      // blow through this very quickly, so there's no compelling reason to
+      // improve it
       tryLoop: for (let tries = 0; tries < 10; tries++) {
-        // shuffle
+        // shuffle. we can't shuffle fixed hexes, so keep rolling the dice until
+        // we select a free hex (which might be ourself)
         while (
           terrain[(randomIndex = Math.floor(Math.random() * currentIndex))]
             .fixed
