@@ -5,7 +5,7 @@
   <img alt="Catan: 5-6 Player Extension" src="screenshot-catan-5-6-players.png" />
 </p>
 
-This is a hobby project to produce randomized [Catan](catan.com) boards under
+This is a hobby project to produce randomized [Catan](https://www.catan.com) boards under
 constraints, e.g. `6` and `8` can't touch, or the
 [pip](<https://en.wikipedia.org/wiki/Pip_(counting)>) count for each intersection
 can't exceed a certain total. It is deployed
