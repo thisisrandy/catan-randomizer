@@ -278,7 +278,7 @@ export default function Randomizer({ setHexes, board }: Props) {
   const [numericConstraints, setNumericConstraints] =
     useStateWithLocalStorage<NumericConstraints>("numericConstraints", {
       maxConnectedLikeTerrain: { value: 2, valid: true },
-      maxIntersectionPipCount: { value: 12, valid: true },
+      maxIntersectionPipCount: { value: 10, valid: true },
     });
 
   // we want to remember this state in case the user set invalid constraints
