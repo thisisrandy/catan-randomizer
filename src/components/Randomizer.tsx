@@ -61,8 +61,9 @@ function shuffle(
         // shuffle. we can't shuffle fixed hexes, so keep rolling the dice until
         // we select a free hex (which might be ourself)
         while (
-          terrain[(randomIndex = Math.floor(Math.random() * currentIndex))]
-            .fixed
+          terrain[
+            (randomIndex = Math.floor(Math.random() * (currentIndex + 1)))
+          ].fixed
         );
         [terrain[currentIndex], terrain[randomIndex]] = [
           terrain[randomIndex],
@@ -154,7 +155,7 @@ function shuffle(
         // shuffle. we need to make sure to skip lefthand indices equal to the
         // number of deserts we haven't yet encountered
         const offset = numDeserts - desertsSeen;
-        randomIndex = Math.floor(Math.random() * (i - offset)) + offset;
+        randomIndex = Math.floor(Math.random() * (i + 1 - offset)) + offset;
         [numbers[i], numbers[randomIndex]] = [numbers[randomIndex], numbers[i]];
 
         // then check each constraint
