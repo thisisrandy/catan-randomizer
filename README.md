@@ -6,7 +6,7 @@
 </p>
 
 This is a hobby project to produce randomized [Catan](catan.com) boards under
-constraints, e.g. `6` and `8` cannot touch, or the
+constraints, e.g. `6` and `8` can't touch, or the
 [pip](<https://en.wikipedia.org/wiki/Pip_(counting)>) count for each intersection
 can't exceed a certain total. It is deployed
 [here](https://catan-randomizer.vercel.app/).
@@ -17,13 +17,13 @@ While the same idea has been executed
 [before](https://alexbeals.com/projects/catan/), this project supports fairness
 constraints (i.e. limiting intersection pip totals) and [Catan
 Expansions](https://www.catan.com/explore-catan/catan-core-family-games) that
-are not seen elsewhere.
+aren't seen elsewhere.
 
 ## Supported Constraints
 
-- 6 & 8 cannot touch
-- 2 & 12 cannot touch
-- Same number cannot touch
+- 6 & 8 can't touch
+- 2 & 12 can't touch
+- Same number can't touch
 - Limit on the size of groups of same-type terrain
 - Limit on the total pip count of intersections
 
@@ -34,10 +34,10 @@ are not seen elsewhere.
 - [Explorers & Pirates](https://www.catan.com/explorers-pirates)
 
 Note that some expansions, e.g. [Cities &
-Knights](https://www.catan.com/cities-knights), do not differ from
+Knights](https://www.catan.com/cities-knights), don't differ from
 [Catan](https://www.catan.com/catan) (or the [5-6 Player
 Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)) in
-terms of terrain hexes or number chits. As such, while they are not explicitly
+terms of terrain hexes or number chits. As such, while they aren't explicitly
 listed above or in the [app](https://catan-randomizer.vercel.app/), they are
 implicitly supported.
 

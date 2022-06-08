@@ -316,7 +316,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label={"Allow adjacent 6 & 8"}
               toolTip={
                 "When this box is checked, the numbers 6 & 8 are allowed" +
-                " to appear next to eachother"
+                " to appear next to each other."
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
@@ -326,7 +326,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label={"Allow adjacent 2 & 12"}
               toolTip={
                 "When this box is checked, the numbers 2 & 12 are allowed" +
-                " to appear next to eachother"
+                " to appear next to each other."
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
@@ -336,7 +336,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label="Allow adjacent number pairs"
               toolTip={
                 "When this box is checked, pairs of the same number are allowed" +
-                " to appear next to eachother"
+                " to appear next to each other."
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
