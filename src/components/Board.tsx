@@ -51,8 +51,7 @@ interface Props {
 }
 
 /**
- * `Board` is the display logic for a Catan board, its props is an array of hexes,
- * each with a coordinate, type, and number chit value
+ * `Board` is the display logic for a Catan board
  */
 export default function Board({ hexes, board, expansion }: Props) {
   return (

@@ -114,7 +114,9 @@ function shuffle(
     hexes = [];
     let desertsSeen = 0;
     // we need to begin by finding any 0 (desert) values and putting them at the
-    // beginning of the loop
+    // beginning of the loop. then, we can avoid accidentally shuffling them
+    // onto a non-desert hex by making our random index choices below at an
+    // offset of the number of deserts not yet encountered
     let zeroSearchOffset = 0,
       zeroIndex;
     while (
@@ -142,7 +144,7 @@ function shuffle(
       }
 
       // check constraints. as with terrain, we don't attempt to backtrack and
-      // start over if too many tries fail
+      // simply start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle. we need to make sure to skip lefthand indices equal to the
         // number of deserts we haven't yet encountered
@@ -255,7 +257,7 @@ interface Props {
  * Component for producing random arrangements of hexes and number chits within
  * certain constraints. Provides a dialog to manage constraint settings and two
  * buttons, one to randomize the board, and the other to open the settings
- * dialog
+ * dialog. These can be arranged in whatever manner the parent component chooses
  */
 export default function Randomizer({ setHexes, board }: Props) {
   // TODO: add a board history

@@ -48,6 +48,7 @@ export type ExpansionName =
   | "Explorers & Pirates";
 
 /**
- * A map of expansion names to their board data
+ * A map of expansion names to their board data. Meant to be the top-level
+ * container for board definitions
  */
 export type Expansions = Map<ExpansionName, CatanBoard>;
