@@ -103,7 +103,7 @@ export default function Board({ hexes, board, expansion }: Props) {
                 alt={String(number)}
                 style={{
                   width: "35%",
-                  height: "28%",
+                  height: expansion === "Catan" ? "28%" : "32%",
                   position: "absolute",
                   zIndex: 2,
                 }}
