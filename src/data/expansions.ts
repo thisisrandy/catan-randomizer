@@ -186,6 +186,7 @@ export const EXPANSIONS: Expansions = new Map([
         "13 / 6 / 16 / 8",
         "13 / 8 / 16 / 10",
       ],
+      numberChitHeightPercentage: "32%",
     },
   ],
   [
@@ -246,6 +247,8 @@ export const EXPANSIONS: Expansions = new Map([
         "13 / 4 / 16 / 6",
         "13 / 6 / 16 / 8",
       ],
+      boardWidthPercentage: "55%",
+      numberChitHeightPercentage: "32%",
     },
   ],
 ]);

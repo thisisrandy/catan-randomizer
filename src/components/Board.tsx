@@ -16,7 +16,7 @@ import ten from "../images/10.png";
 import eleven from "../images/11.png";
 import twelve from "../images/12.png";
 import { HexRecord } from "../types/hexes";
-import { CatanBoard, ExpansionName } from "../types/boards";
+import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 
 const hexNameToImg = {
@@ -47,13 +47,12 @@ const numberValToImg = [
 interface Props {
   hexes: HexRecord;
   board: CatanBoard;
-  expansion: ExpansionName;
 }
 
 /**
  * `Board` is the display logic for a Catan board
  */
-export default function Board({ hexes, board, expansion }: Props) {
+export default function Board({ hexes, board }: Props) {
   return (
     <Paper
       id="board-container"
@@ -67,8 +66,14 @@ export default function Board({ hexes, board, expansion }: Props) {
     >
       <div
         style={{
-          width: expansion === "Explorers & Pirates" ? "55%" : "100%",
-          height: "100%",
+          width:
+            typeof board.boardWidthPercentage !== "undefined"
+              ? board.boardWidthPercentage
+              : "100%",
+          height:
+            typeof board.boardHeightPercentage !== "undefined"
+              ? board.boardHeightPercentage
+              : "100%",
           display: "grid",
           gridTemplateColumns: board.cssGridTemplateColumns,
           gridTemplateRows: board.cssGridTemplateRows,
@@ -102,8 +107,14 @@ export default function Board({ hexes, board, expansion }: Props) {
                 src={String(numberValToImg[number])}
                 alt={String(number)}
                 style={{
-                  width: "35%",
-                  height: expansion === "Catan" ? "28%" : "32%",
+                  width:
+                    typeof board.numberChitWidthPercentage !== "undefined"
+                      ? board.numberChitWidthPercentage
+                      : "35%",
+                  height:
+                    typeof board.numberChitHeightPercentage !== "undefined"
+                      ? board.numberChitHeightPercentage
+                      : "28%",
                   position: "absolute",
                   zIndex: 2,
                 }}

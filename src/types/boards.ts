@@ -40,6 +40,28 @@ export interface CatanBoard {
    * strings
    */
   cssGridAreas: string[];
+  /**
+   * If this board grid isn't square, a custom width percentage can be used to
+   * fix the aspect ratio. Defaults to 100%
+   */
+  boardWidthPercentage?: string;
+  /**
+   * If this board grid isn't square, a custom height percentage can be used to
+   * fix the aspect ratio. Defaults to 100%
+   */
+  boardHeightPercentage?: string;
+  /**
+   * If the aspect ratio of hexes is not exactly the same as in the base game
+   * board, number chits may look squashed. This property can be used to
+   * override the default chit width, which is 35%
+   */
+  numberChitWidthPercentage?: string;
+  /**
+   * If the aspect ratio of hexes is not exactly the same as in the base game
+   * board, number chits may look squashed. This property can be used to
+   * override the default chit height, which is 28%
+   */
+  numberChitHeightPercentage?: string;
 }
 
 export type ExpansionName =
