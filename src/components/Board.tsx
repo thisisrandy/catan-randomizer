@@ -18,6 +18,7 @@ import twelve from "../images/12.png";
 import { HexRecord } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
+import { HEX_HEIGHT, HEX_WIDTH } from "../data/expansions";
 
 const hexNameToImg = {
   pasture: pasture,
@@ -62,6 +63,7 @@ export default function Board({ hexes, board }: Props) {
         padding: 20,
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div
@@ -96,8 +98,8 @@ export default function Board({ hexes, board }: Props) {
               src={hexNameToImg[type]}
               alt={type}
               style={{
-                width: "100%",
-                height: "100%",
+                width: "90%",
+                height: "90%",
                 position: "absolute",
                 zIndex: 1,
               }}
@@ -107,14 +109,8 @@ export default function Board({ hexes, board }: Props) {
                 src={String(numberValToImg[number])}
                 alt={String(number)}
                 style={{
-                  width:
-                    typeof board.numberChitWidthPercentage !== "undefined"
-                      ? board.numberChitWidthPercentage
-                      : "35%",
-                  height:
-                    typeof board.numberChitHeightPercentage !== "undefined"
-                      ? board.numberChitHeightPercentage
-                      : "28%",
+                  width: "35%",
+                  height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
                   position: "absolute",
                   zIndex: 2,
                 }}

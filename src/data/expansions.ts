@@ -1,13 +1,18 @@
 import { Expansions } from "../types/boards";
 
+/** Hex height, in pixels */
+export const HEX_HEIGHT = 215;
+/** Hex width, in pixels */
+export const HEX_WIDTH = 187;
+const SIDE_LENGTH = 107;
+const TRIANGLE_ALTITUDE = (HEX_HEIGHT - SIDE_LENGTH) / 2;
 /**
  * If we split each hex into a top triangle, a middle rectangle, and a bottom
  * triangle, the ratio of of the height of one of the triangles to that of the
- * rectangle, in pixels, is 54/107. This number is slightly more than that to
- * account for unclean edges that create seams between hexes when a smaller
- * value is used.  It will be helpful when constructing grid templates
+ * rectangle, in pixels, is 54/107. This number will be helpful when
+ * constructing grid templates
  */
-const SMALL_ROW_SIZE = 0.53;
+const SMALL_ROW_SIZE = TRIANGLE_ALTITUDE / SIDE_LENGTH;
 
 // TODO: add seafarers and anything else that makes sense
 export const EXPANSIONS: Expansions = new Map([
@@ -81,6 +86,11 @@ export const EXPANSIONS: Expansions = new Map([
         "9 / 5 / 12 / 7",
         "9 / 7 / 12 / 9",
       ],
+      boardHeightPercentage: `${
+        ((TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 5) /
+          (HEX_WIDTH * 5)) *
+        100
+      }%`,
     },
   ],
   [
@@ -186,7 +196,11 @@ export const EXPANSIONS: Expansions = new Map([
         "13 / 6 / 16 / 8",
         "13 / 8 / 16 / 10",
       ],
-      numberChitHeightPercentage: "32%",
+      boardWidthPercentage: `${
+        ((HEX_WIDTH * 6) /
+          (TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 7)) *
+        100
+      }%`,
     },
   ],
   [
@@ -247,8 +261,11 @@ export const EXPANSIONS: Expansions = new Map([
         "13 / 4 / 16 / 6",
         "13 / 6 / 16 / 8",
       ],
-      boardWidthPercentage: "55%",
-      numberChitHeightPercentage: "32%",
+      boardWidthPercentage: `${
+        ((HEX_WIDTH * 3.5) /
+          (TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 7)) *
+        100
+      }%`,
     },
   ],
 ]);
