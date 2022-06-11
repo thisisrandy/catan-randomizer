@@ -1,4 +1,4 @@
-import { Expansions } from "../types/boards";
+import { CatanBoard, ExpansionName, Expansions } from "../types/boards";
 
 /** Hex height, in pixels */
 export const HEX_HEIGHT = 215;
@@ -15,7 +15,9 @@ const TRIANGLE_ALTITUDE = (HEX_HEIGHT - SIDE_LENGTH) / 2;
 const SMALL_ROW_SIZE = TRIANGLE_ALTITUDE / SIDE_LENGTH;
 
 // TODO: add seafarers and anything else that makes sense
-export const EXPANSIONS: Expansions = new Map([
+// this won't be properly type checked if we feed it directly to the Map
+// constructor. see https://github.com/microsoft/TypeScript/issues/49500
+const expansions: [ExpansionName, CatanBoard][] = [
   [
     "Catan",
     {
@@ -268,4 +270,5 @@ export const EXPANSIONS: Expansions = new Map([
       }%`,
     },
   ],
-]);
+];
+export const EXPANSIONS: Expansions = new Map(expansions);
