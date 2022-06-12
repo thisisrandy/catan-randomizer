@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Hex, HexType } from "../types/hexes";
+import { Hex } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
@@ -16,11 +16,6 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 
-interface Terrain {
-  type: HexType;
-  fixed: boolean;
-}
-
 /**
  * Shuffle `board` using the provided constraints and set the result using
  * `setHexes`
@@ -31,7 +26,7 @@ function shuffle(
   numericConstraints: NumericConstraints,
   board: CatanBoard
 ) {
-  const terrain: Terrain[] = board.recommendedLayout.map((hex) => ({
+  const terrain = board.recommendedLayout.map((hex) => ({
     type: hex.type,
     fixed: typeof hex.fixed !== "undefined",
   }));
