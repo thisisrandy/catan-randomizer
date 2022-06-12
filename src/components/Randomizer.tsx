@@ -112,17 +112,18 @@ function shuffle(
 
   // and then numbers
   let hexes: Hex[];
-  let numDeserts: number = numbers.reduce(
+  let numNonResourceProducingHexes: number = numbers.reduce(
     (acc, v) => Number(v === 0) + acc,
     0 as number
   );
   numbersTopLoop: while (true) {
     hexes = [];
-    let desertsSeen = 0;
-    // we need to begin by finding any 0 (desert) values and putting them at the
+    let nonResourceProducingHexesSeen = 0;
+    // we need to begin by finding any 0 values and putting them at the
     // beginning of the loop. then, we can avoid accidentally shuffling them
-    // onto a non-desert hex by making our random index choices below at an
-    // offset of the number of deserts not yet encountered
+    // onto a resource-producing hex by making our random index choices below at
+    // an offset of the number of non-resource-producing hexes not yet
+    // encountered
     let zeroSearchOffset = 0,
       zeroIndex;
     while (
@@ -136,14 +137,18 @@ function shuffle(
     }
 
     shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
-      if (terrain[i].type === "desert") {
-        desertsSeen++;
-        // shuffle in the outermost 0 value. e.g. if we have 2 deserts and this
-        // is the first, shuffle in the one at index 1. then, when we encounter
-        // the second desert, we shuffle in index 0
-        [numbers[numDeserts - desertsSeen], numbers[i]] = [
+      if (["desert", "sea"].includes(terrain[i].type)) {
+        nonResourceProducingHexesSeen++;
+        // shuffle in the outermost 0 value. e.g. if we have 2
+        // non-resource-producing hexes and this is the first, shuffle in the
+        // one at index 1. then, when we encounter the second
+        // non-resource-producing hex, we shuffle in index 0
+        [
+          numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
           numbers[i],
-          numbers[numDeserts - desertsSeen],
+        ] = [
+          numbers[i],
+          numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
         ];
         hexes.push({ type: terrain[i].type, number: numbers[i] });
         continue;
@@ -154,7 +159,8 @@ function shuffle(
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle. we need to make sure to skip lefthand indices equal to the
         // number of deserts we haven't yet encountered
-        const offset = numDeserts - desertsSeen;
+        const offset =
+          numNonResourceProducingHexes - nonResourceProducingHexesSeen;
         randomIndex = Math.floor(Math.random() * (i + 1 - offset)) + offset;
         [numbers[i], numbers[randomIndex]] = [numbers[randomIndex], numbers[i]];
 

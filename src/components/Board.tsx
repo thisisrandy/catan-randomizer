@@ -5,6 +5,7 @@ import hills from "../images/hills.png";
 import mountains from "../images/mountains.png";
 import fields from "../images/fields.png";
 import desert from "../images/desert.png";
+import sea from "../images/sea.png";
 import two from "../images/2.png";
 import three from "../images/3.png";
 import four from "../images/4.png";
@@ -27,6 +28,7 @@ const hexNameToImg = {
   mountains: mountains,
   fields: fields,
   desert: desert,
+  sea: sea,
 };
 
 const numberValToImg = [
@@ -46,7 +48,7 @@ const numberValToImg = [
 ];
 
 interface Props {
-  hexes: Hex[]
+  hexes: Hex[];
   board: CatanBoard;
 }
 
