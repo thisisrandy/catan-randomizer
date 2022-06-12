@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Hex, NumberChitValue } from "../types/hexes";
+import { Hex, NumberChitValue, Port } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
@@ -29,12 +29,16 @@ function shuffle(
   const terrain = board.recommendedLayout.map((hex) => ({
     type: hex.type,
     fixed: typeof hex.fixed !== "undefined",
+    port: hex.port,
   }));
   // for some reason the type needs to be forced here. I asked about it at
   // https://stackoverflow.com/q/72589209/12162258
   const numbers = board.recommendedLayout.map((hex) =>
     typeof hex.number === "undefined" ? 0 : hex.number
   ) as (0 | NumberChitValue)[];
+  const ports = board.recommendedLayout
+    .filter(({ port }) => typeof port !== "undefined")
+    .map(({ port }) => (port as Port).type);
 
   let randomIndex;
 
@@ -113,6 +117,18 @@ function shuffle(
     break;
   }
 
+  // then ports. we don't have any port constraints (yet?) so the shuffle is
+  // purely Fisher-Yates
+  let currentIndex = ports.length;
+  while (currentIndex > 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [ports[currentIndex], ports[randomIndex]] = [
+      ports[randomIndex],
+      ports[currentIndex],
+    ];
+  }
+
   // and then numbers
   let hexes: Hex[];
   let numNonResourceProducingHexes: number = numbers.reduce(
@@ -139,6 +155,14 @@ function shuffle(
       zeroSearchOffset++;
     }
 
+    // we are popping from ports below, so in case we bail out of shuffleLoop,
+    // make a copy
+    // IMPORTANT NOTE: here and in several other places, there is an assumption
+    // that sea hexes with ports are fixed. this isn't necessarily true in
+    // Seafarers and will need to be appropriately handled if support for that
+    // expansion is added
+    let portsCopy = ports.slice();
+
     shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
       if (["desert", "sea"].includes(terrain[i].type)) {
         nonResourceProducingHexesSeen++;
@@ -153,7 +177,14 @@ function shuffle(
           numbers[i],
           numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
         ];
-        hexes.push({ type: terrain[i].type });
+
+        // we also need to check if this is a hex with a port. if so, reassign
+        // its type from portsCopy
+        let port = terrain[i].port;
+        if (typeof port !== "undefined") port.type = portsCopy.pop()!;
+
+        hexes.push({ type: terrain[i].type, port });
+
         continue;
       }
 
