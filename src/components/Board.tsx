@@ -16,7 +16,13 @@ import nine from "../images/9.png";
 import ten from "../images/10.png";
 import eleven from "../images/11.png";
 import twelve from "../images/12.png";
-import { Hex } from "../types/hexes";
+import port3to1WithDocks from "../images/port-3-1-with-docks.png";
+import portBrickWithDocks from "../images/port-brick-with-docks.png";
+import portGrainWithDocks from "../images/port-grain-with-docks.png";
+import portOreWithDocks from "../images/port-ore-with-docks.png";
+import portTimberWithDocks from "../images/port-timber-with-docks.png";
+import portWoolWithDocks from "../images/port-wool-with-docks.png";
+import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
@@ -47,10 +53,21 @@ const numberValToImg = [
   twelve,
 ];
 
+const portTypeToImage: { [type in PortType]: string } = {
+  "3:1": port3to1WithDocks,
+  brick: portBrickWithDocks,
+  grain: portGrainWithDocks,
+  ore: portOreWithDocks,
+  timber: portTimberWithDocks,
+  wool: portWoolWithDocks,
+};
+
 interface Props {
   hexes: Hex[];
   board: CatanBoard;
 }
+
+const HEX_SIZE = "90%";
 
 /**
  * `Board` is the display logic for a Catan board
@@ -83,7 +100,7 @@ export default function Board({ hexes, board }: Props) {
           gridTemplateRows: board.cssGridTemplateRows,
         }}
       >
-        {hexes.map(({ type, number }, i) => (
+        {hexes.map(({ type, number, port }, i) => (
           <div
             key={i}
             style={{
@@ -100,8 +117,8 @@ export default function Board({ hexes, board }: Props) {
               src={hexNameToImg[type]}
               alt={type}
               style={{
-                width: "90%",
-                height: "90%",
+                width: HEX_SIZE,
+                height: HEX_SIZE,
                 position: "absolute",
                 zIndex: 1,
               }}
@@ -116,7 +133,20 @@ export default function Board({ hexes, board }: Props) {
                   position: "absolute",
                   zIndex: 2,
                 }}
-              ></img>
+              />
+            )}
+            {port && (
+              <img
+                src={portTypeToImage[port.type]}
+                alt={port.type}
+                style={{
+                  zIndex: 2,
+                  width: HEX_SIZE,
+                  height: HEX_SIZE,
+                  transform: `rotate(${port.orientation}deg)`,
+                  position: "absolute",
+                }}
+              />
             )}
           </div>
         ))}

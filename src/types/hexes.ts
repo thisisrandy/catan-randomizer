@@ -9,6 +9,14 @@ type HexType =
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
 
+type PortType = "3:1" | "ore" | "wool" | "timber" | "brick" | "grain";
+type PortOrientation = 0 | 60 | 120 | 180 | 240 | 300;
+type Port = {
+  type: PortType;
+  /** Measured in degrees from west-facing */
+  orientation: PortOrientation;
+};
+
 type Hex = {
   type: HexType;
   /**
@@ -21,9 +29,21 @@ type Hex = {
    * property
    */
   fixed?: boolean;
+  /**
+   * If this is a sea hex, it can contain a `Port`
+   */
+  port?: Port;
 };
 
 type HexTemplateType = HexType | "empty";
 type HexTemplate = Omit<Hex, "type"> & { type: HexTemplateType };
 
-export type { HexType, Hex, NumberChitValue, HexTemplate };
+export type {
+  HexType,
+  Hex,
+  NumberChitValue,
+  PortType,
+  PortOrientation,
+  Port,
+  HexTemplate,
+};
