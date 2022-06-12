@@ -49,10 +49,7 @@ board configuration you'd like to see made available, please contribute!
 
 Also, my graphic design skills are basic and uncultivated, so if something about
 the aesthetics of the project is cringe-worthy to your much more refined eye,
-please feel free to fix it. In particular, my poorly cropped sea border images
-looked so atrocious that I gave up on the idea. You can see the attempt
-[here](https://github.com/thisisrandy/catan-randomizer/tree/borders) (you'll
-have to run the branch locally to see the result).
+please feel free to fix it.
 
 The codebase is small and follows the general structure of a
 [create-react-app](https://create-react-app.dev/) project, so it should be easy
