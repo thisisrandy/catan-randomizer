@@ -69,8 +69,12 @@ function shuffle(
           terrain[currentIndex],
         ];
 
-        // then check each constraint
-        if (numericConstraints.maxConnectedLikeTerrain.value < 7) {
+        // then check each constraint. note that max connected like terrain
+        // doesn't apply to sea hexes
+        if (
+          numericConstraints.maxConnectedLikeTerrain.value < 7 &&
+          terrain[currentIndex].type !== "sea"
+        ) {
           // accumulate all same type connected hexes using standard
           // breath-first search
           let chainSize = 0,
