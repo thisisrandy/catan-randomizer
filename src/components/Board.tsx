@@ -21,7 +21,7 @@ import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
 
-const hexNameToImg = {
+const hexNameToImg: { [type in HexType]: string } = {
   pasture: pasture,
   forest: forest,
   hills: hills,
