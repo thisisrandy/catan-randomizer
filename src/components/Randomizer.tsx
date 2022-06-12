@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Hex } from "../types/hexes";
+import { Hex, NumberChitValue } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
@@ -30,7 +30,11 @@ function shuffle(
     type: hex.type,
     fixed: typeof hex.fixed !== "undefined",
   }));
-  const numbers = board.recommendedLayout.map((hex) => hex.number);
+  // for some reason the type needs to be forced here. I asked about it at
+  // https://stackoverflow.com/q/72589209/12162258
+  const numbers = board.recommendedLayout.map((hex) =>
+    typeof hex.number === "undefined" ? 0 : hex.number
+  ) as (0 | NumberChitValue)[];
 
   let randomIndex;
 
@@ -145,7 +149,7 @@ function shuffle(
           numbers[i],
           numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
         ];
-        hexes.push({ type: terrain[i].type, number: numbers[i] });
+        hexes.push({ type: terrain[i].type });
         continue;
       }
 
@@ -232,7 +236,12 @@ function shuffle(
 
         // no constraints were violated. make an entry in hexes continue
         // shuffling
-        hexes.push({ type: terrain[i].type, number: numbers[i] });
+        hexes.push({
+          type: terrain[i].type,
+          // NOTE: we know this is a NumberChitValue because we already checked
+          // that it's a resource-producing hex above
+          number: numbers[i] as NumberChitValue,
+        });
         continue shuffleLoop;
       }
 
