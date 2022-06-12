@@ -163,8 +163,12 @@ function shuffle(
     // expansion is added
     let portsCopy = ports.slice();
 
-    shuffleLoop: for (let i = numbers.length - 1; i >= 0; i--) {
-      if (["desert", "sea"].includes(terrain[i].type)) {
+    shuffleLoop: for (
+      let currentIndex = numbers.length - 1;
+      currentIndex >= 0;
+      currentIndex--
+    ) {
+      if (["desert", "sea"].includes(terrain[currentIndex].type)) {
         nonResourceProducingHexesSeen++;
         // shuffle in the outermost 0 value. e.g. if we have 2
         // non-resource-producing hexes and this is the first, shuffle in the
@@ -172,18 +176,18 @@ function shuffle(
         // non-resource-producing hex, we shuffle in index 0
         [
           numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
-          numbers[i],
+          numbers[currentIndex],
         ] = [
-          numbers[i],
+          numbers[currentIndex],
           numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
         ];
 
         // we also need to check if this is a hex with a port. if so, reassign
         // its type from portsCopy
-        let port = terrain[i].port;
+        let port = terrain[currentIndex].port;
         if (typeof port !== "undefined") port.type = portsCopy.pop()!;
 
-        hexes.push({ type: terrain[i].type, port });
+        hexes.push({ type: terrain[currentIndex].type, port });
 
         continue;
       }
@@ -195,18 +199,22 @@ function shuffle(
         // number of deserts we haven't yet encountered
         const offset =
           numNonResourceProducingHexes - nonResourceProducingHexesSeen;
-        randomIndex = Math.floor(Math.random() * (i + 1 - offset)) + offset;
-        [numbers[i], numbers[randomIndex]] = [numbers[randomIndex], numbers[i]];
+        randomIndex =
+          Math.floor(Math.random() * (currentIndex + 1 - offset)) + offset;
+        [numbers[currentIndex], numbers[randomIndex]] = [
+          numbers[randomIndex],
+          numbers[currentIndex],
+        ];
 
         // then check each constraint
 
         // no 6/8 neighbors
         if (
           binaryConstraints.noAdjacentSixEight &&
-          [6, 8].includes(numbers[i])
+          [6, 8].includes(numbers[currentIndex])
         ) {
-          for (const neighbor of board.neighbors[i]) {
-            if (neighbor < i) continue;
+          for (const neighbor of board.neighbors[currentIndex]) {
+            if (neighbor < currentIndex) continue;
             if ([6, 8].includes(numbers[neighbor])) {
               continue tryLoop;
             }
@@ -216,10 +224,10 @@ function shuffle(
         // no 2/12 neighbors
         if (
           binaryConstraints.noAdjacentTwoTwelve &&
-          [2, 12].includes(numbers[i])
+          [2, 12].includes(numbers[currentIndex])
         ) {
-          for (const neighbor of board.neighbors[i]) {
-            if (neighbor < i) continue;
+          for (const neighbor of board.neighbors[currentIndex]) {
+            if (neighbor < currentIndex) continue;
             if ([2, 12].includes(numbers[neighbor])) {
               continue tryLoop;
             }
@@ -228,9 +236,9 @@ function shuffle(
 
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
-          for (const neighbor of board.neighbors[i]) {
-            if (neighbor < i) continue;
-            if (numbers[i] === numbers[neighbor]) {
+          for (const neighbor of board.neighbors[currentIndex]) {
+            if (neighbor < currentIndex) continue;
+            if (numbers[currentIndex] === numbers[neighbor]) {
               continue tryLoop;
             }
           }
@@ -245,8 +253,8 @@ function shuffle(
         // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
         // we simply consider them both, and the one neighbor case is not
         // considered
-        let processedNeighbors = board.neighbors[i]
-          .filter((n) => n > i)
+        let processedNeighbors = board.neighbors[currentIndex]
+          .filter((n) => n > currentIndex)
           // note that javascript sorts lexicographically by default, even for
           // numbers. per
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description,
@@ -254,10 +262,18 @@ function shuffle(
           .sort((a, b) => a - b);
         let intersections: number[][] = [];
         if (processedNeighbors.length === 3) {
-          intersections.push([i, processedNeighbors[0], processedNeighbors[2]]);
-          intersections.push([i, processedNeighbors[1], processedNeighbors[2]]);
+          intersections.push([
+            currentIndex,
+            processedNeighbors[0],
+            processedNeighbors[2],
+          ]);
+          intersections.push([
+            currentIndex,
+            processedNeighbors[1],
+            processedNeighbors[2],
+          ]);
         } else {
-          intersections.push(processedNeighbors.concat(i));
+          intersections.push(processedNeighbors.concat(currentIndex));
         }
         for (const intersection of intersections) {
           let pipCount = intersection
@@ -272,10 +288,10 @@ function shuffle(
         // no constraints were violated. make an entry in hexes continue
         // shuffling
         hexes.push({
-          type: terrain[i].type,
+          type: terrain[currentIndex].type,
           // NOTE: we know this is a NumberChitValue because we already checked
           // that it's a resource-producing hex above
-          number: numbers[i] as NumberChitValue,
+          number: numbers[currentIndex] as NumberChitValue,
         });
         continue shuffleLoop;
       }
