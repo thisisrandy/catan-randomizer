@@ -1,4 +1,48 @@
-import { Hex } from "./hexes";
+import { Hex, HexTemplate } from "./hexes";
+
+/**
+ * A template to simplify the specification of a `CatanBoard`.
+ *
+ * Imagine that we have a hex coordinate system that behaves as follows. If a
+ * given hex has coordinates (r, c), its neighbors are:
+ *
+ * * NW: (r-1, c)
+ * * NE: (r-1, c+1)
+ * * E: (r, c+1)
+ * * SE: (r+1, c)
+ * * SW: (r+1, c-1)
+ * * W: (r, c-1)
+ *
+ * In other words, the row axis is perpendicular to the E/W sides, and the
+ * column axis to the NW/SE side.
+ *
+ * Using empty `HexTemplates` to fill out each row as needed, specify the
+ * board here. For example, in the base game, the board would look as follows,
+ * where t is terrain, s is sea, and e is empty:
+ *
+ * ```
+ * e e e s s s s
+ * e e s t t t s
+ * e s t t t t s
+ * s t t t t t s
+ * s t t t t s
+ * s t t t s
+ * s s s s
+ * ```
+ *
+ * where the actual spatial arrangement looks like
+ *
+ * ```
+ *    s s s s
+ *   s t t t s
+ *  s t t t t s
+ * s t t t t t s
+ *  s t t t t s
+ *   s t t t s
+ *    s s s s
+ * ```
+ */
+export type CatanBoardTemplate = HexTemplate[][];
 
 /**
  * All of the data about a Catan board, including the hexes and number chits

@@ -23,4 +23,7 @@ type Hex = {
   fixed?: boolean;
 };
 
-export type { HexType, Hex, NumberChitValue };
+type HexTemplateType = HexType | "empty";
+type HexTemplate = Omit<Hex, "type"> & { type: HexTemplateType };
+
+export type { HexType, Hex, NumberChitValue, HexTemplate };

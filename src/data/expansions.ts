@@ -1,42 +1,41 @@
-import {
-  HEX_HEIGHT,
-  HEX_WIDTH,
-  SIDE_LENGTH,
-  TRIANGLE_ALTITUDE,
-} from "../constants/imageProperties";
-import { CatanBoard, ExpansionName, Expansions } from "../types/boards";
-
-/**
- * If we split each hex into a top triangle, a middle rectangle, and a bottom
- * triangle, the ratio of of the height of one of the triangles to that of the
- * rectangle, in pixels, is 54/107. This number will be helpful when
- * constructing grid templates
- */
-const SMALL_ROW_SIZE = TRIANGLE_ALTITUDE / SIDE_LENGTH;
+import catanBoardFactory from "../factories/boardFactory";
+import { CatanBoardTemplate, ExpansionName, Expansions } from "../types/boards";
 
 // TODO: add seafarers and anything else that makes sense
 // this won't be properly type checked if we feed it directly to the Map
 // constructor. see https://github.com/microsoft/TypeScript/issues/49500
-const expansions: [ExpansionName, CatanBoard][] = [
+const templates: [ExpansionName, CatanBoardTemplate][] = [
   [
     "Catan",
-    {
-      recommendedLayout: [
+    [
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "mountains", number: 10 },
         { type: "pasture", number: 2 },
         { type: "forest", number: 9 },
         { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "fields", number: 12 },
         { type: "hills", number: 6 },
         { type: "pasture", number: 4 },
         { type: "hills", number: 10 },
         { type: "sea", fixed: true },
+      ],
+      [
         { type: "sea", fixed: true },
         { type: "fields", number: 9 },
         { type: "forest", number: 11 },
@@ -44,285 +43,157 @@ const expansions: [ExpansionName, CatanBoard][] = [
         { type: "forest", number: 3 },
         { type: "mountains", number: 8 },
         { type: "sea", fixed: true },
+      ],
+      [
         { type: "sea", fixed: true },
         { type: "forest", number: 8 },
         { type: "mountains", number: 3 },
         { type: "fields", number: 4 },
         { type: "pasture", number: 5 },
         { type: "sea", fixed: true },
+      ],
+      [
         { type: "sea", fixed: true },
         { type: "hills", number: 5 },
         { type: "fields", number: 6 },
         { type: "pasture", number: 11 },
         { type: "sea", fixed: true },
+      ],
+      [
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
-      neighbors: [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [6, 10, 11],
-        [5, 7, 11, 12],
-        [6, 12, 13],
-        [],
-        [],
-        [5, 11, 16, 17],
-        [5, 6, 10, 12, 17, 18],
-        [6, 7, 11, 13, 18, 19],
-        [7, 12, 19, 20],
-        [],
-        [],
-        [10, 17, 23],
-        [10, 11, 16, 18, 23, 24],
-        [11, 12, 17, 19, 24, 25],
-        [12, 13, 18, 20, 25, 26],
-        [13, 19, 26],
-        [],
-        [],
-        [16, 17, 24, 29],
-        [17, 18, 23, 25, 29, 30],
-        [18, 19, 24, 26, 30, 31],
-        [19, 20, 25, 31],
-        [],
-        [],
-        [23, 24, 30],
-        [24, 25, 29, 31],
-        [25, 26, 30],
-        [],
-        [],
-        [],
-        [],
-        [],
-      ],
-      cssGridTemplateColumns: "repeat(14, 1fr)",
-      cssGridTemplateRows: `${SMALL_ROW_SIZE}fr 1fr `
-        .repeat(7)
-        .concat(`${SMALL_ROW_SIZE}fr`),
-      cssGridAreas: [
-        "1 / 4 / 4 / 6",
-        "1 / 6 / 4 / 8",
-        "1 / 8 / 4 / 10",
-        "1 / 10 / 4 / 12",
-        "3 / 3 / 6 / 5",
-        "3 / 5 / 6 / 7",
-        "3 / 7 / 6 / 9",
-        "3 / 9 / 6 / 11",
-        "3 / 11 / 6 / 13",
-        "5 / 2 / 8 / 4",
-        "5 / 4 / 8 / 6",
-        "5 / 6 / 8 / 8",
-        "5 / 8 / 8 / 10",
-        "5 / 10 / 8 / 12",
-        "5 / 12 / 8 / 14",
-        "7 / 1 / 10 / 3",
-        "7 / 3 / 10 / 5",
-        "7 / 5 / 10 / 7",
-        "7 / 7 / 10 / 9",
-        "7 / 9 / 10 / 11",
-        "7 / 11 / 10 / 13",
-        "7 / 13 / 10 / 15",
-        "9 / 2 / 12 / 4",
-        "9 / 4 / 12 / 6",
-        "9 / 6 / 12 / 8",
-        "9 / 8 / 12 / 10",
-        "9 / 10 / 12 / 12",
-        "9 / 12 / 12 / 14",
-        "11 / 3 / 14 / 5",
-        "11 / 5 / 14 / 7",
-        "11 / 7 / 14 / 9",
-        "11 / 9 / 14 / 11",
-        "11 / 11 / 14 / 13",
-        "13 / 4 / 16 / 6",
-        "13 / 6 / 16 / 8",
-        "13 / 8 / 16 / 10",
-        "13 / 10 / 16 / 12",
-      ],
-      boardHeightPercentage: `${
-        ((TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 5) /
-          (HEX_WIDTH * 5)) *
-        100
-      }%`,
-    },
+    ],
   ],
   [
     "Catan: 5-6 Player Extension",
-    {
-      recommendedLayout: [
+    [
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true },
         { type: "forest", number: 4 },
         { type: "pasture", number: 5 },
         { type: "fields", number: 2 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true },
         { type: "hills", number: 6 },
         { type: "mountains", number: 11 },
         { type: "hills", number: 10 },
         { type: "pasture", number: 8 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
+        { type: "sea", fixed: true },
         { type: "desert" },
         { type: "forest", number: 12 },
         { type: "fields", number: 12 },
         { type: "forest", number: 9 },
         { type: "fields", number: 4 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
         { type: "fields", number: 3 },
         { type: "forest", number: 10 },
         { type: "mountains", number: 3 },
         { type: "hills", number: 6 },
         { type: "hills", number: 5 },
         { type: "forest", number: 8 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
         { type: "pasture", number: 9 },
         { type: "mountains", number: 5 },
         { type: "fields", number: 2 },
         { type: "desert" },
         { type: "pasture", number: 3 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
         { type: "hills", number: 8 },
         { type: "pasture", number: 4 },
         { type: "pasture", number: 9 },
         { type: "mountains", number: 6 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
         { type: "mountains", number: 11 },
         { type: "fields", number: 11 },
         { type: "forest", number: 10 },
+        { type: "sea", fixed: true },
       ],
-      neighbors: [
-        [1, 3, 4],
-        [0, 2, 4, 5],
-        [1, 5, 6],
-        [0, 4, 7, 8],
-        [0, 1, 3, 5, 8, 9], // 4
-        [1, 2, 4, 6, 9, 10],
-        [2, 5, 10, 11],
-        [3, 8, 12, 13],
-        [3, 4, 7, 9, 13, 14], // 8
-        [4, 5, 8, 10, 14, 15],
-        [5, 6, 9, 11, 15, 16],
-        [6, 10, 16, 17],
-        [7, 13, 18], // 12
-        [7, 8, 12, 14, 18, 19],
-        [8, 9, 13, 15, 19, 20],
-        [9, 10, 14, 16, 20, 21],
-        [10, 11, 15, 17, 21, 22], // 16
-        [11, 16, 22],
-        [12, 13, 19, 23],
-        [13, 14, 18, 20, 23, 24],
-        [14, 15, 19, 21, 24, 25], // 20
-        [15, 16, 20, 22, 25, 26],
-        [17, 17, 21, 26],
-        [18, 19, 24, 27],
-        [19, 20, 23, 25, 27, 28], // 24
-        [20, 21, 24, 26, 28, 29],
-        [21, 22, 25, 29],
-        [23, 24, 28],
-        [24, 25, 27, 29], // 28
-        [25, 26, 28],
+      [
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
       ],
-      cssGridTemplateColumns: "repeat(12, 1fr)",
-      cssGridTemplateRows: `${SMALL_ROW_SIZE}fr 1fr `
-        .repeat(7)
-        .concat(`${SMALL_ROW_SIZE}fr`),
-      cssGridAreas: [
-        "1 / 4 / 4 / 6",
-        "1 / 6 / 4 / 8",
-        "1 / 8 / 4 / 10",
-        "3 / 3 / 6 / 5",
-        "3 / 5 / 6 / 7",
-        "3 / 7 / 6 / 9",
-        "3 / 9 / 6 / 11",
-        "5 / 2 / 8 / 4",
-        "5 / 4 / 8 / 6",
-        "5 / 6 / 8 / 8",
-        "5 / 8 / 8 / 10",
-        "5 / 10 / 8 / 12",
-        "7 / 1 / 10 / 3",
-        "7 / 3 / 10 / 5",
-        "7 / 5 / 10 / 7",
-        "7 / 7 / 10 / 9",
-        "7 / 9 / 10 / 11",
-        "7 / 11 / 10 / 13",
-        "9 / 2 / 12 / 4",
-        "9 / 4 / 12 / 6",
-        "9 / 6 / 12 / 8",
-        "9 / 8 / 12 / 10",
-        "9 / 10 / 12 / 12",
-        "11 / 3 / 14 / 5",
-        "11 / 5 / 14 / 7",
-        "11 / 7 / 14 / 9",
-        "11 / 9 / 14 / 11",
-        "13 / 4 / 16 / 6",
-        "13 / 6 / 16 / 8",
-        "13 / 8 / 16 / 10",
-      ],
-      boardWidthPercentage: `${
-        ((HEX_WIDTH * 6) /
-          (TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 7)) *
-        100
-      }%`,
-    },
+    ],
   ],
   [
     "Explorers & Pirates",
-    {
-      recommendedLayout: [
+    [
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "mountains", number: 11 },
         { type: "forest", number: 9 },
+      ],
+      [
+        { type: "empty" },
+        { type: "empty" },
         { type: "fields", number: 3 },
         { type: "pasture", number: 8 },
+      ],
+      [
+        { type: "empty" },
         { type: "hills", number: 4 },
         { type: "pasture", number: 10 },
+      ],
+      [
         { type: "pasture", number: 6, fixed: true },
         { type: "mountains", number: 12 },
         { type: "forest", number: 8 },
+      ],
+      [
         { type: "fields", number: 10 },
         { type: "pasture", number: 4 },
+      ],
+      [
         { type: "forest", number: 11 },
         { type: "hills", number: 6 },
+      ],
+      [
         { type: "mountains", number: 3 },
         { type: "forest", number: 5 },
       ],
-      neighbors: [
-        [1, 2, 3],
-        [0, 3],
-        [0, 3, 4, 5],
-        [0, 1, 2, 5],
-        [2, 5, 6, 7],
-        [2, 3, 4, 7, 8],
-        [4, 7, 9],
-        [4, 5, 6, 8, 9, 10],
-        [5, 7, 10],
-        [6, 7, 10, 11],
-        [7, 8, 9, 11, 12],
-        [9, 10, 12, 13],
-        [10, 11, 13, 14],
-        [11, 12, 14],
-        [12, 13],
-      ],
-      cssGridTemplateColumns: "repeat(7, 1fr)",
-      cssGridTemplateRows: `${SMALL_ROW_SIZE}fr 1fr `
-        .repeat(7)
-        .concat(`${SMALL_ROW_SIZE}fr`),
-      cssGridAreas: [
-        "1 / 4 / 4 / 6",
-        "1 / 6 / 4 / 8",
-        "3 / 3 / 6 / 5",
-        "3 / 5 / 6 / 7",
-        "5 / 2 / 8 / 4",
-        "5 / 4 / 8 / 6",
-        "7 / 1 / 10 / 3",
-        "7 / 3 / 10 / 5",
-        "7 / 5 / 10 / 7",
-        "9 / 2 / 12 / 4",
-        "9 / 4 / 12 / 6",
-        "11 / 3 / 14 / 5",
-        "11 / 5 / 14 / 7",
-        "13 / 4 / 16 / 6",
-        "13 / 6 / 16 / 8",
-      ],
-      boardWidthPercentage: `${
-        ((HEX_WIDTH * 3.5) /
-          (TRIANGLE_ALTITUDE + (HEX_HEIGHT - TRIANGLE_ALTITUDE) * 7)) *
-        100
-      }%`,
-    },
+    ],
   ],
 ];
-export const EXPANSIONS: Expansions = new Map(expansions);
+
+export const EXPANSIONS: Expansions = new Map(
+  templates.map(([key, val]) => [key, catanBoardFactory(val)])
+);
