@@ -15,7 +15,7 @@ import nine from "../images/9.png";
 import ten from "../images/10.png";
 import eleven from "../images/11.png";
 import twelve from "../images/12.png";
-import { HexRecord } from "../types/hexes";
+import { Hex } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 import { HEX_HEIGHT, HEX_WIDTH } from "../data/expansions";
@@ -46,7 +46,7 @@ const numberValToImg = [
 ];
 
 interface Props {
-  hexes: HexRecord;
+  hexes: Hex[]
   board: CatanBoard;
 }
 

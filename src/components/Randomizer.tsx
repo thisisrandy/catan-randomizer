@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HexRecord, HexType } from "../types/hexes";
+import { Hex, HexType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
@@ -111,7 +111,7 @@ function shuffle(
   }
 
   // and then numbers
-  let hexes: HexRecord;
+  let hexes: Hex[];
   let numDeserts: number = numbers.reduce(
     (acc, v) => Number(v === 0) + acc,
     0 as number
@@ -252,7 +252,7 @@ function shuffle(
   setHexes(hexes.reverse());
 }
 
-type HexSetter = React.Dispatch<React.SetStateAction<HexRecord>>;
+type HexSetter = React.Dispatch<React.SetStateAction<Hex[]>>;
 
 interface Props {
   setHexes: HexSetter;

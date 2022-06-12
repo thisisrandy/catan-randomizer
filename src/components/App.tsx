@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HexRecord } from "../types/hexes";
+import { Hex } from "../types/hexes";
 import Board from "./Board";
 import Randomizer from "./Randomizer";
 import { EXPANSIONS } from "../data/expansions";
@@ -23,7 +23,7 @@ function App() {
     "Catan"
   );
   const [board, setBoard] = useState<CatanBoard>(EXPANSIONS.get(expansion)!);
-  const [hexes, setHexes] = useState<HexRecord>(board.recommendedLayout);
+  const [hexes, setHexes] = useState<Hex[]>(board.recommendedLayout);
 
   useEffect(() => {
     const board = EXPANSIONS.get(expansion)!;

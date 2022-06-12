@@ -1,4 +1,4 @@
-import { HexRecord } from "./hexes";
+import { Hex } from "./hexes";
 
 /**
  * All of the data about a Catan board, including the hexes and number chits
@@ -16,10 +16,10 @@ import { HexRecord } from "./hexes";
  */
 export interface CatanBoard {
   /**
-   * A `HexRecord` corresponding to the recommended board layout per the game
-   * manual
+   * An array of `Hex`s corresponding to the recommended board layout per the
+   * game manual
    */
-  recommendedLayout: HexRecord;
+  recommendedLayout: Hex[];
   /**
    * An array of the indices of neighboring hexes.
    */

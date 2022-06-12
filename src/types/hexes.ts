@@ -6,7 +6,7 @@ type HexType =
   | "fields"
   | "desert";
 
-type HexRecord = {
+type Hex = {
   type: HexType;
   /**
    * The number chit assigned to this hex. Note that 0 represents the desert
@@ -18,6 +18,6 @@ type HexRecord = {
    * property
    */
   fixed?: boolean;
-}[];
+};
 
-export type { HexType, HexRecord };
+export type { HexType, Hex };
