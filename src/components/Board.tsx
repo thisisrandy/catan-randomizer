@@ -19,7 +19,7 @@ import twelve from "../images/12.png";
 import { Hex } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
-import { HEX_HEIGHT, HEX_WIDTH } from "../data/expansions";
+import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
 
 const hexNameToImg = {
   pasture: pasture,

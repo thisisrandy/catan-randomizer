@@ -1,11 +1,11 @@
+import {
+  HEX_HEIGHT,
+  HEX_WIDTH,
+  SIDE_LENGTH,
+  TRIANGLE_ALTITUDE,
+} from "../constants/imageProperties";
 import { CatanBoard, ExpansionName, Expansions } from "../types/boards";
 
-/** Hex height, in pixels */
-export const HEX_HEIGHT = 215;
-/** Hex width, in pixels */
-export const HEX_WIDTH = 187;
-const SIDE_LENGTH = 107;
-const TRIANGLE_ALTITUDE = (HEX_HEIGHT - SIDE_LENGTH) / 2;
 /**
  * If we split each hex into a top triangle, a middle rectangle, and a bottom
  * triangle, the ratio of of the height of one of the triangles to that of the
