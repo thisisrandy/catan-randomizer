@@ -113,12 +113,12 @@ export default function catanBoardFactory(
   else if (height > width) boardWidthPercentage = `${(width / height) * 100}%`;
 
   return {
-    recommendedLayout: recommendedLayout,
-    neighbors: neighbors,
-    cssGridTemplateColumns: cssGridTemplateColumns,
-    cssGridTemplateRows: cssGridTemplateRows,
-    cssGridAreas: cssGridAreas,
-    boardHeightPercentage: boardHeightPercentage,
-    boardWidthPercentage: boardWidthPercentage,
+    recommendedLayout,
+    neighbors,
+    cssGridTemplateColumns,
+    cssGridTemplateRows,
+    cssGridAreas,
+    boardHeightPercentage,
+    boardWidthPercentage,
   };
 }
