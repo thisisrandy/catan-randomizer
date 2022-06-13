@@ -64,34 +64,43 @@ export default function catanBoardFactory(
 
   // for rows, starting at one, we skip two grid rows for every hex row. row
   // span is 3.
+  //
   // for columns, we count the number of leading empties and use that + 1 as our
-  // start. once we've encountered a row with no empties (there can only be
-  // one), we start tracking the offset from that row, which we add to start.
-  // column span is 2.
+  // start. once we've encountered a row with no empties (due to the way the
+  // coordinate system is specified, this is the [weakly] most left-extending
+  // row, and there can be no further empties once it is encountered), we start
+  // tracking the offset from that row, which we add to start. column span is 2.
+  //
   // it's useful to do this before setting the column template since we can
   // track the max column seen
   const cssGridAreas: string[] = [];
-  let widestRow = undefined;
+  let mostLeftExtendingRow = undefined;
   let maxColumn = 0;
   for (let row = 0; row < template.length; row++) {
     const cssRow = 1 + row * 2;
     let cssCol = 1;
-    if (typeof widestRow !== "undefined") cssCol += row - widestRow;
+    if (typeof mostLeftExtendingRow !== "undefined")
+      cssCol += row - mostLeftExtendingRow;
     for (let col = 0; col < template[row].length; col++) {
       if (template[row][col].type === "empty") {
         cssCol++;
         continue;
       }
-      if (cssCol === 1 && typeof widestRow === "undefined") widestRow = row;
+      // we didn't find any leading empties, so, presuming the template was
+      // correctly specified, this is by definition the most left-extending row
+      if (cssCol === 1 && typeof mostLeftExtendingRow === "undefined")
+        mostLeftExtendingRow = row;
       cssGridAreas.push(
         `${cssRow} / ${cssCol} / ${cssRow + 3} / ${cssCol + 2}`
       );
       cssCol += 2;
-      // grid-row-end is exclusive, so subtract 1
+      // grid-(row|column)-end are exclusive, so subtract 1
       maxColumn = Math.max(maxColumn, cssCol - 1);
     }
   }
 
+  // we computed the number of columns in the previous step, so specify that
+  // many here
   const cssGridTemplateColumns = `repeat(${maxColumn}, 1fr)`;
 
   // finally, figure out if we need to adjust width or height by figuring out
