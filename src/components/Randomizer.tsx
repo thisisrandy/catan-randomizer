@@ -327,8 +327,6 @@ interface Props {
  * dialog. These can be arranged in whatever manner the parent component chooses
  */
 export default function Randomizer({ setHexes, board }: Props) {
-  // TODO: add a board history
-
   const [binaryConstraints, setBinaryConstraints] =
     useStateWithLocalStorage<BinaryConstraints>("binaryConstraints", {
       noAdjacentSixEight: true,

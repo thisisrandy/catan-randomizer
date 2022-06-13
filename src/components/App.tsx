@@ -17,6 +17,8 @@ import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 
+// TODO: add a board history
+
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
     "expansion",
