@@ -74,7 +74,7 @@ export default function catanBoardFactory(
   // it's useful to do this before setting the column template since we can
   // track the max column seen
   const cssGridAreas: string[] = [];
-  let mostLeftExtendingRow = undefined;
+  let mostLeftExtendingRow;
   let maxColumn = 0;
   for (let row = 0; row < template.length; row++) {
     const cssRow = 1 + row * 2;
