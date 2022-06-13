@@ -69,6 +69,8 @@ to dive into, but here are a couple of tips:
   [shuffling function](src/components/Randomizer.tsx) should be readily
   modifiable to include such concepts, but they are not currently implemented.
   Note also that hexes are rotated 90˚ in Seafarers.
+- All code and docs are formatted using [Prettier](https://prettier.io/) with
+  default options. Any PRs should be, too.
 
 ## Attribution
 
