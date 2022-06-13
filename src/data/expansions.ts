@@ -2,8 +2,6 @@ import catanBoardFactory from "../factories/boardFactory";
 import { CatanBoardTemplate, ExpansionName, Expansions } from "../types/boards";
 
 // TODO: add seafarers and anything else that makes sense
-// this won't be properly type checked if we feed it directly to the Map
-// constructor. see https://github.com/microsoft/TypeScript/issues/49500
 const templates: [ExpansionName, CatanBoardTemplate][] = [
   [
     "Catan",
