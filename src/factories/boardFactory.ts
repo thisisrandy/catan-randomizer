@@ -2,6 +2,7 @@ import {
   HEX_WIDTH,
   SIDE_LENGTH,
   TRIANGLE_ALTITUDE,
+  TRIANGLE_TO_SIDE_RATIO,
 } from "../constants/imageProperties";
 import { CatanBoard, CatanBoardTemplate } from "../types/boards";
 import { Hex } from "../types/hexes";
@@ -57,10 +58,9 @@ export default function catanBoardFactory(
   }
 
   // a small and large row for each hex followed by a final small at the end
-  const smallRowSize = TRIANGLE_ALTITUDE / SIDE_LENGTH;
-  const cssGridTemplateRows = `${smallRowSize}fr 1fr `
+  const cssGridTemplateRows = `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
     .repeat(template.length)
-    .concat(`${smallRowSize}fr`);
+    .concat(`${TRIANGLE_TO_SIDE_RATIO}fr`);
 
   // for rows, starting at one, we skip two grid rows for every hex row. row
   // span is 3.
