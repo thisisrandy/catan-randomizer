@@ -31,11 +31,12 @@ function shuffle(
     fixed: typeof hex.fixed !== "undefined",
     port: hex.port,
   }));
-  // for some reason the type needs to be forced here. I asked about it at
-  // https://stackoverflow.com/q/72589209/12162258
+  // note the explicit typing of 0 to prevent it from widening to number in
+  // places where it can be reassigned. see
+  // https://stackoverflow.com/a/72597545/12162258
   const numbers = board.recommendedLayout.map((hex) =>
-    typeof hex.number === "undefined" ? 0 : hex.number
-  ) as (0 | NumberChitValue)[];
+    typeof hex.number === "undefined" ? (0 as 0) : hex.number
+  );
   const ports = board.recommendedLayout
     .filter(({ port }) => typeof port !== "undefined")
     .map(({ port }) => (port as Port).type);
