@@ -197,7 +197,7 @@ function shuffle(
       // simply start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle. we need to make sure to skip lefthand indices equal to the
-        // number of deserts we haven't yet encountered
+        // number of non-resource-producing hexes we haven't yet encountered
         const offset =
           numNonResourceProducingHexes - nonResourceProducingHexesSeen;
         randomIndex =
