@@ -143,7 +143,7 @@ export default function Randomizer({ setHexes, board }: Props) {
             justifyContent: "center",
           }}
         >
-          <Tooltip title="Close the dialog">
+          <Tooltip title="Close the dialog" followCursor={true}>
             <Button
               style={{ marginBottom: 10 }}
               variant="contained"
@@ -155,7 +155,10 @@ export default function Randomizer({ setHexes, board }: Props) {
           </Tooltip>
         </DialogActions>
       </Dialog>
-      <Tooltip title="Generate a random board layout subject to the specified constraints">
+      <Tooltip
+        title="Generate a random board layout subject to the specified constraints"
+        followCursor={true}
+      >
         <Button
           variant="contained"
           style={{ margin: 5, padding: 10 }}
@@ -167,7 +170,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           Randomize!
         </Button>
       </Tooltip>
-      <Tooltip title="Open the constraints settings dialog">
+      <Tooltip title="Open the constraints settings dialog" followCursor={true}>
         <IconButton onClick={() => setDialogOpen(true)}>
           <SettingsIcon style={{ margin: 5 }} />
         </IconButton>

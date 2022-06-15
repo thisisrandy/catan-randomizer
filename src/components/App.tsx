@@ -60,7 +60,13 @@ function App() {
             justifyContent: "center",
           }}
         >
-          <Tooltip title="Choose the Catan expansion to use">
+          <Tooltip
+            title={
+              "Choose the Catan expansion to use. The default for each is" +
+              " the recommended beginner setup"
+            }
+            followCursor={true}
+          >
             <Autocomplete
               style={{ margin: 10, marginBottom: 0, width: 300 }}
               disablePortal={true}
@@ -84,7 +90,7 @@ function App() {
             }}
           >
             <Randomizer setHexes={setHexes} board={board} />
-            <Tooltip title="See the code on github.com">
+            <Tooltip title="See the code on github.com" followCursor={true}>
               <IconButton
                 target="_blank"
                 rel="noopener noreferrer"

@@ -18,7 +18,7 @@ export default function BinaryConstraintControl({
   setConstraints,
 }: Props) {
   return (
-    <Tooltip title={toolTip}>
+    <Tooltip title={toolTip} followCursor={true}>
       <FormControlLabel
         control={
           <Checkbox

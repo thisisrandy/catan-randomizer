@@ -26,7 +26,7 @@ export default function NumericConstraintControl({
   setConstraints,
 }: Props) {
   return (
-    <Tooltip title={toolTip}>
+    <Tooltip title={toolTip} followCursor={true}>
       <FormControl
         error={!constraints[constraint].valid}
         style={{ margin: 10 }}
