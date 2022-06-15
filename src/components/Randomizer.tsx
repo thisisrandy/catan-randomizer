@@ -143,15 +143,27 @@ export default function Randomizer({ setHexes, board }: Props) {
             justifyContent: "center",
           }}
         >
-          <Tooltip title="Close the dialog" followCursor={true}>
-            <Button
-              style={{ marginBottom: 10 }}
-              variant="contained"
-              onClick={handleClose}
-              disabled={invalidConstraints}
-            >
-              Close
-            </Button>
+          <Tooltip
+            title={
+              invalidConstraints
+                ? "One or more constraint is invalid. Please fix this before closing the dialog"
+                : "Close the dialog"
+            }
+            followCursor={true}
+          >
+            {/* the span allows the tooltip to still pop up when the button is
+            disabled. see
+            https://mui.com/material-ui/react-tooltip/#disabled-elements */}
+            <span>
+              <Button
+                style={{ marginBottom: 10 }}
+                variant="contained"
+                onClick={handleClose}
+                disabled={invalidConstraints}
+              >
+                Close
+              </Button>
+            </span>
           </Tooltip>
         </DialogActions>
       </Dialog>
