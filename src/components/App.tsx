@@ -50,7 +50,7 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <Board hexes={hexes} board={board} />
+        <Board {...{ hexes, board }} />
         <Paper
           elevation={20}
           style={{
@@ -89,7 +89,7 @@ function App() {
               width: 225,
             }}
           >
-            <Randomizer setHexes={setHexes} board={board} />
+            <Randomizer {...{ setHexes, board }} />
             <Tooltip title="See the code on github.com" followCursor={true}>
               <IconButton
                 target="_blank"
