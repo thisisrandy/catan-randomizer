@@ -84,7 +84,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label={"Allow adjacent 6 & 8"}
               toolTip={
                 "When this box is checked, the numbers 6 & 8 are allowed" +
-                " to appear next to each other."
+                " to appear next to each other"
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
@@ -94,7 +94,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label={"Allow adjacent 2 & 12"}
               toolTip={
                 "When this box is checked, the numbers 2 & 12 are allowed" +
-                " to appear next to each other."
+                " to appear next to each other"
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
@@ -104,7 +104,7 @@ export default function Randomizer({ setHexes, board }: Props) {
               label="Allow adjacent number pairs"
               toolTip={
                 "When this box is checked, pairs of the same number are allowed" +
-                " to appear next to each other."
+                " to appear next to each other"
               }
               constraints={binaryConstraints}
               setConstraints={setBinaryConstraints}
@@ -117,7 +117,7 @@ export default function Randomizer({ setHexes, board }: Props) {
             label="Max connected like terrain"
             toolTip={
               "Control how many terrain hexes of the same type can appear" +
-              " connected. Note that connected can mean in any shape, including a line."
+              " connected. Note that connected can mean in any shape, including a line"
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
@@ -130,7 +130,7 @@ export default function Randomizer({ setHexes, board }: Props) {
             toolTip={
               "Control the upper limit on the sum of the pips surrounding each" +
               " intersection. For example, if this is set to 12, an intersection surrounded" +
-              " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed."
+              " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed"
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
