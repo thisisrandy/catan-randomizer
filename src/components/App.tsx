@@ -11,6 +11,7 @@ import {
   Paper,
   TextField,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import { brown } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
@@ -59,18 +60,20 @@ function App() {
             justifyContent: "center",
           }}
         >
-          <Autocomplete
-            style={{ margin: 10, marginBottom: 0, width: 300 }}
-            disablePortal={true}
-            options={Array.from(EXPANSIONS.keys()).sort()}
-            renderInput={(params) => (
-              <TextField {...params} label="Expansion" />
-            )}
-            value={expansion}
-            onChange={(_, value) => {
-              if (value !== null) setExpansion(value);
-            }}
-          />
+          <Tooltip title="Choose the Catan expansion to use">
+            <Autocomplete
+              style={{ margin: 10, marginBottom: 0, width: 300 }}
+              disablePortal={true}
+              options={Array.from(EXPANSIONS.keys()).sort()}
+              renderInput={(params) => (
+                <TextField {...params} label="Expansion" />
+              )}
+              value={expansion}
+              onChange={(_, value) => {
+                if (value !== null) setExpansion(value);
+              }}
+            />
+          </Tooltip>
           <div
             style={{
               display: "flex",
@@ -81,13 +84,15 @@ function App() {
             }}
           >
             <Randomizer setHexes={setHexes} board={board} />
-            <IconButton
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/thisisrandy/catan-randomizer"
-            >
-              <GitHub style={{ margin: 5 }} />
-            </IconButton>
+            <Tooltip title="See the code on github.com">
+              <IconButton
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/thisisrandy/catan-randomizer"
+              >
+                <GitHub style={{ margin: 5 }} />
+              </IconButton>
+            </Tooltip>
           </div>
         </Paper>
       </div>

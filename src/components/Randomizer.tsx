@@ -12,6 +12,7 @@ import {
   DialogActions,
   IconButton,
   FormGroup,
+  Tooltip,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
@@ -142,29 +143,35 @@ export default function Randomizer({ setHexes, board }: Props) {
             justifyContent: "center",
           }}
         >
-          <Button
-            style={{ marginBottom: 10 }}
-            variant="contained"
-            onClick={handleClose}
-            disabled={invalidConstraints}
-          >
-            Close
-          </Button>
+          <Tooltip title="Close the dialog">
+            <Button
+              style={{ marginBottom: 10 }}
+              variant="contained"
+              onClick={handleClose}
+              disabled={invalidConstraints}
+            >
+              Close
+            </Button>
+          </Tooltip>
         </DialogActions>
       </Dialog>
-      <Button
-        variant="contained"
-        style={{ margin: 5, padding: 10 }}
-        onClick={() =>
-          setHexes(shuffle(board, binaryConstraints, numericConstraints))
-        }
-        disabled={invalidConstraints}
-      >
-        Randomize!
-      </Button>
-      <IconButton onClick={() => setDialogOpen(true)}>
-        <SettingsIcon style={{ margin: 5 }} />
-      </IconButton>
+      <Tooltip title="Generate a random board layout subject to the specified constraints">
+        <Button
+          variant="contained"
+          style={{ margin: 5, padding: 10 }}
+          onClick={() =>
+            setHexes(shuffle(board, binaryConstraints, numericConstraints))
+          }
+          disabled={invalidConstraints}
+        >
+          Randomize!
+        </Button>
+      </Tooltip>
+      <Tooltip title="Open the constraints settings dialog">
+        <IconButton onClick={() => setDialogOpen(true)}>
+          <SettingsIcon style={{ margin: 5 }} />
+        </IconButton>
+      </Tooltip>
     </>
   );
 }
