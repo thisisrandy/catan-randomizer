@@ -102,9 +102,9 @@ function getShuffledTerrain(
           // accumulate all same type connected hexes using standard
           // breath-first search
           let chainSize = 0,
-            seen = new Set(),
-            stack = [currentIndex],
             hex: number;
+          const seen = new Set(),
+            stack = [currentIndex];
           while (stack.length > 0) {
             hex = stack.pop()!;
             if (seen.has(hex)) continue;
@@ -179,7 +179,7 @@ function getShuffledNumbers(
   );
   let randomIndex;
 
-  let numNonResourceProducingHexes: number = numbers.reduce(
+  const numNonResourceProducingHexes: number = numbers.reduce(
     (acc, v) => Number(v === 0) + acc,
     0 as number
   );
@@ -285,14 +285,14 @@ function getShuffledNumbers(
         // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
         // we simply consider them both, and the one neighbor case is not
         // considered
-        let processedNeighbors = board.neighbors[currentIndex]
-          .filter((n) => n > currentIndex)
-          // note that javascript sorts lexicographically by default, even for
-          // numbers. per
-          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description,
-          // this is the preferred way to sort numbers
-          .sort((a, b) => a - b);
-        let intersections: number[][] = [];
+        const processedNeighbors = board.neighbors[currentIndex]
+            .filter((n) => n > currentIndex)
+            // note that javascript sorts lexicographically by default, even for
+            // numbers. per
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description,
+            // this is the preferred way to sort numbers
+            .sort((a, b) => a - b),
+          intersections: number[][] = [];
         if (processedNeighbors.length === 3) {
           intersections.push([
             currentIndex,
@@ -308,7 +308,7 @@ function getShuffledNumbers(
           intersections.push(processedNeighbors.concat(currentIndex));
         }
         for (const intersection of intersections) {
-          let pipCount = intersection
+          const pipCount = intersection
             .map((i) => 6 - Math.abs(7 - numbers[i]))
             .reduce((acc, n) => acc + n, 0 as number);
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
