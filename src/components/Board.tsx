@@ -101,6 +101,8 @@ export default function Board({ hexes, board }: Props) {
         }}
       >
         {hexes.map(({ type, number, port }, i) => (
+          // NOTE: this div fixes display on some older devices. see
+          // https://stackoverflow.com/a/67527395/12162258
           <div
             key={i}
             style={{
