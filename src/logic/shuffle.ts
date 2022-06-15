@@ -1,6 +1,14 @@
-import { Hex, NumberChitValue, Port } from "../types/hexes";
+import { Hex, HexType, NumberChitValue, Port, PortType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
+
+interface Terrain {
+  type: HexType;
+  fixed: boolean;
+  port: Port | undefined;
+}
+
+type Number = NumberChitValue | 0;
 
 /**
  * Shuffle `board` using the provided constraints and set the result using
@@ -11,25 +19,52 @@ export function shuffle(
   binaryConstraints: BinaryConstraints,
   numericConstraints: NumericConstraints
 ): Hex[] {
-  const terrain = board.recommendedLayout.map((hex) => ({
+  // shuffle terrain first
+  const terrain = getShuffledTerrain(board, numericConstraints);
+  // then ports
+  const ports = getShuffledPorts(board);
+  // and finally, numbers, which depends on terrain
+  const numbers = getShuffledNumbers(
+    board,
+    terrain,
+    binaryConstraints,
+    numericConstraints
+  );
+
+  // having shuffled everything, it's time to assemble the board
+  const hexes: Hex[] = [];
+  for (
+    let currentIndex = 0;
+    currentIndex < board.recommendedLayout.length;
+    currentIndex++
+  ) {
+    const hex: Hex = { type: terrain[currentIndex].type };
+    const port = terrain[currentIndex].port;
+    if (typeof port !== "undefined") {
+      port.type = ports.pop()!;
+      hex.port = port;
+    }
+    if (numbers[currentIndex] > 0) {
+      hex.number = numbers[currentIndex] as NumberChitValue;
+    }
+    hexes.push(hex);
+  }
+
+  return hexes;
+}
+
+function getShuffledTerrain(
+  board: CatanBoard,
+  numericConstraints: NumericConstraints
+): Terrain[] {
+  const terrain: Terrain[] = board.recommendedLayout.map((hex) => ({
     type: hex.type,
     fixed: typeof hex.fixed !== "undefined",
     port: hex.port,
   }));
-  // note the explicit typing of 0 to prevent it from widening to number in
-  // places where it can be reassigned. see
-  // https://stackoverflow.com/a/72597545/12162258
-  const numbers = board.recommendedLayout.map((hex) =>
-    typeof hex.number === "undefined" ? (0 as 0) : hex.number
-  );
-  const ports = board.recommendedLayout
-    .filter(({ port }) => typeof port !== "undefined")
-    .map(({ port }) => (port as Port).type);
-
   let randomIndex;
 
-  // shuffle terrain first
-  terrainTopLoop: while (true) {
+  topLoop: while (true) {
     let currentIndex = terrain.length - 1;
 
     shuffleLoop: while (currentIndex >= 0) {
@@ -96,16 +131,29 @@ export function shuffle(
       }
 
       // we failed to find a valid board after exhausing all tries. start over
-      continue terrainTopLoop;
+      continue topLoop;
     }
 
     // we managed to create a valid board. time to move on!
     break;
   }
 
-  // then ports. we don't have any port constraints (yet?) so the shuffle is
-  // purely Fisher-Yates
-  let currentIndex = ports.length;
+  return terrain;
+}
+
+function getShuffledPorts(board: CatanBoard): PortType[] {
+  // IMPORTANT NOTE: here and elsewhere, there is an assumption that sea hexes
+  // with ports are fixed. this isn't necessarily true in Seafarers and will
+  // need to be appropriately handled if support for that expansion is added
+
+  const ports = board.recommendedLayout
+    .filter(({ port }) => typeof port !== "undefined")
+    .map(({ port }) => (port as Port).type);
+
+  // we don't have any port constraints (yet?) so the shuffle is purely
+  // Fisher-Yates
+  let currentIndex = ports.length,
+    randomIndex;
   while (currentIndex > 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
@@ -115,14 +163,28 @@ export function shuffle(
     ];
   }
 
-  // and then numbers
-  let hexes: Hex[];
+  return ports;
+}
+
+function getShuffledNumbers(
+  board: CatanBoard,
+  shuffledTerrain: Terrain[],
+  binaryConstraints: BinaryConstraints,
+  numericConstraints: NumericConstraints
+): Number[] {
+  // note the explicit typing of 0 to prevent it from widening to number in
+  // places where it can be reassigned. see
+  // https://stackoverflow.com/a/72597545/12162258
+  const numbers = board.recommendedLayout.map((hex) =>
+    typeof hex.number === "undefined" ? (0 as 0) : hex.number
+  );
+  let randomIndex;
+
   let numNonResourceProducingHexes: number = numbers.reduce(
     (acc, v) => Number(v === 0) + acc,
     0 as number
   );
-  numbersTopLoop: while (true) {
-    hexes = [];
+  topLoop: while (true) {
     let nonResourceProducingHexesSeen = 0;
     // we need to begin by finding any 0 values and putting them at the
     // beginning of the loop. then, we can avoid accidentally shuffling them
@@ -141,20 +203,12 @@ export function shuffle(
       zeroSearchOffset++;
     }
 
-    // we are popping from ports below, so in case we bail out of shuffleLoop,
-    // make a copy
-    // IMPORTANT NOTE: here and in several other places, there is an assumption
-    // that sea hexes with ports are fixed. this isn't necessarily true in
-    // Seafarers and will need to be appropriately handled if support for that
-    // expansion is added
-    let portsCopy = ports.slice();
-
     shuffleLoop: for (
       let currentIndex = numbers.length - 1;
       currentIndex >= 0;
       currentIndex--
     ) {
-      if (["desert", "sea"].includes(terrain[currentIndex].type)) {
+      if (["desert", "sea"].includes(shuffledTerrain[currentIndex].type)) {
         nonResourceProducingHexesSeen++;
         // shuffle in the outermost 0 value. e.g. if we have 2
         // non-resource-producing hexes and this is the first, shuffle in the
@@ -167,13 +221,6 @@ export function shuffle(
           numbers[currentIndex],
           numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
         ];
-
-        // we also need to check if this is a hex with a port. if so, reassign
-        // its type from portsCopy
-        let port = terrain[currentIndex].port;
-        if (typeof port !== "undefined") port.type = portsCopy.pop()!;
-
-        hexes.push({ type: terrain[currentIndex].type, port });
 
         continue;
       }
@@ -271,30 +318,18 @@ export function shuffle(
           }
         }
 
-        // no constraints were violated. make an entry in hexes continue
-        // shuffling
-        hexes.push({
-          type: terrain[currentIndex].type,
-          // NOTE: we know this is a NumberChitValue because we already checked
-          // that it's a resource-producing hex above
-          number: numbers[currentIndex] as NumberChitValue,
-        });
+        // no constraints were violated. continue shuffling
         continue shuffleLoop;
       }
 
       // we failed to find a valid board after exhausting all tries. time to
       // start over from the beginning
-      continue numbersTopLoop;
+      continue topLoop;
     }
 
     // we managed to create a valid board. time to break out of the loop!
     break;
   }
 
-  // we built hexes in reverse, so make sure to reverse it before returning.
-  // while this doesn't really make a difference in the base Catan board due to
-  // its symmetry, e.g. Explorers & Pirates neighbors are not the same in
-  // reverse order, so all of our careful constraint checking could be for
-  // naught
-  return hexes.reverse();
+  return numbers;
 }
