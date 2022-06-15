@@ -117,7 +117,8 @@ export default function Board({ hexes, board }: Props) {
           >
             <img
               src={hexNameToImg[type]}
-              alt={type}
+              alt={`${type} hex at position ${i}. Positions indices run left to
+              right, top to bottom`}
               style={{
                 width: HEX_SIZE,
                 height: HEX_SIZE,
@@ -128,7 +129,7 @@ export default function Board({ hexes, board }: Props) {
             {number && (
               <img
                 src={String(numberValToImg[number])}
-                alt={String(number)}
+                alt={`${number} chit at position ${i}`}
                 style={{
                   width: "35%",
                   height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
@@ -140,7 +141,7 @@ export default function Board({ hexes, board }: Props) {
             {port && (
               <img
                 src={portTypeToImage[port.type]}
-                alt={port.type}
+                alt={`${port.type} port at position ${i}`}
                 style={{
                   zIndex: 2,
                   width: HEX_SIZE,
