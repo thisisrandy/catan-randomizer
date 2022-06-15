@@ -11,8 +11,7 @@ interface Terrain {
 type Number = NumberChitValue | 0;
 
 /**
- * Shuffle `board` using the provided constraints and set the result using
- * `setHexes`
+ * Shuffle `board` using the provided constraints and return the result
  */
 export function shuffle(
   board: CatanBoard,
