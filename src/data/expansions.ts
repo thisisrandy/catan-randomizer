@@ -201,6 +201,76 @@ const templates: [ExpansionName, CatanBoardTemplate][] = [
       ],
     ],
   ],
+  [
+    "Cities & Knights",
+    [
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true, port: { type: "brick", orientation: 240 } },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true, port: { type: "ore", orientation: 300 } },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true },
+        { type: "hills", number: 6 },
+        { type: "mountains", number: 2 },
+        { type: "hills", number: 5 },
+        {
+          type: "sea",
+          fixed: true,
+          port: { type: "timber", orientation: 300 },
+        },
+      ],
+      [
+        { type: "empty" },
+        {
+          type: "sea",
+          fixed: true,
+          port: { type: "3:1", orientation: 180 },
+        },
+        { type: "forest", number: 3 },
+        { type: "mountains", number: 9 },
+        { type: "desert" },
+        { type: "forest", number: 10 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
+        { type: "forest", number: 8 },
+        { type: "fields", number: 4 },
+        { type: "hills", number: 11 },
+        { type: "pasture", number: 3 },
+        { type: "fields", number: 8 },
+        { type: "sea", fixed: true, port: { type: "grain", orientation: 0 } },
+      ],
+      [
+        { type: "sea", fixed: true, port: { type: "wool", orientation: 180 } },
+        { type: "pasture", number: 10 },
+        { type: "fields", number: 5 },
+        { type: "mountains", number: 6 },
+        { type: "pasture", number: 4 },
+        { type: "sea", fixed: true },
+      ],
+      [
+        { type: "sea", fixed: true },
+        { type: "fields", number: 9 },
+        { type: "pasture", number: 12 },
+        { type: "forest", number: 11 },
+        { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
+      ],
+      [
+        { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
+        { type: "sea", fixed: true },
+      ],
+    ],
+  ],
 ];
 
 export const EXPANSIONS: Expansions = new Map(

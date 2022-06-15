@@ -31,15 +31,8 @@ aren't seen elsewhere.
 
 - [Catan](https://www.catan.com/catan)
 - [Catan: 5-6 Player Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
+- [Cities & Knights](https://www.catan.com/cities-knights)
 - [Explorers & Pirates](https://www.catan.com/explorers-pirates)
-
-Note that some expansions, e.g. [Cities &
-Knights](https://www.catan.com/cities-knights), don't differ from
-[Catan](https://www.catan.com/catan) (or the [5-6 Player
-Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)) in
-terms of terrain hexes or number chits. As such, while they aren't explicitly
-listed above or in the [app](https://catan-randomizer.vercel.app/), they are
-implicitly supported.
 
 ## Contributing
 

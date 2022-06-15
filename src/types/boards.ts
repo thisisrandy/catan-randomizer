@@ -99,7 +99,8 @@ export interface CatanBoard {
 export type ExpansionName =
   | "Catan"
   | "Catan: 5-6 Player Extension"
-  | "Explorers & Pirates";
+  | "Explorers & Pirates"
+  | "Cities & Knights";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
