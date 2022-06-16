@@ -63,7 +63,6 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
             // NOTE: this gets automagically shrunk as needed, so what we're
             // actually specifying is closer to max width
             style={{ margin: 10, marginBottom: 0, width: 300 }}
-            disablePortal={true}
             options={Object.keys(savedBoards)}
             renderInput={(params) => (
               <TextField {...params} autoFocus label="Saved Board" />
