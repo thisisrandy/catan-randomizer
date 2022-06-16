@@ -29,12 +29,12 @@ interface Props {
 export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
   const [disabled, setDisabled] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  // FIXME: set this to the most recently saved board
-  const [gameToLoad, setGameToLoad] = useState("");
+  const [gameToLoad, setGameToLoad] = useState<string | null>(null);
+  const [loadDisabled, setLoadDisabled] = useState(true);
 
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
-    const saved = savedBoards[gameToLoad];
+    const saved = savedBoards[gameToLoad!];
     changeExpansion(saved.expansion, saved.hexes);
     handleDialogClose();
   };
@@ -42,6 +42,10 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
   useEffect(() => {
     setDisabled(Object.keys(savedBoards).length === 0);
   }, [savedBoards]);
+
+  useEffect(() => {
+    setLoadDisabled(gameToLoad === null);
+  }, [gameToLoad]);
 
   return (
     <>
@@ -66,7 +70,7 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
             )}
             value={gameToLoad}
             onChange={(_, value) => {
-              if (value !== null) setGameToLoad(value);
+              setGameToLoad(value);
             }}
           />
         </DialogContent>
@@ -78,16 +82,29 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
             marginBottom: 10,
           }}
         >
-          <Tooltip title="Load the selected board">
-            <Button
-              style={{ marginRight: 20 }}
-              variant="contained"
-              onClick={handleLoad}
-            >
-              Load
-            </Button>
+          <Tooltip
+            title={
+              loadDisabled
+                ? "Please select a board to load"
+                : "Load the selected board"
+            }
+            followCursor={true}
+          >
+            <span>
+              <Button
+                style={{ marginRight: 20 }}
+                variant="contained"
+                onClick={handleLoad}
+                disabled={loadDisabled}
+              >
+                Load
+              </Button>
+            </span>
           </Tooltip>
-          <Tooltip title="Close the dialog without loading anything">
+          <Tooltip
+            title="Close the dialog without loading anything"
+            followCursor={true}
+          >
             <Button variant="contained" onClick={handleDialogClose}>
               Cancel
             </Button>
