@@ -17,8 +17,9 @@ import { brown } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
-
-// TODO: add a board history
+import { SavedBoards } from "../types/persistence";
+import BoardSaver from "./BoardSaver";
+import BoardLoader from "./BoardLoader";
 
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
@@ -27,7 +28,16 @@ function App() {
   );
   const [board, setBoard] = useState<CatanBoard>(EXPANSIONS.get(expansion)!);
   const [hexes, setHexes] = useState<Hex[]>(board.recommendedLayout);
+  const [savedBoards, setSavedBoards] = useStateWithLocalStorage<SavedBoards>(
+    "savedBoards",
+    {}
+  );
 
+  // FIXME: with the addition of loading, we will be setting expansion *and*
+  // hexes, so this effect will do useless work that will probably manifest as
+  // jumpy extra drawing. this work should be moved into the onChange function
+  // of the expansion selector. we do, however, want to set the board in all
+  // cases (load + change expansion). might make sense to keep that in an effect
   useEffect(() => {
     const board = EXPANSIONS.get(expansion)!;
     setBoard(board);
@@ -86,10 +96,11 @@ function App() {
               alignItems: "center",
               justifyContent: "space-between",
               padding: 5,
-              width: 225,
             }}
           >
             <Randomizer {...{ setHexes, board }} />
+            <BoardSaver {...{ hexes, expansion, setSavedBoards }} />
+            <BoardLoader {...{ setHexes, setExpansion, savedBoards }} />
             <Tooltip title="See the code on github.com" followCursor={true}>
               <IconButton
                 target="_blank"
