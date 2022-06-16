@@ -14,15 +14,43 @@ export function useStateWithLocalStorage<T>(
   filter: (value: any, index: number, array: any[]) => boolean = () => true
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   if (key in localStorage)
-    initialValue = JSON.parse(localStorage.getItem(key)!);
+    initialValue = JSON.parse(localStorage.getItem(key)!, reviver);
   const [value, setValue] = useState<T>(initialValue);
 
   useEffect(() => {
     localStorage.setItem(
       key,
-      JSON.stringify(Array.isArray(value) ? value.filter(filter) : value)
+      JSON.stringify(
+        Array.isArray(value) ? value.filter(filter) : value,
+        replacer
+      )
     );
   }, [key, filter, value]);
 
   return [value, setValue];
+}
+
+// there is no native support for Map (de)serialization, but it is easily
+// supported via the replacer/reviver functions which can be passed to
+// JSON.stringify/JSON.parse, respectively. stolen shamelessly from
+// https://stackoverflow.com/a/56150320/12162258
+
+function replacer(_: string, value: any) {
+  if (value instanceof Map) {
+    return {
+      dataType: "Map",
+      value: [...value],
+    };
+  } else {
+    return value;
+  }
+}
+
+function reviver(_: string, value: any) {
+  if (typeof value === "object" && value !== null) {
+    if (value.dataType === "Map") {
+      return new Map(value.value);
+    }
+  }
+  return value;
 }
