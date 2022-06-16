@@ -21,6 +21,11 @@ import { SavedBoards } from "../types/persistence";
 import BoardSaver from "./BoardSaver";
 import BoardLoader from "./BoardLoader";
 
+// FIXME: need to reevaluate the use of tooltips throughout the app. they look
+// great when a mouse is being used for all navigation, but they're all kinds of
+// broken otherwise. if there's no consistently good looking solution, it might
+// be best to just get rid of them altogether
+
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
     "expansion",
