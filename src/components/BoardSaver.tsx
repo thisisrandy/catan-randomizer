@@ -8,10 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   IconButton,
-  InputLabel,
-  OutlinedInput,
+  TextField,
   Tooltip,
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
@@ -22,8 +20,6 @@ interface Props {
   setSavedBoards: React.Dispatch<React.SetStateAction<SavedBoards>>;
 }
 
-const saveInputId = "save-board-input";
-const saveInputLabel = "Save as...";
 const saveMinChars = 5;
 
 // TODO: track whether the current board has been saved. if so, grey out the
@@ -71,26 +67,23 @@ export default function BoardSaver({
             justifyContent: "center",
           }}
         >
-          <FormControl style={{ marginTop: 5 }}>
-            <InputLabel htmlFor={saveInputId}>{saveInputLabel}</InputLabel>
-            <OutlinedInput
-              id={saveInputId}
-              label={saveInputLabel}
-              value={saveName}
-              onChange={(e) => {
-                setSaveName(e.target.value);
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleSave();
-                }
-              }}
-              // NOTE: autoFocus recently broke under strict mode. production is
-              // unaffected since strict mode is a development only thing. see
-              // https://github.com/mui/material-ui/issues/33004
-              autoFocus={true}
-            />
-          </FormControl>
+          <TextField
+            style={{ marginTop: 5 }}
+            label={"Save as..."}
+            value={saveName}
+            onChange={(e) => {
+              setSaveName(e.target.value);
+            }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSave();
+              }
+            }}
+            // NOTE: autoFocus recently broke under strict mode. production is
+            // unaffected since strict mode is a development only thing. see
+            // https://github.com/mui/material-ui/issues/33004
+            autoFocus={true}
+          />
         </DialogContent>
         <DialogActions
           style={{
