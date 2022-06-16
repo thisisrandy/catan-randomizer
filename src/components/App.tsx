@@ -96,7 +96,7 @@ function App() {
                 rel="noopener noreferrer"
                 href="https://github.com/thisisrandy/catan-randomizer"
               >
-                <GitHub style={{ margin: 5 }} />
+                <GitHub />
               </IconButton>
             </Tooltip>
           </div>

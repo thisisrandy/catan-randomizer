@@ -184,7 +184,7 @@ export default function Randomizer({ setHexes, board }: Props) {
       </Tooltip>
       <Tooltip title="Open the constraints settings dialog" followCursor={true}>
         <IconButton onClick={() => setDialogOpen(true)}>
-          <SettingsIcon style={{ margin: 5 }} />
+          <SettingsIcon />
         </IconButton>
       </Tooltip>
     </>
