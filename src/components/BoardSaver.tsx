@@ -17,6 +17,7 @@ import { SavedBoards } from "../types/persistence";
 interface Props {
   hexes: Hex[];
   expansion: ExpansionName;
+  savedBoards: SavedBoards;
   setSavedBoards: React.Dispatch<React.SetStateAction<SavedBoards>>;
 }
 
@@ -24,7 +25,6 @@ const saveMinChars = 5;
 
 // TODO: track whether the current board has been saved. if so, grey out the
 // save button and change the tooltip
-// TODO: enforce name uniqueness
 
 /**
  * Component for saving boards to local storage. Counterpart to BoardLoader.
@@ -33,16 +33,11 @@ const saveMinChars = 5;
 export default function BoardSaver({
   hexes,
   expansion,
+  savedBoards,
   setSavedBoards,
 }: Props) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
-  const [saveDisabled, setSaveDisabled] = useState(true);
-
-  useEffect(
-    () => setSaveDisabled(saveName.length < saveMinChars),
-    [setSaveDisabled, saveName]
-  );
 
   const handleDialogClose = () => {
     setDialogOpen(false);
@@ -83,6 +78,14 @@ export default function BoardSaver({
             // unaffected since strict mode is a development only thing. see
             // https://github.com/mui/material-ui/issues/33004
             autoFocus={true}
+            helperText={
+              saveName.length < saveMinChars
+                ? `${saveMinChars - saveName.length} characters to go...`
+                : saveName in savedBoards
+                ? "That name is already in use"
+                : "Looks good!"
+            }
+            error={saveName in savedBoards}
           />
         </DialogContent>
         <DialogActions
@@ -93,18 +96,13 @@ export default function BoardSaver({
             marginBottom: 10,
           }}
         >
-          <Tooltip
-            title={
-              saveDisabled
-                ? `Save name must be at least ${saveMinChars} characters long`
-                : "Save the board on this device"
-            }
-            followCursor={true}
-          >
+          <Tooltip title={"Save the board on this device"} followCursor={true}>
             <span>
               <Button
                 variant="contained"
-                disabled={saveDisabled}
+                disabled={
+                  saveName.length < saveMinChars || saveName in savedBoards
+                }
                 onClick={handleSave}
                 style={{ marginRight: 20 }}
               >

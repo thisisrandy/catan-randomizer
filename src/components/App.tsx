@@ -104,7 +104,9 @@ function App() {
             }}
           >
             <Randomizer {...{ setHexes, board }} />
-            <BoardSaver {...{ hexes, expansion, setSavedBoards }} />
+            <BoardSaver
+              {...{ hexes, expansion, savedBoards, setSavedBoards }}
+            />
             <BoardLoader {...{ savedBoards, changeExpansion }} />
             <Tooltip title="See the code on github.com" followCursor={true}>
               <IconButton
