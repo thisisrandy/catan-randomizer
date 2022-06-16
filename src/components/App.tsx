@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Hex } from "../types/hexes";
 import Board from "./Board";
 import Randomizer from "./Randomizer";
@@ -33,16 +33,16 @@ function App() {
     {}
   );
 
-  // FIXME: with the addition of loading, we will be setting expansion *and*
-  // hexes, so this effect will do useless work that will probably manifest as
-  // jumpy extra drawing. this work should be moved into the onChange function
-  // of the expansion selector. we do, however, want to set the board in all
-  // cases (load + change expansion). might make sense to keep that in an effect
-  useEffect(() => {
+  /**
+   * When the expansion is changed, state must be updated in the right order.
+   * This is a simple helper to ensure that ordering
+   */
+  const changeExpansion = (expansion: ExpansionName, hexes?: Hex[]) => {
+    setExpansion(expansion);
     const board = EXPANSIONS.get(expansion)!;
     setBoard(board);
-    setHexes(board.recommendedLayout);
-  }, [setBoard, expansion, setHexes]);
+    setHexes(typeof hexes === "undefined" ? board.recommendedLayout : hexes);
+  };
 
   const theme = unstable_createMuiStrictModeTheme({
     palette: { mode: "dark", primary: brown },
@@ -86,7 +86,7 @@ function App() {
               )}
               value={expansion}
               onChange={(_, value) => {
-                if (value !== null) setExpansion(value);
+                if (value !== null) changeExpansion(value);
               }}
             />
           </Tooltip>
@@ -100,7 +100,7 @@ function App() {
           >
             <Randomizer {...{ setHexes, board }} />
             <BoardSaver {...{ hexes, expansion, setSavedBoards }} />
-            <BoardLoader {...{ setHexes, setExpansion, savedBoards }} />
+            <BoardLoader {...{ savedBoards, changeExpansion }} />
             <Tooltip title="See the code on github.com" followCursor={true}>
               <IconButton
                 target="_blank"

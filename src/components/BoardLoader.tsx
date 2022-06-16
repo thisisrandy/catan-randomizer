@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ExpansionName } from "../types/boards";
 import { Hex } from "../types/hexes";
 import HistoryIcon from "@mui/icons-material/History";
@@ -16,9 +16,8 @@ import {
 import { SavedBoards } from "../types/persistence";
 
 interface Props {
-  setHexes: React.Dispatch<React.SetStateAction<Hex[]>>;
-  setExpansion: React.Dispatch<React.SetStateAction<ExpansionName>>;
   savedBoards: SavedBoards;
+  changeExpansion: (expansion: ExpansionName, hexes?: Hex[]) => void;
 }
 
 // TODO: Add a way to delete games
@@ -27,11 +26,7 @@ interface Props {
  * Component for loading boards from local storage. Counterpart to BoardSaver.
  * Provides a load button and associated dialog.
  */
-export default function BoardLoader({
-  setHexes,
-  setExpansion,
-  savedBoards,
-}: Props) {
+export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
   const [disabled, setDisabled] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   // FIXME: set this to the most recently saved board
@@ -40,8 +35,7 @@ export default function BoardLoader({
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
     const saved = savedBoards[gameToLoad];
-    setExpansion(saved.expansion);
-    setHexes(saved.hexes);
+    changeExpansion(saved.expansion, saved.hexes);
     handleDialogClose();
   };
 
