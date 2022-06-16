@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ExpansionName } from "../types/boards";
 import { Hex } from "../types/hexes";
 import SaveIcon from "@mui/icons-material/Save";
@@ -96,7 +96,7 @@ export default function BoardSaver({
             marginBottom: 10,
           }}
         >
-          <Tooltip title={"Save the board on this device"} followCursor={true}>
+          <Tooltip title={"Save the board on this device"} disableTouchListener>
             <span>
               <Button
                 variant="contained"
@@ -110,14 +110,17 @@ export default function BoardSaver({
               </Button>
             </span>
           </Tooltip>
-          <Tooltip title="Close the dialog without saving">
+          <Tooltip title="Close the dialog without saving" disableTouchListener>
             <Button variant="contained" onClick={handleDialogClose}>
               Cancel
             </Button>
           </Tooltip>
         </DialogActions>
       </Dialog>
-      <Tooltip title="Save the current board configuration" followCursor={true}>
+      <Tooltip
+        title="Save the current board configuration"
+        disableTouchListener
+      >
         <IconButton onClick={() => setDialogOpen(true)}>
           <SaveIcon />
         </IconButton>

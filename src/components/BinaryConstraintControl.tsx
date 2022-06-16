@@ -18,7 +18,7 @@ export default function BinaryConstraintControl({
   setConstraints,
 }: Props) {
   return (
-    <Tooltip title={toolTip} followCursor={true}>
+    <Tooltip title={toolTip} disableTouchListener placement="right">
       <FormControlLabel
         control={
           <Checkbox

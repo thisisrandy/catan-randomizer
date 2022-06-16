@@ -149,7 +149,7 @@ export default function Randomizer({ setHexes, board }: Props) {
                 ? "One or more constraint is invalid. Please fix this before closing the dialog"
                 : "Close the dialog"
             }
-            followCursor={true}
+            disableTouchListener
           >
             {/* the span allows the tooltip to still pop up when the button is
             disabled. see
@@ -169,7 +169,8 @@ export default function Randomizer({ setHexes, board }: Props) {
       </Dialog>
       <Tooltip
         title="Generate a random board layout subject to the specified constraints"
-        followCursor={true}
+        disableTouchListener
+        placement="left"
       >
         <Button
           variant="contained"
@@ -182,7 +183,10 @@ export default function Randomizer({ setHexes, board }: Props) {
           Randomize!
         </Button>
       </Tooltip>
-      <Tooltip title="Open the constraints settings dialog" followCursor={true}>
+      <Tooltip
+        title="Open the constraints settings dialog"
+        disableTouchListener
+      >
         <IconButton onClick={() => setDialogOpen(true)}>
           <SettingsIcon />
         </IconButton>

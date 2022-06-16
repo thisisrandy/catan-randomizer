@@ -20,7 +20,7 @@ export default function NumericConstraintControl({
   setConstraints,
 }: Props) {
   return (
-    <Tooltip title={toolTip} followCursor={true}>
+    <Tooltip title={toolTip} disableTouchListener placement="right">
       <TextField
         style={{ margin: 10 }}
         id={constraint}

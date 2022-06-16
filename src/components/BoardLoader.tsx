@@ -88,7 +88,7 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
                 ? "Please select a board to load"
                 : "Load the selected board"
             }
-            followCursor={true}
+            disableTouchListener
           >
             <span>
               <Button
@@ -103,7 +103,7 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
           </Tooltip>
           <Tooltip
             title="Close the dialog without loading anything"
-            followCursor={true}
+            disableTouchListener
           >
             <Button variant="contained" onClick={handleDialogClose}>
               Cancel
@@ -118,7 +118,7 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
               " nothing to load"
             : "Load a previously saved board configuration"
         }
-        followCursor={true}
+        disableTouchListener
       >
         <span>
           <IconButton disabled={disabled} onClick={() => setDialogOpen(true)}>
