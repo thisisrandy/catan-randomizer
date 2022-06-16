@@ -88,6 +88,7 @@ function App() {
               onChange={(_, value) => {
                 if (value !== null) changeExpansion(value);
               }}
+              autoComplete={true}
             />
           </Tooltip>
           <div
