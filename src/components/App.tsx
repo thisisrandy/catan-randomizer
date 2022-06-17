@@ -13,7 +13,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { brown } from "@mui/material/colors";
+import { blueGrey } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
@@ -45,7 +45,7 @@ function App() {
   };
 
   const theme = unstable_createMuiStrictModeTheme({
-    palette: { mode: "dark", primary: brown },
+    palette: { mode: "dark", primary: blueGrey },
   });
 
   return (
