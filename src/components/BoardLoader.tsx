@@ -301,9 +301,8 @@ export default function BoardLoader({
       <Tooltip
         title={
           disabled
-            ? "No games have been previously saved on this device, so there's" +
-              " nothing to load"
-            : "Load a previously saved board configuration"
+            ? "No boards have been saved on this device"
+            : "Load/share a saved board configuration"
         }
         disableTouchListener
       >
