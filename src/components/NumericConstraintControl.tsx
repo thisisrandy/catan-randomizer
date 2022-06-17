@@ -27,10 +27,13 @@ export default function NumericConstraintControl({
         label={label}
         value={constraints[constraint].value}
         onChange={(e) => {
-          let val = Number(e.target.value);
+          const val = Number(e.target.value);
           setConstraints((c) => ({
             ...c,
-            [constraint]: { value: val, valid: val <= max && val >= min },
+            [constraint]: {
+              value: isNaN(val) ? 0 : val,
+              valid: val <= max && val >= min,
+            },
           }));
         }}
         helperText={
