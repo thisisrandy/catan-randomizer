@@ -119,14 +119,20 @@ export default function BoardLoader({
             }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                autoFocus
-                label="Saved Board"
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && !loadDisabled) handleLoad();
-                }}
-              />
+              <Tooltip
+                title="Start typing to narrow the results"
+                disableTouchListener
+                placement="top"
+              >
+                <TextField
+                  {...params}
+                  autoFocus
+                  label="Saved Board"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter" && !loadDisabled) handleLoad();
+                  }}
+                />
+              </Tooltip>
             )}
             renderOption={(props, option) => {
               return (
@@ -150,9 +156,15 @@ export default function BoardLoader({
                       {`Saved on: ${option.date.toLocaleString()}`}
                     </Typography>
                   </span>
-                  <IconButton onClick={handleConfirmDeletion(option.name)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  <Tooltip
+                    title="Delete this board"
+                    disableTouchListener
+                    placement="right"
+                  >
+                    <IconButton onClick={handleConfirmDeletion(option.name)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
                 </li>
               );
             }}
