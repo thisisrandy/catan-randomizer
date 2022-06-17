@@ -12,8 +12,10 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
+import { getDaysSince } from "../utils";
 
 interface Props {
   savedBoards: SavedBoards;
@@ -58,20 +60,59 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
             justifyContent: "center",
           }}
         >
-          {/* TODO: Add date saved display and sort by date */}
           <Autocomplete
             // FIXME: investigate isOptionEqualToValue to see what mui is
             // complaining about
             // NOTE: this gets automagically shrunk as needed, so what we're
             // actually specifying is closer to max width
             style={{ margin: 10, marginBottom: 0, width: 300 }}
-            options={Object.keys(savedBoards)}
+            options={Object.entries(savedBoards)
+              .map(([name, savedBoard]) => ({ ...savedBoard, name }))
+              .sort((a, b) => {
+                return a.date > b.date ? -1 : a.date < b.date ? 1 : 0;
+              })}
+            groupBy={(option) => {
+              const daysSince = getDaysSince(option.date);
+              if (daysSince === 0) {
+                return "Today";
+              } else if (daysSince === 1) {
+                return "Yesterday";
+              } else if (daysSince <= 7) {
+                return "This week";
+              } else if (daysSince <= 14) {
+                return "Last week";
+              } else {
+                return "Older";
+              }
+            }}
+            getOptionLabel={(option) => option.name}
             renderInput={(params) => (
               <TextField {...params} autoFocus label="Saved Board" />
             )}
-            value={gameToLoad}
+            renderOption={(props, option) => {
+              return (
+                <li
+                  {...props}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Typography>{option.name}</Typography>
+                  <Typography variant="caption">
+                    {`Saved on: ${option.date.toLocaleString()}`}
+                  </Typography>
+                </li>
+              );
+            }}
+            value={
+              gameToLoad
+                ? { ...savedBoards[gameToLoad], name: gameToLoad }
+                : null
+            }
             onChange={(_, value) => {
-              setGameToLoad(value);
+              setGameToLoad(value ? value.name : null);
             }}
             autoComplete
           />
