@@ -34,6 +34,11 @@ aren't seen elsewhere.
 - [Cities & Knights](https://www.catan.com/cities-knights)
 - [Explorers & Pirates](https://www.catan.com/explorers-pirates)
 
+## Other Features
+
+- Save/load boards to/from [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- Generate sharing links for saved boards
+
 ## Contributing
 
 Pull requests are welcome! In particular, I haven't played every expansion and
