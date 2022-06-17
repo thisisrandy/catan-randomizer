@@ -71,7 +71,7 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
             onChange={(_, value) => {
               setGameToLoad(value);
             }}
-            autoComplete={true}
+            autoComplete
           />
         </DialogContent>
         <DialogActions

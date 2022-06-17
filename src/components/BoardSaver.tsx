@@ -77,7 +77,7 @@ export default function BoardSaver({
             // NOTE: autoFocus recently broke under strict mode. production is
             // unaffected since strict mode is a development only thing. see
             // https://github.com/mui/material-ui/issues/33004
-            autoFocus={true}
+            autoFocus
             helperText={
               saveName.length < saveMinChars
                 ? `${saveMinChars - saveName.length} characters to go...`
