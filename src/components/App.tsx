@@ -107,7 +107,7 @@ function App() {
             placement="left"
           >
             <Autocomplete
-              style={{ margin: 10, marginBottom: 0, width: 300 }}
+              style={{ margin: 10, marginBottom: 0, width: "min(90vw, 300px)" }}
               options={Array.from(EXPANSIONS.keys()).sort()}
               renderInput={(params) => (
                 <TextField {...params} label="Expansion" />
@@ -123,7 +123,8 @@ function App() {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "center",
+              flexWrap: "wrap",
               padding: 5,
             }}
           >
