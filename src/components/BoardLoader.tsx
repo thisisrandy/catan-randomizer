@@ -61,8 +61,6 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
           }}
         >
           <Autocomplete
-            // FIXME: investigate isOptionEqualToValue to see what mui is
-            // complaining about
             // NOTE: this gets automagically shrunk as needed, so what we're
             // actually specifying is closer to max width
             style={{ margin: 10, marginBottom: 0, width: 300 }}
@@ -115,6 +113,20 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
               setGameToLoad(value ? value.name : null);
             }}
             autoComplete
+            isOptionEqualToValue={(option, value) => {
+              // it isn't really clear to me why autocomplete needs to check
+              // this, and I don't feel like digging in. suffice to say that
+              // this seems to always be true, but the default seems to be to
+              // use simple equality, which is of course false for object
+              // comparisons (and option/value are both [identical] objects). as
+              // a compromise instead of just returning true, check that their
+              // keys are the same
+              const optKeys = new Set(Object.keys(option));
+              const valKeys = new Set(Object.keys(value));
+              if (optKeys.size !== valKeys.size) return false;
+              for (const k in optKeys) if (!valKeys.has(k)) return false;
+              return true;
+            }}
           />
         </DialogContent>
         <DialogActions
