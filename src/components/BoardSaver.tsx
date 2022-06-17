@@ -11,14 +11,31 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
 
+/**
+ * Input props. Note that BoardSaver doesn't own a lot of its state, because
+ * it's useful to be able to invoke it at the App level when we open a shared
+ * board
+ */
 interface Props {
   hexes: Hex[];
   expansion: ExpansionName;
   savedBoards: SavedBoards;
   setSavedBoards: React.Dispatch<React.SetStateAction<SavedBoards>>;
+  dialogOpen: boolean;
+  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  saveName: string;
+  setSaveName: React.Dispatch<React.SetStateAction<string>>;
+  /**
+   * If there is any additional context as to why the save dialog has been
+   * opened, e.g. because the user used a share link and are now being prompted
+   * to save it, supply it here
+   */
+  context: string | null;
+  setContext: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const saveMinChars = 5;
@@ -32,9 +49,13 @@ export default function BoardSaver({
   expansion,
   savedBoards,
   setSavedBoards,
+  dialogOpen,
+  setDialogOpen,
+  saveName,
+  setSaveName,
+  context,
+  setContext,
 }: Props) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [saveName, setSaveName] = useState("");
   const [okayToSave, setOkayToSave] = useState(false);
 
   useEffect(() => {
@@ -46,6 +67,7 @@ export default function BoardSaver({
   const handleDialogClose = () => {
     setDialogOpen(false);
     setSaveName("");
+    setContext(null);
   };
   const handleSave = () => {
     setSavedBoards((savedBoards) => ({
@@ -59,6 +81,11 @@ export default function BoardSaver({
     <>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Save Board</DialogTitle>
+        {context && (
+          <div style={{ lineHeight: 1, padding: "0px 24px" }}>
+            <Typography variant="caption">{context}</Typography>
+          </div>
+        )}
         <DialogContent
           style={{
             display: "flex",

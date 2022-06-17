@@ -34,6 +34,9 @@ function App() {
     "savedBoards",
     {}
   );
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [saveName, setSaveName] = useState("");
+  const [saveContext, setSaveContext] = useState<string | null>(null);
 
   /**
    * When the expansion is changed, state must be updated in the right order.
@@ -49,7 +52,8 @@ function App() {
     [setExpansion]
   );
 
-  // if this was a share link, parse it, save it to savedBoards, and then load it
+  // if this was a share link, parse and load it, then give the user the
+  // opportunity to save it locally
   useEffect(() => {
     const sharedBoardStr = new URL(document.location.href).searchParams.get(
       SHARED_BOARD_PARAM
@@ -58,11 +62,10 @@ function App() {
       try {
         const [sharedBoardName, sharedBoard]: [keyof SavedBoards, SavedBoard] =
           JSON.parse(sharedBoardStr, reviver);
-        setSavedBoards((savedBoards) => ({
-          ...savedBoards,
-          [sharedBoardName]: sharedBoard,
-        }));
         changeExpansion(sharedBoard.expansion, sharedBoard.hexes);
+        setSaveName(sharedBoardName as string);
+        setSaveContext("You opened a shared board. Would you like to save it?");
+        setSaveDialogOpen(true);
       } catch (error) {
         console.log(
           "Something went wrong trying to parse the savedBoard url param",
@@ -70,7 +73,7 @@ function App() {
         );
       }
     }
-  }, [changeExpansion, setSavedBoards]);
+  }, [changeExpansion]);
 
   const theme = unstable_createMuiStrictModeTheme({
     palette: { mode: "dark", primary: blueGrey },
@@ -130,7 +133,18 @@ function App() {
           >
             <Randomizer {...{ setHexes, board }} />
             <BoardSaver
-              {...{ hexes, expansion, savedBoards, setSavedBoards }}
+              {...{
+                hexes,
+                expansion,
+                savedBoards,
+                setSavedBoards,
+                saveName,
+                setSaveName,
+              }}
+              dialogOpen={saveDialogOpen}
+              setDialogOpen={setSaveDialogOpen}
+              context={saveContext}
+              setContext={setSaveContext}
             />
             <BoardLoader
               {...{ savedBoards, setSavedBoards, changeExpansion }}
