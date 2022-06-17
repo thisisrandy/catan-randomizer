@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ExpansionName } from "../types/boards";
 import { Hex } from "../types/hexes";
 import HistoryIcon from "@mui/icons-material/History";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Autocomplete,
   Button,
@@ -19,16 +20,19 @@ import { getDaysSince } from "../utils";
 
 interface Props {
   savedBoards: SavedBoards;
+  setSavedBoards: React.Dispatch<React.SetStateAction<SavedBoards>>;
   changeExpansion: (expansion: ExpansionName, hexes?: Hex[]) => void;
 }
-
-// TODO: Add a way to delete games
 
 /**
  * Component for loading boards from local storage. Counterpart to BoardSaver.
  * Provides a load button and associated dialog.
  */
-export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
+export default function BoardLoader({
+  savedBoards,
+  setSavedBoards,
+  changeExpansion,
+}: Props) {
   const [disabled, setDisabled] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [gameToLoad, setGameToLoad] = useState<string | null>(null);
@@ -40,6 +44,18 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
     changeExpansion(saved.expansion, saved.hexes);
     handleDialogClose();
   };
+
+  const handleDeleteSavedBoard =
+    (name: keyof SavedBoards) =>
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      setSavedBoards(({ [name]: omitted, ...savedBoards }) => savedBoards);
+      // if we deleted the currently selected game to load, clear gameToLoad
+      setGameToLoad((gameToLoad) => (name === gameToLoad ? null : gameToLoad));
+      // delete buttons are part of the select clickable surface, so the event
+      // will bubble up and select the thing we just deleted, unless we prevent
+      // it from doing so
+      event.stopPropagation();
+    };
 
   useEffect(() => {
     setDisabled(Object.keys(savedBoards).length === 0);
@@ -93,14 +109,25 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
                   {...props}
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <Typography>{option.name}</Typography>
-                  <Typography variant="caption">
-                    {`Saved on: ${option.date.toLocaleString()}`}
-                  </Typography>
+                  <span
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography>{option.name}</Typography>
+                    <Typography variant="caption">
+                      {`Saved on: ${option.date.toLocaleString()}`}
+                    </Typography>
+                  </span>
+                  <IconButton onClick={handleDeleteSavedBoard(option.name)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </li>
               );
             }}

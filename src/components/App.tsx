@@ -103,7 +103,9 @@ function App() {
             <BoardSaver
               {...{ hexes, expansion, savedBoards, setSavedBoards }}
             />
-            <BoardLoader {...{ savedBoards, changeExpansion }} />
+            <BoardLoader
+              {...{ savedBoards, setSavedBoards, changeExpansion }}
+            />
             <Tooltip title="See the code on github.com" disableTouchListener>
               <IconButton
                 target="_blank"
