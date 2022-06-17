@@ -24,6 +24,8 @@ interface Props {
   changeExpansion: (expansion: ExpansionName, hexes?: Hex[]) => void;
 }
 
+// TODO: add an alert confirmation before saved game deletion
+
 /**
  * Component for loading boards from local storage. Counterpart to BoardSaver.
  * Provides a load button and associated dialog.
