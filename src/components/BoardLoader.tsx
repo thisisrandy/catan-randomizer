@@ -60,6 +60,8 @@ export default function BoardLoader({ savedBoards, changeExpansion }: Props) {
         >
           {/* TODO: Add date saved display and sort by date */}
           <Autocomplete
+            // FIXME: investigate isOptionEqualToValue to see what mui is
+            // complaining about
             // NOTE: this gets automagically shrunk as needed, so what we're
             // actually specifying is closer to max width
             style={{ margin: 10, marginBottom: 0, width: 300 }}
