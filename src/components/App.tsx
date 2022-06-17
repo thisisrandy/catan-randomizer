@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Hex } from "../types/hexes";
 import Board from "./Board";
 import Randomizer from "./Randomizer";
@@ -17,9 +17,11 @@ import { blueGrey } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
 import { GitHub } from "@mui/icons-material";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
-import { SavedBoards } from "../types/persistence";
+import { SavedBoard, SavedBoards } from "../types/persistence";
 import BoardSaver from "./BoardSaver";
 import BoardLoader from "./BoardLoader";
+import { reviver } from "../utils/serialization";
+import { SHARED_BOARD_PARAM } from "../constants/sharing";
 
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
@@ -33,19 +35,42 @@ function App() {
     {}
   );
 
-  // TODO: Use react-router useSearchParams to gather shared board params, if
-  // any, save them to savedBoards, and then set that board as active
-
   /**
    * When the expansion is changed, state must be updated in the right order.
    * This is a simple helper to ensure that ordering
    */
-  const changeExpansion = (expansion: ExpansionName, hexes?: Hex[]) => {
-    setExpansion(expansion);
-    const board = EXPANSIONS.get(expansion)!;
-    setBoard(board);
-    setHexes(typeof hexes === "undefined" ? board.recommendedLayout : hexes);
-  };
+  const changeExpansion = useCallback(
+    (expansion: ExpansionName, hexes?: Hex[]) => {
+      setExpansion(expansion);
+      const board = EXPANSIONS.get(expansion)!;
+      setBoard(board);
+      setHexes(typeof hexes === "undefined" ? board.recommendedLayout : hexes);
+    },
+    [setExpansion]
+  );
+
+  // if this was a share link, parse it, save it to savedBoards, and then load it
+  useEffect(() => {
+    const sharedBoardStr = new URL(document.location.href).searchParams.get(
+      SHARED_BOARD_PARAM
+    );
+    if (sharedBoardStr) {
+      try {
+        const [sharedBoardName, sharedBoard]: [keyof SavedBoards, SavedBoard] =
+          JSON.parse(sharedBoardStr, reviver);
+        setSavedBoards((savedBoards) => ({
+          ...savedBoards,
+          [sharedBoardName]: sharedBoard,
+        }));
+        changeExpansion(sharedBoard.expansion, sharedBoard.hexes);
+      } catch (error) {
+        console.log(
+          "Something went wrong trying to parse the savedBoard url param",
+          error
+        );
+      }
+    }
+  }, [changeExpansion, setSavedBoards]);
 
   const theme = unstable_createMuiStrictModeTheme({
     palette: { mode: "dark", primary: blueGrey },
