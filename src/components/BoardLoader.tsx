@@ -17,14 +17,13 @@ import {
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
 import { getDaysSince } from "../utils";
+import DeleteSavedBoardConfirmationAlert from "./DeleteSavedBoardConfirmationAlert";
 
 interface Props {
   savedBoards: SavedBoards;
   setSavedBoards: React.Dispatch<React.SetStateAction<SavedBoards>>;
   changeExpansion: (expansion: ExpansionName, hexes?: Hex[]) => void;
 }
-
-// TODO: add an alert confirmation before saved game deletion
 
 /**
  * Component for loading boards from local storage. Counterpart to BoardSaver.
@@ -39,6 +38,12 @@ export default function BoardLoader({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [gameToLoad, setGameToLoad] = useState<string | null>(null);
   const [loadDisabled, setLoadDisabled] = useState(true);
+  const [boardToDelete, setBoardToDelete] = useState<string | null>(null);
+  const [deletionConfirmationAlertOpen, setDeletionConfirmationAlertOpen] =
+    useState(false);
+  const [handleDeleteSavedBoard, setHandleDeleteSavedBoard] = useState(
+    () => () => {}
+  );
 
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
@@ -47,16 +52,26 @@ export default function BoardLoader({
     handleDialogClose();
   };
 
-  const handleDeleteSavedBoard =
+  const handleConfirmDeletion =
     (name: keyof SavedBoards) =>
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      setSavedBoards(({ [name]: omitted, ...savedBoards }) => savedBoards);
-      // if we deleted the currently selected game to load, clear gameToLoad
-      setGameToLoad((gameToLoad) => (name === gameToLoad ? null : gameToLoad));
       // delete buttons are part of the select clickable surface, so the event
-      // will bubble up and select the thing we just deleted, unless we prevent
-      // it from doing so
+      // will bubble up and select the thing we just selected for deletion,
+      // unless we prevent it from doing so
       event.stopPropagation();
+      // note that, per the docs
+      // (https://www.typescriptlang.org/docs/handbook/2/keyof-types.html),
+      // "JavaScript object keys are always coerced to a string", which is why
+      // name is string | number. a quick cast fixes us right up
+      setBoardToDelete(name as string);
+      setHandleDeleteSavedBoard(() => () => {
+        setSavedBoards(({ [name]: omitted, ...savedBoards }) => savedBoards);
+        // if we deleted the currently selected game to load, clear gameToLoad
+        setGameToLoad((gameToLoad) =>
+          name === gameToLoad ? null : gameToLoad
+        );
+      });
+      setDeletionConfirmationAlertOpen(true);
     };
 
   useEffect(() => {
@@ -69,6 +84,7 @@ export default function BoardLoader({
 
   return (
     <>
+      {/* Dialog */}
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Load Board</DialogTitle>
         <DialogContent
@@ -134,7 +150,7 @@ export default function BoardLoader({
                       {`Saved on: ${option.date.toLocaleString()}`}
                     </Typography>
                   </span>
-                  <IconButton onClick={handleDeleteSavedBoard(option.name)}>
+                  <IconButton onClick={handleConfirmDeletion(option.name)}>
                     <DeleteIcon />
                   </IconButton>
                 </li>
@@ -202,6 +218,16 @@ export default function BoardLoader({
           </Tooltip>
         </DialogActions>
       </Dialog>
+
+      {/* Confirmation dialog */}
+      <DeleteSavedBoardConfirmationAlert
+        open={deletionConfirmationAlertOpen}
+        setOpen={setDeletionConfirmationAlertOpen}
+        boardToDelete={boardToDelete}
+        handleDeleteSavedBoard={handleDeleteSavedBoard}
+      />
+
+      {/* Open dialog button */}
       <Tooltip
         title={
           disabled
