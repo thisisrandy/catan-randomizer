@@ -95,13 +95,13 @@ export default function BoardLoader({
       navigator.clipboard.writeText(url).then(
         () => {
           setShareSnackSeverity("success");
-          setShareSnackMessage("Successfully copied share URL to clipboard!");
+          setShareSnackMessage("Successfully copied share link to clipboard!");
           setShareSnackOpen(true);
         },
         (reason) => {
           setShareSnackSeverity("error");
           setShareSnackMessage(
-            "Something went wrong copying the share URL to" +
+            "Something went wrong copying the share link to" +
               "the clipboard. Check the console for details."
           );
           console.log(reason);
