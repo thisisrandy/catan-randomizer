@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
-import { getDaysSince } from "../utils";
+import { getDaysSince } from "../utils/dates";
 import DeleteSavedBoardConfirmationAlert from "./DeleteBoardConfirmationAlert";
 
 interface Props {
