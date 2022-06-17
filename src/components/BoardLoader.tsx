@@ -153,6 +153,9 @@ export default function BoardLoader({
                   >
                     <Typography>{option.name}</Typography>
                     <Typography variant="caption">
+                      {option.expansion}
+                    </Typography>
+                    <Typography variant="caption">
                       {`Saved on: ${option.date.toLocaleString()}`}
                     </Typography>
                   </span>
