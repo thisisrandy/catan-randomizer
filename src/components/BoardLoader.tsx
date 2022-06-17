@@ -3,6 +3,7 @@ import { ExpansionName } from "../types/boards";
 import { Hex } from "../types/hexes";
 import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ShareIcon from "@mui/icons-material/Share";
 import {
   Autocomplete,
   Button,
@@ -70,6 +71,15 @@ export default function BoardLoader({
         );
       });
       setDeletionConfirmationAlertOpen(true);
+    };
+
+  const handleShare =
+    (name: keyof SavedBoards) =>
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      // as with delete, the first order of business is to prevent the event
+      // from propagating to the select surface
+      event.stopPropagation();
+      // TODO: serialize saved board and copy to clipboard
     };
 
   useEffect(() => {
@@ -157,15 +167,32 @@ export default function BoardLoader({
                       {`Saved on: ${option.date.toLocaleString()}`}
                     </Typography>
                   </span>
-                  <Tooltip
-                    title="Delete this board"
-                    disableTouchListener
-                    placement="right"
+                  <span
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
+                    }}
                   >
-                    <IconButton onClick={handleConfirmDeletion(option.name)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
+                    <Tooltip
+                      title="Share this board"
+                      disableTouchListener
+                      placement="right"
+                    >
+                      <IconButton onClick={handleShare(option.name)}>
+                        <ShareIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      title="Delete this board"
+                      disableTouchListener
+                      placement="right"
+                    >
+                      <IconButton onClick={handleConfirmDeletion(option.name)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </span>
                 </li>
               );
             }}

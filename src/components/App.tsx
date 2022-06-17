@@ -33,6 +33,9 @@ function App() {
     {}
   );
 
+  // TODO: Use react-router useSearchParams to gather shared board params, if
+  // any, save them to savedBoards, and then set that board as active
+
   /**
    * When the expansion is changed, state must be updated in the right order.
    * This is a simple helper to ensure that ordering
