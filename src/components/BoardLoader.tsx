@@ -5,6 +5,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import {
+  Alert,
   Autocomplete,
   Button,
   Dialog,
@@ -12,6 +13,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Snackbar,
   TextField,
   Tooltip,
   Typography,
@@ -19,6 +21,8 @@ import {
 import { SavedBoards } from "../types/persistence";
 import { getDaysSince } from "../utils/dates";
 import DeleteSavedBoardConfirmationAlert from "./DeleteBoardConfirmationAlert";
+import { replacer } from "../utils/serialization";
+import { SHARED_BOARD_PARAM } from "../constants/sharing";
 
 interface Props {
   savedBoards: SavedBoards;
@@ -43,6 +47,11 @@ export default function BoardLoader({
   const [deletionConfirmationAlertOpen, setDeletionConfirmationAlertOpen] =
     useState(false);
   const [handleDeleteBoard, setHandleDeleteBoard] = useState(() => () => {});
+  const [shareSnackOpen, setShareSnackOpen] = useState(false);
+  const [shareSnackSeverity, setShareSnackSeverity] = useState<
+    "success" | "error"
+  >("success");
+  const [shareSnackMessage, setShareSnackMessage] = useState("");
 
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
@@ -79,8 +88,29 @@ export default function BoardLoader({
       // as with delete, the first order of business is to prevent the event
       // from propagating to the select surface
       event.stopPropagation();
-      // TODO: serialize saved board and copy to clipboard
+      const selectedBoard = [name, savedBoards[name]] as const;
+      const url =
+        `${window.location.href.split("?")[0]}?${SHARED_BOARD_PARAM}=` +
+        encodeURIComponent(JSON.stringify(selectedBoard, replacer));
+      navigator.clipboard.writeText(url).then(
+        () => {
+          setShareSnackSeverity("success");
+          setShareSnackMessage("Successfully copied share URL to clipboard!");
+          setShareSnackOpen(true);
+        },
+        (reason) => {
+          setShareSnackSeverity("error");
+          setShareSnackMessage(
+            "Something went wrong copying the share URL to" +
+              "the clipboard. Check the console for details."
+          );
+          console.log(reason);
+          setShareSnackOpen(true);
+        }
+      );
     };
+
+  const handleShareSnackClose = () => setShareSnackOpen(false);
 
   useEffect(() => {
     setDisabled(Object.keys(savedBoards).length === 0);
@@ -283,6 +313,21 @@ export default function BoardLoader({
           </IconButton>
         </span>
       </Tooltip>
+
+      {/* Share snackbar */}
+      <Snackbar
+        open={shareSnackOpen}
+        autoHideDuration={6000}
+        onClose={handleShareSnackClose}
+      >
+        <Alert
+          onClose={handleShareSnackClose}
+          severity={shareSnackSeverity}
+          style={{ width: "100%" }}
+        >
+          {shareSnackMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
