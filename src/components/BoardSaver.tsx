@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ExpansionName } from "../types/boards";
 import { Hex } from "../types/hexes";
 import SaveIcon from "@mui/icons-material/Save";
@@ -38,6 +38,13 @@ export default function BoardSaver({
 }: Props) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
+  const [okayToSave, setOkayToSave] = useState(false);
+
+  useEffect(() => {
+    setOkayToSave(
+      saveName.length >= saveMinChars && !(saveName in savedBoards)
+    );
+  }, [saveName, savedBoards]);
 
   const handleDialogClose = () => {
     setDialogOpen(false);
@@ -70,7 +77,7 @@ export default function BoardSaver({
               setSaveName(e.target.value);
             }}
             onKeyPress={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && okayToSave) {
                 handleSave();
               }
             }}
@@ -100,9 +107,7 @@ export default function BoardSaver({
             <span>
               <Button
                 variant="contained"
-                disabled={
-                  saveName.length < saveMinChars || saveName in savedBoards
-                }
+                disabled={!okayToSave}
                 onClick={handleSave}
                 style={{ marginRight: 20 }}
               >
