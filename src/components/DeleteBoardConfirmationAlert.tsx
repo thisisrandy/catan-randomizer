@@ -13,14 +13,14 @@ interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   boardToDelete: string | null;
-  handleDeleteSavedBoard: () => void;
+  handleDeleteBoard: () => void;
 }
 
-export default function DeleteSavedBoardConfirmationAlert({
+export default function DeleteBoardConfirmationAlert({
   open,
   setOpen,
   boardToDelete,
-  handleDeleteSavedBoard,
+  handleDeleteBoard,
 }: Props) {
   return (
     <Dialog open={open}>
@@ -44,7 +44,7 @@ export default function DeleteSavedBoardConfirmationAlert({
             style={{ marginRight: 20 }}
             variant="contained"
             onClick={() => {
-              handleDeleteSavedBoard();
+              handleDeleteBoard();
               setOpen(false);
             }}
           >

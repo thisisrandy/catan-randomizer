@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { SavedBoards } from "../types/persistence";
 import { getDaysSince } from "../utils";
-import DeleteSavedBoardConfirmationAlert from "./DeleteSavedBoardConfirmationAlert";
+import DeleteSavedBoardConfirmationAlert from "./DeleteBoardConfirmationAlert";
 
 interface Props {
   savedBoards: SavedBoards;
@@ -41,9 +41,7 @@ export default function BoardLoader({
   const [boardToDelete, setBoardToDelete] = useState<string | null>(null);
   const [deletionConfirmationAlertOpen, setDeletionConfirmationAlertOpen] =
     useState(false);
-  const [handleDeleteSavedBoard, setHandleDeleteSavedBoard] = useState(
-    () => () => {}
-  );
+  const [handleDeleteBoard, setHandleDeleteBoard] = useState(() => () => {});
 
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
@@ -64,7 +62,7 @@ export default function BoardLoader({
       // "JavaScript object keys are always coerced to a string", which is why
       // name is string | number. a quick cast fixes us right up
       setBoardToDelete(name as string);
-      setHandleDeleteSavedBoard(() => () => {
+      setHandleDeleteBoard(() => () => {
         setSavedBoards(({ [name]: omitted, ...savedBoards }) => savedBoards);
         // if we deleted the currently selected game to load, clear gameToLoad
         setGameToLoad((gameToLoad) =>
@@ -239,7 +237,7 @@ export default function BoardLoader({
         open={deletionConfirmationAlertOpen}
         setOpen={setDeletionConfirmationAlertOpen}
         boardToDelete={boardToDelete}
-        handleDeleteSavedBoard={handleDeleteSavedBoard}
+        handleDeleteBoard={handleDeleteBoard}
       />
 
       {/* Open dialog button */}
