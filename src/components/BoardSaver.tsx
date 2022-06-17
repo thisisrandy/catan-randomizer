@@ -129,16 +129,14 @@ export default function BoardSaver({
           }}
         >
           <Tooltip title={"Save the board on this device"} disableTouchListener>
-            <span>
-              <Button
-                variant="contained"
-                disabled={!okayToSave}
-                onClick={handleSave}
-                style={{ marginRight: 20 }}
-              >
-                Save
-              </Button>
-            </span>
+            <Button
+              variant="contained"
+              disabled={!okayToSave}
+              onClick={handleSave}
+              style={{ marginRight: 20 }}
+            >
+              Save
+            </Button>
           </Tooltip>
           <Tooltip title="Close the dialog without saving" disableTouchListener>
             <Button variant="contained" onClick={handleDialogClose}>
