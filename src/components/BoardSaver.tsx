@@ -23,9 +23,6 @@ interface Props {
 
 const saveMinChars = 5;
 
-// TODO: track whether the current board has been saved. if so, grey out the
-// save button and change the tooltip
-
 /**
  * Component for saving boards to local storage. Counterpart to BoardLoader.
  * Provides a save button and associated dialog
