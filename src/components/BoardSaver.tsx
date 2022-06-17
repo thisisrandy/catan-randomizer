@@ -117,6 +117,7 @@ export default function BoardSaver({
                 : "Looks good!"
             }
             error={saveName in savedBoards}
+            spellCheck={false}
           />
         </DialogContent>
         <DialogActions
