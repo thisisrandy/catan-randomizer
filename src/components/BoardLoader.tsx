@@ -101,7 +101,14 @@ export default function BoardLoader({
             }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
-              <TextField {...params} autoFocus label="Saved Board" />
+              <TextField
+                {...params}
+                autoFocus
+                label="Saved Board"
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !loadDisabled) handleLoad();
+                }}
+              />
             )}
             renderOption={(props, option) => {
               return (
