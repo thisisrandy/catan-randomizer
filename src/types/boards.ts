@@ -107,7 +107,8 @@ export type ExpansionName =
   | "Catan"
   | "Catan: 5-6 Player Extension"
   | "Explorers & Pirates"
-  | "Cities & Knights";
+  | "Cities & Knights"
+  | "Seafarers: Heading for New Shores 3 Player";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
