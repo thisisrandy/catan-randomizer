@@ -113,7 +113,10 @@ function App() {
               style={{ margin: 10, marginBottom: 0, width: "min(90vw, 300px)" }}
               options={Array.from(EXPANSIONS.keys()).sort()}
               renderInput={(params) => (
-                <TextField {...params} label="Expansion" />
+                <TextField
+                  {...params}
+                  label="Expansion / Extension / Scenario"
+                />
               )}
               value={expansion}
               onChange={(_, value) => {
