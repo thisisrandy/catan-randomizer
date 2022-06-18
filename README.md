@@ -27,12 +27,14 @@ aren't seen elsewhere.
 - Limit on the size of groups of same-type terrain
 - Limit on the total pip count of intersections
 
-## Supported Extensions/Expansions
+## Supported Expansions/Extensions/Scenarios
 
 - [Catan](https://www.catan.com/catan)
 - [Catan: 5-6 Player Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
 - [Cities & Knights](https://www.catan.com/cities-knights)
 - [Explorers & Pirates](https://www.catan.com/explorers-pirates)
+- [Seafarers](https://www.catan.com/seafarers), including the following scenarios:
+  - Heading for New Shores
 
 ## Other Features
 
