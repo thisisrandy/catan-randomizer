@@ -4,15 +4,20 @@ import {
   TRIANGLE_ALTITUDE,
   TRIANGLE_TO_SIDE_RATIO,
 } from "../constants/imageProperties";
-import { CatanBoard, CatanBoardTemplate } from "../types/boards";
+import {
+  CatanBoard,
+  CatanBoardTemplate,
+  UseHorizonalLayout,
+} from "../types/boards";
 import { Hex } from "../types/hexes";
 
 /**
- * Given `template` compute all of the properties of a `CatanBoard` for use
- * elsewhere
+ * Given `template` and optionally `horizontal`, compute all of the properties
+ * of a `CatanBoard` for use elsewhere
  */
 export default function catanBoardFactory(
-  template: CatanBoardTemplate
+  template: CatanBoardTemplate,
+  horizontal?: UseHorizonalLayout
 ): CatanBoard {
   // generating recommendedLayout is as simple as filtering out empties and
   // casting the templates to Hex
@@ -120,5 +125,6 @@ export default function catanBoardFactory(
     cssGridAreas,
     boardHeightPercentage,
     boardWidthPercentage,
+    horizontal,
   };
 }

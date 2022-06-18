@@ -5,6 +5,8 @@ import hills from "../images/hills.png";
 import mountains from "../images/mountains.png";
 import fields from "../images/fields.png";
 import desert from "../images/desert.png";
+import goldHorizontal from "../images/gold-horizontal.png";
+import goldVertical from "../images/gold-vertical.png";
 import sea from "../images/sea.png";
 import two from "../images/2.png";
 import three from "../images/3.png";
@@ -35,6 +37,8 @@ const hexNameToImg: { [type in HexType]: string } = {
   fields: fields,
   desert: desert,
   sea: sea,
+  goldHorizontal: goldHorizontal,
+  goldVertical: goldVertical,
 };
 
 const numberValToImg = [
@@ -73,6 +77,9 @@ const HEX_SIZE = "90%";
  * `Board` is the display logic for a Catan board
  */
 export default function Board({ hexes, board }: Props) {
+  const horizontal =
+    typeof board.horizontal !== "undefined" && board.horizontal;
+
   return (
     <Paper
       id="board-container"
@@ -98,6 +105,7 @@ export default function Board({ hexes, board }: Props) {
           display: "grid",
           gridTemplateColumns: board.cssGridTemplateColumns,
           gridTemplateRows: board.cssGridTemplateRows,
+          transform: horizontal ? "rotate(90deg)" : "",
         }}
       >
         {hexes.map(({ type, number, port }, i) => (
@@ -135,6 +143,7 @@ export default function Board({ hexes, board }: Props) {
                   height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
                   position: "absolute",
                   zIndex: 2,
+                  transform: horizontal ? "rotate(-90deg)" : "",
                 }}
               />
             )}

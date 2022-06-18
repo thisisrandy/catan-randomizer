@@ -1,8 +1,13 @@
 import catanBoardFactory from "../factories/boardFactory";
-import { CatanBoardTemplate, ExpansionName, Expansions } from "../types/boards";
+import {
+  CatanBoardTemplate,
+  ExpansionName,
+  Expansions,
+  UseHorizonalLayout,
+} from "../types/boards";
 
 // TODO: add seafarers and anything else that makes sense
-const templates: [ExpansionName, CatanBoardTemplate][] = [
+const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
   [
     "Catan",
     [
@@ -274,5 +279,8 @@ const templates: [ExpansionName, CatanBoardTemplate][] = [
 ];
 
 export const EXPANSIONS: Expansions = new Map(
-  templates.map(([key, val]) => [key, catanBoardFactory(val)])
+  templates.map(([key, template, horizontal]) => [
+    key,
+    catanBoardFactory(template, horizontal),
+  ])
 );

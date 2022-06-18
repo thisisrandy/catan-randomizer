@@ -44,6 +44,8 @@ import { Hex, HexTemplate } from "./hexes";
  */
 export type CatanBoardTemplate = HexTemplate[][];
 
+export type UseHorizonalLayout = boolean;
+
 /**
  * All of the data about a Catan board, including the hexes and number chits
  * used as well as board shape and display styling. Note that by convention,
@@ -94,6 +96,11 @@ export interface CatanBoard {
    * fix the aspect ratio. Defaults to 100%
    */
   boardHeightPercentage?: string;
+  /**
+   * If true, number chits are rotated -90°, then the entire board 90°. Useful e.g.
+   * for Seafarers
+   */
+  horizontal?: UseHorizonalLayout;
 }
 
 export type ExpansionName =
