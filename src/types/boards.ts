@@ -109,7 +109,18 @@ export type ExpansionName =
   | "Explorers & Pirates"
   | "Cities & Knights"
   | "Seafarers: Heading for New Shores 3-Player Set-up"
-  | "Seafarers: Heading for New Shores 4-Player Set-up";
+  | "Seafarers: Heading for New Shores 4-Player Set-up"
+  | "Seafarers: The Four Islands 3-Player Set-up"
+  | "Seafarers: The Four Islands 4-Player Set-up"
+  | "Seafarers: The Fog Islands 3-Player Set-up"
+  | "Seafarers: The Fog Islands 4-Player Set-up"
+  | "Seafarers: Through the Desert 3-Player Set-up"
+  | "Seafarers: Through the Desert 4-Player Set-up"
+  | "Seafarers: The Forgotten Tribe"
+  | "Seafarers: Cloth for Catan"
+  | "Seafarers: The Pirate Islands"
+  | "Seafarers: The Wonders of Catan"
+  | "Seafarers: New World";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
