@@ -41,7 +41,16 @@ type Hex = {
    * group (which is just the one group which hasn't been explicitly labeled),
    * should specify their group number here
    */
+  // TODO: implement me in shuffle
   group?: number;
+  /**
+   * The minimum number of pips which must appear on this number chit after
+   * shuffling. Initial values are not checked for sanity. This is to be used
+   * when the instructions specify e.g. to "make sure forest terrains and
+   * pasture terrains don't get number tokens that are too unfavorable".
+   */
+  // TODO: implement me in shuffle
+  minPipsOnChit?: 2 | 3 | 4 | 5;
 };
 
 type HexTemplateType = HexType | "empty";
