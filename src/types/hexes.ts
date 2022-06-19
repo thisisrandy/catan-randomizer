@@ -6,6 +6,7 @@ type HexType =
   | "fields"
   | "desert"
   | "sea"
+  // FIXME: this is mixing display with logic. separate them out
   | "goldHorizontal"
   | "goldVertical";
 
