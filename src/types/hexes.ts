@@ -48,7 +48,8 @@ type Hex = {
    * The minimum number of pips which must appear on this number chit after
    * shuffling. Initial values are not checked for sanity. This is to be used
    * when the instructions specify e.g. to "make sure forest terrains and
-   * pasture terrains don't get number tokens that are too unfavorable".
+   * pasture terrains don't get number tokens that are too unfavorable". During
+   * shuffling, this value moves *with `type`*.
    */
   // TODO: implement me in shuffle
   minPipsOnChit?: 2 | 3 | 4 | 5;
@@ -57,6 +58,7 @@ type Hex = {
    * shuffling. Initial values are not checked for sanity. This is to be used
    * when the instructions specify e.g. to "make sure the 3 terrain hexes at the
    * bottom of the main island don't receiver numbers that are too favorable".
+   * During shuffling, this value moves *with `type`*.
    */
   // TODO: implement me in shuffle
   maxPipsOnChit?: 1 | 2 | 3 | 4;
