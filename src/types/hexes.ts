@@ -35,6 +35,13 @@ type Hex = {
    * If this is a sea hex, it can contain a `Port`
    */
   port?: Port;
+  /**
+   * Some setups, e.g. Seafarers scenarios, specify multiple groups of
+   * terrain/chits to shuffle. Hexes belonging to anything other than the "main"
+   * group (which is just the one group which hasn't been explicitly labeled),
+   * should specify their group number here
+   */
+  group?: number;
 };
 
 type HexTemplateType = HexType | "empty";
