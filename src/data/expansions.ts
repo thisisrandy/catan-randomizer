@@ -52,6 +52,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "brick", orientation: 180 } },
         { type: "forest", number: 8 },
         { type: "mountains", number: 3 },
@@ -60,6 +61,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "hills", number: 5 },
         { type: "fields", number: 6 },
@@ -67,6 +70,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "wool", orientation: 60 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
@@ -128,6 +134,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "pasture", number: 9 },
         { type: "mountains", number: 5 },
@@ -137,6 +144,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "grain", orientation: 180 } },
         { type: "hills", number: 8 },
         { type: "pasture", number: 4 },
@@ -145,6 +154,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "brick", orientation: 60 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "mountains", number: 11 },
         { type: "fields", number: 11 },
@@ -152,6 +164,10 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "wool", orientation: 0 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true, port: { type: "timber", orientation: 60 } },
@@ -190,16 +206,22 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
         { type: "fields", number: 10 },
         { type: "pasture", number: 4 },
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "forest", number: 11 },
         { type: "hills", number: 6 },
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "mountains", number: 3 },
         { type: "forest", number: 5 },
         { type: "sea", fixed: true },
@@ -254,6 +276,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "grain", orientation: 0 } },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "wool", orientation: 180 } },
         { type: "pasture", number: 10 },
         { type: "fields", number: 5 },
@@ -262,6 +285,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "fields", number: 9 },
         { type: "pasture", number: 12 },
@@ -269,6 +294,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
@@ -283,17 +311,11 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "empty" },
         { type: "empty" },
         { type: "empty" },
-        { type: "empty" },
-        { type: "empty" },
-        { type: "sea", fixed: true },
-        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
       [
-        { type: "empty" },
-        { type: "empty" },
         { type: "empty" },
         { type: "empty" },
         { type: "sea", fixed: true },
@@ -310,7 +332,6 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
-        { type: "sea", fixed: true },
         { type: "pasture", number: 4, group: 2 },
         { type: "mountains", number: 9, group: 2 },
         { type: "sea", fixed: true },
@@ -323,7 +344,6 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "pasture", number: 6 },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
         { type: "fields", number: 3, group: 2 },
-        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
       [
@@ -346,6 +366,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "fields", number: 11 },
         { type: "mountains", number: 3 },
@@ -355,6 +376,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "brick", orientation: 180 } },
         { type: "fields", number: 6 },
         { type: "forest", number: 5 },
@@ -363,6 +386,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         {
           type: "sea",
@@ -383,7 +409,6 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "empty" },
         { type: "empty" },
         { type: "empty" },
-        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
@@ -450,6 +475,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "wool", orientation: 180 } },
         { type: "mountains", number: 3 },
         { type: "pasture", number: 4 },
@@ -460,6 +486,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "fields", number: 8 },
         { type: "forest", number: 2 },
@@ -469,6 +497,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true, port: { type: "brick", orientation: 60 } },
@@ -491,13 +522,11 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "empty" },
         { type: "empty" },
         { type: "empty" },
-        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
       [
-        { type: "empty" },
         { type: "empty" },
         { type: "empty" },
         { type: "empty" },
@@ -511,7 +540,6 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       [
         { type: "empty" },
         { type: "empty" },
-        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 240 } },
         { type: "mountains", number: 4 },
         { type: "forest", number: 9, minPipsOnChit: 2 },
@@ -522,7 +550,6 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       ],
       [
         { type: "empty" },
-        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "pasture", number: 6, minPipsOnChit: 2 },
         { type: "mountains", number: 10 },
@@ -532,6 +559,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
         { type: "empty" },
         { type: "sea", fixed: true },
         {
@@ -546,6 +574,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "fields", number: 11 },
         { type: "mountains", number: 8 },
@@ -556,6 +585,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "forest", number: 5, minPipsOnChit: 2 },
         { type: "pasture", number: 9, minPipsOnChit: 2 },
@@ -565,6 +596,9 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true, port: { type: "grain", orientation: 60 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "pasture", number: 12, minPipsOnChit: 2 },
         { type: "sea", fixed: true, port: { type: "wool", orientation: 60 } },
@@ -573,6 +607,12 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
