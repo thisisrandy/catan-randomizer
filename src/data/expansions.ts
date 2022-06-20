@@ -6,7 +6,6 @@ import {
   UseHorizonalLayout,
 } from "../types/boards";
 
-// TODO: add seafarers and anything else that makes sense
 const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
   [
     "Catan",
