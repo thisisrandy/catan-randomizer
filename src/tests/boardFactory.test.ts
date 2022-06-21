@@ -51,6 +51,7 @@ describe("boardFactory", () => {
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
       ],
       [
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "brick", orientation: 180 } },
         { type: "forest", number: 8 },
         { type: "mountains", number: 3 },
@@ -59,6 +60,8 @@ describe("boardFactory", () => {
         { type: "sea", fixed: true },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true },
         { type: "hills", number: 5 },
         { type: "fields", number: 6 },
@@ -66,6 +69,9 @@ describe("boardFactory", () => {
         { type: "sea", fixed: true, port: { type: "wool", orientation: 60 } },
       ],
       [
+        { type: "empty" },
+        { type: "empty" },
+        { type: "empty" },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 120 } },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 60 } },
@@ -155,7 +161,7 @@ describe("boardFactory", () => {
         [29, 30, 35, 33],
         [30, 31, 36, 34],
         [31, 32, 35],
-      ],
+      ].map((row) => row.sort()),
       cssGridTemplateColumns: "repeat(14, 1fr)",
       cssGridTemplateRows: `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
         .repeat(7)
@@ -205,8 +211,11 @@ describe("boardFactory", () => {
         100
       }%`,
       boardWidthPercentage: undefined,
+      horizontal: undefined,
     };
 
-    expect(catanBoardFactory(template)).toEqual(expected);
+    const generated = catanBoardFactory(template);
+    generated.neighbors.forEach((row) => row.sort());
+    expect(generated).toEqual(expected);
   });
 });
