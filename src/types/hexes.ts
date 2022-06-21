@@ -20,7 +20,6 @@ type Port = {
   orientation: PortOrientation;
   /** Ports can be fixed in some scenarios. Use this property to indicate that
    * this port should not be shuffled */
-  // TODO: implement me in shuffle
   fixed?: boolean;
 };
 

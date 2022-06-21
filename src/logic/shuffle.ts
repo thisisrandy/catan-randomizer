@@ -32,6 +32,9 @@ export function shuffle(
 
   // having shuffled everything, it's time to assemble the board
   const hexes: Hex[] = [];
+  // it's convenient to pop from ports, so reverse it first to maintain the
+  // order of fixed ports
+  ports.reverse();
   for (
     let currentIndex = 0;
     currentIndex < board.recommendedLayout.length;
@@ -147,14 +150,21 @@ function getShuffledPorts(board: CatanBoard): PortType[] {
 
   const ports = board.recommendedLayout
     .filter(({ port }) => typeof port !== "undefined")
-    .map(({ port }) => (port as Port).type);
+    .map(({ port }) => port as Port)
+    .map(({ type, fixed }) => ({ type, fixed }));
 
-  // we don't have any port constraints (yet?) so the shuffle is purely
-  // Fisher-Yates
+  // we need logic to skip fixed ports, but otherwise there are no port
+  // constraints, so this is just Fisher-Yates
   let currentIndex = ports.length,
     randomIndex;
   while (currentIndex > 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    if (ports[currentIndex - 1].fixed) {
+      currentIndex--;
+      continue;
+    }
+    while (
+      ports[(randomIndex = Math.floor(Math.random() * currentIndex))].fixed
+    );
     currentIndex--;
     [ports[currentIndex], ports[randomIndex]] = [
       ports[randomIndex],
@@ -162,7 +172,7 @@ function getShuffledPorts(board: CatanBoard): PortType[] {
     ];
   }
 
-  return ports;
+  return ports.map(({ type }) => type);
 }
 
 function getShuffledNumbers(
