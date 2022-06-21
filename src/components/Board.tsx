@@ -5,7 +5,7 @@ import hills from "../images/hills.png";
 import mountains from "../images/mountains.png";
 import fields from "../images/fields.png";
 import desert from "../images/desert.png";
-import goldHorizontal from "../images/gold-horizontal.png";
+import goldHorizonal from "../images/gold-horizontal.png";
 import goldVertical from "../images/gold-vertical.png";
 import sea from "../images/sea.png";
 import two from "../images/2.png";
@@ -29,16 +29,18 @@ import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
 
-const hexNameToImg: { [type in HexType]: string } = {
-  pasture: pasture,
-  forest: forest,
-  hills: hills,
-  mountains: mountains,
-  fields: fields,
-  desert: desert,
-  sea: sea,
-  goldHorizontal: goldHorizontal,
-  goldVertical: goldVertical,
+/**
+ * Values are [vertical image, horizontal image]
+ */
+const hexNameToImg: { [type in HexType]: [string, string] } = {
+  pasture: [pasture, pasture],
+  forest: [forest, forest],
+  hills: [hills, hills],
+  mountains: [mountains, mountains],
+  fields: [fields, fields],
+  desert: [desert, desert],
+  sea: [sea, sea],
+  gold: [goldVertical, goldHorizonal],
 };
 
 const numberValToImg = [
@@ -124,7 +126,7 @@ export default function Board({ hexes, board }: Props) {
             }}
           >
             <img
-              src={hexNameToImg[type]}
+              src={hexNameToImg[type][Number(horizontal)]}
               alt={`${type} hex at position ${i}. Positions indices run left to
               right, top to bottom`}
               style={{
