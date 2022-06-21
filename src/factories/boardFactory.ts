@@ -26,42 +26,6 @@ export default function catanBoardFactory(
     .filter((ht) => ht.type !== "empty")
     .map((ht) => ht as Hex);
 
-  // for neighbors, we need to know the template's correspondence to CatanBoard
-  // indices
-  const indices: (number | undefined)[][] = [];
-  let i = 0;
-  for (let row = 0; row < template.length; row++) {
-    indices.push([]);
-    for (let col = 0; col < template[row].length; col++) {
-      indices[row].push(template[row][col].type === "empty" ? undefined : i++);
-    }
-  }
-  // now, we can compute neighbors easily using the hex coordinate system
-  // defined for CatanBoardTemplate
-  const neighbors: number[][] = [];
-  for (let row = 0; row < indices.length; row++) {
-    for (let col = 0; col < indices[row].length; col++) {
-      if (typeof indices[row][col] === "undefined") continue;
-
-      neighbors.push([]);
-      for (const [nrow, ncol] of [
-        [row - 1, col],
-        [row - 1, col + 1],
-        [row, col + 1],
-        [row + 1, col],
-        [row + 1, col - 1],
-        [row, col - 1],
-      ]) {
-        // NOTE: javascript will return undefined for out of bounds indices, so
-        // we only need check up to the last level
-        if (nrow < 0 || nrow === indices.length) continue;
-        let neighbor = indices[nrow][ncol];
-        if (typeof neighbor !== "undefined")
-          neighbors[neighbors.length - 1].push(neighbor);
-      }
-    }
-  }
-
   // a small and large row for each hex followed by a final small at the end
   const cssGridTemplateRows = `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
     .repeat(template.length)
@@ -74,15 +38,20 @@ export default function catanBoardFactory(
   // column by 2 for every hex encountered, and 1 for every empty value.
   //
   // it's useful to do this before setting the column template since we can
-  // track the max column seen
+  // track the max column seen. additionally, we can assemble a matrix of column
+  // to CatanBoard indices for subsequent neighbor computation
+  const boardIndices: (number | undefined)[][] = [];
   const cssGridAreas: string[] = [];
-  let maxColumn = 0;
+  let maxColumn = 0,
+    boardIndex = 0;
   for (let row = 0; row < template.length; row++) {
+    boardIndices.push([]);
     const cssRow = 1 + row * 2;
     let cssCol = 1;
     for (let col = 0; col < template[row].length; col++) {
       if (template[row][col].type === "empty") {
         cssCol++;
+        boardIndices[boardIndices.length - 1].push(undefined);
         continue;
       }
       cssGridAreas.push(
@@ -91,12 +60,43 @@ export default function catanBoardFactory(
       cssCol += 2;
       // grid-(row|column)-end are exclusive, so subtract 1
       maxColumn = Math.max(maxColumn, cssCol - 1);
+      boardIndices[boardIndices.length - 1].push(boardIndex);
+      boardIndices[boardIndices.length - 1].push(boardIndex);
+      boardIndex++;
     }
   }
 
   // we computed the number of columns in the previous step, so specify that
   // many here
   const cssGridTemplateColumns = `repeat(${maxColumn}, 1fr)`;
+
+  // now use boardIndices (computed above) to determine neighbor indices
+  const neighbors: number[][] = [];
+  for (let row = 0; row < boardIndices.length; row++) {
+    for (let col = 0; col < boardIndices[row].length; col++) {
+      if (boardIndices[row][col] === undefined) continue;
+
+      neighbors.push([]);
+      for (const [nrow, ncol] of [
+        [row, col - 1],
+        [row - 1, col - 1],
+        [row - 1, col + 1],
+        [row, col + 2],
+        [row + 1, col - 1],
+        [row + 1, col + 1],
+      ]) {
+        // NOTE: javascript will return undefined for out of bounds indices, so
+        // we only need check up to the last level
+        if (nrow < 0 || nrow === boardIndices.length) continue;
+        const neighbor = boardIndices[nrow][ncol];
+        if (neighbor !== undefined)
+          neighbors[neighbors.length - 1].push(neighbor);
+      }
+
+      // hex col span is 2, so skip the next column
+      col++;
+    }
+  }
 
   // finally, figure out if we need to adjust width or height by figuring out
   // which is greater and then assigning a lower percentage to the other
