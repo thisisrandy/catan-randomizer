@@ -39,7 +39,7 @@ import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
 /**
  * Values are [vertical image, horizontal image]
  */
-const hexNameToImg: { [type in HexType]: [string, string] } = {
+const hexTypeToImg: { [type in HexType]: [string, string] } = {
   pasture: [pastureVertical, pastureHorizontal],
   forest: [forestVertical, forestHorizontal],
   hills: [hillsVertical, hillsHorizontal],
@@ -133,7 +133,7 @@ export default function Board({ hexes, board }: Props) {
             }}
           >
             <img
-              src={hexNameToImg[type][Number(horizontal)]}
+              src={hexTypeToImg[type][Number(horizontal)]}
               alt={`${type} hex at position ${i}. Positions indices run left to
               right, top to bottom`}
               style={{
