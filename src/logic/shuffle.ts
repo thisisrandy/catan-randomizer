@@ -322,7 +322,6 @@ function getShuffledNumbers(
             .map((i) => 6 - Math.abs(7 - numbers[i]))
             .reduce((acc, n) => acc + n, 0 as number);
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
-            // eslint-disable-next-line no-extra-label
             continue tryLoop;
           }
         }
