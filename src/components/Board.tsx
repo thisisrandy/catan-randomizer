@@ -1,13 +1,20 @@
 import "../css/board.css";
-import pasture from "../images/pasture.png";
-import forest from "../images/forest.png";
-import hills from "../images/hills.png";
-import mountains from "../images/mountains.png";
-import fields from "../images/fields.png";
-import desert from "../images/desert.png";
+import pastureHorizontal from "../images/pasture-horizontal.png";
+import pastureVertical from "../images/pasture-vertical.png";
+import forestHorizontal from "../images/forest-horizontal.png";
+import forestVertical from "../images/forest-vertical.png";
+import hillsHorizontal from "../images/hills-horizontal.png";
+import hillsVertical from "../images/hills-vertical.png";
+import mountainsHorizontal from "../images/mountains-horizontal.png";
+import mountainsVertical from "../images/mountains-vertical.png";
+import fieldsHorizontal from "../images/fields-horizontal.png";
+import fieldsVertical from "../images/fields-vertical.png";
+import desertHorizontal from "../images/desert-horizontal.png";
+import desertVertical from "../images/desert-vertical.png";
 import goldHorizonal from "../images/gold-horizontal.png";
 import goldVertical from "../images/gold-vertical.png";
-import sea from "../images/sea.png";
+import seaHorizontal from "../images/sea-horizontal.png";
+import seaVertical from "../images/sea-vertical.png";
 import two from "../images/2.png";
 import three from "../images/3.png";
 import four from "../images/4.png";
@@ -33,13 +40,13 @@ import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
  * Values are [vertical image, horizontal image]
  */
 const hexNameToImg: { [type in HexType]: [string, string] } = {
-  pasture: [pasture, pasture],
-  forest: [forest, forest],
-  hills: [hills, hills],
-  mountains: [mountains, mountains],
-  fields: [fields, fields],
-  desert: [desert, desert],
-  sea: [sea, sea],
+  pasture: [pastureVertical, pastureHorizontal],
+  forest: [forestVertical, forestHorizontal],
+  hills: [hillsVertical, hillsHorizontal],
+  mountains: [mountainsVertical, mountainsHorizontal],
+  fields: [fieldsVertical, fieldsHorizontal],
+  desert: [desertVertical, desertHorizontal],
+  sea: [seaVertical, seaHorizontal],
   gold: [goldVertical, goldHorizonal],
 };
 
