@@ -1,4 +1,11 @@
-import { Hex, HexType, NumberChitValue, Port, PortType } from "../types/hexes";
+import {
+  Hex,
+  HexType,
+  NON_RESOURCE_PRODUCING_HEX_TYPES,
+  NumberChitValue,
+  Port,
+  PortType,
+} from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
 
@@ -221,7 +228,11 @@ function getShuffledNumbers(
       currentIndex >= 0;
       currentIndex--
     ) {
-      if (["desert", "sea"].includes(shuffledTerrain[currentIndex].type)) {
+      if (
+        NON_RESOURCE_PRODUCING_HEX_TYPES.includes(
+          shuffledTerrain[currentIndex].type
+        )
+      ) {
         nonResourceProducingHexesSeen++;
         // shuffle in the outermost 0 value. e.g. if we have 2
         // non-resource-producing hexes and this is the first, shuffle in the

@@ -1,5 +1,5 @@
 import { CatanBoard } from "../types/boards";
-import { Hex } from "../types/hexes";
+import { Hex, NON_RESOURCE_PRODUCING_HEX_TYPES } from "../types/hexes";
 
 export type ShuffleType = "terrain" | "numbers";
 
@@ -12,8 +12,8 @@ export type ShuffleType = "terrain" | "numbers";
  * 1. `"terrain"`: fixed hexes are removed. a terrain shuffling function should
  *    handle skipping fixed hexes on its own
  *
- * 2. `"numbers"`: non-resource-producing hexes, i.e. `sea` and `desert` hexes,
- *    are removed. a number shuffling function should handle skipping these
+ * 2. `"numbers"`: non-resource-producing hexes are removed. a number shuffling
+ *    function should handle skipping these
  */
 class HexGroup {
   currentIndex: number;
@@ -27,7 +27,7 @@ class HexGroup {
         break;
       case "numbers":
         this.sourceIndices = sourceIndices.filter(
-          (_, i) => !["sea", "desert"].includes(hexes[i].type)
+          (_, i) => !NON_RESOURCE_PRODUCING_HEX_TYPES.includes(hexes[i].type)
         );
         break;
       default:

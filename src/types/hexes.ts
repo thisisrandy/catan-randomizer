@@ -8,6 +8,15 @@ type HexType =
   | "sea"
   | "gold";
 
+/**
+ * Use this to test whether a hex type is resource-producing, i.e. needs to have
+ * a number assigned to it
+ */
+export const NON_RESOURCE_PRODUCING_HEX_TYPES: readonly HexType[] = [
+  "sea",
+  "desert",
+];
+
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
 
 type PortType = "3:1" | "ore" | "wool" | "timber" | "brick" | "grain";
