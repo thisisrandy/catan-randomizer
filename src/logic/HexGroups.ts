@@ -77,7 +77,16 @@ class HexGroup {
 
 /**
  * Abstracts the creation and management of a group of `HexGroup`s into a single
- * interface. See {@link HexGroup}
+ * interface. See {@link HexGroup}.
+ *
+ * Assuming a shuffling function which iteratively shuffles until all local
+ * constraints are met or allotted tries are exceeded, restarting from the top
+ * in the latter case, usage is as follows:
+ *
+ * 1. At the beginning of the top-level loop, call `reset`
+ * 2. When a random index is required, call `getRandomIndex`
+ * 3. If the random index selected in (2) passes all constraint checks, call
+ *    `advanceCurrentIndex` to update internal state
  */
 export class HexGroups {
   #hexGroups: HexGroup[] = [];
