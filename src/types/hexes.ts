@@ -52,7 +52,6 @@ type Hex = {
    * group (which is just the one group which hasn't been explicitly labeled),
    * should specify their group number here
    */
-  // TODO: implement me in shuffle
   group?: number;
   /**
    * The maximum number of pips which may appear on this number chit after

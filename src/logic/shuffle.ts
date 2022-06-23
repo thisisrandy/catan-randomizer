@@ -8,6 +8,7 @@ import {
 } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
+import { HexGroups } from "./HexGroups";
 
 interface Terrain {
   type: HexType;
@@ -74,9 +75,12 @@ function getShuffledTerrain(
     fixed: typeof hex.fixed !== "undefined",
     port: hex.port,
   }));
+  const hexGroups = new HexGroups(board, "terrain");
   let randomIndex;
 
   topLoop: while (true) {
+    hexGroups.reset();
+
     shuffleLoop: for (
       let currentIndex = terrain.length - 1;
       currentIndex >= 0;
@@ -93,13 +97,8 @@ function getShuffledTerrain(
       // blow through this very quickly, so there's no compelling reason to
       // improve it
       tryLoop: for (let tries = 0; tries < 10; tries++) {
-        // shuffle. we can't shuffle fixed hexes, so keep rolling the dice until
-        // we select a free hex (which might be ourself)
-        while (
-          terrain[
-            (randomIndex = Math.floor(Math.random() * (currentIndex + 1)))
-          ].fixed
-        );
+        // shuffle
+        randomIndex = hexGroups.getRandomIndex();
         [terrain[currentIndex], terrain[randomIndex]] = [
           terrain[randomIndex],
           terrain[currentIndex],
@@ -137,6 +136,7 @@ function getShuffledTerrain(
         }
 
         // no constraints were violated, so move to the next hex
+        hexGroups.advanceCurrentIndex();
         continue shuffleLoop;
       }
 
@@ -199,66 +199,30 @@ function getShuffledNumbers(
     typeof hex.maxPipsOnChit === "undefined" ? 5 : hex.maxPipsOnChit
   );
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
+  const hexGroups = new HexGroups(board, "numbers");
   let randomIndex;
 
-  const numNonResourceProducingHexes: number = numbers.reduce(
-    (acc, v) => Number(v === 0) + acc,
-    0 as number
-  );
   topLoop: while (true) {
-    let nonResourceProducingHexesSeen = 0;
-    // we need to begin by finding any 0 values and putting them at the
-    // beginning of the loop. then, we can avoid accidentally shuffling them
-    // onto a resource-producing hex by making our random index choices below at
-    // an offset of the number of non-resource-producing hexes not yet
-    // encountered
-    let zeroSearchOffset = 0,
-      zeroIndex;
-    while (
-      (zeroIndex = numbers.indexOf(0, zeroSearchOffset)) >= zeroSearchOffset
-    ) {
-      [numbers[zeroSearchOffset], numbers[zeroIndex]] = [
-        numbers[zeroIndex],
-        numbers[zeroSearchOffset],
-      ];
-      zeroSearchOffset++;
-    }
+    hexGroups.reset();
 
     shuffleLoop: for (
       let currentIndex = numbers.length - 1;
       currentIndex >= 0;
       currentIndex--
     ) {
+      // skip hexes without number chits
       if (
         NON_RESOURCE_PRODUCING_HEX_TYPES.includes(
           shuffledTerrain[currentIndex].type
         )
-      ) {
-        nonResourceProducingHexesSeen++;
-        // shuffle in the outermost 0 value. e.g. if we have 2
-        // non-resource-producing hexes and this is the first, shuffle in the
-        // one at index 1. then, when we encounter the second
-        // non-resource-producing hex, we shuffle in index 0
-        [
-          numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
-          numbers[currentIndex],
-        ] = [
-          numbers[currentIndex],
-          numbers[numNonResourceProducingHexes - nonResourceProducingHexesSeen],
-        ];
-
+      )
         continue;
-      }
 
       // check constraints. as with terrain, we don't attempt to backtrack and
       // simply start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
-        // shuffle. we need to make sure to skip lefthand indices equal to the
-        // number of non-resource-producing hexes we haven't yet encountered
-        const offset =
-          numNonResourceProducingHexes - nonResourceProducingHexesSeen;
-        randomIndex =
-          Math.floor(Math.random() * (currentIndex + 1 - offset)) + offset;
+        // shuffle
+        randomIndex = hexGroups.getRandomIndex();
         [numbers[currentIndex], numbers[randomIndex]] = [
           numbers[randomIndex],
           numbers[currentIndex],
@@ -354,6 +318,7 @@ function getShuffledNumbers(
         }
 
         // no constraints were violated. continue shuffling
+        hexGroups.advanceCurrentIndex();
         continue shuffleLoop;
       }
 
