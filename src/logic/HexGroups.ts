@@ -61,7 +61,7 @@ class HexGroup {
    * Advance the current index, returning the new one, if any
    */
   advanceCurrentIndex(): number | undefined {
-    return this.sourceIndices[--this.#internalIndex];
+    return (this.currentIndex = this.sourceIndices[--this.#internalIndex]);
   }
 
   /**
@@ -69,9 +69,10 @@ class HexGroup {
    * method first. Returns the new current index
    */
   reset(): number {
-    return this.sourceIndices[
-      (this.#internalIndex = this.sourceIndices.length - 1)
-    ];
+    return (this.currentIndex =
+      this.sourceIndices[
+        (this.#internalIndex = this.sourceIndices.length - 1)
+      ]);
   }
 }
 
