@@ -77,14 +77,13 @@ function getShuffledTerrain(
   let randomIndex;
 
   topLoop: while (true) {
-    let currentIndex = terrain.length - 1;
-
-    shuffleLoop: while (currentIndex >= 0) {
+    shuffleLoop: for (
+      let currentIndex = terrain.length - 1;
+      currentIndex >= 0;
+      currentIndex--
+    ) {
       // if this hex is fixed, skip it
-      if (terrain[currentIndex].fixed) {
-        currentIndex--;
-        continue;
-      }
+      if (terrain[currentIndex].fixed) continue;
 
       // check constraints. we may have gotten ourself into a state from which
       // we can't meet the constraints without backtracking, so after a few
@@ -138,7 +137,6 @@ function getShuffledTerrain(
         }
 
         // no constraints were violated, so move to the next hex
-        currentIndex--;
         continue shuffleLoop;
       }
 
