@@ -15,6 +15,9 @@ interface Terrain {
   port: Port | undefined;
 }
 
+/**
+ * 0 is used as a sentinel to represent "no chit"
+ */
 type Number = NumberChitValue | 0;
 
 /**
