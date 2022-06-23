@@ -310,6 +310,10 @@ const templates: [
     ],
   ],
   [
+    // FIXME: small island contours are not fixed, i.e. can be shuffled with sea
+    // hexes which aren't adjacent to the main island. need to update Heading
+    // for New Shores board definitions and account for non-fixed sea hexes in
+    // shuffling code
     "Seafarers: Heading for New Shores 3-Player Set-up",
     [
       [
