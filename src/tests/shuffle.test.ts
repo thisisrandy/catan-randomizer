@@ -1,7 +1,9 @@
 import { EXPANSIONS } from "../data/expansions";
+import catanBoardFactory from "../factories/boardFactory";
 import { shuffle } from "../logic/shuffle";
+import { CatanBoardTemplate, MinPipsOnHexTypes } from "../types/boards";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
-import { Hex } from "../types/hexes";
+import { Hex, HexType } from "../types/hexes";
 
 const board = EXPANSIONS.get("Catan")!;
 const binaryConstraints: BinaryConstraints = {
@@ -13,6 +15,22 @@ const numericConstraints: NumericConstraints = {
   maxConnectedLikeTerrain: { value: 1, valid: true },
   maxIntersectionPipCount: { value: 10, valid: true },
 };
+const pipConstrainedTemplate: CatanBoardTemplate = [
+  [
+    { type: "forest", number: 10, maxPipsOnChit: 3 },
+    { type: "forest", number: 3, maxPipsOnChit: 3 },
+    { type: "forest", number: 6 },
+    { type: "hills", number: 5 },
+    { type: "pasture", number: 2 },
+    { type: "pasture", number: 4 },
+  ],
+];
+const minPipsOnHexTypes: MinPipsOnHexTypes = { pasture: 3 };
+const pipConstrainedBoard = catanBoardFactory(
+  pipConstrainedTemplate,
+  undefined,
+  minPipsOnHexTypes
+);
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
 const numSamples = 50;
@@ -192,6 +210,92 @@ describe("shuffle", () => {
       }
     }
     // if we never found what we were looking for, fail
+    expect(false).toBe(true);
+  });
+
+  it("shouldn't allow low pip counts on constrained terrain types", () => {
+    const groupedTerrainOkay: NumericConstraints = {
+      ...numericConstraints,
+      maxConnectedLikeTerrain: { value: 7, valid: true },
+    };
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        pipConstrainedBoard,
+        binaryConstraints,
+        groupedTerrainOkay
+      );
+      for (let j = 0; j < hexes.length; j++) {
+        expect(hexes[j].number).toBeGreaterThanOrEqual(
+          minPipsOnHexTypes[hexes[j].type] || 1
+        );
+      }
+    }
+  });
+
+  it("should allow low pip counts on all terrain types when unconstrained", () => {
+    const twoOrTwelveSeen: { [type in HexType]?: boolean } = {
+      fields: false,
+      forest: false,
+      hills: false,
+      pasture: false,
+      mountains: false,
+    };
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      for (let j = 0; j < hexes.length; j++) {
+        if (hexes[j].number && [2, 12].includes(hexes[j].number as number)) {
+          twoOrTwelveSeen[hexes[j].type] = true;
+          if (Object.values(twoOrTwelveSeen).reduce((acc, seen) => acc && seen))
+            return;
+        }
+      }
+    }
+    expect(false).toBe(true);
+  });
+
+  it("shouldn't allow high pip counts on constrained hexes", () => {
+    const groupedTerrainOkay: NumericConstraints = {
+      ...numericConstraints,
+      maxConnectedLikeTerrain: { value: 7, valid: true },
+    };
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        pipConstrainedBoard,
+        binaryConstraints,
+        groupedTerrainOkay
+      );
+      for (let j = 0; j < hexes.length; j++) {
+        const pipCount = 6 - Math.abs(7 - (hexes[j].number as number));
+        expect(pipCount).toBeLessThanOrEqual(
+          pipConstrainedTemplate[0][j].maxPipsOnChit || 5
+        );
+      }
+    }
+  });
+
+  it("should allow high pip counts all hexes when unconstrained", () => {
+    const sixOrEightSeen = board.recommendedLayout.map(
+      (hex) => hex.number === undefined
+    );
+    let countSixOrEightNotSeen = sixOrEightSeen.reduce(
+      (acc, seen) => acc + Number(!seen),
+      0
+    );
+    // seeing 6 or 8 at *every* hex is a pretty tall order, so take many more
+    // samples than the other tests to ensure success
+    for (let i = 0; i < numSamples * 5; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      for (let j = 0; j < hexes.length; j++) {
+        if (
+          hexes[j].number &&
+          [6, 8].includes(hexes[j].number as number) &&
+          !sixOrEightSeen[j]
+        ) {
+          sixOrEightSeen[j] = true;
+          if (!--countSixOrEightNotSeen) return;
+        }
+      }
+    }
     expect(false).toBe(true);
   });
 });

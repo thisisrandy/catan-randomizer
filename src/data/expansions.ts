@@ -3,10 +3,16 @@ import {
   CatanBoardTemplate,
   ExpansionName,
   Expansions,
+  MinPipsOnHexTypes,
   UseHorizonalLayout,
 } from "../types/boards";
 
-const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
+const templates: [
+  ExpansionName,
+  CatanBoardTemplate,
+  UseHorizonalLayout?,
+  MinPipsOnHexTypes?
+][] = [
   [
     "Catan",
     [
@@ -561,7 +567,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "fields", number: 4 },
-        { type: "pasture", number: 3, minPipsOnChit: 2 },
+        { type: "pasture", number: 3 },
         {
           type: "sea",
           fixed: true,
@@ -577,7 +583,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
           port: { type: "3:1", orientation: 240, fixed: true },
         },
         { type: "mountains", number: 4 },
-        { type: "forest", number: 9, minPipsOnChit: 2 },
+        { type: "forest", number: 9 },
         { type: "sea", fixed: true },
         { type: "fields", number: 9 },
         { type: "hills", number: 5 },
@@ -586,14 +592,14 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       [
         { type: "empty" },
         { type: "sea", fixed: true },
-        { type: "pasture", number: 6, minPipsOnChit: 2 },
+        { type: "pasture", number: 6 },
         { type: "mountains", number: 10 },
         {
           type: "sea",
           fixed: true,
           port: { type: "ore", orientation: 60, fixed: true },
         },
-        { type: "forest", number: 8, minPipsOnChit: 2 },
+        { type: "forest", number: 8 },
         { type: "hills", number: 11 },
         { type: "sea", fixed: true },
       ],
@@ -621,7 +627,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
         { type: "fields", number: 11 },
         { type: "mountains", number: 8 },
-        { type: "forest", number: 3, minPipsOnChit: 2 },
+        { type: "forest", number: 3 },
         {
           type: "sea",
           fixed: true,
@@ -639,8 +645,8 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
           fixed: true,
           port: { type: "3:1", orientation: 120, fixed: true },
         },
-        { type: "forest", number: 5, minPipsOnChit: 2 },
-        { type: "pasture", number: 9, minPipsOnChit: 2 },
+        { type: "forest", number: 5 },
+        { type: "pasture", number: 9 },
         { type: "sea", fixed: true },
         { type: "mountains", number: 2 },
         { type: "fields", number: 5 },
@@ -655,7 +661,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "empty" },
         { type: "empty" },
         { type: "sea", fixed: true },
-        { type: "pasture", number: 12, minPipsOnChit: 2 },
+        { type: "pasture", number: 12 },
         {
           type: "sea",
           fixed: true,
@@ -675,6 +681,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       ],
     ],
     true,
+    { forest: 2, pasture: 2 },
   ],
   [
     "Seafarers: The Four Islands 4-Player Set-up",
@@ -693,10 +700,10 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "empty" },
         { type: "empty" },
         { type: "sea", fixed: true },
-        { type: "pasture", number: 8, minPipsOnChit: 2 },
+        { type: "pasture", number: 8 },
         { type: "sea", fixed: true },
-        { type: "forest", number: 9, minPipsOnChit: 2 },
-        { type: "forest", number: 11, minPipsOnChit: 2 },
+        { type: "forest", number: 9 },
+        { type: "forest", number: 11 },
         { type: "sea", fixed: true },
       ],
       [
@@ -710,12 +717,12 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
         { type: "sea", fixed: true },
         { type: "mountains", number: 3 },
         { type: "fields", number: 12 },
-        { type: "pasture", number: 5, minPipsOnChit: 2 },
+        { type: "pasture", number: 5 },
       ],
       [
         { type: "sea", fixed: true },
         { type: "fields", number: 5 },
-        { type: "forest", number: 3, minPipsOnChit: 2 },
+        { type: "forest", number: 3 },
         {
           type: "sea",
           fixed: true,
@@ -738,7 +745,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
           port: { type: "3:1", orientation: 60, fixed: true },
         },
         { type: "sea", fixed: true },
-        { type: "forest", number: 6, minPipsOnChit: 2 },
+        { type: "forest", number: 6 },
         { type: "sea", fixed: true },
         {
           type: "sea",
@@ -750,15 +757,15 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       [
         { type: "sea", fixed: true },
         { type: "hills", number: 4 },
-        { type: "pasture", number: 9, minPipsOnChit: 2 },
+        { type: "pasture", number: 9 },
         {
           type: "sea",
           fixed: true,
           port: { type: "3:1", orientation: 300, fixed: true },
         },
         { type: "sea", fixed: true },
-        { type: "forest", number: 9, minPipsOnChit: 2 },
-        { type: "pasture", number: 11, minPipsOnChit: 2 },
+        { type: "forest", number: 9 },
+        { type: "pasture", number: 11 },
         { type: "sea", fixed: true },
       ],
       [
@@ -787,7 +794,7 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
           fixed: true,
           port: { type: "wool", orientation: 180, fixed: true },
         },
-        { type: "pasture", number: 10, minPipsOnChit: 2 },
+        { type: "pasture", number: 10 },
         { type: "fields", number: 11 },
         { type: "sea", fixed: true },
         { type: "fields", number: 4 },
@@ -805,12 +812,13 @@ const templates: [ExpansionName, CatanBoardTemplate, UseHorizonalLayout?][] = [
       ],
     ],
     true,
+    { forest: 2, pasture: 2 },
   ],
 ];
 
 export const EXPANSIONS: Expansions = new Map(
-  templates.map(([key, template, horizontal]) => [
+  templates.map(([key, template, horizontal, minPipsOnHexTypes]) => [
     key,
-    catanBoardFactory(template, horizontal),
+    catanBoardFactory(template, horizontal, minPipsOnHexTypes),
   ])
 );

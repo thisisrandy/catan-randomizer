@@ -1,4 +1,4 @@
-import { Hex, HexTemplate } from "./hexes";
+import { Hex, HexTemplate, HexType } from "./hexes";
 
 /**
  * A template to simplify the specification of a `CatanBoard`.
@@ -32,6 +32,14 @@ import { Hex, HexTemplate } from "./hexes";
 export type CatanBoardTemplate = HexTemplate[][];
 
 export type UseHorizonalLayout = boolean;
+
+/**
+ * The minimum number of pips which must appear on chits assigned to specified
+ * hex types after shuffling. This is to be used when the instructions specify
+ * e.g. to "make sure forest terrains and pasture terrains don't get number
+ * tokens that are too unfavorable".
+ */
+export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
 
 /**
  * All of the data about a Catan board, including the hexes and number chits
@@ -88,6 +96,10 @@ export interface CatanBoard {
    * for Seafarers
    */
   horizontal?: UseHorizonalLayout;
+  /**
+   * See {@link MinPipsOnHexType}
+   */
+  minPipsOnHexTypes?: MinPipsOnHexTypes;
 }
 
 export type ExpansionName =

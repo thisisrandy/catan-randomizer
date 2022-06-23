@@ -187,6 +187,10 @@ function getShuffledNumbers(
   const numbers = board.recommendedLayout.map((hex) =>
     typeof hex.number === "undefined" ? (0 as 0) : hex.number
   );
+  const maxPipsOnChits = board.recommendedLayout.map((hex) =>
+    typeof hex.maxPipsOnChit === "undefined" ? 5 : hex.maxPipsOnChit
+  );
+  const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
   let randomIndex;
 
   const numNonResourceProducingHexes: number = numbers.reduce(
@@ -249,6 +253,17 @@ function getShuffledNumbers(
         ];
 
         // then check each constraint
+
+        // min/max pip count
+        const pipCount = 6 - Math.abs(7 - numbers[currentIndex]);
+        if (
+          pipCount <
+            (minPipsOnHexTypes[shuffledTerrain[currentIndex].type] || 1) ||
+          pipCount > maxPipsOnChits[currentIndex]
+        ) {
+          // eslint-disable-next-line no-extra-label
+          continue tryLoop;
+        }
 
         // no 6/8 neighbors
         if (

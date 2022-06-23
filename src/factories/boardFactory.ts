@@ -7,17 +7,20 @@ import {
 import {
   CatanBoard,
   CatanBoardTemplate,
+  MinPipsOnHexTypes,
   UseHorizonalLayout,
 } from "../types/boards";
 import { Hex } from "../types/hexes";
 
 /**
  * Given `template` and optionally `horizontal`, compute all of the properties
- * of a `CatanBoard` for use elsewhere
+ * of a `CatanBoard` for use elsewhere. `minPipsOnHexTypes` is passed through to
+ * the returned `CatanBoard` without further processing
  */
 export default function catanBoardFactory(
   template: CatanBoardTemplate,
-  horizontal?: UseHorizonalLayout
+  horizontal?: UseHorizonalLayout,
+  minPipsOnHexTypes?: MinPipsOnHexTypes
 ): CatanBoard {
   // generating recommendedLayout is as simple as filtering out empties and
   // casting the templates to Hex
@@ -116,5 +119,6 @@ export default function catanBoardFactory(
     boardHeightPercentage,
     boardWidthPercentage,
     horizontal,
+    minPipsOnHexTypes,
   };
 }
