@@ -7,6 +7,7 @@ import {
 import {
   CatanBoard,
   CatanBoardTemplate,
+  MaxPipsOnHexTypes,
   MinPipsOnHexTypes,
   UseHorizonalLayout,
 } from "../types/boards";
@@ -14,13 +15,15 @@ import { Hex } from "../types/hexes";
 
 /**
  * Given `template` and optionally `horizontal`, compute all of the properties
- * of a `CatanBoard` for use elsewhere. `minPipsOnHexTypes` is passed through to
- * the returned `CatanBoard` without further processing
+ * of a `CatanBoard` for use elsewhere. `minPipsOnHexTypes` and
+ * `maxPipsOnHexTypes` are passed through to the returned `CatanBoard` without
+ * further processing
  */
 export default function catanBoardFactory(
   template: CatanBoardTemplate,
   horizontal?: UseHorizonalLayout,
-  minPipsOnHexTypes?: MinPipsOnHexTypes
+  minPipsOnHexTypes?: MinPipsOnHexTypes,
+  maxPipsOnHexTypes?: MaxPipsOnHexTypes
 ): CatanBoard {
   // flattening and filtering out empties will be useful for several operations
   const flatNoEmpties = template.flat().filter((ht) => ht.type !== "empty");
@@ -127,6 +130,7 @@ export default function catanBoardFactory(
     boardWidthPercentage,
     horizontal,
     minPipsOnHexTypes,
+    maxPipsOnHexTypes,
     maxPipsOnChits,
   };
 }

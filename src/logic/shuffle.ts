@@ -154,6 +154,7 @@ function getShuffledNumbers(
   numericConstraints: NumericConstraints
 ): Hex[] {
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
+  const maxPipsOnHexTypes = board.maxPipsOnHexTypes || {};
   const hexGroups = new HexGroups(hexes, "numbers");
   let randomIndex;
 
@@ -185,6 +186,7 @@ function getShuffledNumbers(
           6 - Math.abs(7 - (hexes[currentIndex].number as number));
         if (
           pipCount < (minPipsOnHexTypes[hexes[currentIndex].type] || 1) ||
+          pipCount > (maxPipsOnHexTypes[hexes[currentIndex].type] || 5) ||
           pipCount > board.maxPipsOnChits[currentIndex]
         ) {
           // eslint-disable-next-line no-extra-label

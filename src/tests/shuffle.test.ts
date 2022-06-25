@@ -1,7 +1,11 @@
 import { EXPANSIONS } from "../data/expansions";
 import catanBoardFactory from "../factories/boardFactory";
 import { shuffle } from "../logic/shuffle";
-import { CatanBoardTemplate, MinPipsOnHexTypes } from "../types/boards";
+import {
+  CatanBoardTemplate,
+  MaxPipsOnHexTypes,
+  MinPipsOnHexTypes,
+} from "../types/boards";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { Hex, HexType, NumberChitValue } from "../types/hexes";
 
@@ -36,10 +40,12 @@ const pipConstrainedTemplate: CatanBoardTemplate = [
   ],
 ];
 const minPipsOnHexTypes: MinPipsOnHexTypes = { pasture: 3 };
+const maxPipsOnHexTypes: MaxPipsOnHexTypes = { hills: 4 };
 const pipConstrainedBoard = catanBoardFactory(
   pipConstrainedTemplate,
   undefined,
-  minPipsOnHexTypes
+  minPipsOnHexTypes,
+  maxPipsOnHexTypes
 );
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
@@ -278,6 +284,9 @@ describe("shuffle", () => {
         const pipCount = 6 - Math.abs(7 - (hexes[j].number as number));
         expect(pipCount).toBeLessThanOrEqual(
           pipConstrainedTemplate[0][j].maxPipsOnChit || 5
+        );
+        expect(pipCount).toBeLessThanOrEqual(
+          maxPipsOnHexTypes[hexes[j].type] || 5
         );
       }
     }

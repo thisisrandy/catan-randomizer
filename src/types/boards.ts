@@ -48,6 +48,13 @@ export type UseHorizonalLayout = boolean;
 export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
 
 /**
+ * The maxiumum number of pips which may appear on chits assigned to specified
+ * hex types after shuffling. This is to be used when the instructions specify
+ * e.g. to "not place... 6s & 8s... on gold fields".
+ */
+export type MaxPipsOnHexTypes = { [type in HexType]?: 1 | 2 | 3 | 4 };
+
+/**
  * All of the data about a Catan board, including the hexes and number chits
  * used as well as board shape and display styling. Note that by convention,
  * hexes are counted off left to right, top to bottom. For example, in the base
@@ -105,6 +112,10 @@ export interface CatanBoard {
    * See {@link MinPipsOnHexTypes}
    */
   minPipsOnHexTypes?: MinPipsOnHexTypes;
+  /**
+   * See {@link MaxPipsOnHexTypes}
+   */
+  maxPipsOnHexTypes?: MaxPipsOnHexTypes;
   /**
    * See {@link MaxPipsOnChit}
    */
