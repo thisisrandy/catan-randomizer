@@ -310,16 +310,14 @@ const templates: [
     ],
   ],
   [
-    // FIXME: small island contours are not fixed, i.e. can be shuffled with sea
-    // hexes which aren't adjacent to the main island. need to update Heading
-    // for New Shores board definitions and account for non-fixed sea hexes in
-    // shuffling code
     "Seafarers: Heading for New Shores 3-Player Set-up",
     [
       [
         { type: "empty" },
         { type: "empty" },
         { type: "empty" },
+        { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
@@ -330,8 +328,8 @@ const templates: [
         { type: "sea", fixed: true },
         { type: "hills", number: 12, group: 2 },
         { type: "gold", number: 5, group: 2 },
-        { type: "sea", fixed: true },
-        { type: "sea", fixed: true },
+        { type: "sea", group: 2 },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -361,6 +359,7 @@ const templates: [
           port: { type: "3:1", orientation: 0, fixed: true },
         },
         { type: "fields", number: 3, group: 2 },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -379,6 +378,7 @@ const templates: [
           port: { type: "wool", orientation: 300, fixed: true },
         },
         { type: "gold", number: 4, group: 2 },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -388,6 +388,7 @@ const templates: [
         { type: "pasture", number: 9 },
         { type: "forest", number: 8 },
         { type: "sea", fixed: true },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -451,6 +452,7 @@ const templates: [
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
+        { type: "sea", fixed: true },
       ],
       [
         { type: "empty" },
@@ -458,9 +460,9 @@ const templates: [
         { type: "sea", fixed: true },
         { type: "mountains", number: 8, group: 2 },
         { type: "pasture", number: 11, group: 2 },
-        { type: "sea", fixed: true },
+        { type: "sea", group: 2 },
         { type: "gold", number: 4, group: 2 },
-        { type: "sea", fixed: true },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -488,6 +490,7 @@ const templates: [
           port: { type: "timber", orientation: 300 },
         },
         { type: "forest", number: 9, group: 2 },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -499,6 +502,7 @@ const templates: [
         { type: "pasture", number: 9 },
         { type: "sea", fixed: true },
         { type: "gold", number: 10, group: 2 },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
@@ -509,6 +513,7 @@ const templates: [
         { type: "fields", number: 11 },
         { type: "forest", number: 5 },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
+        { type: "sea", group: 2 },
         { type: "sea", fixed: true },
       ],
       [
