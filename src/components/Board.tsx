@@ -15,6 +15,8 @@ import goldHorizonal from "../images/gold-horizontal.png";
 import goldVertical from "../images/gold-vertical.png";
 import seaHorizontal from "../images/sea-horizontal.png";
 import seaVertical from "../images/sea-vertical.png";
+import fogHorizontal from "../images/fog-horizontal.png";
+import fogVertical from "../images/fog-vertical.png";
 import two from "../images/2.png";
 import three from "../images/3.png";
 import four from "../images/4.png";
@@ -48,6 +50,7 @@ const hexTypeToImg: { [type in HexType]: [string, string] } = {
   desert: [desertVertical, desertHorizontal],
   sea: [seaVertical, seaHorizontal],
   gold: [goldVertical, goldHorizonal],
+  fog: [fogVertical, fogHorizontal],
 };
 
 const numberValToImg = [
