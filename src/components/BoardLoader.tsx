@@ -102,7 +102,7 @@ export default function BoardLoader({
           setShareSnackSeverity("error");
           setShareSnackMessage(
             "Something went wrong copying the share link to" +
-              "the clipboard. Check the console for details."
+              " the clipboard. Check the console for details."
           );
           console.log(reason);
           setShareSnackOpen(true);
