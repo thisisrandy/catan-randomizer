@@ -3,7 +3,17 @@ import catanBoardFactory from "../factories/boardFactory";
 import { shuffle } from "../logic/shuffle";
 import { CatanBoardTemplate, MinPipsOnHexTypes } from "../types/boards";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
-import { Hex, HexType } from "../types/hexes";
+import { Hex, HexType, NumberChitValue } from "../types/hexes";
+
+// FIXME: Jest for some reason erases structuredClone, which is used by the
+// shuffling code. https://github.com/facebook/jest/issues/12628 was supposed to
+// have fixed that, but a) create-react-app hasn't been updated to include that
+// version of jest, and b) the fix seems strangely absent from the most recent
+// version (v28.1.1), even though it's noted in the changelog. I need to
+// re-report the bug, but for now, I can just fake structuredClone
+if (typeof globalThis.structuredClone === "undefined") {
+  globalThis.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
+}
 
 const board = EXPANSIONS.get("Catan")!;
 const binaryConstraints: BinaryConstraints = {
@@ -297,6 +307,56 @@ describe("shuffle", () => {
       }
     }
     expect(false).toBe(true);
+  });
+
+  it("should shuffle terrain and number chits only within groups", () => {
+    const template: CatanBoardTemplate = [
+      [
+        { type: "desert" },
+        { type: "fields", number: 5, group: 2 },
+        { type: "fields", number: 4 },
+        { type: "forest", number: 3 },
+        { type: "hills", number: 3, group: 1 },
+        { type: "mountains", number: 6, group: 1 },
+        { type: "mountains", number: 8, group: 2 },
+        { type: "sea", fixed: true, group: 2 },
+        { type: "pasture", number: 2, group: 2 },
+      ],
+    ];
+    const board = catanBoardFactory(template);
+    const groupsAndIndices: [number | undefined, number][] =
+      board.recommendedLayout.map((h, i) => [h.group, i]);
+    const uniqueGroups = Array.from(
+      new Set(board.recommendedLayout.map((h) => h.group)).values()
+    );
+    const getGroups = (hexes: Hex[]) =>
+      uniqueGroups.map((groupId) => {
+        const indices = groupsAndIndices
+          .filter(([g]) => g === groupId)
+          .map(([, i]) => i);
+        return {
+          groupId,
+          terrain: indices.map((i) => hexes[i].type).sort(),
+          numbers: indices
+            .map((i) => hexes[i].number)
+            .filter((n) => n !== undefined)
+            .sort() as NumberChitValue[],
+        };
+      });
+    const startGroups = getGroups(board.recommendedLayout);
+
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      const groups = getGroups(hexes);
+      for (const group of groups) {
+        for (const startGroup of startGroups) {
+          // there aren't ever many groups, so while we could use Maps, scanning
+          // is fine
+          if (group.groupId !== startGroup.groupId) continue;
+          expect(group).toEqual(startGroup);
+        }
+      }
+    }
   });
 });
 

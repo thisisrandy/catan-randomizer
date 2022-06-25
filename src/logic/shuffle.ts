@@ -1,25 +1,7 @@
-import {
-  Hex,
-  HexType,
-  NON_RESOURCE_PRODUCING_HEX_TYPES,
-  NumberChitValue,
-  Port,
-  PortType,
-} from "../types/hexes";
+import { Hex, Port, PortType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
 import { HexGroups } from "./HexGroups";
-
-interface Terrain {
-  type: HexType;
-  fixed: boolean;
-  port: Port | undefined;
-}
-
-/**
- * 0 is used as a sentinel to represent "no chit"
- */
-type Number = NumberChitValue | 0;
 
 /**
  * Shuffle `board` using the provided constraints and return the result
@@ -30,37 +12,23 @@ export function shuffle(
   numericConstraints: NumericConstraints
 ): Hex[] {
   // shuffle terrain first
-  const terrain = getShuffledTerrain(board, numericConstraints);
-  // then ports
-  const ports = getShuffledPorts(board);
-  // and finally, numbers, which depends on terrain
-  const numbers = getShuffledNumbers(
+  let hexes = getShuffledTerrain(board, numericConstraints);
+  // and then numbers, which depends on terrain
+  hexes = getShuffledNumbers(
     board,
-    terrain,
+    hexes,
     binaryConstraints,
     numericConstraints
   );
 
-  // having shuffled everything, it's time to assemble the board
-  const hexes: Hex[] = [];
-  // it's convenient to pop from ports, so reverse it first to maintain the
-  // order of fixed ports
-  ports.reverse();
-  for (
-    let currentIndex = 0;
-    currentIndex < board.recommendedLayout.length;
-    currentIndex++
-  ) {
-    const hex: Hex = { type: terrain[currentIndex].type };
-    const port = terrain[currentIndex].port;
-    if (typeof port !== "undefined") {
-      port.type = ports.pop()!;
-      hex.port = port;
+  // ports don't get shuffled in place, so we need to assign them back to
+  // hexes after shuffling. it's convenient to pop from ports, so reverse it
+  // first to maintain the order of fixed ports
+  const ports = getShuffledPorts(board).reverse();
+  for (const hex of hexes) {
+    if (hex.port !== undefined) {
+      hex.port.type = ports.pop()!;
     }
-    if (numbers[currentIndex] > 0) {
-      hex.number = numbers[currentIndex] as NumberChitValue;
-    }
-    hexes.push(hex);
   }
 
   return hexes;
@@ -69,25 +37,21 @@ export function shuffle(
 function getShuffledTerrain(
   board: CatanBoard,
   numericConstraints: NumericConstraints
-): Terrain[] {
-  const terrain: Terrain[] = board.recommendedLayout.map((hex) => ({
-    type: hex.type,
-    fixed: typeof hex.fixed !== "undefined",
-    port: hex.port,
-  }));
-  const hexGroups = new HexGroups(board, "terrain");
+): Hex[] {
+  const hexes: Hex[] = structuredClone(board.recommendedLayout);
+  const hexGroups = new HexGroups(hexes, "terrain");
   let randomIndex;
 
   topLoop: while (true) {
     hexGroups.reset();
 
     shuffleLoop: for (
-      let currentIndex = terrain.length - 1;
+      let currentIndex = hexes.length - 1;
       currentIndex >= 0;
       currentIndex--
     ) {
       // if this hex is fixed, skip it
-      if (terrain[currentIndex].fixed) continue;
+      if (hexes[currentIndex].fixed) continue;
 
       // check constraints. we may have gotten ourself into a state from which
       // we can't meet the constraints without backtracking, so after a few
@@ -99,16 +63,19 @@ function getShuffledTerrain(
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle
         randomIndex = hexGroups.getRandomIndex();
-        [terrain[currentIndex], terrain[randomIndex]] = [
-          terrain[randomIndex],
-          terrain[currentIndex],
+        // FIXME: this moves maxPipsOnChit. need to separate things that move
+        // together from things that don't. shuffling code shouldn't have to
+        // know about those details
+        [hexes[currentIndex], hexes[randomIndex]] = [
+          hexes[randomIndex],
+          hexes[currentIndex],
         ];
 
         // then check each constraint. note that max connected like terrain
         // doesn't apply to sea hexes
         if (
           numericConstraints.maxConnectedLikeTerrain.value < 7 &&
-          terrain[currentIndex].type !== "sea"
+          hexes[currentIndex].type !== "sea"
         ) {
           // accumulate all same type connected hexes using standard
           // breath-first search
@@ -127,8 +94,8 @@ function getShuffledTerrain(
               // consider only neighbors greater than this hex, as those lower
               // will still be shuffled, unless the lower neighbor is fixed
               if (
-                (neighbor > currentIndex || terrain[neighbor].fixed) &&
-                terrain[currentIndex].type === terrain[neighbor].type
+                (neighbor > currentIndex || hexes[neighbor].fixed) &&
+                hexes[currentIndex].type === hexes[neighbor].type
               )
                 stack.push(neighbor);
             }
@@ -148,7 +115,7 @@ function getShuffledTerrain(
     break;
   }
 
-  return terrain;
+  return hexes;
 }
 
 function getShuffledPorts(board: CatanBoard): PortType[] {
@@ -185,56 +152,49 @@ function getShuffledPorts(board: CatanBoard): PortType[] {
 
 function getShuffledNumbers(
   board: CatanBoard,
-  shuffledTerrain: Terrain[],
+  hexes: Hex[],
   binaryConstraints: BinaryConstraints,
   numericConstraints: NumericConstraints
-): Number[] {
-  // note the explicit typing of 0 to prevent it from widening to number in
-  // places where it can be reassigned. see
-  // https://stackoverflow.com/a/72597545/12162258
-  const numbers = board.recommendedLayout.map((hex) =>
-    typeof hex.number === "undefined" ? (0 as 0) : hex.number
-  );
+): Hex[] {
+  // FIXME: as noted elsewhere, maxPipsOnChit is fixed to hex position, but
+  // since we're moving hexes around during terrain shuffling, we need to draw
+  // from the original board layout here. this detail should be encapsulated
+  // elsewhere
   const maxPipsOnChits = board.recommendedLayout.map((hex) =>
     typeof hex.maxPipsOnChit === "undefined" ? 5 : hex.maxPipsOnChit
   );
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
-  const hexGroups = new HexGroups(board, "numbers");
+  const hexGroups = new HexGroups(hexes, "numbers");
   let randomIndex;
 
   topLoop: while (true) {
     hexGroups.reset();
 
     shuffleLoop: for (
-      let currentIndex = numbers.length - 1;
+      let currentIndex = hexes.length - 1;
       currentIndex >= 0;
       currentIndex--
     ) {
       // skip hexes without number chits
-      if (
-        NON_RESOURCE_PRODUCING_HEX_TYPES.includes(
-          shuffledTerrain[currentIndex].type
-        )
-      )
-        continue;
+      if (hexes[currentIndex].number === undefined) continue;
 
       // check constraints. as with terrain, we don't attempt to backtrack and
       // simply start over if too many tries fail
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle
         randomIndex = hexGroups.getRandomIndex();
-        [numbers[currentIndex], numbers[randomIndex]] = [
-          numbers[randomIndex],
-          numbers[currentIndex],
+        [hexes[currentIndex].number, hexes[randomIndex].number] = [
+          hexes[randomIndex].number,
+          hexes[currentIndex].number,
         ];
 
         // then check each constraint
 
         // min/max pip count
-        const pipCount = 6 - Math.abs(7 - numbers[currentIndex]);
+        const pipCount =
+          6 - Math.abs(7 - (hexes[currentIndex].number as number));
         if (
-          pipCount <
-            (minPipsOnHexTypes[shuffledTerrain[currentIndex].type] || 1) ||
+          pipCount < (minPipsOnHexTypes[hexes[currentIndex].type] || 1) ||
           pipCount > maxPipsOnChits[currentIndex]
         ) {
           // eslint-disable-next-line no-extra-label
@@ -244,11 +204,11 @@ function getShuffledNumbers(
         // no 6/8 neighbors
         if (
           binaryConstraints.noAdjacentSixEight &&
-          [6, 8].includes(numbers[currentIndex])
+          [6, 8].includes(hexes[currentIndex].number as number)
         ) {
           for (const neighbor of board.neighbors[currentIndex]) {
             if (neighbor < currentIndex) continue;
-            if ([6, 8].includes(numbers[neighbor])) {
+            if ([6, 8].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
             }
           }
@@ -257,11 +217,11 @@ function getShuffledNumbers(
         // no 2/12 neighbors
         if (
           binaryConstraints.noAdjacentTwoTwelve &&
-          [2, 12].includes(numbers[currentIndex])
+          [2, 12].includes(hexes[currentIndex].number as number)
         ) {
           for (const neighbor of board.neighbors[currentIndex]) {
             if (neighbor < currentIndex) continue;
-            if ([2, 12].includes(numbers[neighbor])) {
+            if ([2, 12].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
             }
           }
@@ -271,7 +231,7 @@ function getShuffledNumbers(
         if (binaryConstraints.noAdjacentPairs) {
           for (const neighbor of board.neighbors[currentIndex]) {
             if (neighbor < currentIndex) continue;
-            if (numbers[currentIndex] === numbers[neighbor]) {
+            if (hexes[currentIndex].number === hexes[neighbor].number) {
               continue tryLoop;
             }
           }
@@ -310,7 +270,7 @@ function getShuffledNumbers(
         }
         for (const intersection of intersections) {
           const pipCount = intersection
-            .map((i) => 6 - Math.abs(7 - numbers[i]))
+            .map((i) => 6 - Math.abs(7 - (hexes[i].number as number)))
             .reduce((acc, n) => acc + n, 0 as number);
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
             continue tryLoop;
@@ -331,5 +291,5 @@ function getShuffledNumbers(
     break;
   }
 
-  return numbers;
+  return hexes;
 }

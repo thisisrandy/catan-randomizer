@@ -1,5 +1,4 @@
-import { CatanBoard } from "../types/boards";
-import { Hex, NON_RESOURCE_PRODUCING_HEX_TYPES } from "../types/hexes";
+import { Hex } from "../types/hexes";
 
 export type ShuffleType = "terrain" | "numbers";
 
@@ -27,7 +26,7 @@ class HexGroup {
         break;
       case "numbers":
         this.sourceIndices = sourceIndices.filter(
-          (_, i) => !NON_RESOURCE_PRODUCING_HEX_TYPES.includes(hexes[i].type)
+          (_, i) => hexes[i].number !== undefined
         );
         break;
       default:
@@ -93,18 +92,19 @@ export class HexGroups {
   #hexGroups: HexGroup[] = [];
   #currentHexGroup: number = 0;
 
-  constructor(board: CatanBoard, shuffleType: ShuffleType) {
-    const groupsAndIndices: [number | undefined, number][] =
-      board.recommendedLayout.map((h, i) => [h.group, i]);
+  constructor(hexes: Hex[], shuffleType: ShuffleType) {
+    const groupsAndIndices: [number | undefined, number][] = hexes.map(
+      (h, i) => [h.group, i]
+    );
     const uniqueGroups = Array.from(
-      new Set(board.recommendedLayout.map((h) => h.group)).values()
+      new Set(hexes.map((h) => h.group)).values()
     );
     this.#hexGroups = uniqueGroups.map((groupId) => {
       const indices = groupsAndIndices
         .filter(([g]) => g === groupId)
         .map(([, i]) => i);
       return new HexGroup(
-        indices.map((i) => board.recommendedLayout[i]),
+        indices.map((i) => hexes[i]),
         indices,
         shuffleType
       );
