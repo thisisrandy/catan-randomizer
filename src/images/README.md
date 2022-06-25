@@ -15,9 +15,11 @@ As some expansions are played with hexes rotated 90°, two varieties of hexes ar
 
 1. A "vertical" hex with images aligned on the vertical axis.
 2. A "horizonal" hex where:
-   - If a horizontal image is available, it is used rotated -90°. Note that most
-     hex images from the various manuals are vertical-only, meaning that the soft
-     border around the hex image is oriented with vertices at top and bottom.
+   - If a horizontal image is available, it is used rotated -90° (horizontal
+     boards are specified at -90° and rotated 90° when drawn). Note that most
+     hex images from the various manuals are vertical-only, meaning that the
+     soft border around the hex image is oriented with vertices at top and
+     bottom.
    - Otherwise, a horizonal version is created by rotating the vertical version
      -120°. This creates the effect of the image being at -30° on horizontal
      boards. The [Seafarers

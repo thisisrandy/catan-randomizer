@@ -31,6 +31,12 @@ import { Hex, HexTemplate, HexType, MaxPipsOnChit } from "./hexes";
  */
 export type CatanBoardTemplate = HexTemplate[][];
 
+/**
+ * If true, number chits are rotated -90°, then the entire board 90°. As such, a
+ * horizontal board must be specified top to bottom (cols) right to left (rows)
+ * instead of the usual left to right (cols) top to bottom (rows). Useful e.g.
+ * for Seafarers
+ */
 export type UseHorizonalLayout = boolean;
 
 /**
@@ -92,8 +98,7 @@ export interface CatanBoard {
    */
   boardHeightPercentage?: string;
   /**
-   * If true, number chits are rotated -90°, then the entire board 90°. Useful e.g.
-   * for Seafarers
+   * See {@link UseHorizonalLayout}
    */
   horizontal?: UseHorizonalLayout;
   /**
