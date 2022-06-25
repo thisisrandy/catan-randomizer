@@ -102,7 +102,7 @@ export interface CatanBoard {
    */
   horizontal?: UseHorizonalLayout;
   /**
-   * See {@link MinPipsOnHexType}
+   * See {@link MinPipsOnHexTypes}
    */
   minPipsOnHexTypes?: MinPipsOnHexTypes;
   /**
