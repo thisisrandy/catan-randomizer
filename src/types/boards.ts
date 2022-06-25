@@ -1,4 +1,4 @@
-import { Hex, HexTemplate, HexType } from "./hexes";
+import { Hex, HexTemplate, HexType, MaxPipsOnChit } from "./hexes";
 
 /**
  * A template to simplify the specification of a `CatanBoard`.
@@ -100,6 +100,10 @@ export interface CatanBoard {
    * See {@link MinPipsOnHexType}
    */
   minPipsOnHexTypes?: MinPipsOnHexTypes;
+  /**
+   * See {@link MaxPipsOnChit}
+   */
+  maxPipsOnChits: MaxPipsOnChit[];
 }
 
 export type ExpansionName =

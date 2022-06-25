@@ -22,12 +22,19 @@ export default function catanBoardFactory(
   horizontal?: UseHorizonalLayout,
   minPipsOnHexTypes?: MinPipsOnHexTypes
 ): CatanBoard {
-  // generating recommendedLayout is as simple as filtering out empties and
-  // casting the templates to Hex
-  const recommendedLayout = template
-    .flat()
-    .filter((ht) => ht.type !== "empty")
-    .map((ht) => ht as Hex);
+  // flattening and filtering out empties will be useful for several operations
+  const flatNoEmpties = template.flat().filter((ht) => ht.type !== "empty");
+
+  // first, pull maxPipsOnChits out into a separate array so the shuffling code
+  // doesn't need to remember to fix it to hex positions
+  const maxPipsOnChits = flatNoEmpties.map((ht) =>
+    ht.maxPipsOnChit === undefined ? 5 : ht.maxPipsOnChit
+  );
+
+  // then, delete the maxPipsOnChit property from all templates. since we also
+  // filtered empties, we can safely cast HexTemplate to Hex
+  flatNoEmpties.forEach((ht) => delete ht.maxPipsOnChit);
+  const recommendedLayout = flatNoEmpties.map((ht) => ht as Hex);
 
   // a small and large row for each hex followed by a final small at the end
   const cssGridTemplateRows = `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
@@ -120,5 +127,6 @@ export default function catanBoardFactory(
     boardWidthPercentage,
     horizontal,
     minPipsOnHexTypes,
+    maxPipsOnChits,
   };
 }

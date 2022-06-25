@@ -65,7 +65,7 @@ describe("boardFactory", () => {
         { type: "sea", fixed: true },
         { type: "hills", number: 5 },
         { type: "fields", number: 6 },
-        { type: "pasture", number: 11 },
+        { type: "pasture", number: 11, maxPipsOnChit: 3 },
         { type: "sea", fixed: true, port: { type: "wool", orientation: 60 } },
       ],
       [
@@ -212,6 +212,10 @@ describe("boardFactory", () => {
       }%`,
       boardWidthPercentage: undefined,
       horizontal: undefined,
+      maxPipsOnChits: [
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+        5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5,
+      ],
     };
 
     const generated = catanBoardFactory(template);

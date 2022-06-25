@@ -63,9 +63,6 @@ function getShuffledTerrain(
       tryLoop: for (let tries = 0; tries < 10; tries++) {
         // shuffle
         randomIndex = hexGroups.getRandomIndex();
-        // FIXME: this moves maxPipsOnChit. need to separate things that move
-        // together from things that don't. shuffling code shouldn't have to
-        // know about those details
         [hexes[currentIndex], hexes[randomIndex]] = [
           hexes[randomIndex],
           hexes[currentIndex],
@@ -156,13 +153,6 @@ function getShuffledNumbers(
   binaryConstraints: BinaryConstraints,
   numericConstraints: NumericConstraints
 ): Hex[] {
-  // FIXME: as noted elsewhere, maxPipsOnChit is fixed to hex position, but
-  // since we're moving hexes around during terrain shuffling, we need to draw
-  // from the original board layout here. this detail should be encapsulated
-  // elsewhere
-  const maxPipsOnChits = board.recommendedLayout.map((hex) =>
-    typeof hex.maxPipsOnChit === "undefined" ? 5 : hex.maxPipsOnChit
-  );
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
   const hexGroups = new HexGroups(hexes, "numbers");
   let randomIndex;
@@ -195,7 +185,7 @@ function getShuffledNumbers(
           6 - Math.abs(7 - (hexes[currentIndex].number as number));
         if (
           pipCount < (minPipsOnHexTypes[hexes[currentIndex].type] || 1) ||
-          pipCount > maxPipsOnChits[currentIndex]
+          pipCount > board.maxPipsOnChits[currentIndex]
         ) {
           // eslint-disable-next-line no-extra-label
           continue tryLoop;

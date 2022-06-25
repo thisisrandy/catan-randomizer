@@ -44,23 +44,29 @@ type Hex = {
    * should specify their group number here
    */
   group?: number;
-  /**
-   * The maximum number of pips which may appear on this number chit after
-   * shuffling. Initial values are not checked for sanity. This is to be used
-   * when the instructions specify e.g. to "make sure the 3 terrain hexes at the
-   * bottom of the main island don't receiver numbers that are too favorable".
-   * During shuffling, this value is *fixed* to its initial position on the
-   * board.
-   */
-  maxPipsOnChit?: 1 | 2 | 3 | 4;
 };
 
+/**
+ * The maximum number of pips which may appear on this number chit after
+ * shuffling. 5 means "no restriction". This is to be used when the instructions
+ * specify e.g. to "make sure the 3 terrain hexes at the bottom of the main
+ * island don't receiver numbers that are too favorable". During shuffling, this
+ * value is *fixed* to its initial position on the board.
+ */
+type MaxPipsOnChit = 1 | 2 | 3 | 4 | 5;
 type HexTemplateType = HexType | "empty";
-type HexTemplate = Omit<Hex, "type"> & { type: HexTemplateType };
+type HexTemplate = Omit<Hex, "type"> & {
+  type: HexTemplateType;
+  /**
+   * See {@link MaxPipsOnChit}
+   */
+  maxPipsOnChit?: MaxPipsOnChit;
+};
 
 export type {
   HexType,
   Hex,
+  MaxPipsOnChit,
   NumberChitValue,
   PortType,
   PortOrientation,
