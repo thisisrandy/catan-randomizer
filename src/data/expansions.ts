@@ -729,6 +729,7 @@ const templates: [
         { type: "mountains", number: 3 },
         { type: "fields", number: 12 },
         { type: "pasture", number: 5 },
+        { type: "sea", fixed: true },
       ],
       [
         { type: "sea", fixed: true },
