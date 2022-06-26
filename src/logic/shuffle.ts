@@ -10,7 +10,28 @@ if (typeof globalThis.structuredClone === "undefined") {
 }
 
 /**
+ * An error to be thrown when board shuffling cannot be completed within
+ * specified constraints after a set number of tries. Should include a message
+ * indicating which stage of shuffling was unabled to be completed
+ */
+export class ShufflingError extends Error {}
+export class TerrainShufflingError extends ShufflingError {}
+export class NumberShufflingError extends ShufflingError {}
+
+/**
+ * In a small test, large, heavily constrained boards were found to occasionally
+ * take over 1000 retries to shuffle, although the median is much lower.
+ * Multiplying that by a small factor seems like a reasonable proxy for
+ * "over-constrained"
+ */
+const MAX_RETRIES = 10000;
+
+/**
  * Shuffle `board` using the provided constraints and return the result
+ *
+ * @throws {ShufflingError} If the board is over-constrained, throws
+ * `ShufflingError` with a message indicating which stage of shuffling was
+ * unable to be completed
  */
 export function shuffle(
   board: CatanBoard,
@@ -46,7 +67,8 @@ function getShuffledTerrain(
 ): Hex[] {
   const hexes: Hex[] = structuredClone(board.recommendedLayout);
   const hexGroups = new HexGroups(hexes, "terrain");
-  let randomIndex;
+  let randomIndex,
+    retries = 0;
 
   topLoop: while (true) {
     hexGroups.reset();
@@ -111,6 +133,15 @@ function getShuffledTerrain(
       }
 
       // we failed to find a valid board after exhausing all tries. start over
+      if (retries++ > MAX_RETRIES)
+        throw new TerrainShufflingError(
+          "Terrain shuffling failed to find a board that falls within the specified" +
+            " constraints. It's very likely that the board is over-constrained. For" +
+            " example, if the board has a large number of pasture hexes and you" +
+            " specify that no same type hexes may touch, it might be impossible" +
+            " to construct a suitable board. Please relax constraints and try" +
+            " again."
+        );
       continue topLoop;
     }
 
@@ -162,7 +193,8 @@ function getShuffledNumbers(
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
   const maxPipsOnHexTypes = board.maxPipsOnHexTypes || {};
   const hexGroups = new HexGroups(hexes, "numbers");
-  let randomIndex;
+  let randomIndex,
+    retries = 0;
 
   topLoop: while (true) {
     hexGroups.reset();
@@ -283,6 +315,15 @@ function getShuffledNumbers(
 
       // we failed to find a valid board after exhausting all tries. time to
       // start over from the beginning
+      if (retries++ > MAX_RETRIES)
+        throw new NumberShufflingError(
+          "Number chit shuffling failed to find a board that falls within the" +
+            " specified constraints. It's very likely that the board is over-constrained." +
+            " For example, if the board doesn't include very many low pip chits" +
+            " and you specify a small maximum intersection pip count, it might be" +
+            " impossible to construct a suitable board. Please relax constraints" +
+            " and try again."
+        );
       continue topLoop;
     }
 

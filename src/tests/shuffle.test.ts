@@ -1,6 +1,10 @@
 import { EXPANSIONS } from "../data/expansions";
 import catanBoardFactory from "../factories/boardFactory";
-import { shuffle } from "../logic/shuffle";
+import {
+  NumberShufflingError,
+  shuffle,
+  TerrainShufflingError,
+} from "../logic/shuffle";
 import {
   CatanBoardTemplate,
   MaxPipsOnHexTypes,
@@ -367,6 +371,27 @@ describe("shuffle", () => {
         }
       }
     }
+  });
+
+  it("should throw a ShufflingError when the board is over-constrained", () => {
+    const template: CatanBoardTemplate = [
+      [
+        { type: "fields", number: 5 },
+        { type: "fields", number: 4 },
+      ],
+      [{ type: "empty" }, { type: "fields", number: 6 }],
+    ];
+    const board = catanBoardFactory(template);
+
+    expect(() =>
+      shuffle(board, binaryConstraints, numericConstraints)
+    ).toThrowError(TerrainShufflingError);
+    expect(() =>
+      shuffle(board, binaryConstraints, {
+        ...numericConstraints,
+        maxConnectedLikeTerrain: { value: 7, valid: true },
+      })
+    ).toThrowError(NumberShufflingError);
   });
 });
 

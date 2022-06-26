@@ -1107,10 +1107,6 @@ const templates: [
     true,
   ],
   [
-    // FIXME: It seems it isn't possible to arrange the main island in this
-    // scenario with a max intersection pip count of 10. Need to set an upper
-    // limit to shuffle retries and then inform the user that the board is
-    // over-constrained when it's reached
     "Seafarers: Through the Desert 3-Player Set-up",
     [
       [

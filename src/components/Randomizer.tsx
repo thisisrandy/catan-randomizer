@@ -13,10 +13,12 @@ import {
   IconButton,
   FormGroup,
   Tooltip,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
-import { shuffle } from "../logic/shuffle";
+import { shuffle, ShufflingError } from "../logic/shuffle";
 
 interface Props {
   setHexes: React.Dispatch<React.SetStateAction<Hex[]>>;
@@ -66,8 +68,15 @@ export default function Randomizer({ setHexes, board }: Props) {
     if (!invalidConstraints) setDialogOpen(false);
   };
 
+  const [errorSnackOpen, setErrorSnackOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleErrorSnackClose = () => {
+    setErrorSnackOpen(false);
+  };
+
   return (
     <>
+      {/* Constraints dialog */}
       <Dialog open={dialogOpen} onClose={handleClose}>
         <DialogTitle>Settings</DialogTitle>
         <DialogContent
@@ -167,6 +176,8 @@ export default function Randomizer({ setHexes, board }: Props) {
           </Tooltip>
         </DialogActions>
       </Dialog>
+
+      {/* Buttons */}
       <Tooltip
         title="Generate a random board layout subject to the specified constraints"
         disableTouchListener
@@ -175,9 +186,16 @@ export default function Randomizer({ setHexes, board }: Props) {
         <Button
           variant="contained"
           style={{ margin: 5, padding: 10 }}
-          onClick={() =>
-            setHexes(shuffle(board, binaryConstraints, numericConstraints))
-          }
+          onClick={() => {
+            try {
+              setHexes(shuffle(board, binaryConstraints, numericConstraints));
+            } catch (error: unknown) {
+              if (error instanceof ShufflingError) {
+                setErrorMessage(error.message);
+                setErrorSnackOpen(true);
+              } else throw error;
+            }
+          }}
           disabled={invalidConstraints}
         >
           Randomize!
@@ -191,6 +209,21 @@ export default function Randomizer({ setHexes, board }: Props) {
           <SettingsIcon />
         </IconButton>
       </Tooltip>
+
+      {/* Error snackbar */}
+      <Snackbar
+        open={errorSnackOpen}
+        onClose={handleErrorSnackClose}
+        style={{ maxWidth: 400 }}
+      >
+        <Alert
+          onClose={handleErrorSnackClose}
+          severity="error"
+          style={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
