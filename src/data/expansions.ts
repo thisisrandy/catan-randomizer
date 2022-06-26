@@ -351,14 +351,14 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "grain", orientation: 180, fixed: true },
+          port: { type: "grain", orientation: 180 },
         },
         { type: "fields", number: 4 },
         { type: "pasture", number: 6 },
         {
           type: "sea",
           fixed: true,
-          port: { type: "3:1", orientation: 0, fixed: true },
+          port: { type: "3:1", orientation: 0 },
         },
         { type: "fields", number: 3, group: 2 },
         { type: "sea", group: 2 },
@@ -369,7 +369,7 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "ore", orientation: 240, fixed: true },
+          port: { type: "ore", orientation: 240 },
         },
         { type: "pasture", number: 2 },
         { type: "mountains", number: 5 },
@@ -377,7 +377,7 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "wool", orientation: 300, fixed: true },
+          port: { type: "wool", orientation: 300 },
         },
         { type: "gold", number: 4, group: 2 },
         { type: "sea", group: 2 },
@@ -398,7 +398,7 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "3:1", orientation: 120, fixed: true },
+          port: { type: "3:1", orientation: 120 },
         },
         { type: "fields", number: 11 },
         { type: "mountains", number: 3 },
@@ -413,14 +413,14 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "brick", orientation: 180, fixed: true },
+          port: { type: "brick", orientation: 180 },
         },
         { type: "fields", number: 6 },
         { type: "forest", number: 5 },
         {
           type: "sea",
           fixed: true,
-          port: { type: "3:1", orientation: 0, fixed: true },
+          port: { type: "3:1", orientation: 0 },
         },
         { type: "hills", number: 10, group: 2 },
         { type: "sea", fixed: true },
@@ -433,7 +433,7 @@ const templates: [
         {
           type: "sea",
           fixed: true,
-          port: { type: "timber", orientation: 120, fixed: true },
+          port: { type: "timber", orientation: 120 },
         },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
