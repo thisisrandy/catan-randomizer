@@ -8,6 +8,7 @@ import {
 } from "../types/boards";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { Hex, HexType, NumberChitValue } from "../types/hexes";
+import { numberToPipCount } from "../utils/catan";
 
 // FIXME: Jest for some reason erases structuredClone, which is used by the
 // shuffling code. https://github.com/facebook/jest/issues/12628 was supposed to
@@ -281,7 +282,7 @@ describe("shuffle", () => {
         groupedTerrainOkay
       );
       for (let j = 0; j < hexes.length; j++) {
-        const pipCount = 6 - Math.abs(7 - (hexes[j].number as number));
+        const pipCount = numberToPipCount(hexes[j].number!);
         expect(pipCount).toBeLessThanOrEqual(
           pipConstrainedTemplate[0][j].maxPipsOnChit || 5
         );
@@ -385,8 +386,8 @@ function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
       .filter((n) => n > index)
       .sort((a, b) => a - b)
       .map((n) => hexes[n].number)
-      .map((num) => (typeof num === "undefined" ? 0 : num)),
-    intersections: number[][] = [];
+      .filter((num) => num !== undefined) as NumberChitValue[],
+    intersections: NumberChitValue[][] = [];
 
   if (largerNeighbors.length === 3) {
     intersections.push([hex.number, largerNeighbors[0], largerNeighbors[2]]);
@@ -397,7 +398,7 @@ function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
 
   return intersections.map((intersection) =>
     intersection
-      .map((num) => 6 - Math.abs(7 - num))
+      .map((num) => numberToPipCount(num))
       .reduce((acc, n) => acc + n, 0)
   );
 }

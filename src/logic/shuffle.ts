@@ -2,6 +2,7 @@ import { Hex, Port, PortType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
 import { HexGroups } from "./HexGroups";
+import { numberToPipCount } from "../utils/catan";
 
 /**
  * Shuffle `board` using the provided constraints and return the result
@@ -182,8 +183,7 @@ function getShuffledNumbers(
         // then check each constraint
 
         // min/max pip count
-        const pipCount =
-          6 - Math.abs(7 - (hexes[currentIndex].number as number));
+        const pipCount = numberToPipCount(hexes[currentIndex].number!);
         if (
           pipCount < (minPipsOnHexTypes[hexes[currentIndex].type] || 1) ||
           pipCount > (maxPipsOnHexTypes[hexes[currentIndex].type] || 5) ||
@@ -262,7 +262,7 @@ function getShuffledNumbers(
         }
         for (const intersection of intersections) {
           const pipCount = intersection
-            .map((i) => 6 - Math.abs(7 - (hexes[i].number as number)))
+            .map((i) => numberToPipCount(hexes[i].number!))
             .reduce((acc, n) => acc + n, 0 as number);
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
             continue tryLoop;
