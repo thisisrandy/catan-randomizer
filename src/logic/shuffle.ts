@@ -4,6 +4,11 @@ import { CatanBoard } from "../types/boards";
 import { HexGroups } from "./HexGroups";
 import { numberToPipCount } from "../utils/catan";
 
+// structuredClone isn't available on older devices. use this as a polyfill
+if (typeof globalThis.structuredClone === "undefined") {
+  globalThis.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
+}
+
 /**
  * Shuffle `board` using the provided constraints and return the result
  */
