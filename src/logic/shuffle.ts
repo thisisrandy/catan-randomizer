@@ -267,7 +267,9 @@ function getShuffledNumbers(
         }
         for (const intersection of intersections) {
           const pipCount = intersection
-            .map((i) => numberToPipCount(hexes[i].number!))
+            .map((i) => hexes[i].number)
+            .filter((num) => num !== undefined)
+            .map((num) => numberToPipCount(num!))
             .reduce((acc, n) => acc + n, 0 as number);
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
             continue tryLoop;

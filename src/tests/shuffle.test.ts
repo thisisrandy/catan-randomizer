@@ -385,9 +385,12 @@ function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
   const largerNeighbors = board.neighbors[index]
       .filter((n) => n > index)
       .sort((a, b) => a - b)
-      .map((n) => hexes[n].number)
-      .filter((num) => num !== undefined) as NumberChitValue[],
-    intersections: NumberChitValue[][] = [];
+      // it's important not to toss non-resource-producing hexes, because we
+      // need a placeholder to maintain structure. e.g. if the desert is at max
+      // and we threw it out, we'd end up considering (i, min, mid) an
+      // intersection, which of course is not correct
+      .map((n) => hexes[n].number || 0),
+    intersections: (NumberChitValue | 0)[][] = [];
 
   if (largerNeighbors.length === 3) {
     intersections.push([hex.number, largerNeighbors[0], largerNeighbors[2]]);
@@ -398,7 +401,8 @@ function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
 
   return intersections.map((intersection) =>
     intersection
-      .map((num) => numberToPipCount(num))
+      .filter((num) => num > 0)
+      .map((num) => numberToPipCount(num as NumberChitValue))
       .reduce((acc, n) => acc + n, 0)
   );
 }
