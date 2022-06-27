@@ -393,6 +393,29 @@ describe("shuffle", () => {
       })
     ).toThrowError(NumberShufflingError);
   });
+
+  it("shouldn't shuffle fixed numbers", () => {
+    const template: CatanBoardTemplate = [
+      [
+        { type: "fields", number: 5 },
+        { type: "forest", number: 3 },
+        { type: "hills", number: 6 },
+        { type: "mountains", number: 9 },
+      ],
+    ];
+    const board = catanBoardFactory(
+      template,
+      undefined,
+      undefined,
+      undefined,
+      true
+    );
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      for (let i = 0; i < hexes.length; i++)
+        expect(hexes[i].number).toEqual(template[0][i].number);
+    }
+  });
 });
 
 function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {

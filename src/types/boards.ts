@@ -55,6 +55,17 @@ export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
 export type MaxPipsOnHexTypes = { [type in HexType]?: 1 | 2 | 3 | 4 };
 
 /**
+ * A true value indicates that the number chits on this board should not be
+ * shuffled, e.g. as is true in the Seafarers: The Pirate Islands scenario. Note
+ * that fixing only some numbers is much more complicated due to the way
+ * shuffling proceeds and is not currently supported. Note also that if this is
+ * used on a board where any non-resource-producing hexes are not fixed, a
+ * number may end up on e.g. the desert, which is obviously not desirable.
+ * Correct board specification is left to the programmer
+ */
+export type FixAllNumbers = boolean;
+
+/**
  * All of the data about a Catan board, including the hexes and number chits
  * used as well as board shape and display styling. Note that by convention,
  * hexes are counted off left to right, top to bottom. For example, in the base
@@ -120,6 +131,10 @@ export interface CatanBoard {
    * See {@link MaxPipsOnChit}
    */
   maxPipsOnChits: MaxPipsOnChit[];
+  /**
+   * See {@link FixAllNumbers}
+   */
+  fixAllNumbers?: FixAllNumbers;
 }
 
 export type ExpansionName =

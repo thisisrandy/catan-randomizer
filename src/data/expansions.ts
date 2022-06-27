@@ -3,6 +3,7 @@ import {
   CatanBoardTemplate,
   ExpansionName,
   Expansions,
+  FixAllNumbers,
   MaxPipsOnHexTypes,
   MinPipsOnHexTypes,
   UseHorizonalLayout,
@@ -13,7 +14,8 @@ const templates: [
   CatanBoardTemplate,
   UseHorizonalLayout?,
   MinPipsOnHexTypes?,
-  MaxPipsOnHexTypes?
+  MaxPipsOnHexTypes?,
+  FixAllNumbers?
 ][] = [
   [
     "Catan",
@@ -1571,13 +1573,21 @@ const templates: [
 
 export const EXPANSIONS: Expansions = new Map(
   templates.map(
-    ([key, template, horizontal, minPipsOnHexTypes, maxPipsOnHexTypes]) => [
+    ([
+      key,
+      template,
+      horizontal,
+      minPipsOnHexTypes,
+      maxPipsOnHexTypes,
+      fixAllNumbers,
+    ]) => [
       key,
       catanBoardFactory(
         template,
         horizontal,
         minPipsOnHexTypes,
-        maxPipsOnHexTypes
+        maxPipsOnHexTypes,
+        fixAllNumbers
       ),
     ]
   )
