@@ -179,6 +179,9 @@ export type ExpansionName =
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
- * container for board definitions
+ * container for board definitions. `Map`s maintain the type of their keys in
+ * typescript (as oppposed to `Object`s, which coerce property names to `string`
+ * when asked e.g. for `Object.keys(...)`), so they're just a little nicer to
+ * use in the particular way we use `Expansions`
  */
 export type Expansions = Map<ExpansionName, CatanBoard>;
