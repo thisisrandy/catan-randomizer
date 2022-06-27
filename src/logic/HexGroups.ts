@@ -36,12 +36,6 @@ class HexGroup {
     }
 
     this.#internalIndex = this.sourceIndices.length - 1;
-    if (this.#internalIndex < 0) {
-      throw new Error(
-        "Tried to make a HexGroup without any in-class hexes." +
-          " The source board is probably ill-specified"
-      );
-    }
     this.currentIndex = this.sourceIndices[this.#internalIndex];
   }
 
