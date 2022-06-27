@@ -33,8 +33,13 @@ aren't seen elsewhere.
 - [Catan: 5-6 Player Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
 - [Cities & Knights](https://www.catan.com/cities-knights)
 - [Explorers & Pirates](https://www.catan.com/explorers-pirates)
-- [Seafarers](https://www.catan.com/seafarers), including the following scenarios:
-  - Heading for New Shores
+- [Seafarers](https://www.catan.com/seafarers), all scenarios. Pains have been
+  taken to observe every aspect of variable setup specified in the manual for
+  each scenario, including things like shuffling the main and foreign islands
+  separately, restricting the pip count of certain positions or terrain types,
+  and not shuffling some/all islands and/or ports. That said, I've never
+  actually played Seafarers, and it's quite possible I misinterpretted
+  something. [PRs are welcome!](#contributing)
 
 ## Other Features
 
@@ -53,24 +58,18 @@ please feel free to fix it.
 
 The codebase is small and follows the general structure of a
 [create-react-app](https://create-react-app.dev/) project, so it should be easy
-to dive into, but here are a couple of tips:
+to dive into, but here are some tips:
 
 - Board definitions are in [src/data/expansions.ts](src/data/expansions.ts), and
-  expansion names are in [src/types/boards.ts](src/types/boards.ts). Provided
-  that variable setup follows the same rules as the base game, adding a new
-  board is just a matter of adding a new board definiton and expansion name in
-  these two files.
-- In some expansions, e.g. [Seafarers](https://www.catan.com/seafarers), variable
-  setup is restricted in ways that are not currently conceptualized in code. For
-  example, there may be multiple sets of hexes and chits, some of which are
-  distributed on one island, and the others of which are distributed elsewhere,
-  or there may be an implicit constraint that certain hexes not receive numbers
-  which are "too favorable." The extant [interfaces](src/types/boards.ts) and
-  [shuffling function](src/components/Randomizer.tsx) should be readily
-  modifiable to include such concepts, but they are not currently implemented.
-  Note also that hexes are rotated 90˚ in Seafarers.
+  expansion names are in [src/types/boards.ts](src/types/boards.ts). Provided that
+  any restrictions on variable setup can be encoded in a `CatanBoardTemplate` (see
+  [boards.ts](src/types/boards.ts) for details), adding a new board is
+  just a matter of adding a new board definiton and expansion name in these two
+  files.
 - All code and docs are formatted using [Prettier](https://prettier.io/) with
   default options. Any PRs should be, too.
+- All shuffling logic is thoroughly tested and fully passing. Any fixes or
+  additions should be, too.
 
 ## Attribution
 
