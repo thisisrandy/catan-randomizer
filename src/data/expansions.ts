@@ -1651,7 +1651,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
     horizontal: true,
-    fixAllNumbers: true,
+    fixNumbersInGroups: [undefined],
   },
 };
 

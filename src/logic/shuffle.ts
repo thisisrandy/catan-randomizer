@@ -190,19 +190,9 @@ function getShuffledNumbers(
   binaryConstraints: BinaryConstraints,
   numericConstraints: NumericConstraints
 ): Hex[] {
-  // if numbers are fixed, revert them to the recommended layout. this will not
-  // usually be the desired behavior if any non-resource-producing hexes are not
-  // fixed, as they may end up shuffled onto a spot with a fixed number
-  if (board.fixAllNumbers) {
-    for (let i = 0; i < board.recommendedLayout.length; i++) {
-      hexes[i].number = board.recommendedLayout[i].number;
-    }
-    return hexes;
-  }
-
   const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
   const maxPipsOnHexTypes = board.maxPipsOnHexTypes || {};
-  const hexGroups = new HexGroups(hexes, "numbers");
+  const hexGroups = new HexGroups(hexes, "numbers", board.fixNumbersInGroups);
   let randomIndex,
     retries = 0;
 
@@ -214,6 +204,16 @@ function getShuffledNumbers(
       currentIndex >= 0;
       currentIndex--
     ) {
+      // if this hex is in a fixed group, reset it to its original number value
+      // and move on
+      if (
+        board.fixNumbersInGroups &&
+        board.fixNumbersInGroups.includes(hexes[currentIndex].group)
+      ) {
+        hexes[currentIndex].number =
+          board.recommendedLayout[currentIndex].number;
+        continue;
+      }
       // skip hexes without number chits
       if (hexes[currentIndex].number === undefined) continue;
 

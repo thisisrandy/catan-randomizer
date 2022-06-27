@@ -391,24 +391,54 @@ describe("shuffle", () => {
     ).toThrowError(NumberShufflingError);
   });
 
-  it("shouldn't shuffle fixed numbers", () => {
+  it("shouldn't shuffle fixed number groups", () => {
+    const groupToFix = 2;
     const template: CatanBoardTemplate = {
       board: [
         [
-          { type: "fields", number: 5 },
+          { type: "fields", number: 5, group: groupToFix },
           { type: "forest", number: 3 },
-          { type: "hills", number: 6 },
+          { type: "hills", number: 6, group: groupToFix },
           { type: "mountains", number: 9 },
         ],
       ],
-      fixAllNumbers: true,
+      fixNumbersInGroups: [groupToFix],
     };
     const board = catanBoardFactory(template);
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
-      for (let i = 0; i < hexes.length; i++)
+      for (let i = 0; i < hexes.length; i++) {
+        if (hexes[i].group !== groupToFix) continue;
         expect(hexes[i].number).toEqual(template.board[0][i].number);
+      }
     }
+  });
+
+  it("should shuffle unfixed number groups", () => {
+    const groupToFix = 2;
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "fields", number: 5, group: groupToFix },
+          { type: "forest", number: 3 },
+          { type: "hills", number: 6, group: groupToFix },
+          { type: "mountains", number: 9 },
+        ],
+      ],
+      fixNumbersInGroups: [groupToFix],
+    };
+    const board = catanBoardFactory(template);
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      for (let i = 0; i < hexes.length; i++) {
+        if (
+          hexes[i].group !== groupToFix &&
+          hexes[i].number !== template.board[0][i].number
+        )
+          return;
+      }
+    }
+    expect(false).toBe(true);
   });
 });
 

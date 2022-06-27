@@ -47,9 +47,22 @@ export type CatanBoardTemplate = {
    */
   maxPipsOnHexTypes?: MaxPipsOnHexTypes;
   /**
-   * See {@link FixAllNumbers}
+   * The number chits assigned to the hexes in the specified group(s) should not
+   * be shuffled. The Seafarers: The Pirate Islands scenario, for example,
+   * specifies that no number chits should be shuffled, and The Wonders of Catan
+   * scenario only allows shuffling on the main island. Several notes:
+   *
+   * 1. The default group (see {@link Hex[group]}) is `undefined`. Most boards
+   *    don't have multiple groups, so in order to fix all numbers on the board,
+   *    `undefined` must be specified here.
+   * 2. Fixing only some numbers within groups is more complicated due to
+   *    the way shuffling proceeds and is not currently supported.
+   * 3. If this is used for a group where any non-resource-producing hexes are
+   *    not fixed, a number may end up on e.g. the desert, which is obviously
+   *    not desirable. Correct board specification is not rigorously checked and
+   *    left instead to the programmer.
    */
-  fixAllNumbers?: FixAllNumbers;
+  fixNumbersInGroups?: (number | undefined)[];
 };
 
 /**
@@ -74,17 +87,6 @@ export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
  * e.g. to "not place... 6s & 8s... on gold fields".
  */
 export type MaxPipsOnHexTypes = { [type in HexType]?: 1 | 2 | 3 | 4 };
-
-/**
- * A true value indicates that the number chits on this board should not be
- * shuffled, e.g. as is true in the Seafarers: The Pirate Islands scenario. Note
- * that fixing only some numbers is much more complicated due to the way
- * shuffling proceeds and is not currently supported. Note also that if this is
- * used on a board where any non-resource-producing hexes are not fixed, a
- * number may end up on e.g. the desert, which is obviously not desirable.
- * Correct board specification is left to the programmer
- */
-export type FixAllNumbers = boolean;
 
 /**
  * All of the data about a Catan board, including the hexes and number chits
@@ -153,9 +155,9 @@ export interface CatanBoard {
    */
   maxPipsOnChits: MaxPipsOnChit[];
   /**
-   * See {@link FixAllNumbers}
+   * See {@link CatanBoardTemplate[fixNumbersInGroups]}
    */
-  fixAllNumbers?: FixAllNumbers;
+  fixNumbersInGroups?: (number | undefined)[];
 }
 
 export type ExpansionName =

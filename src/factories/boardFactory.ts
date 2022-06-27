@@ -123,6 +123,6 @@ export default function catanBoardFactory(
     minPipsOnHexTypes: template.minPipsOnHexTypes,
     maxPipsOnHexTypes: template.maxPipsOnHexTypes,
     maxPipsOnChits,
-    fixAllNumbers: template.fixAllNumbers,
+    fixNumbersInGroups: template.fixNumbersInGroups,
   };
 }

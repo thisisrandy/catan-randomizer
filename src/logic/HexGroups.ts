@@ -86,23 +86,34 @@ export class HexGroups {
   #hexGroups: HexGroup[] = [];
   #currentHexGroup: number = 0;
 
-  constructor(hexes: Hex[], shuffleType: ShuffleType) {
+  /**
+   * Construct a new `HexGroups`. For `shuffleType`, see {@link HexGroup}.
+   * `skipGroups` may be specified to indicate group IDs for which a `HexGroup`
+   * should not be created, e.g. if that group is fixed for this `ShuffleType`
+   */
+  constructor(
+    hexes: Hex[],
+    shuffleType: ShuffleType,
+    skipGroups?: (number | undefined)[]
+  ) {
     const groupsAndIndices: [number | undefined, number][] = hexes.map(
       (h, i) => [h.group, i]
     );
     const uniqueGroups = Array.from(
       new Set(hexes.map((h) => h.group)).values()
     );
-    this.#hexGroups = uniqueGroups.map((groupId) => {
-      const indices = groupsAndIndices
-        .filter(([g]) => g === groupId)
-        .map(([, i]) => i);
-      return new HexGroup(
-        indices.map((i) => hexes[i]),
-        indices,
-        shuffleType
-      );
-    });
+    this.#hexGroups = uniqueGroups
+      .filter((groupId) => !(skipGroups && skipGroups.includes(groupId)))
+      .map((groupId) => {
+        const indices = groupsAndIndices
+          .filter(([g]) => g === groupId)
+          .map(([, i]) => i);
+        return new HexGroup(
+          indices.map((i) => hexes[i]),
+          indices,
+          shuffleType
+        );
+      });
     this.#setCurrentHexGroup();
   }
 
