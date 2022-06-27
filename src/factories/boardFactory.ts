@@ -4,31 +4,19 @@ import {
   TRIANGLE_ALTITUDE,
   TRIANGLE_TO_SIDE_RATIO,
 } from "../constants/imageProperties";
-import {
-  CatanBoard,
-  CatanBoardTemplate,
-  FixAllNumbers,
-  MaxPipsOnHexTypes,
-  MinPipsOnHexTypes,
-  UseHorizonalLayout,
-} from "../types/boards";
+import { CatanBoard, CatanBoardTemplate } from "../types/boards";
 import { Hex } from "../types/hexes";
 
 /**
- * Given `template` and optionally `horizontal`, compute all of the properties
- * of a `CatanBoard` for use elsewhere. `minPipsOnHexTypes`,
- * `maxPipsOnHexTypes`, and `fixAllNumbers` are passed through to the returned
- * `CatanBoard` without further processing
+ * Given `template`, compute all of the properties of a `CatanBoard`
  */
 export default function catanBoardFactory(
-  template: CatanBoardTemplate,
-  horizontal?: UseHorizonalLayout,
-  minPipsOnHexTypes?: MinPipsOnHexTypes,
-  maxPipsOnHexTypes?: MaxPipsOnHexTypes,
-  fixAllNumbers?: FixAllNumbers
+  template: CatanBoardTemplate
 ): CatanBoard {
   // flattening and filtering out empties will be useful for several operations
-  const flatNoEmpties = template.flat().filter((ht) => ht.type !== "empty");
+  const flatNoEmpties = template.board
+    .flat()
+    .filter((ht) => ht.type !== "empty");
 
   // first, pull maxPipsOnChits out into a separate array so the shuffling code
   // doesn't need to remember to fix it to hex positions
@@ -43,7 +31,7 @@ export default function catanBoardFactory(
 
   // a small and large row for each hex followed by a final small at the end
   const cssGridTemplateRows = `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
-    .repeat(template.length)
+    .repeat(template.board.length)
     .concat(`${TRIANGLE_TO_SIDE_RATIO}fr`);
 
   // for rows, starting at one, we skip two grid rows for every hex row. row
@@ -59,12 +47,12 @@ export default function catanBoardFactory(
   const cssGridAreas: string[] = [];
   let maxColumn = 0,
     boardIndex = 0;
-  for (let row = 0; row < template.length; row++) {
+  for (let row = 0; row < template.board.length; row++) {
     boardIndices.push([]);
     const cssRow = 1 + row * 2;
     let cssCol = 1;
-    for (let col = 0; col < template[row].length; col++) {
-      if (template[row][col].type === "empty") {
+    for (let col = 0; col < template.board[row].length; col++) {
+      if (template.board[row][col].type === "empty") {
         cssCol++;
         boardIndices[boardIndices.length - 1].push(undefined);
         continue;
@@ -118,7 +106,8 @@ export default function catanBoardFactory(
   let boardHeightPercentage, boardWidthPercentage;
   const width = (HEX_WIDTH * maxColumn) / 2;
   const height =
-    TRIANGLE_ALTITUDE + (SIDE_LENGTH + TRIANGLE_ALTITUDE) * template.length;
+    TRIANGLE_ALTITUDE +
+    (SIDE_LENGTH + TRIANGLE_ALTITUDE) * template.board.length;
   if (width > height) boardHeightPercentage = `${(height / width) * 100}%`;
   else if (height > width) boardWidthPercentage = `${(width / height) * 100}%`;
 
@@ -130,10 +119,10 @@ export default function catanBoardFactory(
     cssGridAreas,
     boardHeightPercentage,
     boardWidthPercentage,
-    horizontal,
-    minPipsOnHexTypes,
-    maxPipsOnHexTypes,
+    horizontal: template.horizontal,
+    minPipsOnHexTypes: template.minPipsOnHexTypes,
+    maxPipsOnHexTypes: template.maxPipsOnHexTypes,
     maxPipsOnChits,
-    fixAllNumbers,
+    fixAllNumbers: template.fixAllNumbers,
   };
 }

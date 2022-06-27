@@ -1,25 +1,9 @@
 import catanBoardFactory from "../factories/boardFactory";
-import {
-  CatanBoardTemplate,
-  ExpansionName,
-  Expansions,
-  FixAllNumbers,
-  MaxPipsOnHexTypes,
-  MinPipsOnHexTypes,
-  UseHorizonalLayout,
-} from "../types/boards";
+import { CatanBoardTemplate, ExpansionName, Expansions } from "../types/boards";
 
-const templates: [
-  ExpansionName,
-  CatanBoardTemplate,
-  UseHorizonalLayout?,
-  MinPipsOnHexTypes?,
-  MaxPipsOnHexTypes?,
-  FixAllNumbers?
-][] = [
-  [
-    "Catan",
-    [
+const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
+  Catan: {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -88,10 +72,9 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-  ],
-  [
-    "Catan: 5-6 Player Extension",
-    [
+  },
+  "Catan: 5-6 Player Extension": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -183,10 +166,9 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-  ],
-  [
-    "Explorers & Pirates",
-    [
+  },
+  "Explorers & Pirates": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -236,10 +218,9 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-  ],
-  [
-    "Cities & Knights",
-    [
+  },
+  "Cities & Knights": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -312,10 +293,9 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-  ],
-  [
-    "Seafarers: Heading for New Shores 3-Player Set-up",
-    [
+  },
+  "Seafarers: Heading for New Shores 3-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -442,11 +422,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: Heading for New Shores 4-Player Set-up",
-    [
+    horizontal: true,
+  },
+  "Seafarers: Heading for New Shores 4-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -554,11 +533,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: The Four Islands 3-Player Set-up",
-    [
+    horizontal: true,
+  },
+  "Seafarers: The Four Islands 3-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -693,12 +671,11 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-    { forest: 2, pasture: 2 },
-  ],
-  [
-    "Seafarers: The Four Islands 4-Player Set-up",
-    [
+    horizontal: true,
+    minPipsOnHexTypes: { forest: 2, pasture: 2 },
+  },
+  "Seafarers: The Four Islands 4-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -825,12 +802,11 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-    { forest: 2, pasture: 2 },
-  ],
-  [
-    "Seafarers: The Fog Islands 3-Player Set-up",
-    [
+    horizontal: true,
+    minPipsOnHexTypes: { forest: 2, pasture: 2 },
+  },
+  "Seafarers: The Fog Islands 3-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -958,11 +934,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: The Fog Islands 4-Player Set-up",
-    [
+    horizontal: true,
+  },
+  "Seafarers: The Fog Islands 4-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1106,11 +1081,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: Through the Desert 3-Player Set-up",
-    [
+    horizontal: true,
+  },
+  "Seafarers: Through the Desert 3-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1206,13 +1180,11 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-    undefined,
-    { gold: 4 },
-  ],
-  [
-    "Seafarers: Through the Desert 4-Player Set-up",
-    [
+    horizontal: true,
+    maxPipsOnHexTypes: { gold: 4 },
+  },
+  "Seafarers: Through the Desert 4-Player Set-up": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1322,13 +1294,11 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-    undefined,
-    { gold: 4 },
-  ],
-  [
-    "Seafarers: The Forgotten Tribe",
-    [
+    horizontal: true,
+    maxPipsOnHexTypes: { gold: 4 },
+  },
+  "Seafarers: The Forgotten Tribe": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1462,11 +1432,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: Cloth for Catan",
-    [
+    horizontal: true,
+  },
+  "Seafarers: Cloth for Catan": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1567,11 +1536,10 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-  ],
-  [
-    "Seafarers: The Pirate Islands",
-    [
+    horizontal: true,
+  },
+  "Seafarers: The Pirate Islands": {
+    board: [
       [
         { type: "empty" },
         { type: "empty" },
@@ -1682,31 +1650,17 @@ const templates: [
         { type: "sea", fixed: true },
       ],
     ],
-    true,
-    undefined,
-    undefined,
-    true,
-  ],
-];
+    horizontal: true,
+    fixAllNumbers: true,
+  },
+};
 
 export const EXPANSIONS: Expansions = new Map(
-  templates.map(
-    ([
-      key,
-      template,
-      horizontal,
-      minPipsOnHexTypes,
-      maxPipsOnHexTypes,
-      fixAllNumbers,
-    ]) => [
-      key,
-      catanBoardFactory(
-        template,
-        horizontal,
-        minPipsOnHexTypes,
-        maxPipsOnHexTypes,
-        fixAllNumbers
-      ),
-    ]
-  )
+  Object.entries(templates).map(([name, template]) => [
+    // Object.entries returns string for the prop name, so we have to cast it
+    // back. there's some discussion about it at
+    // https://github.com/microsoft/TypeScript/issues/38520
+    name as ExpansionName,
+    catanBoardFactory(template),
+  ])
 );

@@ -5,11 +5,7 @@ import {
   shuffle,
   TerrainShufflingError,
 } from "../logic/shuffle";
-import {
-  CatanBoardTemplate,
-  MaxPipsOnHexTypes,
-  MinPipsOnHexTypes,
-} from "../types/boards";
+import { CatanBoardTemplate } from "../types/boards";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { Hex, HexType, NumberChitValue } from "../types/hexes";
 import { numberToPipCount } from "../utils/catan";
@@ -34,24 +30,21 @@ const numericConstraints: NumericConstraints = {
   maxConnectedLikeTerrain: { value: 1, valid: true },
   maxIntersectionPipCount: { value: 10, valid: true },
 };
-const pipConstrainedTemplate: CatanBoardTemplate = [
-  [
-    { type: "forest", number: 10, maxPipsOnChit: 3 },
-    { type: "forest", number: 3, maxPipsOnChit: 3 },
-    { type: "forest", number: 6 },
-    { type: "hills", number: 5 },
-    { type: "pasture", number: 2 },
-    { type: "pasture", number: 4 },
+const pipConstrainedTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "forest", number: 10, maxPipsOnChit: 3 },
+      { type: "forest", number: 3, maxPipsOnChit: 3 },
+      { type: "forest", number: 6 },
+      { type: "hills", number: 5 },
+      { type: "pasture", number: 2 },
+      { type: "pasture", number: 4 },
+    ],
   ],
-];
-const minPipsOnHexTypes: MinPipsOnHexTypes = { pasture: 3 };
-const maxPipsOnHexTypes: MaxPipsOnHexTypes = { hills: 4 };
-const pipConstrainedBoard = catanBoardFactory(
-  pipConstrainedTemplate,
-  undefined,
-  minPipsOnHexTypes,
-  maxPipsOnHexTypes
-);
+  minPipsOnHexTypes: { pasture: 3 },
+  maxPipsOnHexTypes: { hills: 4 },
+};
+const pipConstrainedBoard = catanBoardFactory(pipConstrainedTemplate);
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
 const numSamples = 50;
@@ -247,7 +240,7 @@ describe("shuffle", () => {
       );
       for (let j = 0; j < hexes.length; j++) {
         expect(hexes[j].number).toBeGreaterThanOrEqual(
-          minPipsOnHexTypes[hexes[j].type] || 1
+          pipConstrainedBoard.minPipsOnHexTypes![hexes[j].type] || 1
         );
       }
     }
@@ -288,10 +281,10 @@ describe("shuffle", () => {
       for (let j = 0; j < hexes.length; j++) {
         const pipCount = numberToPipCount(hexes[j].number!);
         expect(pipCount).toBeLessThanOrEqual(
-          pipConstrainedTemplate[0][j].maxPipsOnChit || 5
+          pipConstrainedTemplate.board[0][j].maxPipsOnChit || 5
         );
         expect(pipCount).toBeLessThanOrEqual(
-          maxPipsOnHexTypes[hexes[j].type] || 5
+          pipConstrainedBoard.maxPipsOnHexTypes![hexes[j].type] || 5
         );
       }
     }
@@ -324,19 +317,21 @@ describe("shuffle", () => {
   });
 
   it("should shuffle terrain and number chits only within groups", () => {
-    const template: CatanBoardTemplate = [
-      [
-        { type: "desert" },
-        { type: "fields", number: 5, group: 2 },
-        { type: "fields", number: 4 },
-        { type: "forest", number: 3 },
-        { type: "hills", number: 3, group: 1 },
-        { type: "mountains", number: 6, group: 1 },
-        { type: "mountains", number: 8, group: 2 },
-        { type: "sea", fixed: true, group: 2 },
-        { type: "pasture", number: 2, group: 2 },
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "desert" },
+          { type: "fields", number: 5, group: 2 },
+          { type: "fields", number: 4 },
+          { type: "forest", number: 3 },
+          { type: "hills", number: 3, group: 1 },
+          { type: "mountains", number: 6, group: 1 },
+          { type: "mountains", number: 8, group: 2 },
+          { type: "sea", fixed: true, group: 2 },
+          { type: "pasture", number: 2, group: 2 },
+        ],
       ],
-    ];
+    };
     const board = catanBoardFactory(template);
     const groupsAndIndices: [number | undefined, number][] =
       board.recommendedLayout.map((h, i) => [h.group, i]);
@@ -374,13 +369,15 @@ describe("shuffle", () => {
   });
 
   it("should throw a ShufflingError when the board is over-constrained", () => {
-    const template: CatanBoardTemplate = [
-      [
-        { type: "fields", number: 5 },
-        { type: "fields", number: 4 },
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "fields", number: 5 },
+          { type: "fields", number: 4 },
+        ],
+        [{ type: "empty" }, { type: "fields", number: 6 }],
       ],
-      [{ type: "empty" }, { type: "fields", number: 6 }],
-    ];
+    };
     const board = catanBoardFactory(template);
 
     expect(() =>
@@ -395,25 +392,22 @@ describe("shuffle", () => {
   });
 
   it("shouldn't shuffle fixed numbers", () => {
-    const template: CatanBoardTemplate = [
-      [
-        { type: "fields", number: 5 },
-        { type: "forest", number: 3 },
-        { type: "hills", number: 6 },
-        { type: "mountains", number: 9 },
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "fields", number: 5 },
+          { type: "forest", number: 3 },
+          { type: "hills", number: 6 },
+          { type: "mountains", number: 9 },
+        ],
       ],
-    ];
-    const board = catanBoardFactory(
-      template,
-      undefined,
-      undefined,
-      undefined,
-      true
-    );
+      fixAllNumbers: true,
+    };
+    const board = catanBoardFactory(template);
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (let i = 0; i < hexes.length; i++)
-        expect(hexes[i].number).toEqual(template[0][i].number);
+        expect(hexes[i].number).toEqual(template.board[0][i].number);
     }
   });
 });

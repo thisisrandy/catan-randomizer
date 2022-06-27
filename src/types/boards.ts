@@ -1,35 +1,56 @@
 import { Hex, HexTemplate, HexType, MaxPipsOnChit } from "./hexes";
 
 /**
- * A template to simplify the specification of a `CatanBoard`.
+ * A template to simplify the specification of a `CatanBoard`
  *
- * Each hex spans two CSS grid columns. A special `HexTemplate` type `"empty"`
- * is provided to specify *single* empty columns. Thus, where `s` is sea and `t`
- * is terrain, we can specify a board that looks like this:
- *
- * ```
- *    s s s s
- *   s t t t s
- *  s t t t t s
- * s t t t t t s
- *  s t t t t s
- *   s t t t s
- *    s s s s
- * ```
- *
- * as follows, where `e` is `"empty"`:
- *
- * ```
- * e e e s s s s
- * e e s t t t s
- * e s t t t t s
- * s t t t t t s
- * e s t t t t s
- * e e s t t t s
- * e e e s s s s
- * ```
  */
-export type CatanBoardTemplate = HexTemplate[][];
+export type CatanBoardTemplate = {
+  /**
+   * Board shape and initial layout. Each hex spans two CSS grid columns. A
+   * special `HexTemplate` type `"empty"` is provided to specify *single* empty
+   * columns. Thus, where `s` is sea and `t` is terrain, we can specify a board
+   * that looks like this:
+   *
+   * ```
+   *    s s s s
+   *   s t t t s
+   *  s t t t t s
+   * s t t t t t s
+   *  s t t t t s
+   *   s t t t s
+   *    s s s s
+   * ```
+   *
+   * as follows, where `e` is `"empty"`:
+   *
+   * ```
+   * e e e s s s s
+   * e e s t t t s
+   * e s t t t t s
+   * s t t t t t s
+   * e s t t t t s
+   * e e s t t t s
+   * e e e s s s s
+   * ```
+   */
+  board: HexTemplate[][];
+  /**
+   * See {@link UseHorizonalLayout}
+   */
+  horizontal?: UseHorizonalLayout;
+  /**
+   * See {@link MinPipsOnHexTypes}
+   */
+  minPipsOnHexTypes?: MinPipsOnHexTypes;
+  /**
+   * See {@link MaxPipsOnHexTypes}
+   */
+  maxPipsOnHexTypes?: MaxPipsOnHexTypes;
+  /**
+   * See {@link FixAllNumbers}
+   */
+  fixAllNumbers?: FixAllNumbers;
+};
 
 /**
  * If true, number chits are rotated -90°, then the entire board 90°. As such, a
