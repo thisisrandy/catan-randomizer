@@ -135,9 +135,9 @@ function getShuffledTerrain(
       // we failed to find a valid board after exhausing all tries. start over
       if (retries++ > MAX_RETRIES)
         throw new TerrainShufflingError(
-          "Terrain shuffling failed to find a board that falls within the specified" +
-            " constraints. It's very likely that the board is over-constrained. For" +
-            " example, if the board has a large number of pasture hexes and you" +
+          "Failed to find a board that falls within the specified constraints for" +
+            " terrain. It's very likely that this board is over-constrained. For" +
+            " example, if there are a large number of pasture hexes and you" +
             " specify that no same type hexes may touch, it might be impossible" +
             " to construct a suitable board. Please relax constraints and try" +
             " again."
@@ -317,9 +317,9 @@ function getShuffledNumbers(
       // start over from the beginning
       if (retries++ > MAX_RETRIES)
         throw new NumberShufflingError(
-          "Number chit shuffling failed to find a board that falls within the" +
-            " specified constraints. It's very likely that the board is over-constrained." +
-            " For example, if the board doesn't include very many low pip chits" +
+          "Failed to find a board that falls within the specified constraints for" +
+            " number chits. It's very likely that this board is over-constrained." +
+            " For example, if there aren't very many low pip chits in a given group" +
             " and you specify a small maximum intersection pip count, it might be" +
             " impossible to construct a suitable board. Please relax constraints" +
             " and try again."
