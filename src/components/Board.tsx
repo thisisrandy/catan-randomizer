@@ -33,6 +33,7 @@ import portGrainWithDocks from "../images/port-grain-with-docks.png";
 import portOreWithDocks from "../images/port-ore-with-docks.png";
 import portTimberWithDocks from "../images/port-timber-with-docks.png";
 import portWoolWithDocks from "../images/port-wool-with-docks.png";
+import portUnrevealedWithDocks from "../images/port-unrevealed-with-docks.png";
 import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
@@ -76,6 +77,7 @@ const portTypeToImage: { [type in PortType]: string } = {
   ore: portOreWithDocks,
   timber: portTimberWithDocks,
   wool: portWoolWithDocks,
+  unrevealed: portUnrevealedWithDocks,
 };
 
 interface Props {
