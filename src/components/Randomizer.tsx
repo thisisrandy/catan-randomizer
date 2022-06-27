@@ -18,12 +18,18 @@ import {
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
-import { shuffle, ShufflingError } from "../logic/shuffle";
+import { IncomingMessage, OutgoingMessage } from "../threading/shuffleWorker";
 
 interface Props {
   setHexes: React.Dispatch<React.SetStateAction<Hex[]>>;
   board: CatanBoard;
 }
+
+// per https://webpack.js.org/guides/web-workers/, creating a new Worker is
+// straightforward
+const shuffleWorker = new Worker(
+  new URL("../threading/shuffleWorker.ts", import.meta.url)
+);
 
 /**
  * Component for producing random arrangements of hexes and number chits within
@@ -73,6 +79,25 @@ export default function Randomizer({ setHexes, board }: Props) {
   const handleErrorSnackClose = () => {
     setErrorSnackOpen(false);
   };
+
+  useEffect(() => {
+    shuffleWorker.onmessage = (ev: MessageEvent<OutgoingMessage>) => {
+      const { messageType, payload } = ev.data;
+      switch (messageType) {
+        case "result":
+          setHexes(payload as Hex[]);
+          break;
+        case "error":
+          setErrorMessage(payload as string);
+          setErrorSnackOpen(true);
+          break;
+        default:
+          ((_: never): never => {
+            throw new Error("never");
+          })(messageType);
+      }
+    };
+  });
 
   return (
     <>
@@ -187,14 +212,12 @@ export default function Randomizer({ setHexes, board }: Props) {
           variant="contained"
           style={{ margin: 5, padding: 10 }}
           onClick={() => {
-            try {
-              setHexes(shuffle(board, binaryConstraints, numericConstraints));
-            } catch (error: unknown) {
-              if (error instanceof ShufflingError) {
-                setErrorMessage(error.message);
-                setErrorSnackOpen(true);
-              } else throw error;
-            }
+            const message: IncomingMessage = {
+              board,
+              binaryConstraints,
+              numericConstraints,
+            };
+            shuffleWorker.postMessage(message);
           }}
           disabled={invalidConstraints}
         >
