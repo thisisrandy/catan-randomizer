@@ -47,22 +47,9 @@ export type CatanBoardTemplate = {
    */
   maxPipsOnHexTypes?: MaxPipsOnHexTypes;
   /**
-   * The number chits assigned to the hexes in the specified group(s) should not
-   * be shuffled. The Seafarers: The Pirate Islands scenario, for example,
-   * specifies that no number chits should be shuffled, and The Wonders of Catan
-   * scenario only allows shuffling on the main island. Several notes:
-   *
-   * 1. The default group (see {@link Hex[group]}) is `undefined`. Most boards
-   *    don't have multiple groups, so in order to fix all numbers on the board,
-   *    `undefined` must be specified here.
-   * 2. Fixing only some numbers within groups is more complicated due to
-   *    the way shuffling proceeds and is not currently supported.
-   * 3. If this is used for a group where any non-resource-producing hexes are
-   *    not fixed, a number may end up on e.g. the desert, which is obviously
-   *    not desirable. Correct board specification is not rigorously checked and
-   *    left instead to the programmer.
+   * See {@link FixNumbersInGroup}
    */
-  fixNumbersInGroups?: (number | undefined)[];
+  fixNumbersInGroups?: FixNumbersInGroup[];
 };
 
 /**
@@ -87,6 +74,32 @@ export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
  * e.g. to "not place... 6s & 8s... on gold fields".
  */
 export type MaxPipsOnHexTypes = { [type in HexType]?: 1 | 2 | 3 | 4 };
+
+/**
+ * The number chits assigned to the hexes in the specified group(s) should not
+ * be shuffled. The Seafarers: The Pirate Islands scenario, for example,
+ * specifies that no number chits should be shuffled, and The Wonders of Catan
+ * scenario only allows shuffling on the main island. Several notes:
+ *
+ * 1. The default group (see {@link Hex[group]}) when none is specified is
+ *    `undefined`, so in order to indicate the default group specifically, one
+ *    must specify `undefined`. However, when the meaning is "fix all groups",
+ *    the alias `"all"` is also provided.
+ * 2. Fixing only some numbers within groups is more complicated due to
+ *    the way shuffling proceeds and is not currently supported. In practice,
+ *    numbers can always be fixed by creating a new group, but the case of
+ *    fixing *some* numbers but allowing *all* terrain to be freely shuffled is
+ *    not supported (no known scenario follows this pattern).
+ * 3. If this is used for a group where any non-resource-producing hexes are
+ *    not fixed, a number may end up on e.g. the desert, which is obviously
+ *    not desirable. Correct board specification is not rigorously checked and
+ *    left instead to the programmer.
+ */
+export type FixNumbersInGroup = number | undefined | "all";
+/**
+ * The explicit version of {@link FixNumbersInGroup} used on {@link CatanBoard}
+ */
+export type FixNumbersInGroupStrict = Exclude<FixNumbersInGroup, "all">;
 
 /**
  * All of the data about a Catan board, including the hexes and number chits
@@ -155,9 +168,9 @@ export interface CatanBoard {
    */
   maxPipsOnChits: MaxPipsOnChit[];
   /**
-   * See {@link CatanBoardTemplate[fixNumbersInGroups]}
+   * See {@link FixNumbersInGroupStrict}
    */
-  fixNumbersInGroups?: (number | undefined)[];
+  fixNumbersInGroups?: FixNumbersInGroupStrict[];
 }
 
 export type ExpansionName =

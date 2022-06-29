@@ -4,7 +4,11 @@ import {
   TRIANGLE_ALTITUDE,
   TRIANGLE_TO_SIDE_RATIO,
 } from "../constants/imageProperties";
-import { CatanBoard, CatanBoardTemplate } from "../types/boards";
+import {
+  CatanBoard,
+  CatanBoardTemplate,
+  FixNumbersInGroupStrict,
+} from "../types/boards";
 import { Hex } from "../types/hexes";
 
 /**
@@ -101,8 +105,8 @@ export default function catanBoardFactory(
     }
   }
 
-  // finally, figure out if we need to adjust width or height by figuring out
-  // which is greater and then assigning a lower percentage to the other
+  // figure out if we need to adjust width or height by determining which is
+  // greater and then assigning a lower percentage to the other
   let boardHeightPercentage, boardWidthPercentage;
   const width = (HEX_WIDTH * maxColumn) / 2;
   const height =
@@ -110,6 +114,18 @@ export default function catanBoardFactory(
     (SIDE_LENGTH + TRIANGLE_ALTITUDE) * template.board.length;
   if (width > height) boardHeightPercentage = `${(height / width) * 100}%`;
   else if (height > width) boardWidthPercentage = `${(width / height) * 100}%`;
+
+  // we also need to translate FixNumbersInGroup items into
+  // FixNumbersInGroupStrict, which means interpreting "all"
+  let fixNumbersInGroups: FixNumbersInGroupStrict[];
+  if (template.fixNumbersInGroups?.includes("all")) {
+    fixNumbersInGroups = Array.from(
+      new Set(flatNoEmpties.map((ht) => ht.group)).values()
+    );
+  } else {
+    fixNumbersInGroups =
+      template.fixNumbersInGroups as FixNumbersInGroupStrict[];
+  }
 
   return {
     recommendedLayout,
@@ -123,6 +139,6 @@ export default function catanBoardFactory(
     minPipsOnHexTypes: template.minPipsOnHexTypes,
     maxPipsOnHexTypes: template.maxPipsOnHexTypes,
     maxPipsOnChits,
-    fixNumbersInGroups: template.fixNumbersInGroups,
+    fixNumbersInGroups,
   };
 }

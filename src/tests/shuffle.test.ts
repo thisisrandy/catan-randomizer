@@ -414,6 +414,27 @@ describe("shuffle", () => {
     }
   });
 
+  it("shouldn't shuffle anything when 'all' is specified", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "fields", number: 5 },
+          { type: "forest", number: 3 },
+          { type: "hills", number: 6 },
+          { type: "mountains", number: 9 },
+        ],
+      ],
+      fixNumbersInGroups: ["all"],
+    };
+    const board = catanBoardFactory(template);
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      for (let i = 0; i < hexes.length; i++) {
+        expect(hexes[i].number).toEqual(template.board[0][i].number);
+      }
+    }
+  });
+
   it("should shuffle unfixed number groups", () => {
     const groupToFix = 2;
     const template: CatanBoardTemplate = {

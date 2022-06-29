@@ -1671,7 +1671,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
     horizontal: true,
-    fixNumbersInGroups: [undefined],
+    fixNumbersInGroups: ["all"],
   },
   "Seafarers: The Wonders of Catan": {
     board: [
