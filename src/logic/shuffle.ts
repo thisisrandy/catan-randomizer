@@ -1,6 +1,6 @@
 import { Hex, HexType, Port, PortType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
-import { CatanBoard } from "../types/boards";
+import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
 import { numberToPipCount } from "../utils/catan";
 
@@ -245,14 +245,14 @@ function getShuffledNumbers(
           continue tryLoop;
         }
 
-        const neighbors = Object.values(board.neighbors[currentIndex]);
+        const neighborIndices = Object.values(board.neighbors[currentIndex]);
 
         // no 6/8 neighbors
         if (
           binaryConstraints.noAdjacentSixEight &&
           [6, 8].includes(hexes[currentIndex].number as number)
         ) {
-          for (const neighbor of neighbors) {
+          for (const neighbor of neighborIndices) {
             if (neighbor < currentIndex) continue;
             if ([6, 8].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
@@ -265,7 +265,7 @@ function getShuffledNumbers(
           binaryConstraints.noAdjacentTwoTwelve &&
           [2, 12].includes(hexes[currentIndex].number as number)
         ) {
-          for (const neighbor of neighbors) {
+          for (const neighbor of neighborIndices) {
             if (neighbor < currentIndex) continue;
             if ([2, 12].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
@@ -275,7 +275,7 @@ function getShuffledNumbers(
 
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
-          for (const neighbor of neighbors) {
+          for (const neighbor of neighborIndices) {
             if (neighbor < currentIndex) continue;
             if (hexes[currentIndex].number === hexes[neighbor].number) {
               continue tryLoop;
@@ -283,47 +283,12 @@ function getShuffledNumbers(
           }
         }
 
-        // TODO: neighbors now includes explicit directions, so we don't have to
-        // be clever here anymore. update to use them. there's similar code in
-        // the relevant test, so update that, too
-        //
-        // constrain pip count. we don't have a concept of "intersections", but
-        // we can exploit something about the way we process numbers, i.e. last
-        // to first hex. there will be a max of 3 neighbors which have already
-        // been processed. we can call their indices min, middle, and max. the
-        // intersections formed are then (i, min, max) and (i, middle, max). for
-        // example, if we are processing index 1, we consider the intersections
-        // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
-        // we simply consider them both, and the one neighbor case is not
-        // considered
-        const processedNeighbors = neighbors
-            .filter((n) => n > currentIndex)
-            // note that javascript sorts lexicographically by default, even for
-            // numbers. per
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description,
-            // this is the preferred way to sort numbers
-            .sort((a, b) => a - b),
-          intersections: number[][] = [];
-        if (processedNeighbors.length === 3) {
-          intersections.push([
-            currentIndex,
-            processedNeighbors[0],
-            processedNeighbors[2],
-          ]);
-          intersections.push([
-            currentIndex,
-            processedNeighbors[1],
-            processedNeighbors[2],
-          ]);
-        } else {
-          intersections.push(processedNeighbors.concat(currentIndex));
-        }
-        for (const intersection of intersections) {
-          const pipCount = intersection
-            .map((i) => hexes[i].number)
-            .filter((num) => num !== undefined)
-            .map((num) => numberToPipCount(num!))
-            .reduce((acc, n) => acc + n, 0 as number);
+        // constrain pip count per intersection
+        for (const pipCount of getIntersectionPipCounts({
+          board,
+          hexes,
+          atIndex: currentIndex,
+        })) {
           if (pipCount > numericConstraints.maxIntersectionPipCount.value) {
             continue tryLoop;
           }
@@ -353,4 +318,57 @@ function getShuffledNumbers(
   }
 
   return hexes;
+}
+
+interface GetIntersectionPipCountProps {
+  board: CatanBoard;
+  hexes: Hex[];
+  atIndex: number;
+  /**
+   * Shuffling proceeds high to low, so there's no point in checking
+   * intersections including indices lower than `atIndex` during shuffling. This
+   * isn't necessarily the case during testing, so this switch is provided to
+   * include all surrounding intersections when set to `false`.
+   *
+   * NOTE: there is a case where lower neighbors could be part of a fixed number
+   * group and should as such be considered even during shuffling, but in
+   * practice, groups are things like distinct islands that have no adjacencies,
+   * so the case never arises. we don't consider it here
+   */
+  onlyHigher?: boolean;
+}
+
+/**
+ * Get the total pip counts of each intersection including the hex at `atIndex`,
+ * subject to `onlyHigher`. See {@link GetIntersectionPipCountProps} for details
+ */
+export function getIntersectionPipCounts({
+  board,
+  hexes,
+  atIndex,
+  onlyHigher = true,
+}: GetIntersectionPipCountProps): number[] {
+  const neighbors = board.neighbors[atIndex],
+    groups: (keyof Neighbors)[][] = [
+      ["sw", "se"],
+      ["se", "e"],
+    ],
+    intersections: number[][] = [];
+  if (!onlyHigher) {
+    groups.push(["e", "ne"], ["ne", "nw"], ["nw", "w"], ["w", "sw"]);
+  }
+  for (const group of groups) {
+    const intersection: number[] = [atIndex];
+    for (const dir of group) {
+      if (dir in neighbors) intersection.push(neighbors[dir]!);
+    }
+    if (intersection.length > 1) intersections.push(intersection);
+  }
+  return intersections.map((intersection) =>
+    intersection
+      .map((i) => hexes[i].number)
+      .filter((num) => num !== undefined)
+      .map((num) => numberToPipCount(num!))
+      .reduce((acc, n) => acc + n, 0 as number)
+  );
 }

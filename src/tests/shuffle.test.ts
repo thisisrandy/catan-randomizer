@@ -1,6 +1,7 @@
 import { EXPANSIONS } from "../data/expansions";
 import catanBoardFactory from "../factories/boardFactory";
 import {
+  getIntersectionPipCounts,
   NumberShufflingError,
   shuffle,
   TerrainShufflingError,
@@ -201,11 +202,50 @@ describe("shuffle", () => {
     expect(false).toBe(true);
   });
 
+  it("should correctly report the pip counts of all surrounding intersections", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          { type: "mountains", number: 6 },
+          { type: "mountains", number: 4 },
+        ],
+        [
+          { type: "mountains", number: 2 },
+          { type: "mountains", number: 3 },
+          { type: "mountains", number: 8 },
+        ],
+        [
+          { type: "empty" },
+          { type: "mountains", number: 12 },
+          { type: "mountains", number: 10 },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    for (const [atIndex, expected] of [
+      [0, [6, 8, 8, 10]],
+      [3, [4, 6, 8, 10, 10, 10]],
+    ] as const) {
+      const pipCounts = getIntersectionPipCounts({
+        board,
+        hexes: board.recommendedLayout,
+        atIndex,
+        onlyHigher: false,
+      }).sort((a, b) => a - b);
+      expect(pipCounts).toEqual(expected);
+    }
+  });
+
   it("shouldn't allow intersection pip counts above the specified maximum", () => {
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (let j = 0; j < hexes.length; j++) {
-        for (const pipCount of getIntersectionPipCountsAt(hexes, j)) {
+        for (const pipCount of getIntersectionPipCounts({
+          board,
+          hexes,
+          atIndex: j,
+        })) {
           expect(pipCount).toBeLessThanOrEqual(
             numericConstraints.maxIntersectionPipCount.value
           );
@@ -228,7 +268,11 @@ describe("shuffle", () => {
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, noBinaryConstraints, noPipCountRestriction);
       for (let j = 0; j < hexes.length; j++) {
-        for (const pipCount of getIntersectionPipCountsAt(hexes, j)) {
+        for (const pipCount of getIntersectionPipCounts({
+          board,
+          hexes,
+          atIndex: j,
+        })) {
           // if we found what we were looking for, immediately finish the test
           if (pipCount === numericConstraints.maxIntersectionPipCount.value)
             return;
@@ -478,40 +522,3 @@ describe("shuffle", () => {
     expect(false).toBe(true);
   });
 });
-
-function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
-  const hex = hexes[index];
-  if (typeof hex.number === "undefined") return [];
-
-  // as in the shuffle code, the easiest way to do this is collect the up
-  // to 3 neighbors larger than the current hex. calling them min, mid,
-  // and max, there are two intersections at (i, min, max) and (i, mid,
-  // max). if there are only two neighbors, consider them both. don't
-  // consider only one neighbor, as we only allow the max intersection pip count
-  // constraint to go down to 10 (lower isn't possible on most
-  // reasonable-looking boards), and the max of a two neighbor intersection is
-  // 10
-  const largerNeighbors = Object.values(board.neighbors[index])
-      .filter((n) => n > index)
-      .sort((a, b) => a - b)
-      // it's important not to toss non-resource-producing hexes, because we
-      // need a placeholder to maintain structure. e.g. if the desert is at max
-      // and we threw it out, we'd end up considering (i, min, mid) an
-      // intersection, which of course is not correct
-      .map((n) => hexes[n].number || 0),
-    intersections: (NumberChitValue | 0)[][] = [];
-
-  if (largerNeighbors.length === 3) {
-    intersections.push([hex.number, largerNeighbors[0], largerNeighbors[2]]);
-    intersections.push([hex.number, largerNeighbors[1], largerNeighbors[2]]);
-  } else if (largerNeighbors.length === 2) {
-    intersections.push(largerNeighbors.concat(hex.number));
-  }
-
-  return intersections.map((intersection) =>
-    intersection
-      .filter((num) => num > 0)
-      .map((num) => numberToPipCount(num as NumberChitValue))
-      .reduce((acc, n) => acc + n, 0)
-  );
-}
