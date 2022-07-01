@@ -15,10 +15,9 @@ export interface IncomingMessage {
   binaryConstraints: BinaryConstraints;
   numericConstraints: NumericConstraints;
 }
-export interface OutgoingMessage {
-  messageType: "result" | "error";
-  payload: Hex[] | string;
-}
+export type OutgoingMessage =
+  | { messageType: "result"; payload: Hex[] }
+  | { messageType: "error"; payload: string };
 
 onmessage = (ev: MessageEvent<IncomingMessage>) => {
   const { board, binaryConstraints, numericConstraints } = ev.data;
