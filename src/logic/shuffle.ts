@@ -115,7 +115,7 @@ function getShuffledTerrain(
             chainSize += 1;
             if (chainSize > numericConstraints.maxConnectedLikeTerrain.value)
               continue tryLoop;
-            for (let neighbor of board.neighbors[hex]) {
+            for (const neighbor of Object.values(board.neighbors[hex])) {
               // consider only neighbors greater than this hex, as those lower
               // will still be shuffled, unless the lower neighbor is fixed
               if (
@@ -245,12 +245,14 @@ function getShuffledNumbers(
           continue tryLoop;
         }
 
+        const neighbors = Object.values(board.neighbors[currentIndex]);
+
         // no 6/8 neighbors
         if (
           binaryConstraints.noAdjacentSixEight &&
           [6, 8].includes(hexes[currentIndex].number as number)
         ) {
-          for (const neighbor of board.neighbors[currentIndex]) {
+          for (const neighbor of neighbors) {
             if (neighbor < currentIndex) continue;
             if ([6, 8].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
@@ -263,7 +265,7 @@ function getShuffledNumbers(
           binaryConstraints.noAdjacentTwoTwelve &&
           [2, 12].includes(hexes[currentIndex].number as number)
         ) {
-          for (const neighbor of board.neighbors[currentIndex]) {
+          for (const neighbor of neighbors) {
             if (neighbor < currentIndex) continue;
             if ([2, 12].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
@@ -273,7 +275,7 @@ function getShuffledNumbers(
 
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
-          for (const neighbor of board.neighbors[currentIndex]) {
+          for (const neighbor of neighbors) {
             if (neighbor < currentIndex) continue;
             if (hexes[currentIndex].number === hexes[neighbor].number) {
               continue tryLoop;
@@ -281,6 +283,10 @@ function getShuffledNumbers(
           }
         }
 
+        // TODO: neighbors now includes explicit directions, so we don't have to
+        // be clever here anymore. update to use them. there's similar code in
+        // the relevant test, so update that, too
+        //
         // constrain pip count. we don't have a concept of "intersections", but
         // we can exploit something about the way we process numbers, i.e. last
         // to first hex. there will be a max of 3 neighbors which have already
@@ -290,7 +296,7 @@ function getShuffledNumbers(
         // formed by (1, 2, 5) and (1, 4, 5). if there are only two neighbors,
         // we simply consider them both, and the one neighbor case is not
         // considered
-        const processedNeighbors = board.neighbors[currentIndex]
+        const processedNeighbors = neighbors
             .filter((n) => n > currentIndex)
             // note that javascript sorts lexicographically by default, even for
             // numbers. per

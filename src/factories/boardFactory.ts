@@ -8,6 +8,7 @@ import {
   CatanBoard,
   CatanBoardTemplate,
   FixNumbersInGroupStrict,
+  Neighbors,
 } from "../types/boards";
 import { Hex } from "../types/hexes";
 
@@ -105,26 +106,27 @@ export default function catanBoardFactory(
   const cssGridTemplateColumns = `repeat(${maxColumn}, 1fr)`;
 
   // now use boardIndices (computed above) to determine neighbor indices
-  const neighbors: number[][] = [];
+  const neighbors: Neighbors[] = [];
   for (let row = 0; row < boardIndices.length; row++) {
     for (let col = 0; col < boardIndices[row].length; col++) {
       if (boardIndices[row][col] === undefined) continue;
 
-      neighbors.push([]);
-      for (const [nrow, ncol] of [
-        [row, col - 1],
-        [row - 1, col - 1],
-        [row - 1, col + 1],
-        [row, col + 2],
-        [row + 1, col - 1],
-        [row + 1, col + 1],
-      ]) {
+      const myNeighbors: Neighbors = {};
+      neighbors.push(myNeighbors);
+      for (const [dir, [nrow, ncol]] of Object.entries({
+        nw: [row - 1, col - 1],
+        ne: [row - 1, col + 1],
+        e: [row, col + 2],
+        se: [row + 1, col + 1],
+        sw: [row + 1, col - 1],
+        w: [row, col - 1],
+      })) {
         // NOTE: javascript will return undefined for out of bounds indices, so
         // we only need check up to the last level
         if (nrow < 0 || nrow === boardIndices.length) continue;
         const neighbor = boardIndices[nrow][ncol];
         if (neighbor !== undefined)
-          neighbors[neighbors.length - 1].push(neighbor);
+          myNeighbors[dir as keyof Neighbors] = neighbor;
       }
 
       // hex col span is 2, so skip the next column

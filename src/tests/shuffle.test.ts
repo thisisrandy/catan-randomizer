@@ -59,7 +59,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined" && [6, 8].includes(hex.number)) {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             // eslint-disable-next-line jest/no-conditional-expect
             expect([6, 8]).not.toContain(neighbor.number);
           }
@@ -73,7 +75,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined" && [2, 12].includes(hex.number)) {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             // eslint-disable-next-line jest/no-conditional-expect
             expect([2, 12]).not.toContain(neighbor.number);
           }
@@ -87,7 +91,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined") {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             // eslint-disable-next-line jest/no-conditional-expect
             expect(hex.number).not.toEqual(neighbor.number);
           }
@@ -105,7 +111,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, sixEightOkay, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined" && [6, 8].includes(hex.number)) {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             if (typeof neighbor.number === "undefined") continue;
             // if we found what we were looking for, immediately finish the test
             if ([6, 8].includes(neighbor.number)) return;
@@ -126,7 +134,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, twoTwelveOkay, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined" && [2, 12].includes(hex.number)) {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             if (typeof neighbor.number === "undefined") continue;
             // if we found what we were looking for, immediately finish the test
             if ([2, 12].includes(neighbor.number)) return;
@@ -147,7 +157,9 @@ describe("shuffle", () => {
       const hexes = shuffle(board, pairsOkay, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (typeof hex.number !== "undefined") {
-          for (const neighbor of board.neighbors[j].map((n) => hexes[n])) {
+          for (const neighbor of Object.values(board.neighbors[j]).map(
+            (n) => hexes[n]
+          )) {
             // if we found what we were looking for, immediately finish the test
             if (hex.number === neighbor.number) return;
           }
@@ -163,7 +175,7 @@ describe("shuffle", () => {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (const [j, hex] of hexes.entries()) {
         if (hex.type === "sea") continue;
-        for (const neighbor of board.neighbors[j]) {
+        for (const neighbor of Object.values(board.neighbors[j])) {
           expect(hex.type).not.toEqual(hexes[neighbor].type);
         }
       }
@@ -179,7 +191,7 @@ describe("shuffle", () => {
       const hexes = shuffle(board, binaryConstraints, likeTerrainOkay);
       for (const [j, hex] of hexes.entries()) {
         if (hex.type === "sea") continue;
-        for (const neighbor of board.neighbors[j]) {
+        for (const neighbor of Object.values(board.neighbors[j])) {
           // if we found what we were looking for, immediately finish the test
           if (hex.type === hexes[neighbor].type) return;
         }
@@ -479,7 +491,7 @@ function getIntersectionPipCountsAt(hexes: Hex[], index: number): number[] {
   // constraint to go down to 10 (lower isn't possible on most
   // reasonable-looking boards), and the max of a two neighbor intersection is
   // 10
-  const largerNeighbors = board.neighbors[index]
+  const largerNeighbors = Object.values(board.neighbors[index])
       .filter((n) => n > index)
       .sort((a, b) => a - b)
       // it's important not to toss non-resource-producing hexes, because we

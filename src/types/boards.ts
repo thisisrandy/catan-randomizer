@@ -111,6 +111,15 @@ export type FixNumbersInGroup = number | undefined | "all";
 export type FixNumbersInGroupStrict = Exclude<FixNumbersInGroup, "all">;
 
 /**
+ * Container for explicit storage of neighboring hex indices along with their
+ * spatial relation to the current hex. Directions are w.r.t. the vertical
+ * specification of a board. See {@link UseHorizonalLayout}
+ */
+export type Neighbors = Partial<
+  Record<"nw" | "ne" | "e" | "se" | "sw" | "w", number>
+>;
+
+/**
  * All of the data about a Catan board, including the hexes and number chits
  * used as well as board shape and display styling. Note that by convention,
  * hexes are counted off left to right, top to bottom. For example, in the base
@@ -131,9 +140,9 @@ export interface CatanBoard {
    */
   recommendedLayout: Hex[];
   /**
-   * An array of the indices of neighboring hexes.
+   * An array of `Neighbors` for each hex. See {@link Neighbors}
    */
-  neighbors: number[][];
+  neighbors: Neighbors[];
   /** The CSS
    * [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
    * that will be used for the board grid
