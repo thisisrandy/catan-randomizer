@@ -11,6 +11,8 @@ import {
 } from "../types/boards";
 import { Hex } from "../types/hexes";
 
+export class BoardSpecError extends Error {}
+
 /**
  * Given `template`, compute all of the properties of a `CatanBoard`
  */
@@ -22,8 +24,33 @@ export default function catanBoardFactory(
     .flat()
     .filter((ht) => ht.type !== "empty");
 
-  // first, pull maxPipsOnChits out into a separate array so the shuffling code
-  // doesn't need to remember to fix it to hex positions
+  // before we start to assemble the board, do a couple of sanity checks on the
+  // template. most everything else should be covered statically by the type
+  // system
+  flatNoEmpties.forEach((ht) => {
+    if (!ht.fixed && ht.port?.fixed)
+      throw new BoardSpecError(
+        `Fixed ports can't appear on non-fixed hexes: ${ht}`
+      );
+  });
+  if (template.fixNumbersInGroups) {
+    const toCheck = template.fixNumbersInGroups.slice();
+    if (toCheck.includes("all")) toCheck.splice(toCheck.indexOf("all"));
+    for (const ht of flatNoEmpties) {
+      if (!toCheck.length) break;
+      if (toCheck.includes(ht.group)) toCheck.splice(toCheck.indexOf(ht.group));
+    }
+    if (toCheck.length) {
+      throw new BoardSpecError(
+        "The specified fixNumbersInGroups contains groups to which no hex" +
+          ` belongs: ${toCheck}`
+      );
+    }
+  }
+
+  // we're ready to start assembling the board. first, pull maxPipsOnChits out
+  // into a separate array so the shuffling code doesn't need to remember to fix
+  // it to hex positions
   const maxPipsOnChits = flatNoEmpties.map((ht) =>
     ht.maxPipsOnChit === undefined ? 5 : ht.maxPipsOnChit
   );

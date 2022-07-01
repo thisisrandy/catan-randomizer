@@ -1,4 +1,9 @@
-import { Hex, HexTemplate, HexType, MaxPipsOnChit } from "./hexes";
+import {
+  Hex,
+  HexTemplate,
+  MaxPipsOnChit,
+  ResourceProducingHexType,
+} from "./hexes";
 
 /**
  * A template to simplify the specification of a `CatanBoard`
@@ -66,14 +71,18 @@ export type UseHorizonalLayout = boolean;
  * e.g. to "make sure forest terrains and pasture terrains don't get number
  * tokens that are too unfavorable".
  */
-export type MinPipsOnHexTypes = { [type in HexType]?: 2 | 3 | 4 | 5 };
+export type MinPipsOnHexTypes = {
+  [type in ResourceProducingHexType]?: 2 | 3 | 4 | 5;
+};
 
 /**
  * The maxiumum number of pips which may appear on chits assigned to specified
  * hex types after shuffling. This is to be used when the instructions specify
  * e.g. to "not place... 6s & 8s... on gold fields".
  */
-export type MaxPipsOnHexTypes = { [type in HexType]?: 1 | 2 | 3 | 4 };
+export type MaxPipsOnHexTypes = {
+  [type in ResourceProducingHexType]?: 1 | 2 | 3 | 4;
+};
 
 /**
  * The number chits assigned to the hexes in the specified group(s) should not

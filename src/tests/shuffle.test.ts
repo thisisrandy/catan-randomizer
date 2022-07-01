@@ -232,6 +232,8 @@ describe("shuffle", () => {
       ...numericConstraints,
       maxConnectedLikeTerrain: { value: 7, valid: true },
     };
+    const minPipsOnHexTypes: { [type in HexType]?: number } =
+      pipConstrainedBoard.minPipsOnHexTypes || {};
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(
         pipConstrainedBoard,
@@ -240,7 +242,7 @@ describe("shuffle", () => {
       );
       for (let j = 0; j < hexes.length; j++) {
         expect(hexes[j].number).toBeGreaterThanOrEqual(
-          pipConstrainedBoard.minPipsOnHexTypes![hexes[j].type] || 1
+          minPipsOnHexTypes![hexes[j].type] || 1
         );
       }
     }
@@ -272,6 +274,8 @@ describe("shuffle", () => {
       ...numericConstraints,
       maxConnectedLikeTerrain: { value: 7, valid: true },
     };
+    const maxPipsOnHexTypes: { [type in HexType]?: number } =
+      pipConstrainedBoard.maxPipsOnHexTypes || {};
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(
         pipConstrainedBoard,
@@ -284,7 +288,7 @@ describe("shuffle", () => {
           pipConstrainedTemplate.board[0][j].maxPipsOnChit || 5
         );
         expect(pipCount).toBeLessThanOrEqual(
-          pipConstrainedBoard.maxPipsOnHexTypes![hexes[j].type] || 5
+          maxPipsOnHexTypes![hexes[j].type] || 5
         );
       }
     }

@@ -1,4 +1,4 @@
-import { Hex, Port, PortType } from "../types/hexes";
+import { Hex, HexType, Port, PortType } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard } from "../types/boards";
 import { HexGroups } from "./HexGroups";
@@ -190,8 +190,13 @@ function getShuffledNumbers(
   binaryConstraints: BinaryConstraints,
   numericConstraints: NumericConstraints
 ): Hex[] {
-  const minPipsOnHexTypes = board.minPipsOnHexTypes || {};
-  const maxPipsOnHexTypes = board.maxPipsOnHexTypes || {};
+  // it's useful to manually widen these so we don't have to do extra checks
+  // below. the narrowness of the board types is useful for restricting board
+  // specification, but not beyond that
+  const minPipsOnHexTypes: { [type in HexType]?: number } =
+    board.minPipsOnHexTypes || {};
+  const maxPipsOnHexTypes: { [type in HexType]?: number } =
+    board.maxPipsOnHexTypes || {};
   const hexGroups = new HexGroups(hexes, "numbers", board.fixNumbersInGroups);
   let randomIndex,
     retries = 0;

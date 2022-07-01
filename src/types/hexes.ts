@@ -1,13 +1,14 @@
-type HexType =
+import { StrictUnion } from "./StrictUnion";
+
+type ResourceProducingHexType =
   | "mountains"
   | "pasture"
   | "forest"
   | "hills"
   | "fields"
-  | "desert"
-  | "sea"
-  | "gold"
-  | "fog";
+  | "gold";
+type NonResourceProducingHexType = "desert" | "sea" | "fog";
+type HexType = ResourceProducingHexType | NonResourceProducingHexType;
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
 
@@ -29,22 +30,40 @@ type Port = {
   fixed?: boolean;
 };
 
-type Hex = {
-  type: HexType;
-  /**
-   * The number chit assigned to this hex, if any
-   */
-  number?: NumberChitValue;
+/**
+ * Container for hex information. In order to be able to inject additional
+ * values into the union for {@link HexTemplate}, we make `Hex` generic as
+ * discussed [here](https://stackoverflow.com/a/72822682/12162258). Because the
+ * values injected there overlap with the values used in `Hex` (specifically, `{
+ * type: ResourceProducingHexType, ... }` is reused), {@link StrictUnion} is
+ * required to ensure that the type checking we want actually happens
+ */
+type Hex<T extends Record<string, unknown> = never> = StrictUnion<
+  | T
+  | {
+      type: ResourceProducingHexType;
+      /**
+       * The number chit assigned to this hex, if any
+       */
+      number?: NumberChitValue;
+    }
+  | {
+      type: "sea";
+      /**
+       * If this is a sea hex, it can contain a `Port`
+       */
+      port?: Port;
+    }
+  | {
+      type: Exclude<NonResourceProducingHexType, "sea">;
+    }
+> & {
   /**
    * If this hex cannot be moved, e.g. as is true of the center-left pasture hex
    * on the Explorers & Pirates map, it can be marked as such using this
    * property
    */
   fixed?: boolean;
-  /**
-   * If this is a sea hex, it can contain a `Port`
-   */
-  port?: Port;
   /**
    * Some setups, e.g. Seafarers scenarios, specify multiple groups of
    * terrain/chits to shuffle. Hexes belonging to anything other than the "main"
@@ -62,16 +81,21 @@ type Hex = {
  * value is *fixed* to its initial position on the board.
  */
 type MaxPipsOnChit = 1 | 2 | 3 | 4 | 5;
-type HexTemplateType = HexType | "empty";
-type HexTemplate = Omit<Hex, "type"> & {
-  type: HexTemplateType;
-  /**
-   * See {@link MaxPipsOnChit}
-   */
-  maxPipsOnChit?: MaxPipsOnChit;
-};
+type HexTemplate = StrictUnion<
+  | Hex<{
+      type: ResourceProducingHexType;
+      number: NumberChitValue;
+      /**
+       * See {@link MaxPipsOnChit}
+       */
+      maxPipsOnChit: MaxPipsOnChit;
+    }>
+  | { type: "empty" }
+>;
 
 export type {
+  ResourceProducingHexType,
+  NonResourceProducingHexType,
   HexType,
   Hex,
   MaxPipsOnChit,
