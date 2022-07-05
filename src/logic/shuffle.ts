@@ -162,6 +162,12 @@ function fisherYates(array: any[]) {
 }
 
 function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
+  // FIXME: this function completely ignores hex groups, and for good reason:
+  // there are no known scenarios that impose group constraints on ports. that
+  // said, if such a board were proposed, it would not be properly shuffled by
+  // the existing logic. this serves as a note that the logic would need to be
+  // refined for such a scenario
+
   // the first task is to reset all fixed ports
   for (let i = 0; i < board.recommendedLayout.length; i++) {
     if (board.recommendedLayout[i].port?.fixed) {
