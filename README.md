@@ -37,7 +37,7 @@ aren't seen elsewhere.
   each scenario, including things like shuffling the main and foreign islands
   separately, restricting the pip count of certain positions or terrain types,
   and not shuffling some/all islands and/or ports. That said, I've never
-  actually played Seafarers, and it's quite possible I misinterpretted
+  actually played Seafarers, so it's quite possible I misinterpretted
   something. [PRs are welcome!](#contributing)
 
 ## Other Features
