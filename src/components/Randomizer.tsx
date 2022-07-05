@@ -180,7 +180,7 @@ export default function Randomizer({ setHexes, board }: Props) {
           <Tooltip
             title={
               invalidConstraints
-                ? "One or more constraint is invalid. Please fix this before closing the dialog"
+                ? "One or more constraints is invalid. Please fix this before closing the dialog"
                 : "Close the dialog"
             }
             disableTouchListener
