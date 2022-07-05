@@ -1,3 +1,5 @@
+![CI](https://github.com/thisisrandy/catan-randomizer/actions/workflows/main.yml/badge.svg)
+
 # Catan Randomizer
 
 <p align="center">
