@@ -1,8 +1,7 @@
 # Catan Randomizer
 
 <p align="center">
-  <img alt="Explorers & Pirates" src="screenshot-explorers-pirates.png" />
-  <img alt="Catan: 5-6 Player Extension" src="screenshot-catan-5-6-players.png" />
+  <img alt="demo gif" src="demo.gif" />
 </p>
 
 This is a hobby project to produce randomized [Catan](https://www.catan.com) boards under
