@@ -53,7 +53,8 @@ function App() {
   );
 
   // if this was a share link, parse and load it, then give the user the
-  // opportunity to save it locally
+  // opportunity to save it locally (recall that effects run on mount and then
+  // every dep change, only the first of which will ever happen here)
   useEffect(() => {
     const sharedBoardStr = new URL(document.location.href).searchParams.get(
       SHARED_BOARD_PARAM
