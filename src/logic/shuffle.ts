@@ -1,4 +1,4 @@
-import { Hex, HexType, Port, PortType } from "../types/hexes";
+import { Hex, HexType, Port, PortOrientation } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
@@ -17,6 +17,7 @@ if (typeof globalThis.structuredClone === "undefined") {
 export class ShufflingError extends Error {}
 export class TerrainShufflingError extends ShufflingError {}
 export class NumberShufflingError extends ShufflingError {}
+export class PortShufflingError extends ShufflingError {}
 
 /**
  * In a small test, large, heavily constrained boards were found to occasionally
@@ -47,16 +48,8 @@ export function shuffle(
     binaryConstraints,
     numericConstraints
   );
-
-  // ports don't get shuffled in place, so we need to assign them back to
-  // hexes after shuffling. it's convenient to pop from ports, so reverse it
-  // first to maintain the order of fixed ports
-  const ports = getShuffledPorts(board).reverse();
-  for (const hex of hexes) {
-    if (hex.port !== undefined) {
-      hex.port.type = ports.pop()!;
-    }
-  }
+  // and finally ports, which also depends on terrain
+  hexes = getShuffledPorts(board, hexes);
 
   return hexes;
 }
@@ -152,36 +145,158 @@ function getShuffledTerrain(
   return hexes;
 }
 
-function getShuffledPorts(board: CatanBoard): PortType[] {
-  // IMPORTANT NOTE: here and elsewhere, there is an assumption that sea hexes
-  // with ports are fixed. this isn't necessarily true in Seafarers and will
-  // need to be appropriately handled if support for that expansion is added
-
-  const ports = board.recommendedLayout
-    .filter(({ port }) => typeof port !== "undefined")
-    .map(({ port }) => port as Port)
-    .map(({ type, fixed }) => ({ type, fixed }));
-
-  // we need logic to skip fixed ports, but otherwise there are no port
-  // constraints, so this is just Fisher-Yates
-  let currentIndex = ports.length,
+/**
+ * Do vanilla Fisher-Yates in-place on `array`
+ */
+function fisherYates(array: any[]) {
+  let currentIndex = array.length,
     randomIndex;
   while (currentIndex > 0) {
-    if (ports[currentIndex - 1].fixed) {
-      currentIndex--;
-      continue;
-    }
-    while (
-      ports[(randomIndex = Math.floor(Math.random() * currentIndex))].fixed
-    );
+    randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-    [ports[currentIndex], ports[randomIndex]] = [
-      ports[randomIndex],
-      ports[currentIndex],
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
     ];
   }
+}
 
-  return ports.map(({ type }) => type);
+function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
+  // the first task is to reset all fixed ports
+  for (let i = 0; i < board.recommendedLayout.length; i++) {
+    if (board.recommendedLayout[i].port?.fixed) {
+      hexes[i].port = board.recommendedLayout[i].port;
+    }
+  }
+
+  // next, gather the remaining (non-fixed) ports
+  const ports = board.recommendedLayout
+    .filter(({ port }) => typeof port !== "undefined" && !port.fixed)
+    .map(({ port }) => port as Port);
+  // on some boards, all ports are fixed, so we can return now
+  if (!ports.length) return hexes;
+  // otherwise, shuffle what remains
+  fisherYates(ports);
+
+  // fill in (non-fixed) ports on fixed hexes, being careful not to change their
+  // orientations
+  for (const hex of hexes) {
+    if (hex.fixed && hex.port && !hex.port.fixed) {
+      hex.port.type = ports.pop()!.type;
+    }
+  }
+  // on most boards, all port hexes are fixed, so check again if we're ready to
+  // return
+  if (!ports.length) return hexes;
+
+  // finally, it's time to place the rest of ports on valid sea hexes in valid
+  // orientations. start by clearing ports on non-fixed hexes
+  for (const hex of hexes) {
+    if (hex.port && !hex.fixed) delete hex.port;
+  }
+  // then, gather unassigned sea hexes. retain their indices so we can look up
+  // their neighbors. note that we aren't excluding fixed hexes. there's no
+  // issue with shuffling a free port onto a fixed hex, e.g. one representing
+  // the border
+  const seaHexes = hexes
+    .map((hex, i) => [hex, i] as [Hex, number])
+    .filter(([hex, _]) => hex.type === "sea" && !hex.port);
+  // shuffle them
+  fisherYates(seaHexes);
+  // and test to see if there are any valid port orientations on each.
+  for (const [seaHex, index] of seaHexes) {
+    const validOrientations: PortOrientation[] = getValidPortOrientations(
+      index,
+      hexes,
+      board
+    );
+    // if there weren't any valid orientations, keep going
+    if (!validOrientations.length) continue;
+    // otherwise, choose a random one
+    const orientation =
+      validOrientations[Math.floor(Math.random() * validOrientations.length)];
+    // and assign a port to this hex
+    seaHex.port = { type: ports.pop()!.type, orientation };
+    // if we've run out of ports, it's time to stop
+    if (!ports.length) break;
+  }
+
+  // if we still have unassigned ports, blow up. technically, we should probably
+  // retry a few times. it's possible, for example, that different orientations
+  // might fit within constraints. in practice, though, I don't think a board
+  // crowded enough for this to happen should exist, so it's probably moot
+  if (ports.length)
+    throw new PortShufflingError(
+      "Unable to assign all ports to sea hexes. This might happen if your board" +
+        " is specified with a large number of ports and relatively few sea hexes." +
+        " Since any given intersection can't have more than one dock pointed at it," +
+        " it's possible to specify a board that can't be randomized within that" +
+        " constraint. Please check your board specification and try again."
+    );
+
+  return hexes;
+}
+
+const directions: (keyof Neighbors)[] = ["w", "nw", "ne", "e", "se", "sw"];
+const dirToOrientation: Record<keyof Neighbors, PortOrientation> = {
+  w: 0,
+  nw: 60,
+  ne: 120,
+  e: 180,
+  se: 240,
+  sw: 300,
+};
+
+/**
+ * Determine the valid `PortOrientation`s at `shuffledHexes[index]`, if any. If
+ * `shuffledHexes[index]` is not a sea hex or already has a port assigned to it,
+ * the result is an empty list.
+ *
+ * In order to be valid, an orientation must meet the following criteria:
+ *
+ * 1. The hex in the same direction as the port must be a known land hex.
+ * 2. If directions are listed in order (clockwise or counter, doesn't
+ *    matter) and the orientation index is i, then the hex at (i+5)%6 must not
+ *    contain a port oriented at (i+1)%6, and the hex at (i+1)%6 must not
+ *    contain a port oriented at (i+5)%6
+ *
+ * NOTE: This logic is pulled out of {@link getShuffledPorts} mostly for the
+ * purpose of testing. It shouldn't be used on its own outside of that context.
+ */
+export function getValidPortOrientations(
+  index: number,
+  shuffledHexes: Hex[],
+  board: CatanBoard
+): PortOrientation[] {
+  if (shuffledHexes[index].type !== "sea" || shuffledHexes[index].port)
+    return [];
+
+  const validOrientations: PortOrientation[] = [];
+  const neighbors = board.neighbors[index];
+  for (let i = 0; i < directions.length; i++) {
+    // establish the directions which will need various sorts of testing
+    const heading = directions[i],
+      counterClockwise =
+        directions[(i + directions.length - 1) % directions.length],
+      clockwise = directions[(i + 1) % directions.length];
+    if (
+      // hex in heading direction must exist and be land
+      neighbors[heading] !== undefined &&
+      !["sea", "fog"].includes(shuffledHexes[neighbors[heading]!].type) &&
+      // counterClockwise hex must either not exist or not have a clockwise port
+      (neighbors[counterClockwise] === undefined ||
+        shuffledHexes[neighbors[counterClockwise]!].port?.orientation !==
+          dirToOrientation[clockwise]) &&
+      // clockwise hex must either not exist or not have a counterClockwise port
+      (neighbors[clockwise] === undefined ||
+        shuffledHexes[neighbors[clockwise]!].port?.orientation !==
+          dirToOrientation[counterClockwise])
+    ) {
+      validOrientations.push(dirToOrientation[heading]);
+    }
+  }
+
+  return validOrientations;
 }
 
 function getShuffledNumbers(

@@ -2,7 +2,9 @@ import { EXPANSIONS } from "../data/expansions";
 import catanBoardFactory from "../factories/boardFactory";
 import {
   getIntersectionPipCounts,
+  getValidPortOrientations,
   NumberShufflingError,
+  PortShufflingError,
   shuffle,
   TerrainShufflingError,
 } from "../logic/shuffle";
@@ -46,6 +48,41 @@ const pipConstrainedTemplate: CatanBoardTemplate = {
   maxPipsOnHexTypes: { hills: 4 },
 };
 const pipConstrainedBoard = catanBoardFactory(pipConstrainedTemplate);
+const mixedPortBoardTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "empty" },
+      {
+        type: "sea",
+        fixed: true,
+        port: { type: "brick", orientation: 300, fixed: true },
+      },
+      {
+        type: "sea",
+        fixed: true,
+        port: { type: "ore", orientation: 240, fixed: true },
+      },
+      { type: "sea", fixed: true },
+      { type: "sea", fixed: true, port: { type: "grain", orientation: 300 } },
+      { type: "sea", fixed: true, port: { type: "3:1", orientation: 240 } },
+      { type: "sea", fixed: true },
+      { type: "sea", port: { type: "timber", orientation: 300 } },
+      { type: "sea", port: { type: "wool", orientation: 240 } },
+    ],
+    [
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+    ],
+  ],
+};
+const mixedPortBoard = catanBoardFactory(mixedPortBoardTemplate);
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
 const numSamples = 50;
@@ -487,6 +524,90 @@ describe("shuffle", () => {
     expect(false).toBe(true);
   });
 
+  it("should not shuffle fixed ports", () => {
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        mixedPortBoard,
+        binaryConstraints,
+        numericConstraints
+      );
+      for (const [i, shuffledHex] of hexes.entries()) {
+        const origHex = mixedPortBoard.recommendedLayout[i];
+        if (origHex.port?.fixed) {
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(shuffledHex.port).toBeDefined();
+          const origPort = origHex.port!,
+            shuffledPort = shuffledHex.port!;
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(origPort.type).toEqual(shuffledPort.type);
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(origPort.orientation).toEqual(shuffledPort.orientation);
+        }
+      }
+    }
+  });
+
+  it(
+    "should shuffle non-fixed ports on fixed hexes without" +
+      " changing their position or orientation",
+    () => {
+      let numDifferent = 0;
+      for (let i = 0; i < numSamples; i++) {
+        const hexes = shuffle(
+          mixedPortBoard,
+          binaryConstraints,
+          numericConstraints
+        );
+        for (const [i, shuffledHex] of hexes.entries()) {
+          const origHex = mixedPortBoard.recommendedLayout[i];
+          if (origHex.fixed && origHex.port && !origHex.port.fixed) {
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(shuffledHex.port).toBeDefined();
+            const origPort = mixedPortBoard.recommendedLayout[i].port!,
+              shuffledPort = shuffledHex.port!;
+            if (origPort.type !== shuffledPort.type) numDifferent++;
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(origPort.orientation).toEqual(shuffledPort.orientation);
+          }
+        }
+      }
+      expect(numDifferent).toBeGreaterThan(0);
+    }
+  );
+
+  it("should shuffle non-fixed ports originating on non-fixed hexes freely", () => {
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        mixedPortBoard,
+        binaryConstraints,
+        numericConstraints
+      );
+      for (const [i, shuffledHex] of hexes.entries()) {
+        if (shuffledHex.port && !mixedPortBoard.recommendedLayout[i].port) {
+          return;
+        }
+      }
+    }
+    expect(true).toBe(false);
+  });
+
+  it("should fail to shuffle ports on a crowded board", () => {
+    const badTemplate: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "sea", port: { type: "ore", orientation: 240 } },
+          { type: "sea", port: { type: "brick", orientation: 300 } },
+        ],
+        [{ type: "empty" }, { type: "desert", fixed: true }],
+      ],
+    };
+    const badBoard = catanBoardFactory(badTemplate);
+    expect(() =>
+      shuffle(badBoard, binaryConstraints, numericConstraints)
+    ).toThrowError(PortShufflingError);
+  });
+});
+
 describe("getIntersectionPipCount", () => {
   it("should correctly report the pip counts of all surrounding intersections", () => {
     const template: CatanBoardTemplate = {
@@ -523,4 +644,31 @@ describe("getIntersectionPipCount", () => {
     }
   });
 });
+
+describe("getValidPortOrientations", () => {
+  it("should not allow multiple docks to point at the same intersection", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "sea", port: { type: "ore", orientation: 240 } },
+          // this is the one we're testing. getValidPortOrientations expects
+          // there to *not* be a port at the location being tested, because that
+          // would indicate that it had already been assigned a port and
+          // therefore that there aren't any valid orientations on that hex
+          { type: "sea" },
+          { type: "desert", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          { type: "desert", fixed: true },
+          { type: "desert", fixed: true },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    // sw (300) should not be present in the results
+    expect(getValidPortOrientations(1, board.recommendedLayout, board)).toEqual(
+      [180, 240]
+    );
+  });
 });
