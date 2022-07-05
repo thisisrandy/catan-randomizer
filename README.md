@@ -82,3 +82,18 @@ guidelines](https://www.catan.com/guidelines-dealing-intellectual-property-catan
 However, on the off chance that you are associated with CATAN GmbH and feel that
 this project harms your brand in any way, it will be swiftly and
 enthusiastically scrubbed from public existence upon request.
+
+## Uh, ports? Don't you mean harbors?
+
+You may have noticed that the word "port" is used pervasively in the code to
+refer to what the Catan manuals call "harbors." I didn't do this on purpose, but
+once I realized my mistake, I also realized it was actually a correction.
+[Here](http://www.differencebetween.net/language/difference-between-port-and-harbor/)
+are some appropriate definitions:
+
+**harbor** _noun_ A place of safety for ships and other waterborne vessels.
+
+**port** _noun_ A commercial water facility used for ships and their cargo.
+
+In order words, since harbors are just mooring areas and have nothing to do with
+goods and trade, what we have in Catan are more aptly called ports.
