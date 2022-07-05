@@ -202,41 +202,6 @@ describe("shuffle", () => {
     expect(false).toBe(true);
   });
 
-  it("should correctly report the pip counts of all surrounding intersections", () => {
-    const template: CatanBoardTemplate = {
-      board: [
-        [
-          { type: "empty" },
-          { type: "mountains", number: 6 },
-          { type: "mountains", number: 4 },
-        ],
-        [
-          { type: "mountains", number: 2 },
-          { type: "mountains", number: 3 },
-          { type: "mountains", number: 8 },
-        ],
-        [
-          { type: "empty" },
-          { type: "mountains", number: 12 },
-          { type: "mountains", number: 10 },
-        ],
-      ],
-    };
-    const board = catanBoardFactory(template);
-    for (const [atIndex, expected] of [
-      [0, [6, 8, 8, 10]],
-      [3, [4, 6, 8, 10, 10, 10]],
-    ] as const) {
-      const pipCounts = getIntersectionPipCounts({
-        board,
-        hexes: board.recommendedLayout,
-        atIndex,
-        onlyHigher: false,
-      }).sort((a, b) => a - b);
-      expect(pipCounts).toEqual(expected);
-    }
-  });
-
   it("shouldn't allow intersection pip counts above the specified maximum", () => {
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
@@ -521,4 +486,41 @@ describe("shuffle", () => {
     }
     expect(false).toBe(true);
   });
+
+describe("getIntersectionPipCount", () => {
+  it("should correctly report the pip counts of all surrounding intersections", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          { type: "mountains", number: 6 },
+          { type: "mountains", number: 4 },
+        ],
+        [
+          { type: "mountains", number: 2 },
+          { type: "mountains", number: 3 },
+          { type: "mountains", number: 8 },
+        ],
+        [
+          { type: "empty" },
+          { type: "mountains", number: 12 },
+          { type: "mountains", number: 10 },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    for (const [atIndex, expected] of [
+      [0, [6, 8, 8, 10]],
+      [3, [4, 6, 8, 10, 10, 10]],
+    ] as const) {
+      const pipCounts = getIntersectionPipCounts({
+        board,
+        hexes: board.recommendedLayout,
+        atIndex,
+        onlyHigher: false,
+      }).sort((a, b) => a - b);
+      expect(pipCounts).toEqual(expected);
+    }
+  });
+});
 });
