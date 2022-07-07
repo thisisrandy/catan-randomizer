@@ -16,7 +16,7 @@ While the same idea has been executed
 [many](https://jkirschner.github.io/catan-randomizer/)
 [times](https://catan.bunge.io/)
 [before](https://alexbeals.com/projects/catan/), this project supports fairness
-constraints (i.e. limiting intersection pip totals) and [Catan
+constraints and [Catan
 Expansions](https://www.catan.com/explore-catan/catan-core-family-games) that
 aren't seen elsewhere.
 
