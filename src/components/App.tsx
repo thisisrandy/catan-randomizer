@@ -39,8 +39,9 @@ function App() {
   const [saveContext, setSaveContext] = useState<string | null>(null);
 
   /**
-   * When the expansion is changed, state must be updated in the right order.
-   * This is a simple helper to ensure that ordering
+   * When the expansion is changed, state updates (specifically board and hexes)
+   * must be batched together, which is guaranteed under synchronous conditions
+   * inside a callback. This is a simple helper to ensure that
    */
   const changeExpansion = useCallback(
     (expansion: ExpansionName, hexes?: Hex[]) => {
