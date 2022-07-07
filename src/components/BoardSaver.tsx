@@ -128,15 +128,24 @@ export default function BoardSaver({
             marginBottom: 10,
           }}
         >
-          <Tooltip title={"Save the board on this device"} disableTouchListener>
-            <Button
-              variant="contained"
-              disabled={!okayToSave}
-              onClick={handleSave}
-              style={{ marginRight: 20 }}
-            >
-              Save
-            </Button>
+          <Tooltip
+            title={
+              okayToSave
+                ? "Save the board on this device"
+                : "Please choose a name that isn't already in use"
+            }
+            disableTouchListener
+          >
+            <span>
+              <Button
+                variant="contained"
+                disabled={!okayToSave}
+                onClick={handleSave}
+                style={{ marginRight: 20 }}
+              >
+                Save
+              </Button>
+            </span>
           </Tooltip>
           <Tooltip title="Close the dialog without saving" disableTouchListener>
             <Button variant="contained" onClick={handleDialogClose}>
