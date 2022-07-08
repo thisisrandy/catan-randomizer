@@ -1,39 +1,41 @@
 import "../css/board.css";
-import pastureHorizontal from "../images/pasture-horizontal.png";
-import pastureVertical from "../images/pasture-vertical.png";
-import forestHorizontal from "../images/forest-horizontal.png";
-import forestVertical from "../images/forest-vertical.png";
-import hillsHorizontal from "../images/hills-horizontal.png";
-import hillsVertical from "../images/hills-vertical.png";
-import mountainsHorizontal from "../images/mountains-horizontal.png";
-import mountainsVertical from "../images/mountains-vertical.png";
-import fieldsHorizontal from "../images/fields-horizontal.png";
-import fieldsVertical from "../images/fields-vertical.png";
-import desertHorizontal from "../images/desert-horizontal.png";
-import desertVertical from "../images/desert-vertical.png";
-import goldHorizonal from "../images/gold-horizontal.png";
-import goldVertical from "../images/gold-vertical.png";
-import seaHorizontal from "../images/sea-horizontal.png";
-import seaVertical from "../images/sea-vertical.png";
-import fogHorizontal from "../images/fog-horizontal.png";
-import fogVertical from "../images/fog-vertical.png";
-import two from "../images/2.png";
-import three from "../images/3.png";
-import four from "../images/4.png";
-import five from "../images/5.png";
-import six from "../images/6.png";
-import eight from "../images/8.png";
-import nine from "../images/9.png";
-import ten from "../images/10.png";
-import eleven from "../images/11.png";
-import twelve from "../images/12.png";
-import port3to1WithDocks from "../images/port-3-1-with-docks.png";
-import portBrickWithDocks from "../images/port-brick-with-docks.png";
-import portGrainWithDocks from "../images/port-grain-with-docks.png";
-import portOreWithDocks from "../images/port-ore-with-docks.png";
-import portTimberWithDocks from "../images/port-timber-with-docks.png";
-import portWoolWithDocks from "../images/port-wool-with-docks.png";
-import portUnrevealedWithDocks from "../images/port-unrevealed-with-docks.png";
+import {
+  pastureHorizontal,
+  pastureVertical,
+  forestHorizontal,
+  forestVertical,
+  hillsHorizontal,
+  hillsVertical,
+  mountainsHorizontal,
+  mountainsVertical,
+  fieldsHorizontal,
+  fieldsVertical,
+  desertHorizontal,
+  desertVertical,
+  goldHorizonal,
+  goldVertical,
+  seaHorizontal,
+  seaVertical,
+  fogHorizontal,
+  fogVertical,
+  two,
+  three,
+  four,
+  five,
+  six,
+  eight,
+  nine,
+  ten,
+  eleven,
+  twelve,
+  port3to1WithDocks,
+  portBrickWithDocks,
+  portGrainWithDocks,
+  portOreWithDocks,
+  portTimberWithDocks,
+  portWoolWithDocks,
+  portUnrevealedWithDocks,
+} from "../images/index";
 import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
