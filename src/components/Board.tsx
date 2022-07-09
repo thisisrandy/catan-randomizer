@@ -40,6 +40,7 @@ import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
 import { Paper } from "@mui/material";
 import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
+import ImageKeeper from "./ImageKeeper";
 
 /**
  * Values are [vertical image, horizontal image]
@@ -97,88 +98,91 @@ export default function Board({ hexes, board }: Props) {
     typeof board.horizontal !== "undefined" && board.horizontal;
 
   return (
-    <Paper
-      id="board-container"
-      elevation={20}
-      style={{
-        margin: 10,
-        padding: 20,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
+    <>
+      <ImageKeeper />
+      <Paper
+        id="board-container"
+        elevation={20}
         style={{
-          width:
-            typeof board.boardWidthPercentage !== "undefined"
-              ? board.boardWidthPercentage
-              : "100%",
-          height:
-            typeof board.boardHeightPercentage !== "undefined"
-              ? board.boardHeightPercentage
-              : "100%",
-          display: "grid",
-          gridTemplateColumns: board.cssGridTemplateColumns,
-          gridTemplateRows: board.cssGridTemplateRows,
-          transform: horizontal ? "rotate(90deg)" : "",
+          margin: 10,
+          padding: 20,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        {hexes.map(({ type, number, port }, i) => (
-          // NOTE: this div fixes display on some older devices. see
-          // https://stackoverflow.com/a/67527395/12162258
-          <div
-            key={i}
-            style={{
-              height: "100%",
-              width: "100%",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gridArea: board.cssGridAreas[i],
-            }}
-          >
-            <img
-              src={hexTypeToImg[type][Number(horizontal)]}
-              alt={`${type} hex at position ${i}. Positions indices run left to
-              right, top to bottom`}
+        <div
+          style={{
+            width:
+              typeof board.boardWidthPercentage !== "undefined"
+                ? board.boardWidthPercentage
+                : "100%",
+            height:
+              typeof board.boardHeightPercentage !== "undefined"
+                ? board.boardHeightPercentage
+                : "100%",
+            display: "grid",
+            gridTemplateColumns: board.cssGridTemplateColumns,
+            gridTemplateRows: board.cssGridTemplateRows,
+            transform: horizontal ? "rotate(90deg)" : "",
+          }}
+        >
+          {hexes.map(({ type, number, port }, i) => (
+            // NOTE: this div fixes display on some older devices. see
+            // https://stackoverflow.com/a/67527395/12162258
+            <div
+              key={i}
               style={{
-                width: HEX_SIZE,
-                height: HEX_SIZE,
-                position: "absolute",
-                zIndex: 1,
+                height: "100%",
+                width: "100%",
+                position: "relative",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gridArea: board.cssGridAreas[i],
               }}
-            />
-            {number && (
+            >
               <img
-                src={String(numberValToImg[number])}
-                alt={`${number} chit at position ${i}`}
+                src={hexTypeToImg[type][Number(horizontal)]}
+                alt={`${type} hex at position ${i}. Positions indices run left to
+              right, top to bottom`}
                 style={{
-                  width: "35%",
-                  height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
-                  position: "absolute",
-                  zIndex: 2,
-                  transform: horizontal ? "rotate(-90deg)" : "",
-                }}
-              />
-            )}
-            {port && (
-              <img
-                src={portTypeToImage[port.type]}
-                alt={`${port.type} port at position ${i}`}
-                style={{
-                  zIndex: 2,
                   width: HEX_SIZE,
                   height: HEX_SIZE,
-                  transform: `rotate(${port.orientation}deg)`,
                   position: "absolute",
+                  zIndex: 1,
                 }}
               />
-            )}
-          </div>
-        ))}
-      </div>
-    </Paper>
+              {number && (
+                <img
+                  src={String(numberValToImg[number])}
+                  alt={`${number} chit at position ${i}`}
+                  style={{
+                    width: "35%",
+                    height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                    position: "absolute",
+                    zIndex: 2,
+                    transform: horizontal ? "rotate(-90deg)" : "",
+                  }}
+                />
+              )}
+              {port && (
+                <img
+                  src={portTypeToImage[port.type]}
+                  alt={`${port.type} port at position ${i}`}
+                  style={{
+                    zIndex: 2,
+                    width: HEX_SIZE,
+                    height: HEX_SIZE,
+                    transform: `rotate(${port.orientation}deg)`,
+                    position: "absolute",
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </Paper>
+    </>
   );
 }
