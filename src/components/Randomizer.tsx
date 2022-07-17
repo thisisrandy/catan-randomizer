@@ -85,10 +85,10 @@ export default function Randomizer({ setHexes, board }: Props) {
       const { messageType, payload } = ev.data;
       switch (messageType) {
         case "result":
-          setHexes(payload as Hex[]);
+          setHexes(payload);
           break;
         case "error":
-          setErrorMessage(payload as string);
+          setErrorMessage(payload);
           setErrorSnackOpen(true);
           break;
         default:
