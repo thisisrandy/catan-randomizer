@@ -59,7 +59,7 @@ export default function catanBoardFactory(
   // then, delete the maxPipsOnChit property from all templates. since we also
   // filtered empties, we can safely cast HexTemplate to Hex
   flatNoEmpties.forEach((ht) => delete ht.maxPipsOnChit);
-  const recommendedLayout = flatNoEmpties.map((ht) => ht as Hex);
+  const recommendedLayout = flatNoEmpties as Hex[];
 
   // a small and large row for each hex followed by a final small at the end
   const cssGridTemplateRows = `${TRIANGLE_TO_SIDE_RATIO}fr 1fr `
