@@ -33,7 +33,10 @@ aren't seen elsewhere.
 - [Catan](https://www.catan.com/catan)
 - [Catan: 5-6 Player Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
 - [Cities & Knights](https://www.catan.com/cities-knights)
-- [Explorers & Pirates](https://www.catan.com/explorers-pirates)
+- [Explorers & Pirates](https://www.catan.com/explorers-pirates), including the
+  recommended setup for combining with Cities & Knights (see the "Possible
+  Combinations" tab on the [Explorers & Pirates product
+  page](https://www.catan.com/explorers-pirates))
 - [Seafarers](https://www.catan.com/seafarers), all scenarios. Pains have been
   taken to observe every aspect of variable setup specified in the manual for
   each scenario, including things like shuffling the main and foreign islands

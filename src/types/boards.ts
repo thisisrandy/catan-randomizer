@@ -196,6 +196,7 @@ export type ExpansionName =
   | "Catan: 5-6 Player Extension"
   | "Explorers & Pirates"
   | "Cities & Knights"
+  | "Explorers & Pirates + Cities & Knights"
   | "Seafarers: Heading for New Shores 3-Player Set-up"
   | "Seafarers: Heading for New Shores 4-Player Set-up"
   | "Seafarers: The Four Islands 3-Player Set-up"
