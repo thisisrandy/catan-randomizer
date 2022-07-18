@@ -12,6 +12,8 @@ import {
   TextField,
   IconButton,
   Tooltip,
+  Popper,
+  PopperProps,
 } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
@@ -22,6 +24,15 @@ import BoardSaver from "./BoardSaver";
 import BoardLoader from "./BoardLoader";
 import { reviver } from "../utils/serialization";
 import { SHARED_BOARD_PARAM } from "../constants/sharing";
+
+/**
+ * Component to force the Autocomplete popper to stay on top, even when there's
+ * room at the bottom. Used to make sure popper and tooltip always stay out of
+ * each other's way
+ */
+const TopPopper = function (props: PopperProps) {
+  return <Popper {...props} placement="top" />;
+};
 
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
@@ -108,11 +119,17 @@ function App() {
               "Choose the Catan expansion to use. The default for each is" +
               " the recommended beginner setup"
             }
-            disableTouchListener
-            placement="left"
+            placement="bottom"
+            arrow
+            disableInteractive
           >
             <Autocomplete
-              style={{ margin: 10, marginBottom: 0, width: "min(90vw, 300px)" }}
+              style={{
+                margin: 10,
+                marginBottom: 0,
+                width: "min(90vw, 300px)",
+              }}
+              PopperComponent={TopPopper}
               options={Array.from(EXPANSIONS.keys()).sort()}
               renderInput={(params) => (
                 <TextField
@@ -154,7 +171,12 @@ function App() {
             <BoardLoader
               {...{ savedBoards, setSavedBoards, changeExpansion }}
             />
-            <Tooltip title="See the code on github.com" disableTouchListener>
+            <Tooltip
+              title="See the code on github.com"
+              placement="top"
+              arrow
+              disableInteractive
+            >
               <IconButton
                 target="_blank"
                 rel="noopener noreferrer"

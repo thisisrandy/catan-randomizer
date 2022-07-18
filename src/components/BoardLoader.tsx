@@ -159,8 +159,9 @@ export default function BoardLoader({
             renderInput={(params) => (
               <Tooltip
                 title="Start typing to narrow the results"
-                disableTouchListener
                 placement="top"
+                arrow
+                disableInteractive
               >
                 <TextField
                   {...params}
@@ -206,8 +207,9 @@ export default function BoardLoader({
                   >
                     <Tooltip
                       title="Share this board"
-                      disableTouchListener
-                      placement="right"
+                      placement="top"
+                      arrow
+                      disableInteractive
                     >
                       <IconButton onClick={handleShare(option.name)}>
                         <ShareIcon />
@@ -215,8 +217,9 @@ export default function BoardLoader({
                     </Tooltip>
                     <Tooltip
                       title="Delete this board"
-                      disableTouchListener
-                      placement="right"
+                      placement="top"
+                      arrow
+                      disableInteractive
                     >
                       <IconButton onClick={handleConfirmDeletion(option.name)}>
                         <DeleteIcon />
@@ -265,7 +268,9 @@ export default function BoardLoader({
                 ? "Please select a board to load"
                 : "Load the selected board"
             }
-            disableTouchListener
+            placement="top"
+            arrow
+            disableInteractive
           >
             <span>
               <Button
@@ -280,7 +285,9 @@ export default function BoardLoader({
           </Tooltip>
           <Tooltip
             title="Close the dialog without loading anything"
-            disableTouchListener
+            placement="top"
+            arrow
+            disableInteractive
           >
             <Button variant="contained" onClick={handleDialogClose}>
               Cancel
@@ -304,7 +311,9 @@ export default function BoardLoader({
             ? "No boards have been saved on this device"
             : "Load/share a saved board configuration"
         }
-        disableTouchListener
+        placement="top"
+        arrow
+        disableInteractive
       >
         <span>
           <IconButton disabled={disabled} onClick={() => setDialogOpen(true)}>

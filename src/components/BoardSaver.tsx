@@ -134,7 +134,9 @@ export default function BoardSaver({
                 ? "Save the board on this device"
                 : "Please choose a name that isn't already in use"
             }
-            disableTouchListener
+            placement="top"
+            arrow
+            disableInteractive
           >
             <span>
               <Button
@@ -147,7 +149,12 @@ export default function BoardSaver({
               </Button>
             </span>
           </Tooltip>
-          <Tooltip title="Close the dialog without saving" disableTouchListener>
+          <Tooltip
+            title="Close the dialog without saving"
+            placement="top"
+            arrow
+            disableInteractive
+          >
             <Button variant="contained" onClick={handleDialogClose}>
               Cancel
             </Button>
@@ -156,7 +163,9 @@ export default function BoardSaver({
       </Dialog>
       <Tooltip
         title="Save the current board configuration"
-        disableTouchListener
+        placement="top"
+        arrow
+        disableInteractive
       >
         <IconButton onClick={() => setDialogOpen(true)}>
           <SaveIcon />

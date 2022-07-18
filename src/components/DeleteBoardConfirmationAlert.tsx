@@ -39,7 +39,12 @@ export default function DeleteBoardConfirmationAlert({
           marginBottom: 10,
         }}
       >
-        <Tooltip title="Delete forever!" disableTouchListener>
+        <Tooltip
+          title="Delete forever!"
+          placement="top"
+          arrow
+          disableInteractive
+        >
           <Button
             style={{ marginRight: 20 }}
             variant="contained"
@@ -51,7 +56,12 @@ export default function DeleteBoardConfirmationAlert({
             Yes
           </Button>
         </Tooltip>
-        <Tooltip title="Let the poor board be!" disableTouchListener>
+        <Tooltip
+          title="Let the poor board be!"
+          placement="top"
+          arrow
+          disableInteractive
+        >
           <Button variant="contained" onClick={() => setOpen(false)}>
             Cancel
           </Button>
