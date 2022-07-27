@@ -96,7 +96,7 @@ function getShuffledTerrain(
           hexes[currentIndex].type !== "sea"
         ) {
           // accumulate all same type connected hexes using standard
-          // breath-first search
+          // depth-first search
           let chainSize = 0,
             hex: number;
           const seen = new Set(),
