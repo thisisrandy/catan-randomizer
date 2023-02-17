@@ -32,7 +32,6 @@ import portGrainWithDocks from "./port-grain-with-docks.png";
 import portOreWithDocks from "./port-ore-with-docks.png";
 import portTimberWithDocks from "./port-timber-with-docks.png";
 import portWoolWithDocks from "./port-wool-with-docks.png";
-import portUnrevealedWithDocks from "./port-unrevealed-with-docks.png";
 
 export {
   pastureHorizontal,
@@ -69,5 +68,4 @@ export {
   portOreWithDocks,
   portTimberWithDocks,
   portWoolWithDocks,
-  portUnrevealedWithDocks,
 };

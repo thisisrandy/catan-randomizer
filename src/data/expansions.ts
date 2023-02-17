@@ -1403,14 +1403,14 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 240, fixed: true },
+          port: { type: "timber", orientation: 240 },
         },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 240, fixed: true },
+          port: { type: "grain", orientation: 240 },
         },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
@@ -1441,7 +1441,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 300, fixed: true },
+          port: { type: "brick", orientation: 300 },
         },
       ],
       [
@@ -1493,7 +1493,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 60, fixed: true },
+          port: { type: "ore", orientation: 60 },
         },
       ],
       [
@@ -1515,7 +1515,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 120, fixed: true },
+          port: { type: "wool", orientation: 120 },
         },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },
@@ -1523,7 +1523,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         {
           type: "sea",
           fixed: true,
-          port: { type: "unrevealed", orientation: 60, fixed: true },
+          port: { type: "3:1", orientation: 60 },
         },
         { type: "sea", fixed: true },
         { type: "sea", fixed: true },

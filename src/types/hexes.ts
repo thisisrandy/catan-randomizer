@@ -12,14 +12,7 @@ type HexType = ResourceProducingHexType | NonResourceProducingHexType;
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
 
-type PortType =
-  | "3:1"
-  | "ore"
-  | "wool"
-  | "timber"
-  | "brick"
-  | "grain"
-  | "unrevealed";
+type PortType = "3:1" | "ore" | "wool" | "timber" | "brick" | "grain";
 type PortOrientation = 0 | 60 | 120 | 180 | 240 | 300;
 type Port = {
   type: PortType;

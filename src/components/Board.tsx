@@ -34,7 +34,6 @@ import {
   portOreWithDocks,
   portTimberWithDocks,
   portWoolWithDocks,
-  portUnrevealedWithDocks,
 } from "../images/index";
 import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
@@ -80,7 +79,6 @@ const portTypeToImage: { [type in PortType]: string } = {
   ore: portOreWithDocks,
   timber: portTimberWithDocks,
   wool: portWoolWithDocks,
-  unrevealed: portUnrevealedWithDocks,
 };
 
 interface Props {
