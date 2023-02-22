@@ -2132,7 +2132,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "sea", fixed: true },
         { type: "mountains", number: 3 },
         { type: "desert" },
-        { type: "desert" },
+        { type: "forest", number: 6 },
         { type: "sea", fixed: true },
       ],
       [
@@ -2178,7 +2178,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "fields", number: 9, group: 2 },
         { type: "fields", number: 10, group: 2 },
         { type: "forest", number: 11, group: 2 },
-        { type: "forest", number: 6, group: 2 },
+        { type: "desert", group: 2 },
         { type: "sea", fixed: true },
         { type: "fields", number: 12 },
         { type: "sea", fixed: true },
