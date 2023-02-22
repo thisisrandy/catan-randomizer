@@ -209,7 +209,9 @@ export type ExpansionName =
   | "Seafarers: Cloth for Catan"
   | "Seafarers: The Pirate Islands"
   | "Seafarers: The Wonders of Catan"
-  | "Seafarers: New World";
+  | "Seafarers: New World"
+  | "Seafarers: New World Expanded"
+  | "Seafarers: New World Islands";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level

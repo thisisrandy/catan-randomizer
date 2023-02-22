@@ -27,6 +27,10 @@ aren't seen elsewhere.
 - Same number can't touch
 - Limit on the size of groups of same-type terrain
 - Limit on the total pip count of intersections
+- Lower limit on the number of islands created for the _Seafarers: New World_
+  scenario. See the [Supported
+  Scenarios](#supported-expansions%2Fextensions%2Fscenarios) section for
+  details
 
 ## Supported Expansions/Extensions/Scenarios
 
@@ -41,9 +45,30 @@ aren't seen elsewhere.
   taken to observe every aspect of variable setup specified in the manual for
   each scenario, including things like shuffling the main and foreign islands
   separately, restricting the pip count of certain positions or terrain types,
-  and not shuffling some/all islands and/or ports. That said, I've never
-  actually played Seafarers, so it's quite possible I misinterpretted
-  something. [PRs are welcome!](#contributing)
+  and not shuffling some/all islands and/or ports. A few notes on the _New
+  World_ (final, fully randomized) scenario:
+  - Ports are auto-shuffled such that they are placed with all docks pointing
+    at land and in no case adjacent to one another. Feel free to ignore this
+    and use the instructions from the manual instead ("Shuffle... with their
+    reverse sides facing up. Starting with the oldest player... each takes a
+    [port] and places it...")
+  - A _Min Islands_ setting specific to this scenario is provided from the
+    settings menu (IN PROGRESS)
+  - There are two scenarios specified which do not appear in the manual:
+    - _Seafarers: New World Expanded_: Same as _New World_ but using the full
+      frame and all terrain hexes, i.e. adding the 3 deserts, 2 gold fields,
+      and remaining hill and mountain hexes (1 each). There is one more number
+      chit than resource-producing hex, so following the _The Wonders of Catan_
+      scenario, the second 12 chit is excluded. It is recommended to increase
+      the victory point goal for this board to 14
+    - _Seafarers: New World Islands_: Same as _New World Expanded_, but with
+      distinct main and foreign island areas
+      - Following the _Through the Desert_ scenario, gold fields and some of
+        the better number chits are reserved for the foreign island area.
+        Players can choose to allow or disallow initial settlements in the
+        foreign island area by preference, but the latter is recommended
+      - Under the _Min Islands_ constraint, all islands, including the main
+        island, will be counted towards the island total
 
 ## Other Features
 
@@ -90,9 +115,9 @@ enthusiastically scrubbed from public existence upon request.
 
 ## Uh, ports? Don't you mean harbors?
 
-You may have noticed that the word "port" is used pervasively in the code to
-refer to what the Catan manuals call "harbors." I didn't do this on purpose, but
-once I realized my mistake, I also realized it was actually a correction.
+You may have noticed that the word "port" is used pervasively to refer to what
+the Catan manuals call "harbors." I didn't do this on purpose, but once I
+realized my mistake, I also realized it was actually a correction.
 [Here](http://www.differencebetween.net/language/difference-between-port-and-harbor/)
 are some appropriate definitions:
 
