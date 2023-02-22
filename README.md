@@ -28,47 +28,74 @@ aren't seen elsewhere.
 - Limit on the size of groups of same-type terrain
 - Limit on the total pip count of intersections
 - Lower limit on the number of islands created for the _Seafarers: New World_
-  scenario. See the [Supported
-  Scenarios](#supported-expansions%2Fextensions%2Fscenarios) section for
-  details
+  scenario. See [New World](#on-the-new-world-scenario) for details
 
 ## Supported Expansions/Extensions/Scenarios
 
-- [Catan](https://www.catan.com/catan)
-- [Catan: 5-6 Player Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
-- [Cities & Knights](https://www.catan.com/cities-knights)
-- [Explorers & Pirates](https://www.catan.com/explorers-pirates), including the
-  recommended setup for combining with _Cities & Knights_ (see the "Possible
-  Combinations" tab on the [Explorers & Pirates product
-  page](https://www.catan.com/explorers-pirates))
-- [Seafarers](https://www.catan.com/seafarers), all scenarios. Pains have been
-  taken to observe every aspect of variable setup specified in the manual for
-  each scenario, including things like shuffling the main and foreign islands
-  separately, restricting the pip count of certain positions or terrain types,
-  and not shuffling some/all islands and/or ports. A few notes on the _New
-  World_ (final, fully randomized) scenario:
-  - Ports are auto-shuffled such that they are placed with all docks pointing
-    at land and in no case adjacent to one another. Feel free to ignore this
-    and use the instructions from the manual instead ("Shuffle... with their
-    reverse sides facing up. Starting with the oldest player... each takes a
-    [port] and places it...")
-  - A _Min Islands_ setting specific to this scenario is provided from the
-    settings menu (IN PROGRESS)
-  - There are two scenarios specified which do not appear in the manual:
-    - _Seafarers: New World Expanded_: Same as _New World_ but using the full
-      frame and all terrain hexes, i.e. adding the 3 deserts, 2 gold fields,
-      and remaining hill and mountain hexes (1 each). There is one more number
-      chit than resource-producing hex, so following the _The Wonders of Catan_
-      scenario, the second 12 chit is excluded. It is recommended to increase
-      the victory point goal for this board to 14
-    - _Seafarers: New World Islands_: Same as _New World Expanded_, but with
-      distinct main and foreign island areas
-      - Following the _Through the Desert_ scenario, gold fields and some of
-        the better number chits are reserved for the foreign island area.
-        Players can choose to allow or disallow initial settlements in the
-        foreign island area by preference, but the latter is recommended
-      - Under the _Min Islands_ constraint, all islands, including the main
-        island, will be counted towards the island total
+### Catan
+
+Both [Catan](https://www.catan.com/catan) and [Catan: 5-6 Player
+Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
+supported.
+
+### Cities & Knights
+
+See [Cities & Knights](https://www.catan.com/cities-knights). Note that this is
+identical to [Catan](#catan) except for the recommended beginner setup.
+
+### Explorers & Pirates
+
+Starting island for [Explorers &
+Pirates](https://www.catan.com/explorers-pirates), including the recommended
+setup for combining with _Cities & Knights_ (see the "Possible Combinations"
+tab on the [Explorers & Pirates product
+page](https://www.catan.com/explorers-pirates)). There's no way to set up the
+hidden islands face down without involving a third party, and assigned number
+chits are gameplay-dependent, so no attempt is made to shuffle those.
+
+### Seafarers
+
+All [Seafarers](https://www.catan.com/seafarers) scenarios are supported,
+including some custom _New World_ scenarios. Pains have been taken to observe
+every aspect of variable setup specified in the manual for each scenario,
+including things like shuffling the main and foreign islands separately,
+restricting the pip count of certain positions or terrain types, and not
+shuffling some/all islands and/or ports.
+
+#### On the _New World_ scenario
+
+_New World_ is the final, fully randomized scenario for _Seafarers_.
+
+- Ports are shuffled such that they are placed with both docks pointing at a
+  terrain hex such that no more than one total dock points at any given
+  intersection. Within those constraints, they are allowed to appear on any sea
+  hex in this scenario. However, you may feel free to ignore random placement
+  and instead use the instructions from the manual (_"Shuffle... with their
+  reverse sides facing up. Starting with the oldest player... each takes a
+  [port] and places it..."_)
+- A _Min Islands_ setting specific to this scenario is provided from the
+  settings menu. You can use it to specify a lower limit on the number of
+  distinct islands generated during the shuffling process. (IN PROGRESS)
+- There are two additional scenarios provided which do not appear in the manual:
+  - _Seafarers: New World Expanded_: Same as _New World_ but using the full
+    frame and all terrain hexes, i.e. adding the 3 deserts, 2 gold fields,
+    and remaining hill and mountain hexes (1 each). There is one more number
+    chit than resource-producing hex[^1], so following the _The Wonders of Catan_
+    scenario, the second 12 chit is excluded. It is recommended to increase
+    the victory point goal for this board to 14
+  - _Seafarers: New World Islands_: Same as _New World Expanded_, but with
+    distinct main and foreign island areas
+    - Following the _Through the Desert_ scenario, gold fields and some of
+      the better number chits are reserved for the foreign island area.
+      Players can choose to allow or disallow initial settlements on the
+      foreign island area by preference, but the latter is recommended
+    - Under the _Min Islands_ constraint, all islands, including the main
+      island, will be counted towards the island total
+
+[^1]:
+    For the curious, the extra chit is used exclusively in the _Cloth for
+    Catan_ scenario, where each cloth island has a chit on both its east and
+    west sides representing separate villages
 
 ## Other Features
 
