@@ -16,6 +16,7 @@ if (typeof globalThis.structuredClone === "undefined") {
  */
 export class ShufflingError extends Error {}
 export class TerrainShufflingError extends ShufflingError {}
+export class IslandShufflingError extends ShufflingError {}
 export class NumberShufflingError extends ShufflingError {}
 export class PortShufflingError extends ShufflingError {}
 
@@ -138,11 +139,57 @@ function getShuffledTerrain(
       continue topLoop;
     }
 
+    // the last constraint, that a minimum number of distinct islands were
+    // created, is a full-board constraint that we can only check in a general
+    // way after the full board has been built. however, we don't need to
+    // calculate anything if the constraint isn't active, which it isn't for
+    // most scenarios (it's not our responsibility here to determine when this
+    // is true, however, just to evaluate the situation when we're told it is)
+    if (
+      numericConstraints.minIslandCount.active &&
+      countIslands(hexes, board) < numericConstraints.minIslandCount.value
+    ) {
+      if (retries++ > MAX_RETRIES)
+        throw new IslandShufflingError(
+          "Failed to find a board that falls within the specified constraints for" +
+            " the minimum number of distinct islands. It's very likely that this" +
+            " board is over-constrained. Please lower the minumum acceptable" +
+            " island count and try again."
+        );
+      // eslint-disable-next-line no-extra-label
+      continue topLoop;
+    }
+
     // we managed to create a valid board. time to move on!
     break;
   }
 
   return hexes;
+}
+
+/**
+ * Count and return the number of distinct islands (groups of connected terrain
+ * hexes surrounded complete by water) formed by `hexes` in the context of
+ * `board`. This function is separated out from {@link getShuffledTerrain} for the
+ * purpose of testing only and should not be used in any other context
+ */
+export function countIslands(hexes: Hex[], board: CatanBoard): number {
+  let numIslands = 0;
+  const seen = Array(hexes.length).fill(false);
+  for (let i = 0; i < hexes.length; i++) {
+    const stack = [i];
+    let size = 0,
+      hex: number;
+    while (stack.length > 0) {
+      hex = stack.pop()!;
+      if (seen[hex] || hexes[hex].type === "sea") continue;
+      seen[hex] = true;
+      size++;
+      stack.push(...Object.values(board.neighbors[hex]));
+    }
+    if (size) numIslands++;
+  }
+  return numIslands;
 }
 
 /**

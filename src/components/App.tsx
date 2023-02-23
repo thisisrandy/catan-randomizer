@@ -153,7 +153,7 @@ function App() {
               padding: 5,
             }}
           >
-            <Randomizer {...{ setHexes, board }} />
+            <Randomizer {...{ setHexes, board, expansion }} />
             <BoardSaver
               {...{
                 hexes,

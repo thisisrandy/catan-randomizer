@@ -1,8 +1,10 @@
 import { EXPANSIONS } from "../data/expansions";
 import catanBoardFactory from "../factories/boardFactory";
 import {
+  countIslands,
   getIntersectionPipCounts,
   getValidPortOrientations,
+  IslandShufflingError,
   NumberShufflingError,
   PortShufflingError,
   shuffle,
@@ -30,8 +32,9 @@ const binaryConstraints: BinaryConstraints = {
   noAdjacentTwoTwelve: true,
 };
 const numericConstraints: NumericConstraints = {
-  maxConnectedLikeTerrain: { value: 1, valid: true },
-  maxIntersectionPipCount: { value: 10, valid: true },
+  maxConnectedLikeTerrain: { value: 1, valid: true, active: true },
+  maxIntersectionPipCount: { value: 10, valid: true, active: true },
+  minIslandCount: { value: 1, valid: true, active: false },
 };
 const pipConstrainedTemplate: CatanBoardTemplate = {
   board: [
@@ -223,7 +226,7 @@ describe("shuffle", () => {
   it("should allow connected same type hexes when not constrained", () => {
     const likeTerrainOkay: NumericConstraints = {
       ...numericConstraints,
-      maxConnectedLikeTerrain: { value: 7, valid: true },
+      maxConnectedLikeTerrain: { value: 7, valid: true, active: true },
     };
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, likeTerrainOkay);
@@ -265,7 +268,7 @@ describe("shuffle", () => {
     };
     const noPipCountRestriction: NumericConstraints = {
       ...numericConstraints,
-      maxIntersectionPipCount: { value: 15, valid: true },
+      maxIntersectionPipCount: { value: 15, valid: true, active: true },
     };
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, noBinaryConstraints, noPipCountRestriction);
@@ -288,7 +291,7 @@ describe("shuffle", () => {
   it("shouldn't allow low pip counts on constrained terrain types", () => {
     const groupedTerrainOkay: NumericConstraints = {
       ...numericConstraints,
-      maxConnectedLikeTerrain: { value: 7, valid: true },
+      maxConnectedLikeTerrain: { value: 7, valid: true, active: true },
     };
     const minPipsOnHexTypes: { [type in HexType]?: number } =
       pipConstrainedBoard.minPipsOnHexTypes || {};
@@ -330,7 +333,7 @@ describe("shuffle", () => {
   it("shouldn't allow high pip counts on constrained hexes", () => {
     const groupedTerrainOkay: NumericConstraints = {
       ...numericConstraints,
-      maxConnectedLikeTerrain: { value: 7, valid: true },
+      maxConnectedLikeTerrain: { value: 7, valid: true, active: true },
     };
     const maxPipsOnHexTypes: { [type in HexType]?: number } =
       pipConstrainedBoard.maxPipsOnHexTypes || {};
@@ -448,7 +451,7 @@ describe("shuffle", () => {
     expect(() =>
       shuffle(board, binaryConstraints, {
         ...numericConstraints,
-        maxConnectedLikeTerrain: { value: 7, valid: true },
+        maxConnectedLikeTerrain: { value: 7, valid: true, active: true },
       })
     ).toThrowError(NumberShufflingError);
   });
@@ -606,6 +609,56 @@ describe("shuffle", () => {
       shuffle(badBoard, binaryConstraints, numericConstraints)
     ).toThrowError(PortShufflingError);
   });
+
+  it("should obey the minIslandCount constraint when active", () => {
+    const minIslands = 6;
+    const active: NumericConstraints = {
+      ...numericConstraints,
+      minIslandCount: {
+        value: minIslands,
+        valid: true,
+        active: true,
+      },
+    };
+    const board = EXPANSIONS.get("Seafarers: New World")!;
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, active);
+      expect(countIslands(hexes, board)).toBeGreaterThanOrEqual(minIslands);
+    }
+  });
+
+  it("should ignore the minIslandCount constraint when inactive", () => {
+    const minIslands = 6;
+    const active: NumericConstraints = {
+      ...numericConstraints,
+      minIslandCount: {
+        value: minIslands,
+        valid: true,
+        active: false,
+      },
+    };
+    // we don't need to sample this repeatedly. we know that the base Catan
+    // board can never have more than one island. the point of this test is to
+    // make sure that shuffling completes. if it didn't, an
+    // IslandShufflingError would be thrown and the test would fail
+    const hexes = shuffle(board, binaryConstraints, active);
+    expect(countIslands(hexes, board)).toBe(1);
+  });
+
+  it("should fail to shuffle when minIslandCount is infeasible", () => {
+    const minIslands = 6;
+    const active: NumericConstraints = {
+      ...numericConstraints,
+      minIslandCount: {
+        value: minIslands,
+        valid: true,
+        active: true,
+      },
+    };
+    expect(() => shuffle(board, binaryConstraints, active)).toThrowError(
+      IslandShufflingError
+    );
+  });
 });
 
 describe("getIntersectionPipCount", () => {
@@ -670,5 +723,19 @@ describe("getValidPortOrientations", () => {
     expect(getValidPortOrientations(1, board.recommendedLayout, board)).toEqual(
       [180, 240]
     );
+  });
+});
+
+describe("countIslands", () => {
+  it("should count one island for basic Catan", () => {
+    const catan = EXPANSIONS.get("Catan")!;
+    expect(countIslands(catan.recommendedLayout, catan)).toEqual(1);
+  });
+
+  it("should count four islands for Seafarers: Four Islands", () => {
+    const fourIslands = EXPANSIONS.get(
+      "Seafarers: The Four Islands 4-Player Set-up"
+    )!;
+    expect(countIslands(fourIslands.recommendedLayout, fourIslands)).toEqual(4);
   });
 });

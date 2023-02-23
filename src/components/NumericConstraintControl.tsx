@@ -31,6 +31,7 @@ export default function NumericConstraintControl({
           setConstraints((c) => ({
             ...c,
             [constraint]: {
+              ...c[constraint],
               value: isNaN(val) ? 0 : val,
               valid: val <= max && val >= min,
             },
@@ -42,6 +43,7 @@ export default function NumericConstraintControl({
             : null
         }
         error={!constraints[constraint].valid}
+        disabled={!constraints[constraint].active}
       />
     </Tooltip>
   );

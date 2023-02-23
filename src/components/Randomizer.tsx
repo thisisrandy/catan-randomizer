@@ -3,7 +3,7 @@ import { Hex } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import BinaryConstraintControl from "./BinaryConstraintControl";
 import NumericConstraintControl from "./NumericConstraintControl";
-import { CatanBoard } from "../types/boards";
+import { CatanBoard, ExpansionName } from "../types/boards";
 import {
   Button,
   Dialog,
@@ -20,9 +20,16 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 import { IncomingMessage, OutgoingMessage } from "../threading/shuffleWorker";
 
+const islandExpansions: ExpansionName[] = [
+  "Seafarers: New World",
+  "Seafarers: New World Expanded",
+  "Seafarers: New World Islands",
+];
+
 interface Props {
   setHexes: React.Dispatch<React.SetStateAction<Hex[]>>;
   board: CatanBoard;
+  expansion: ExpansionName;
 }
 
 // per https://webpack.js.org/guides/web-workers/, creating a new Worker is
@@ -37,7 +44,7 @@ const shuffleWorker = new Worker(
  * buttons, one to randomize the board, and the other to open the settings
  * dialog. These can be arranged in whatever manner the parent component chooses
  */
-export default function Randomizer({ setHexes, board }: Props) {
+export default function Randomizer({ setHexes, board, expansion }: Props) {
   const [binaryConstraints, setBinaryConstraints] =
     useStateWithLocalStorage<BinaryConstraints>("binaryConstraints", {
       noAdjacentSixEight: true,
@@ -45,10 +52,14 @@ export default function Randomizer({ setHexes, board }: Props) {
       noAdjacentPairs: true,
     });
 
+  // FIXME: this needs versioning so I can inject defaults for missing values.
+  // Currently, browsers with a saved value not including minIslandCount crash
+  // out when the settings dialog is opened
   const [numericConstraints, setNumericConstraints] =
     useStateWithLocalStorage<NumericConstraints>("numericConstraints", {
-      maxConnectedLikeTerrain: { value: 2, valid: true },
-      maxIntersectionPipCount: { value: 10, valid: true },
+      maxConnectedLikeTerrain: { value: 2, valid: true, active: true },
+      maxIntersectionPipCount: { value: 10, valid: true, active: true },
+      minIslandCount: { value: 1, valid: true, active: true },
     });
 
   // we want to remember this state in case the user set invalid constraints
@@ -98,6 +109,16 @@ export default function Randomizer({ setHexes, board }: Props) {
       }
     };
   });
+
+  useEffect(() => {
+    setNumericConstraints((c) => ({
+      ...c,
+      minIslandCount: {
+        ...c.minIslandCount,
+        active: islandExpansions.includes(expansion),
+      },
+    }));
+  }, [expansion, setNumericConstraints]);
 
   return (
     <>
@@ -165,6 +186,19 @@ export default function Randomizer({ setHexes, board }: Props) {
               "Control the upper limit on the sum of the pips surrounding each" +
               " intersection. For example, if this is set to 12, an intersection surrounded" +
               " by 6 (5 pips), 5 (4 pips), and 9 (4 pips) would not be allowed"
+            }
+            constraints={numericConstraints}
+            setConstraints={setNumericConstraints}
+          />
+          <NumericConstraintControl
+            constraint="minIslandCount"
+            min={1}
+            max={7}
+            label="Min island count"
+            toolTip={
+              numericConstraints.minIslandCount.active
+                ? "Control the lower limit on distinct islands on the shuffled board"
+                : "Only applicable to the Seafarers: New World scenario"
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
