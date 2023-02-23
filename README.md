@@ -152,5 +152,5 @@ are some appropriate definitions:
 
 **port** _noun_ A commercial water facility used for ships and their cargo.
 
-In order words, since harbors are just mooring areas and have nothing to do with
+In other words, since harbors are just mooring areas and have nothing to do with
 goods and trade, what we have in Catan are more aptly called ports.
