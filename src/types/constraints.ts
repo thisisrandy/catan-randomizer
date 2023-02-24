@@ -4,25 +4,19 @@ export interface BinaryConstraints {
   noAdjacentPairs: boolean;
 }
 
-// TODO: the value type constraints on the fields of this interface are mostly
-// unused outside of testing. I also don't particularly like the repetition of
-// internal fields. perhaps this type should be rethunk a bit?
+interface NumericConstraint {
+  // NOTE: while each individual constraint has a finite range of values, these
+  // are specified by the user at runtime, so it isn't useful to encode them in
+  // the type
+  value: number;
+  valid: boolean;
+  active: boolean;
+}
+
 export interface NumericConstraints {
-  maxConnectedLikeTerrain: {
-    value: 1 | 2 | 3 | 4 | 5 | 6 | 7;
-    valid: boolean;
-    active: boolean;
-  };
-  maxIntersectionPipCount: {
-    value: 10 | 11 | 12 | 13 | 14 | 15;
-    valid: boolean;
-    active: boolean;
-  };
-  minIslandCount: {
-    value: 1 | 2 | 3 | 4 | 5 | 6 | 7;
-    valid: boolean;
-    active: boolean;
-  };
+  maxConnectedLikeTerrain: NumericConstraint;
+  maxIntersectionPipCount: NumericConstraint;
+  minIslandCount: NumericConstraint;
 }
 
 export type Constraints = BinaryConstraints | NumericConstraints;
