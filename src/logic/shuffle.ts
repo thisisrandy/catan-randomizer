@@ -15,8 +15,14 @@ if (typeof globalThis.structuredClone === "undefined") {
  * indicating which stage of shuffling was unabled to be completed
  */
 export class ShufflingError extends Error {}
+// NOTE: before 34d04a8, there was an IslandShufflingError to distinguish
+// terrain shuffling failure cases. this was kind of useful for testing, but in
+// the midst of boards being rejected for having too few islands, the final
+// rejection could still be because of other constraints, which was causing the
+// island failure test case to sometimes fail. the tests do a good enough job
+// of distinguishing these cases in other ways, so the extra error type was
+// deemed unnecessary
 export class TerrainShufflingError extends ShufflingError {}
-export class IslandShufflingError extends ShufflingError {}
 export class NumberShufflingError extends ShufflingError {}
 export class PortShufflingError extends ShufflingError {}
 
@@ -150,7 +156,7 @@ function getShuffledTerrain(
       countIslands(hexes, board) < numericConstraints.minIslandCount.value
     ) {
       if (retries++ > MAX_RETRIES)
-        throw new IslandShufflingError(
+        throw new TerrainShufflingError(
           "Failed to find a board that falls within the specified constraints for" +
             " the minimum number of distinct islands. It's very likely that this" +
             " board is over-constrained. Please lower the minumum acceptable" +

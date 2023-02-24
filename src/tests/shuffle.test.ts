@@ -4,7 +4,6 @@ import {
   countIslands,
   getIntersectionPipCounts,
   getValidPortOrientations,
-  IslandShufflingError,
   NumberShufflingError,
   PortShufflingError,
   shuffle,
@@ -656,7 +655,7 @@ describe("shuffle", () => {
       },
     };
     expect(() => shuffle(board, binaryConstraints, active)).toThrowError(
-      IslandShufflingError
+      TerrainShufflingError
     );
   });
 });
