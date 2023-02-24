@@ -8,9 +8,10 @@
 
 This is a hobby project to produce randomized [Catan](https://www.catan.com) boards under
 constraints, e.g. `6` and `8` can't touch, or the
-[pip](<https://en.wikipedia.org/wiki/Pip_(counting)>) count for each intersection
-can't exceed a certain total. It is deployed
-[here](https://catan-randomizer.vercel.app/).
+[pip](<https://en.wikipedia.org/wiki/Pip_(counting)>) count for each
+intersection (the sum of pips on adjacent [number
+chits](<https://en.wikipedia.org/wiki/Chit_(board_wargames)>)) can't exceed a
+certain total. It is deployed [here](https://catan-randomizer.vercel.app/).
 
 While the same idea has been executed
 [many](https://jkirschner.github.io/catan-randomizer/)
