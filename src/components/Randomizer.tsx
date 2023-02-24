@@ -21,6 +21,10 @@ import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 import { IncomingMessage, OutgoingMessage } from "../threading/shuffleWorker";
 
 const islandExpansions: ExpansionName[] = [
+  "Seafarers: Heading for New Shores 3-Player Set-up",
+  "Seafarers: Heading for New Shores 4-Player Set-up",
+  "Seafarers: Through the Desert 3-Player Set-up",
+  "Seafarers: Through the Desert 4-Player Set-up",
   "Seafarers: New World",
   "Seafarers: New World Expanded",
   "Seafarers: New World Islands",
@@ -209,7 +213,7 @@ export default function Randomizer({ setHexes, board, expansion }: Props) {
             toolTip={
               numericConstraints.minIslandCount.active
                 ? "Control the lower limit on distinct islands on the shuffled board"
-                : "Only applicable to the Seafarers: New World scenario"
+                : "Only applicable to scenarios with a variable number of islands"
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}

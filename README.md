@@ -27,8 +27,9 @@ aren't seen elsewhere.
 - Same number can't touch
 - Limit on the size of groups of same-type terrain
 - Limit on the total pip count of intersections
-- Lower limit on the number of islands created for the _Seafarers: New World_
-  scenario. See [New World](#on-the-new-world-scenario) for details
+- For scenarios featuring a variable number of islands, a lower limit on the
+  number of islands created. See
+  [Seafarers](#on-scenarios-with-a-variable-number-of-islands) for details
 
 ## Supported Expansions/Extensions/Scenarios
 
@@ -62,6 +63,29 @@ including things like shuffling the main and foreign islands separately,
 restricting the pip count of certain positions or terrain types, and not
 shuffling some/all islands and/or ports.
 
+#### On scenarios with a variable number of islands
+
+Some _Seafarers_ scenarios allow a variable number of islands to be created
+during terrain shuffling. For these, a _Min Island Count_ constraint is
+provided from the settings menu to allow for more control over the number of
+distinct islands generated during the shuffling process. For scenarios which
+have well-defined "main" and "foreign" islands, the main island is included in
+this count.
+
+The following scenarios support this constraint:
+
+- _Heading for New Shores_
+- _Through the Desert_
+- _New World_
+- _New World Expanded_
+- _New World Islands_
+
+Note that the maximum feasible number of islands is different from scenario to
+scenario. For example, the shuffler can usually find a 7 island board for _New
+World_, but since there are only two variable sea hexes in _Through the
+Desert_, no more than 4 islands are possible. The shuffler will alert you if
+the board is over-constrained in this or any other way.
+
 #### On the _New World_ scenario
 
 _New World_ is the final, fully randomized scenario for _Seafarers_.
@@ -73,9 +97,6 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
   and instead use the instructions from the manual (_"Shuffle... with their
   reverse sides facing up. Starting with the oldest player... each takes a
   [port] and places it..."_)
-- A _Min Island Count_ setting specific to this scenario is provided from the
-  settings menu. You can use it to specify a lower limit on the number of
-  distinct islands generated during the shuffling process.
 - There are two additional scenarios provided which do not appear in the
   manual:
   - _New World Expanded_: Same as _New World_ but using the full frame and all
@@ -85,16 +106,13 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
     more number chit than resource-producing hex[^1], so, following the _The
     Wonders of Catan_ scenario, the second 12 chit is excluded. It is
     recommended to increase the victory point goal for this board to 14
-  - _New World Islands_: Same as _New World Expanded_, but with
-    distinct and separately-shuffled main and foreign island areas
-    - Following the _Through the Desert_ scenario, gold fields and some of the
-      better number chits are reserved for the foreign island area. Players can
-      choose to allow or disallow initial settlements on the foreign island
-      area by preference, but the latter is recommended. Since gold fields can
-      only appear on foreign islands, the pip restriction from _New World
-      Expanded_ is removed
-    - Under the _Min Island Count_ constraint, the main island is included in
-      the count
+  - _New World Islands_: Same as _New World Expanded_, but with distinct and
+    separately-shuffled main and foreign island areas. Following the _Through
+    the Desert_ scenario, gold fields and some of the better number chits are
+    reserved for the foreign island area. Players can choose to allow or
+    disallow initial settlements in the foreign island area by preference, but
+    the latter is recommended. Since gold fields can only appear on foreign
+    islands, the pip restriction from _New World Expanded_ is removed
 
 [^1]:
     For the curious, the extra chit is used exclusively in the _Cloth for
