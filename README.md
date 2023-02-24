@@ -78,18 +78,21 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
   distinct islands generated during the shuffling process.
 - There are two additional scenarios provided which do not appear in the
   manual:
-  - _New World Expanded_: Same as _New World_ but using the full
-    frame and all terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and
-    remaining hill and mountain hexes (1 each). There is one more number chit
-    than resource-producing hex[^1], so, following the _The Wonders of Catan_
-    scenario, the second 12 chit is excluded. It is recommended to increase the
-    victory point goal for this board to 14
+  - _New World Expanded_: Same as _New World_ but using the full frame and all
+    terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
+    and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips
+    to prevent overly favorable initial settlement opportunities. There is one
+    more number chit than resource-producing hex[^1], so, following the _The
+    Wonders of Catan_ scenario, the second 12 chit is excluded. It is
+    recommended to increase the victory point goal for this board to 14
   - _New World Islands_: Same as _New World Expanded_, but with
     distinct and separately-shuffled main and foreign island areas
     - Following the _Through the Desert_ scenario, gold fields and some of the
       better number chits are reserved for the foreign island area. Players can
       choose to allow or disallow initial settlements on the foreign island
-      area by preference, but the latter is recommended
+      area by preference, but the latter is recommended. Since gold fields can
+      only appear on foreign islands, the pip restriction from _New World
+      Expanded_ is removed
     - Under the _Min Island Count_ constraint, the main island is included in
       the count
 

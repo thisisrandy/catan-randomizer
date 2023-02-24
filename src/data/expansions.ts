@@ -2015,7 +2015,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "hills", number: 4 },
         { type: "sea", port: { type: "3:1", orientation: 0 } },
         { type: "sea" },
-        { type: "gold", number: 8 },
+        { type: "gold", number: 10 },
         { type: "fields", number: 9 },
         { type: "sea" },
         { type: "sea", port: { type: "3:1", orientation: 180 } },
@@ -2065,7 +2065,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "pasture", number: 3 },
         { type: "forest", number: 8 },
         { type: "hills", number: 9 },
-        { type: "fields", number: 10 },
+        { type: "fields", number: 8 },
         { type: "hills", number: 2 },
         { type: "mountains", number: 11 },
         { type: "sea", fixed: true },
@@ -2084,6 +2084,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
     horizontal: true,
+    maxPipsOnHexTypes: { gold: 3 },
   },
   "Seafarers: New World Islands": {
     board: [
