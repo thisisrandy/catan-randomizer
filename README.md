@@ -115,9 +115,9 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
     islands, the pip restriction from _New World Expanded_ is removed
 
 [^1]:
-    For the curious, the extra chit is used exclusively in the _Cloth for
-    Catan_ scenario, where each cloth island has a chit on both its east and
-    west sides representing separate villages
+    For the curious, the extra number chit is used exclusively in the _Cloth
+    for Catan_ scenario, where each cloth island has a number chit on both its
+    east and west sides representing separate villages
 
 ## Other Features
 
