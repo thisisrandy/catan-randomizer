@@ -91,7 +91,7 @@ the board is over-constrained in this or any other way.
 _New World_ is the final, fully randomized scenario for _Seafarers_.
 
 - Ports are shuffled such that they are placed with both docks pointing at a
-  terrain hex such that no more than one total dock points at any given
+  terrain hex and no more than one total dock pointing at any given
   intersection. Within those constraints, they are allowed to appear on any sea
   hex in this scenario. However, you may feel free to ignore random placement
   and instead use the instructions from the manual (_"Shuffle... with their
