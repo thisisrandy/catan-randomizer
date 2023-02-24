@@ -153,13 +153,12 @@ to dive into, but here are some tips:
 
 All images are [ripped](https://en.wikipedia.org/wiki/Pdfimages) from the pdf
 manuals found at [catan.com](https://www.catan.com/) and used without explicit
-permission. Additionally, the [favicon](https://en.wikipedia.org/wiki/Favicon)
-is the same as that used at [catan.com](https://en.wikipedia.org/wiki/Favicon).
-As I do not profit in any way from this project, this usage appears to be in
-line with the [Catan IP
+permission. The [favicon](https://en.wikipedia.org/wiki/Favicon) is a
+cut-and-paste job of the front cover of the manual. As I do not profit in any
+way from this project, this usage appears to be in line with the [Catan IP
 guidelines](https://www.catan.com/guidelines-dealing-intellectual-property-catan).
-However, on the off chance that you are associated with CATAN GmbH and feel that
-this project harms your brand in any way, it will be swiftly and
+However, on the off chance that you are associated with CATAN GmbH and feel
+that this project harms your brand in any way, it will be swiftly and
 enthusiastically scrubbed from public existence upon request.
 
 ## Uh, ports? Don't you mean harbors?
