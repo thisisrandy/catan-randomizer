@@ -52,15 +52,26 @@ export default function Randomizer({ setHexes, board, expansion }: Props) {
       noAdjacentPairs: true,
     });
 
-  // FIXME: this needs versioning so I can inject defaults for missing values.
-  // Currently, browsers with a saved value not including minIslandCount crash
-  // out when the settings dialog is opened
   const [numericConstraints, setNumericConstraints] =
-    useStateWithLocalStorage<NumericConstraints>("numericConstraints", {
-      maxConnectedLikeTerrain: { value: 2, valid: true, active: true },
-      maxIntersectionPipCount: { value: 10, valid: true, active: true },
-      minIslandCount: { value: 1, valid: true, active: true },
-    });
+    useStateWithLocalStorage<NumericConstraints>(
+      "numericConstraints",
+      {
+        maxConnectedLikeTerrain: { value: 2, valid: true, active: true },
+        maxIntersectionPipCount: { value: 10, valid: true, active: true },
+        minIslandCount: { value: 1, valid: true, active: true },
+      },
+      undefined,
+      2,
+      {
+        // version 1 lacked a `minIslandCount` property and `active`
+        // subproperties
+        1: ({ maxConnectedLikeTerrain, maxIntersectionPipCount }) => ({
+          maxConnectedLikeTerrain: { ...maxConnectedLikeTerrain, active: true },
+          maxIntersectionPipCount: { ...maxIntersectionPipCount, active: true },
+          minIslandCount: { value: 1, valid: true, active: true },
+        }),
+      }
+    );
 
   // we want to remember this state in case the user set invalid constraints
   // and then closed the page. it would be confusing to have the randomize
