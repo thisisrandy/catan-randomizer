@@ -363,8 +363,10 @@ describe("shuffle", () => {
       0
     );
     // seeing 6 or 8 at *every* hex is a pretty tall order, so take many more
-    // samples than the other tests to ensure success
-    for (let i = 0; i < numSamples * 5; i++) {
+    // samples than the other tests to ensure success. we stop as soon as we
+    // succeed, so this can be a large number without making the test overlong
+    // every time
+    for (let i = 0; i < numSamples * 20; i++) {
       const hexes = shuffle(board, binaryConstraints, numericConstraints);
       for (let j = 0; j < hexes.length; j++) {
         if (
