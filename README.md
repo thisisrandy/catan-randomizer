@@ -37,19 +37,19 @@ aren't seen elsewhere.
 
 Both [Catan](https://www.catan.com/catan) and [Catan: 5-6 Player
 Extension](http://catanshop.com/the-settlers-of-catan-5-6-player-extension)
-supported.
+are supported.
 
 ### Cities & Knights
 
-See [Cities & Knights](https://www.catan.com/cities-knights). Note that this is
-identical to [Catan](#catan) except for the recommended beginner setup.
+[Cities & Knights](https://www.catan.com/cities-knights), which is identical to
+[Catan](#catan) except for the recommended beginner setup, is supported.
 
 ### Explorers & Pirates
 
-Starting island for [Explorers &
-Pirates](https://www.catan.com/explorers-pirates), including the recommended
-setup for combining with _Cities & Knights_ (see the "Possible Combinations"
-tab on the [Explorers & Pirates product
+Shuffling of the starting island for [Explorers &
+Pirates](https://www.catan.com/explorers-pirates) is supported, as is the
+recommended starting island for combining with _Cities & Knights_ (see the
+"Possible Combinations" tab on the [Explorers & Pirates product
 page](https://www.catan.com/explorers-pirates)). There's no way to set up the
 hidden islands face down without involving a third party, and assigned number
 chits are gameplay-dependent, so no attempt is made to shuffle those.
@@ -109,10 +109,10 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
   - _New World Islands_: Same as _New World Expanded_, but with distinct and
     separately-shuffled main and foreign island areas. Following the _Through
     the Desert_ scenario, gold fields and some of the better number chits are
-    reserved for the foreign island area. Players can choose to allow or
-    disallow initial settlements in the foreign island area by preference, but
-    the latter is recommended. Since gold fields can only appear on foreign
-    islands, the pip restriction from _New World Expanded_ is removed
+    reserved for the foreign island area. You can choose to allow or disallow
+    initial settlements in the foreign island area, but the latter is
+    recommended. Since gold fields can only appear on foreign islands, the pip
+    restriction from _New World Expanded_ is removed
 
 [^1]:
     For the curious, the extra number chit is used exclusively in the _Cloth
