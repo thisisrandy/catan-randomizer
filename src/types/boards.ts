@@ -208,6 +208,7 @@ export type ExpansionName =
   | "Seafarers: The Forgotten Tribe"
   | "Seafarers: Cloth for Catan"
   | "Seafarers: The Pirate Islands"
+  | "Seafarers: The Pirate Islands (Shuffled)"
   | "Seafarers: The Wonders of Catan"
   | "Seafarers: New World"
   | "Seafarers: New World Expanded"

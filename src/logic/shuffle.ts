@@ -419,7 +419,21 @@ function getShuffledNumbers(
           continue tryLoop;
         }
 
-        const neighborIndices = Object.values(board.neighbors[currentIndex]);
+        // as we check neighbor-related constraints, we don't want to consider
+        // neighbors which may subsequently be shuffled. since shuffling
+        // proceeds from high to low indices, this means that neighbors at
+        // lower indices which are not in a fixed number group are excluded
+        const neighborIndices = Object.values(
+          board.neighbors[currentIndex]
+        ).filter(
+          (neighbor) =>
+            neighbor > currentIndex ||
+            (board.fixNumbersInGroups &&
+              // for historical reasons, undefined is the default hex group, so
+              // we have to lie to typescript here about nullity. the resulting
+              // js will work as expected
+              board.fixNumbersInGroups.includes(hexes[neighbor].group!))
+        );
 
         // no 6/8 neighbors
         if (
@@ -427,7 +441,6 @@ function getShuffledNumbers(
           [6, 8].includes(hexes[currentIndex].number as number)
         ) {
           for (const neighbor of neighborIndices) {
-            if (neighbor < currentIndex) continue;
             if ([6, 8].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
             }
@@ -440,7 +453,6 @@ function getShuffledNumbers(
           [2, 12].includes(hexes[currentIndex].number as number)
         ) {
           for (const neighbor of neighborIndices) {
-            if (neighbor < currentIndex) continue;
             if ([2, 12].includes(hexes[neighbor].number as number)) {
               continue tryLoop;
             }
@@ -450,7 +462,6 @@ function getShuffledNumbers(
         // no same number neighbors
         if (binaryConstraints.noAdjacentPairs) {
           for (const neighbor of neighborIndices) {
-            if (neighbor < currentIndex) continue;
             if (hexes[currentIndex].number === hexes[neighbor].number) {
               continue tryLoop;
             }
@@ -499,15 +510,11 @@ interface GetIntersectionPipCountProps {
   hexes: Hex[];
   atIndex: number;
   /**
-   * Shuffling proceeds high to low, so there's no point in checking
-   * intersections including indices lower than `atIndex` during shuffling. This
-   * isn't necessarily the case during testing, so this switch is provided to
-   * include all surrounding intersections when set to `false`.
-   *
-   * NOTE: there is a case where lower neighbors could be part of a fixed number
-   * group and should as such be considered even during shuffling, but in
-   * practice, groups are things like distinct islands that have no adjacencies,
-   * so the case never arises. we don't consider it here
+   * Shuffling proceeds high to low, so there's usually no point in checking
+   * intersections including indices lower than `atIndex` during shuffling (see
+   * {@link getIntersectionPipCounts} for the edge case). This isn't necessarily
+   * the case during testing, so this switch is provided to include all
+   * surrounding intersections when set to `false`.
    */
   onlyHigher?: boolean;
 }
@@ -530,7 +537,49 @@ export function getIntersectionPipCounts({
     intersections: number[][] = [];
   if (!onlyHigher) {
     groups.push(["e", "ne"], ["ne", "nw"], ["nw", "w"], ["w", "sw"]);
+  } else if (board.fixNumbersInGroups) {
+    // As noted in {@link GetIntersectionPipCountProps}, shuffling proceeds high
+    // to low, so in the vast majority of cases, there's no point in checking
+    // intersections including indices lower than `atIndex` during shuffling.
+    // However, there is a case where lower neighbors could be part of a fixed
+    // number group and should as such be considered even during shuffling. We
+    // check for this here
+    const potentialGroups: (keyof Neighbors)[][][] = [
+      [["ne"], ["e", "ne"]],
+      [
+        ["ne", "nw"],
+        ["ne", "nw"],
+      ],
+      [
+        ["nw", "w"],
+        ["nw", "w"],
+      ],
+      [["w"], ["w", "sw"]],
+    ];
+    for (const [toCheck, toAdd] of potentialGroups) {
+      if (
+        toCheck.some((dir) => {
+          return (
+            board.recommendedLayout[neighbors[dir]!] &&
+            // for some reason TS can't reason that board.fixNumbersInGroups
+            // is not null even though we checked at the top level of the
+            // condition, so we must assert it
+            board.fixNumbersInGroups!.includes(
+              // strictNullChecks prevents us from indexing
+              // board.recommendedLayout with unchecked values from neighbors.
+              // javascript is totally fine with indexing an array with
+              // undefined, however. for brevity, we lie to typescript by
+              // asserting that all neighbors lookups are not null
+              board.recommendedLayout[neighbors[dir]!]?.group
+            )
+          );
+        })
+      ) {
+        groups.push(toAdd);
+      }
+    }
   }
+
   for (const group of groups) {
     const intersection: number[] = [atIndex];
     for (const dir of group) {

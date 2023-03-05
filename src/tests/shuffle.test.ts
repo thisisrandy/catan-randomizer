@@ -662,28 +662,29 @@ describe("shuffle", () => {
   });
 });
 
+const pipCountingTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "empty" },
+      { type: "mountains", number: 6, group: 2 },
+      { type: "mountains", number: 4 },
+    ],
+    [
+      { type: "mountains", number: 2 },
+      { type: "mountains", number: 3 },
+      { type: "mountains", number: 8 },
+    ],
+    [
+      { type: "empty" },
+      { type: "mountains", number: 12 },
+      { type: "mountains", number: 10 },
+    ],
+  ],
+  fixNumbersInGroups: [2],
+};
 describe("getIntersectionPipCount", () => {
   it("should correctly report the pip counts of all surrounding intersections", () => {
-    const template: CatanBoardTemplate = {
-      board: [
-        [
-          { type: "empty" },
-          { type: "mountains", number: 6 },
-          { type: "mountains", number: 4 },
-        ],
-        [
-          { type: "mountains", number: 2 },
-          { type: "mountains", number: 3 },
-          { type: "mountains", number: 8 },
-        ],
-        [
-          { type: "empty" },
-          { type: "mountains", number: 12 },
-          { type: "mountains", number: 10 },
-        ],
-      ],
-    };
-    const board = catanBoardFactory(template);
+    const board = catanBoardFactory(pipCountingTemplate);
     for (const [atIndex, expected] of [
       [0, [6, 8, 8, 10]],
       [3, [4, 6, 8, 10, 10, 10]],
@@ -697,6 +698,39 @@ describe("getIntersectionPipCount", () => {
       expect(pipCounts).toEqual(expected);
     }
   });
+
+  it("should ignore intersections involving indices lower than the one being checked", () => {
+    const board = catanBoardFactory(pipCountingTemplate);
+    for (const [atIndex, expected] of [
+      [4, [8]],
+      [5, [4]],
+    ] as const) {
+      const pipCounts = getIntersectionPipCounts({
+        board,
+        hexes: board.recommendedLayout,
+        atIndex,
+      }).sort((a, b) => a - b);
+      expect(pipCounts).toEqual(expected);
+    }
+  });
+  it(
+    "should consider intersections involving indices lower than the one being" +
+      " checked when they include fixed hexes",
+    () => {
+      const board = catanBoardFactory(pipCountingTemplate);
+      for (const [atIndex, expected] of [
+        [2, [2, 4, 6, 8]],
+        [1, [8, 8, 10, 10]],
+      ] as const) {
+        const pipCounts = getIntersectionPipCounts({
+          board,
+          hexes: board.recommendedLayout,
+          atIndex,
+        }).sort((a, b) => a - b);
+        expect(pipCounts).toEqual(expected);
+      }
+    }
+  );
 });
 
 describe("getValidPortOrientations", () => {

@@ -58,7 +58,8 @@ chits are gameplay-dependent, so no attempt is made to shuffle those.
 ### Seafarers
 
 All [Seafarers](https://www.catan.com/seafarers) scenarios are supported,
-including some custom _New World_ scenarios. Pains have been taken to observe
+including some custom _New World_ scenarios as well as a partially shuffled
+version of the _The Pirate Islands_ scenario. Pains have been taken to observe
 every aspect of variable setup specified in the manual for each scenario,
 including things like shuffling the main and foreign islands separately,
 restricting the pip count of certain positions or terrain types, and not
@@ -119,6 +120,19 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
     east and west sides representing separate villages
+
+#### On the _The Pirate Islands_ scenario
+
+The manual claims, _"This scenario is balanced only if the given set-up is
+maintained. Therefore, it should not be varied, except for the [ports]."_ These
+instructions are respected in the _The Pirate Islands_ scenario, but fair
+variable setups can still be achieved if we just fix the terrain and numbers of
+the outer ("pirate") islands and the upper ("western") coastline of the main
+("eastern") island. A _The Pirate Islands (Shuffled)_ scenario is provided
+which shuffles the remaining hexes and number chits as well as the ports.
+
+Note that this is a tightly constrained scenario; you may need to relax your
+constraint settings in order to successfully shuffle it.
 
 ## Other Features
 
