@@ -561,9 +561,10 @@ export function getIntersectionPipCounts({
         toCheck.some((dir) => {
           return (
             board.recommendedLayout[neighbors[dir]!] &&
-            // for some reason TS can't reason that board.fixNumbersInGroups
-            // is not null even though we checked at the top level of the
-            // condition, so we must assert it
+            // TS can't reason that board.fixNumbersInGroups is not undefined
+            // even though we checked at the top level of the condition,
+            // because it may have become so intervening. we know this isn't
+            // the case, so we can safely assert that it is in fact defined
             board.fixNumbersInGroups!.includes(
               // strictNullChecks prevents us from indexing
               // board.recommendedLayout with unchecked values from neighbors.
