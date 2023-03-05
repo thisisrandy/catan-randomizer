@@ -1,3 +1,4 @@
+import { FixNumbersInGroupStrict } from "../types/boards";
 import { Hex } from "../types/hexes";
 
 export type ShuffleType = "terrain" | "numbers";
@@ -94,7 +95,7 @@ export class HexGroups {
   constructor(
     hexes: Hex[],
     shuffleType: ShuffleType,
-    skipGroups?: (number | undefined)[]
+    skipGroups?: FixNumbersInGroupStrict[]
   ) {
     const groupsAndIndices: [number | undefined, number][] = hexes.map(
       (h, i) => [h.group, i]
