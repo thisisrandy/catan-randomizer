@@ -68,7 +68,19 @@ function getShuffledTerrain(
   const hexes: Hex[] = structuredClone(board.recommendedLayout);
   const hexGroups = new HexGroups(hexes, "terrain");
   let randomIndex,
-    retries = 0;
+    retries = 0,
+    // when the min island count constraint is in play, we can reject otherwise
+    // valid boards due to a smaller than desired number of islands, but
+    // subsequently exceed the maximum number of reshuffle tries for a different
+    // reason. the error reported to the user in that case should be about min
+    // islands, so we need to track whether we successfully built a board that
+    // satisfied all constraints except for the island constraint
+    encountered_island_error = false;
+  const islandError =
+    "Failed to find a board that falls within the specified constraints for" +
+    " the minimum number of distinct islands. It's very likely that this" +
+    " board is over-constrained. Please lower the minimum acceptable" +
+    " island count and try again.";
 
   topLoop: while (true) {
     hexGroups.reset();
@@ -135,12 +147,14 @@ function getShuffledTerrain(
       // we failed to find a valid board after exhausing all tries. start over
       if (retries++ > MAX_RETRIES)
         throw new TerrainShufflingError(
-          "Failed to find a board that falls within the specified constraints for" +
-            " terrain. It's very likely that this board is over-constrained. For" +
-            " example, if there are a large number of pasture hexes and you" +
-            " specify that no same type hexes may touch, it might be impossible" +
-            " to construct a suitable board. Please relax constraints and try" +
-            " again."
+          encountered_island_error
+            ? islandError
+            : "Failed to find a board that falls within the specified constraints for" +
+              " terrain. It's very likely that this board is over-constrained. For" +
+              " example, if there are a large number of pasture hexes and you" +
+              " specify that no same type hexes may touch, it might be impossible" +
+              " to construct a suitable board. Please relax constraints and try" +
+              " again."
         );
       continue topLoop;
     }
@@ -155,13 +169,8 @@ function getShuffledTerrain(
       numericConstraints.minIslandCount.active &&
       countIslands(hexes, board) < numericConstraints.minIslandCount.value
     ) {
-      if (retries++ > MAX_RETRIES)
-        throw new TerrainShufflingError(
-          "Failed to find a board that falls within the specified constraints for" +
-            " the minimum number of distinct islands. It's very likely that this" +
-            " board is over-constrained. Please lower the minumum acceptable" +
-            " island count and try again."
-        );
+      encountered_island_error = true;
+      if (retries++ > MAX_RETRIES) throw new TerrainShufflingError(islandError);
       // eslint-disable-next-line no-extra-label
       continue topLoop;
     }
