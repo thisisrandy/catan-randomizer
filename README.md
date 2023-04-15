@@ -122,6 +122,19 @@ and _Cities & Knights_ as _CK_:
   build a settlement on the _Far Islands_, players may wish to increase the
   favorability of trades from these port to 1:1. Make sure to agree beforehand
   on which rate you wish to use.
+- **Gold Mines**:
+  - _Orange Sun_ and _Green Moon_ islands: Treat these as in _EP_. A
+    settlement or harbor settlement built adjacent one of these mines (after
+    the resident pirates are driven away, of course) produces 2 gold, and a
+    city produces 4 gold.
+  - _Far Islands_: Treat these as in _SF_. A settlement produces one resource
+    of the player's choice, and a city produces two. While there's little
+    compelling reason to do so until the endgame (i.e. for victory points that
+    are slightly cheaper than cities, or if cities have run out), players may
+    build harbor settlements on the _Far Islands_. If they do, harbor
+    settlement production is the same as basic settlements, per usual.
+  - **VARIATION**: Treat all gold mines identically in the manner of your
+    choosing. Remember to agree on this beforehand.
 
 ### Seafarers
 
