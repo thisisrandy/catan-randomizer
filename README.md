@@ -118,8 +118,8 @@ and _Cities & Knights_ as _CK_:
   _SF_ shipping routes and vice-versa.
 - **Ports & Trade**: The basic trading rate for _EP_ is 3:1, and it remains so
   here. However, all the 2:1 ports are in play, but only in the seas
-  surrounding the _Far Islands_. **BONUS**: Since it is no small feat to build
-  a settlement on the _Far Islands_, players may wish to increase the
+  surrounding the _Far Islands_. **VARIATION**: Since it is no small feat to
+  build a settlement on the _Far Islands_, players may wish to increase the
   favorability of trades from these port to 1:1. Make sure to agree beforehand
   on which rate you wish to use.
 
