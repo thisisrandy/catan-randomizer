@@ -17,9 +17,9 @@ While the same idea has been executed
 [many](https://jkirschner.github.io/catan-randomizer/)
 [times](https://catan.bunge.io/)
 [before](https://alexbeals.com/projects/catan/), this project supports fairness
-constraints and [Catan
-Expansions](https://www.catan.com/explore-catan/catan-core-family-games) that
-aren't seen elsewhere.
+constraints, [Catan
+Expansions](https://www.catan.com/explore-catan/catan-core-family-games), and
+custom scenarios that aren't seen elsewhere.
 
 ## Supported Constraints
 
@@ -54,6 +54,74 @@ recommended starting island for combining with _Cities & Knights_ (see the
 page](https://www.catan.com/explorers-pirates)). There's no way to set up the
 hidden islands face down without involving a third party, and assigned number
 chits are gameplay-dependent, so no attempt is made to shuffle those.
+
+#### Everything, Everywhere, All at Once
+
+The [Explorers & Pirates main page](https://www.catan.com/explorers-pirates)
+claims "In the [Seafarers and Explorers & Pirates] expansions, the ways of
+using ships and settling new islands are so fundamentally different from each
+other that it is **impossible to combine the expansions**. Besides, combining
+them doesn't make much sense anyway. If you use a settler ship, you reach a new
+building site for a settlement faster and more cost-effectively than when
+stringing together various ships."
+
+We claim that they haven't tried hard enough. Enter the _Everything,
+Everywhere, All at Once_ scenario, which combines _Explorers & Pirates_,
+_Seafarers_, and _Cities & Knights_ (optional).
+
+##### Rules
+
+For brevity, _Explorers & Pirates_ is abbreviated _EP_, _Seafarers_ as _SF_,
+and _Cities & Knights_ as _CK_:
+
+- **Setup**:
+  1. Begin by assembling the final scenario for _EP_. Remember to substitute
+     an additional fields hex for a forest hex if playing in combination with
+     _CK_ (w/and w/o _CK_ scenarios are provided via this app).
+  2. Then, using the 2 two hex length and 2 one hex length border pieces from
+     _SF_, further extend the long side borders by three hex lengths on each
+     side.
+  3. Using _SF_ hexes and number chits, create an addition 5 islands
+     (henceforth _Far Islands_) as specified on the far side of the world.
+- **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
+  for _SF_). If also using _CK_, add an additional 5 points, for a grand total
+  of 27 VPs.
+- **Robber & Pirate**:
+  - Only the _EP_ pirate is used.
+  - Per the _EP_ rules, it can be placed on any sea hex except along the
+    coastline of the _EP_ main island, including in the area around the _Far
+    Islands_. Also, per the _EP_ rules, this _does not_ include border pieces.
+  - The pirate's interaction with _EP_ ships and _SF_ shipping routes is the same
+    as specified in the rules for each expansion. In particular:
+    - _EP_: Ships may not move past the pirate without paying tribute unless
+      the pirate is the same color as them. Ships may do battle with the
+      pirate during the player's movement phrase as per the _EP_ rules.
+    - _SF_: The pirate prevents any building or open shipping route movement
+      on any adjacent route. The _SF_ pirate is black, so _all players_ are
+      affected regardless of the pirate piece color.
+- **Settling Foreign Islands**:
+  - Catan chits (_SF_) worth one VP each are awarded for each player's _first_
+    settlement on each of the _far islands only_. Settlements on any part of
+    the _Orange Sun_ or _Green Moon_ islands (_EP_) are _not_ thusly rewarded.
+  - _Orange Sun_ and _Green Moon_ islands (_EP_) may be settled either with a
+    settler ship (_EP_) or by building a shipping route (_SF_) to an
+    intersection and then building a settlement. Note that the only compelling
+    reason to do the latter is if you are using all of your _EP_ ships for
+    something else.
+  - The _Far Islands_ may _only_ be settled by building a shipping route (_SF_)
+    to abut them and then building a settlement. In this way, an extra element
+    of play and strategy is introduced: there is a race to build settlements on
+    the far side of the _Orange Sun_ and _Green Moon_ islands so that a
+    shipping route can be build from them towards one or more of the lucrative
+    _Far Islands_.
+- **Shipping Route (_SF_)/Ship (_EP_) Interaction**: None. _EP_ ships may sail freely through
+  _SF_ shipping routes and vice-versa.
+- **Ports & Trade**: The basic trading rate for _EP_ is 3:1, and it remains so
+  here. However, all the 2:1 ports are in play, but only in the seas
+  surrounding the _Far Islands_. **BONUS**: Since it is no small feat to build
+  a settlement on the _Far Islands_, players may wish to increase the
+  favorability of trades from these port to 1:1. Make sure to agree beforehand
+  on which rate you wish to use.
 
 ### Seafarers
 
@@ -105,7 +173,7 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
     terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
     and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips
     to prevent overly favorable initial settlement opportunities. There is one
-    more number chit than resource-producing hex[^1], so, following the _The
+    more number chit than resource-producing hex[^2], so, following the _The
     Wonders of Catan_ scenario, the second 12 chit is excluded. It is
     recommended to increase the victory point goal for this board to 14
   - _New World Islands_: Same as _New World Expanded_, but with distinct and
@@ -116,7 +184,7 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
     recommended. Since gold fields can only appear on foreign islands, the pip
     restriction from _New World Expanded_ is removed
 
-[^1]:
+[^2]:
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
     east and west sides representing separate villages
