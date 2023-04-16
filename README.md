@@ -181,7 +181,16 @@ diplayed. See the [rules](#rules).
 #### Rules
 
 For brevity, _Explorers & Pirates_ is abbreviated _EP_, _Seafarers_ as _SF_,
-and _Cities & Knights_ as _CK_:
+and _Cities & Knights_ as _CK_.
+
+If you have not read the rules for the _SF_/_CK_ combination or the _CK_/_EP_
+combination, you must do before attempting the _Everything, Everywhere, All at
+Once_ scenarios (though not the _Seafarers & Pirates_ scenarios). Both rulesets
+can be found in the "Possible Combinations" section of the [_CK_
+page](https://www.catan.com/cities-knights). All rules from those combinations
+apply unless explicitly contradicted below. It is recommended to play both of
+the two expansion combinations at least once before attempting _Everything,
+Everywhere, All at Once_.
 
 - **Setup**:
   1. Begin by assembling the final scenario for _EP_. Remember to substitute
