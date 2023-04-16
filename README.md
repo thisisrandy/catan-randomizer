@@ -226,6 +226,12 @@ Everywhere, All at Once_.
       is always friendly towards the player of the same color, even where
       shipping routes are concerned. Make sure to agree on whether this is the
       case beforehand.
+  - The pirate's interaction with _CK_ knights is the same as specified in the
+  - _SF_/_CK_ combination rules. In particular:
+    - Knights may move to or be built on any unoccupied intersection of a trade
+      route, including shipping routes.
+    - If active at the beginning of your turn and adjacent to the pirate, a
+      knight may chase the pirate away at the cost of its activation.
 - **Settling Foreign Islands**:
   - Catan chits (_SF_) worth one VP each are awarded for each player's _first_
     settlement on each of the _Far Islands only_. Settlements on any part of
