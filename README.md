@@ -83,6 +83,9 @@ and _Cities & Knights_ as _CK_:
      side.
   3. Using _SF_ hexes and number chits, create an addition 5 islands
      (henceforth _Far Islands_) as specified on the far side of the world.
+  4. **NB:** The _Orange Sun_ and _Green Moon_ islands are not depicted by the
+     randomizer. Instead, an empty space between the main and _Far Islands_ is
+     diplayed.
 - **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
   for _SF_). If also using _CK_, add an additional 5 points, for a grand total
   of 27 VPs.
