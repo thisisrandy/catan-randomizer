@@ -2471,7 +2471,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
   },
-  "Everything, Everywhere, All at Once - Full Random": {
+  "Everything, Everywhere, All at Once, Variable": {
     board: [
       [
         { type: "empty" },
