@@ -16,10 +16,12 @@ certain total. It is deployed [here](https://catan-randomizer.vercel.app/).
 While the same idea has been executed
 [many](https://jkirschner.github.io/catan-randomizer/)
 [times](https://catan.bunge.io/)
-[before](https://alexbeals.com/projects/catan/), this project supports fairness
-constraints, [Catan
+[before](https://alexbeals.com/projects/catan/), this project supports [fairness
+constraints](#supported-constraints), [Catan
 Expansions](https://www.catan.com/explore-catan/catan-core-family-games), and
-custom scenarios that aren't seen elsewhere.
+[custom](#expanded-versions)
+[scenarios](#everything%2C-everywhere%2C-all-at-once) that aren't seen
+elsewhere.
 
 ## Supported Constraints
 
@@ -92,29 +94,31 @@ the board is over-constrained in this or any other way.
 
 _New World_ is the final, fully randomized scenario for _Seafarers_.
 
-- Ports are shuffled such that they are placed with both docks pointing at a
-  terrain hex and no more than one total dock pointing at any given
-  intersection. Within those constraints, they are allowed to appear on any sea
-  hex in this scenario. However, you may feel free to ignore random placement
-  and instead use the instructions from the manual (_"Shuffle... with their
-  reverse sides facing up. Starting with the oldest player... each takes a
-  [port] and places it..."_)
-- There are two additional scenarios provided which do not appear in the
-  manual:
-  - _New World Expanded_: Same as _New World_ but using the full frame and all
-    terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
-    and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips
-    to prevent overly favorable initial settlement opportunities. There is one
-    more number chit than resource-producing hex[^2], so, following the _The
-    Wonders of Catan_ scenario, the second 12 chit is excluded. It is
-    recommended to increase the victory point goal for this board to 14
-  - _New World Islands_: Same as _New World Expanded_, but with distinct and
-    separately-shuffled main and foreign island areas. Following the _Through
-    the Desert_ scenario, gold fields and some of the better number chits are
-    reserved for the foreign island area. You can choose to allow or disallow
-    initial settlements in the foreign island area, but the latter is
-    recommended. Since gold fields can only appear on foreign islands, the pip
-    restriction from _New World Expanded_ is removed
+Ports are shuffled such that they are placed with both docks pointing at a
+terrain hex and no more than one total dock pointing at any given intersection.
+Within those constraints, they are allowed to appear on any sea hex in this
+scenario. However, you may feel free to ignore random placement and instead use
+the instructions from the manual (_"Shuffle... with their reverse sides facing
+up. Starting with the oldest player... each takes a [port] and places it..."_).
+
+##### Expanded versions
+
+There are two additional scenarios provided which do not appear in the manual:
+
+- _New World Expanded_: Same as _New World_ but using the full frame and all
+  terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
+  and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips to
+  prevent overly favorable initial settlement opportunities. There is one more
+  number chit than resource-producing hex[^2], so, following the _The Wonders
+  of Catan_ scenario, the second 12 chit is excluded. It is recommended to
+  increase the victory point goal for this board to 14
+- _New World Islands_: Same as _New World Expanded_, but with distinct and
+  separately-shuffled main and foreign island areas. Following the _Through the
+  Desert_ scenario, gold fields and some of the better number chits are
+  reserved for the foreign island area. You can choose to allow or disallow
+  initial settlements in the foreign island area, but the latter is
+  recommended. Since gold fields can only appear on foreign islands, the pip
+  restriction from _New World Expanded_ is removed
 
 [^2]:
     For the curious, the extra number chit is used exclusively in the _Cloth
@@ -184,21 +188,24 @@ and _Cities & Knights_ as _CK_:
   for _SF_). If also using _CK_, add an additional 5 points, for a grand total
   of 27 VPs.
 - **Robber & Pirate**:
-  - Only the _EP_ pirate is used.
-  - Per the _EP_ rules, it can be placed on any sea hex except along the
-    coastline of the _EP_ main island, including in the area around the _Far
-    Islands_. Also, per the _EP_ rules, this _does not_ include border pieces.
+  - Only the _EP_ pirate is used. **VARIATION**: Add the robber. When any
+    action that would move the robber or pirate occurs, the initiating players
+    gets to choose which they will move.
+  - Per the _EP_ rules, the pirate can be placed on any sea hex except along
+    the coastline of the _EP_ main island, including in the area around the
+    _Far Islands_. Also, per the _EP_ rules, this _does not_ include border
+    pieces.
   - The pirate's interaction with _EP_ ships and _SF_ shipping routes is the same
     as specified in the rules for each expansion. In particular:
     - _EP_: Ships may not move past the pirate without paying tribute unless
       the pirate is the same color as them. Ships may do battle with the
       pirate during the player's movement phrase as per the _EP_ rules.
     - _SF_: The pirate prevents any building or open shipping route movement
-      on any adjacent route. The _SF_ pirate is black, so _all players_ are
+      on any adjacent route. The _SF_ pirate is neutral, so _all players_ are
       affected regardless of the pirate piece color.
 - **Settling Foreign Islands**:
   - Catan chits (_SF_) worth one VP each are awarded for each player's _first_
-    settlement on each of the _far islands only_. Settlements on any part of
+    settlement on each of the _Far Islands only_. Settlements on any part of
     the _Orange Sun_ or _Green Moon_ islands (_EP_) are _not_ thusly rewarded.
   - _Orange Sun_ and _Green Moon_ islands (_EP_) may be settled either with a
     settler ship (_EP_) or by building a shipping route (_SF_) to an
@@ -217,7 +224,7 @@ and _Cities & Knights_ as _CK_:
   here. However, all the 2:1 ports are in play, but only in the seas
   surrounding the _Far Islands_. **VARIATION**: Since it is no small feat to
   build a settlement on the _Far Islands_, players may wish to increase the
-  favorability of trades from these port to 1:1. Make sure to agree beforehand
+  favorability of trades from these ports to 1:1. Make sure to agree beforehand
   on which rate you wish to use.
 - **Gold Mines**:
   - _Orange Sun_ and _Green Moon_ islands: Treat these as in _EP_. A
@@ -226,7 +233,7 @@ and _Cities & Knights_ as _CK_:
     city produces 4 gold.
   - _Far Islands_: Treat these as in _SF_. A settlement produces one resource
     of the player's choice, and a city produces two. While there's little
-    compelling reason to do so until the endgame (i.e. for victory points that
+    compelling reason to do so until the endgame (e.g. for victory points that
     are slightly cheaper than cities, or if cities have run out), players may
     build harbor settlements on the _Far Islands_. If they do, harbor
     settlement production is the same as basic settlements, per usual.
