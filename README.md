@@ -241,8 +241,8 @@ Everywhere, All at Once_.
     the far side of the _Orange Sun_ and _Green Moon_ islands so that a
     shipping route can be build from them towards one or more of the lucrative
     _Far Islands_.
-- **Shipping Route (_SF_)/Ship (_EP_) Interaction**: None. _EP_ ships may sail freely through
-  _SF_ shipping routes and vice-versa.
+- **Shipping Route (_SF_)/Ship (_EP_) Interaction**: None. _EP_ ships may sail
+  freely through _SF_ shipping routes and vice-versa.
 - **Ports & Trade**: The basic trading rate for _EP_ is 3:1, and it remains so
   here. However, all the 2:1 ports are in play, but only in the seas
   surrounding the _Far Islands_. **VARIATION**: Since it is no small feat to
