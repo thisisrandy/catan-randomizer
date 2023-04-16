@@ -268,7 +268,10 @@ function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
   // the border
   const seaHexes = hexes
     .map((hex, i) => [hex, i] as [Hex, number])
-    .filter(([hex, _]) => hex.type === "sea" && !hex.port);
+    .filter(
+      ([hex, _]) =>
+        hex.type === "sea" && !hex.port && hex.portsAllowed !== false
+    );
   // shuffle them
   fisherYates(seaHexes);
   // and test to see if there are any valid port orientations on each.

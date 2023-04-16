@@ -46,6 +46,19 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
        * If this is a sea hex, it can contain a `Port`
        */
       port?: Port;
+      /**
+       * If specified, `portsAllowed` must be true for sea hexes which might
+       * contain ports. However, there's no need to specify it explicitly in
+       * this case
+       */
+      portsAllowed?: true;
+    }
+  | {
+      type: "sea";
+      /**
+       * For sea hexes which may not contain ports, we can use this switch
+       */
+      portsAllowed: false;
     }
   | {
       type: Exclude<NonResourceProducingHexType, "sea">;
