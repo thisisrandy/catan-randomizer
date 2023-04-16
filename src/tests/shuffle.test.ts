@@ -82,6 +82,10 @@ const mixedPortBoardTemplate: CatanBoardTemplate = {
       { type: "desert", fixed: true },
       { type: "desert", fixed: true },
     ],
+    [
+      { type: "sea", fixed: true, portsAllowed: false },
+      { type: "sea", portsAllowed: false },
+    ],
   ],
 };
 const mixedPortBoard = catanBoardFactory(mixedPortBoardTemplate);
@@ -578,6 +582,34 @@ describe("shuffle", () => {
       expect(numDifferent).toBeGreaterThan(0);
     }
   );
+
+  it("should not shuffle ports onto hexes marked portsAllowed: false", () => {
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        mixedPortBoard,
+        binaryConstraints,
+        numericConstraints
+      );
+      for (const [i, shuffledHex] of hexes.entries()) {
+        const origHex = mixedPortBoard.recommendedLayout[i];
+        // the fixed case
+        if (origHex.fixed) {
+          if (origHex.portsAllowed === false)
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(shuffledHex.port).toBeUndefined();
+        }
+        // the unfixed case. really, this is the only case that matters.
+        // portsAllowed is a property of hexes, so it should move or not move
+        // with them. on the other hand, it's kind of weird to be specifying
+        // that a moveable hex doesn't allow ports, so best to check both cases
+        // in case the machinery changes somehow in the future
+        else if (shuffledHex.portsAllowed === false) {
+          // eslint-disable-next-line jest/no-conditional-expect
+          expect(shuffledHex.port).toBeUndefined();
+        }
+      }
+    }
+  });
 
   it("should shuffle non-fixed ports originating on non-fixed hexes freely", () => {
     for (let i = 0; i < numSamples; i++) {
