@@ -84,6 +84,7 @@ The following scenarios support this constraint:
 - _New World Expanded_
 - _New World Islands_
 - _Everything, Everywhere, All at Once, Variable_
+- _Seafarers & Pirates, Variable_
 
 Note that the maximum feasible number of islands is different from scenario to
 scenario. For example, the shuffler can usually find a 7 island board for _New
@@ -173,6 +174,9 @@ diplayed. See the [rules](#rules).
   [Min Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 - _Seafarers & Pirates_ - Combines _Explorers & Pirates_ and _Seafarers_. Play
   to 22 VP.
+- _Seafarers & Pirates, Variable_ - Same as _Seafarers & Pirates_, but with
+  variable island shuffling. Subject to the [Min
+  Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 
 #### Rules
 

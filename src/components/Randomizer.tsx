@@ -29,6 +29,7 @@ const islandExpansions: ExpansionName[] = [
   "Seafarers: New World Expanded",
   "Seafarers: New World Islands",
   "Everything, Everywhere, All at Once, Variable",
+  "Seafarers & Pirates, Variable",
 ];
 
 interface Props {
