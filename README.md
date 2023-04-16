@@ -213,7 +213,10 @@ and _Cities & Knights_ as _CK_:
       pirate during the player's movement phrase as per the _EP_ rules.
     - _SF_: The pirate prevents any building or open shipping route movement
       on any adjacent route. The _SF_ pirate is neutral, so _all players_ are
-      affected regardless of the pirate piece color.
+      affected regardless of the pirate piece color. **VARIATION**: The pirate
+      is always friendly towards the player of the same color, even where
+      shipping routes are concerned. Make sure to agree on whether this is the
+      case beforehand.
 - **Settling Foreign Islands**:
   - Catan chits (_SF_) worth one VP each are awarded for each player's _first_
     settlement on each of the _Far Islands only_. Settlements on any part of
