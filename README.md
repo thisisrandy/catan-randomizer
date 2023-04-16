@@ -198,7 +198,10 @@ and _Cities & Knights_ as _CK_:
 - **Robber & Pirate**:
   - Only the _EP_ pirate is used. **VARIATION**: Add the robber. When any
     action that would move the robber or pirate occurs, the initiating players
-    gets to choose which they will move.
+    gets to choose which they will move. The robber could even do things like
+    prevent spice (_EP_) retrieval when occupying a spice village. Make sure to
+    agree to all rules about where the robber can occupy and what it does on
+    each hex type beforehand.
   - Per the _EP_ rules, the pirate can be placed on any sea hex except along
     the coastline of the _EP_ main island, including in the area around the
     _Far Islands_. Also, per the _EP_ rules, this _does not_ include border
