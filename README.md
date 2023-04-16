@@ -148,7 +148,7 @@ various ships."
 
 We claim that they haven't tried hard enough. Enter the _Everything,
 Everywhere, All at Once_ scenario, which combines _Explorers & Pirates_,
-_Seafarers_, and _Cities & Knights_ (optional).
+_Seafarers_, and _Cities & Knights_ ([optional](#scenarios)).
 
 <p align="center">
   <img alt="EEAatO.png" src="EEAatO.png" />
