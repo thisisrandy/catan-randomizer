@@ -227,7 +227,7 @@ Everywhere, All at Once_.
       shipping routes are concerned. Make sure to agree on whether this is the
       case beforehand.
   - The pirate's interaction with _CK_ knights is the same as specified in the
-  - _SF_/_CK_ combination rules. In particular:
+    _SF_/_CK_ combination rules. In particular:
     - Knights may move to or be built on any unoccupied intersection of a trade
       route, including shipping routes.
     - If active at the beginning of your turn and adjacent to the pirate, a
