@@ -58,7 +58,7 @@ chits are gameplay-dependent, so no attempt is made to shuffle those.
 #### Everything, Everywhere, All at Once
 
 The [Explorers & Pirates main page](https://www.catan.com/explorers-pirates)
-claims "In the [Seafarers and Explorers & Pirates] expansions, the ways of
+claims, "In the [Seafarers and Explorers & Pirates] expansions, the ways of
 using ships and settling new islands are so fundamentally different from each
 other that it is **impossible to combine the expansions**. Besides, combining
 them doesn't make much sense anyway. If you use a settler ship, you reach a new
