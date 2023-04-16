@@ -214,6 +214,7 @@ export type ExpansionName =
   | "Seafarers: New World Expanded"
   | "Seafarers: New World Islands"
   | "Everything, Everywhere, All at Once"
+  | "Everything, Everywhere, All at Once - Full Random"
   | "Seafarers & Pirates";
 
 /**
