@@ -83,6 +83,7 @@ The following scenarios support this constraint:
 - _New World_
 - _New World Expanded_
 - _New World Islands_
+- _Everything, Everywhere, All at Once, Variable_
 
 Note that the maximum feasible number of islands is different from scenario to
 scenario. For example, the shuffler can usually find a 7 island board for _New
@@ -167,6 +168,9 @@ diplayed. See the [rules](#rules).
 
 - _Everything, Everywhere, All at Once_ - Combines _Explorers & Pirates_,
   _Seafarers_, and _Cities & Knights_. Play to 27 VP.
+- _Everything, Everywhere, All at Once, Variable_ - Same as _Everything,
+  Everywhere, All at Once_, but with variable island shuffling. Subject to the
+  [Min Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 - _Seafarers & Pirates_ - Combines _Explorers & Pirates_ and _Seafarers_. Play
   to 22 VP.
 
