@@ -111,7 +111,7 @@ There are two additional scenarios provided which do not appear in the manual:
   terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
   and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips to
   prevent overly favorable initial settlement opportunities. There is one more
-  number chit than resource-producing hex[^2], so, following the _The Wonders
+  number chit than resource-producing hex[^1], so, following the _The Wonders
   of Catan_ scenario, the second 12 chit is excluded. It is recommended to
   increase the victory point goal for this board to 14
 - _New World Islands_: Same as _New World Expanded_, but with distinct and
@@ -122,7 +122,7 @@ There are two additional scenarios provided which do not appear in the manual:
   recommended. Since gold fields can only appear on foreign islands, the pip
   restriction from _New World Expanded_ is removed
 
-[^2]:
+[^1]:
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
     east and west sides representing separate villages
@@ -142,7 +142,7 @@ constraint settings in order to successfully shuffle it.
 
 ### Everything, Everywhere, All at Once
 
-The "Possible Conbinations" sections of both the
+The "Possible Combinations" section of both the
 [Seafarers](https://www.catan.com/seafarers) and [Explorers &
 Pirates](https://www.catan.com/explorers-pirates) pages claim, "In the
 [Seafarers and Explorers & Pirates] expansions, the ways of using ships and
@@ -204,7 +204,7 @@ and _Cities & Knights_ as _CK_:
     each hex type beforehand.
   - Per the _EP_ rules, the pirate can be placed on any sea hex except along
     the coastline of the _EP_ main island, including in the area around the
-    _Far Islands_. Also, per the _EP_ rules, this _does not_ include border
+    _Far Islands_. Also per the _EP_ rules, this _does not_ include border
     pieces.
   - The pirate's interaction with _EP_ ships and _SF_ shipping routes is the same
     as specified in the rules for each expansion. In particular:
