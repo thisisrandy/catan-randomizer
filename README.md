@@ -152,7 +152,7 @@ much sense anyway. If you use a settler ship, you reach a new building site for
 a settlement faster and more cost-effectively than when stringing together
 various ships."
 
-We claim that they haven't tried hard enough. Enter the _Everything,
+I claim that they haven't tried hard enough. Enter the _Everything,
 Everywhere, All at Once_ scenario, which combines _Explorers & Pirates_,
 _Seafarers_, and _Cities & Knights_ ([optional](#scenarios)).
 
