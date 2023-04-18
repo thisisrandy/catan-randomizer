@@ -163,7 +163,7 @@ _Seafarers_, and _Cities & Knights_ ([optional](#scenarios)).
 **NB:** The _Orange Sun_ and _Green Moon_ islands, which, as noted
 [above](#explorers-%26-pirates), must be manually shuffled, are not depicted by
 the randomizer. Instead, an empty space between the main and _Far Islands_ is
-diplayed. See the [rules](#rules).
+displayed. See the [rules](#rules).
 
 #### Scenarios
 
