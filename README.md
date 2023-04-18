@@ -195,7 +195,8 @@ Everywhere, All at Once_.
 - **Setup**:
   1. Begin by assembling the final scenario for _EP_. Remember to substitute
      an additional fields hex for a forest hex if playing in combination with
-     _CK_ (w/and w/o _CK_ scenarios are provided via this app).
+     _CK_. The randomizer will handle this for you if you select the correct
+     [scenario](#scenarios).
   2. Then, using the 2 two hex length and 2 one hex length border pieces from
      _SF_, further extend the long side borders by three hex lengths on each
      side.
