@@ -276,6 +276,13 @@ Everywhere, All at Once_.
     settlement production is the same as basic settlements, per usual.
   - **VARIATION**: Treat all gold mines identically in the manner of your
     choosing. Remember to agree on this beforehand.
+- **Longest Road**: Since settling the _Far Islands_ requires long shipping
+  routes, Longest Road is in play for all scenarios.
+- **Largest Army**: If playing with _CK_ (_Everything, Everywhere, All at Once_
+  scenarios), Largest Army is irrelevant, since Progress Cards instead of
+  Development Cards are used. However, since the _Seafarers & Pirates_
+  scenarios exclude _CK_ and hence include Development Cards, Largest Army is
+  in play.
 
 ## Other Features
 
