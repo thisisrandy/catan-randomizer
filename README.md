@@ -239,7 +239,7 @@ Everywhere, All at Once_.
   - _Orange Sun_ and _Green Moon_ islands (_EP_) may be settled either with a
     settler ship (_EP_) or by building a shipping route (_SF_) to an
     intersection and then building a settlement. There are a few compelling
-    reasons to do the latter, despite Catan GmbH's claim that settler ships are
+    reasons to do the latter, despite CATAN GmbH's claim that settler ships are
     always better:
     1. You are using all of your _EP_ ships for something else.
     2. You want to have a route available to move your _CK_ knights between
