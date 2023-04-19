@@ -19,7 +19,10 @@ type Port = {
   /** Measured in degrees from west-facing */
   orientation: PortOrientation;
   /** Ports can be fixed in some scenarios. Use this property to indicate that
-   * this port should not be shuffled */
+   * this port should not be shuffled. Note that fixed ports may not appear on
+   * non-fixed hexes. The type system allows such a board to be specified, but
+   * there is a runtime check in place that will abort board creation when the
+   * board template is processed */
   fixed?: boolean;
 };
 
@@ -58,6 +61,11 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       /**
        * For sea hexes which may not contain ports, we can use this switch
        */
+      // FIXME: this is a stopgap to account for the fact that port shuffling
+      // (see getShuffledPorts) doesn't account for hex groups, which was never
+      // required until the Everything, Everywhere, All at Once scenario was
+      // introduced. it would reduce complexity to consider groups properly and
+      // do away with this flag
       portsAllowed: false;
     }
   | {
@@ -69,6 +77,19 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
    * on the Explorers & Pirates map, it can be marked as such using this
    * property
    */
+  // FIXME: this was originally introduced to account for the fixed Explorer's
+  // & Pirates hex, but over the course of development, its meaning got a
+  // little bit muddled vis-a-vis ports. specifically, a fixed hex which
+  // includes a port in a given orientation in the recommended layout is
+  // required to always include a port, though not necessarily the same port,
+  // in the same orientation in the shuffled output. however, fixed hexes which
+  // don't have a port in the recommended layout may be later assigned a free
+  // port during shuffling. the practical consequence of this is that boards
+  // with free ports have to cram them all onto non-fixed hexes in the
+  // recommended layout so that they get shuffled instead of being stuck on a
+  // fixed hex. ideally, theses concepts should be more decoupled. I'll
+  // probably never get around to this since it hasn't blocked anything, but
+  // it's worth noting nonetheless
   fixed?: boolean;
   /**
    * Some setups, e.g. Seafarers scenarios, specify multiple groups of
