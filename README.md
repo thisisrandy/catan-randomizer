@@ -185,9 +185,9 @@ For brevity, _Explorers & Pirates_ is abbreviated _EP_, _Seafarers_ as _SF_,
 and _Cities & Knights_ as _CK_.
 
 If you have not read the rules for the _SF_/_CK_ combination or the _CK_/_EP_
-combination, you must do before attempting the _Everything, Everywhere, All at
-Once_ scenarios (though not the _Seafarers & Pirates_ scenarios). Both rulesets
-can be found in the "Possible Combinations" section of the [_CK_
+combination, you must do so before attempting the _Everything, Everywhere, All
+at Once_ scenarios (though not the _Seafarers & Pirates_ scenarios). Both
+rulesets can be found in the "Possible Combinations" section of the [_CK_
 page](https://www.catan.com/cities-knights). All rules from those combinations
 apply unless explicitly contradicted below. It is recommended to play both of
 the two expansion combinations at least once before attempting _Everything,
@@ -255,7 +255,7 @@ Everywhere, All at Once_.
     to abut them and then building a settlement. In this way, an extra element
     of play and strategy is introduced: there is a race to build settlements on
     the far side of the _Orange Sun_ and _Green Moon_ islands so that a
-    shipping route can be build from them towards one or more of the lucrative
+    shipping route can be built from them towards one or more of the lucrative
     _Far Islands_.
 - **Shipping Route (_SF_)/Ship (_EP_) Interaction**: None. _EP_ ships may sail
   freely through _SF_ shipping routes and vice-versa.
