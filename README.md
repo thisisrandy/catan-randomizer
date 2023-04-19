@@ -170,12 +170,13 @@ displayed. See the [rules](#rules).
 - _Everything, Everywhere, All at Once_ - Combines _Explorers & Pirates_,
   _Seafarers_, and _Cities & Knights_. Play to 27 VP.
 - _Everything, Everywhere, All at Once, Variable_ - Same as _Everything,
-  Everywhere, All at Once_, but with variable island shuffling. Subject to the
-  [Min Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
+  Everywhere, All at Once_, but with variable _Far Island_ shuffling. Subject
+  to the [Min Islands](#on-scenarios-with-a-variable-number-of-islands)
+  constraint.
 - _Seafarers & Pirates_ - Combines _Explorers & Pirates_ and _Seafarers_. Play
   to 22 VP.
 - _Seafarers & Pirates, Variable_ - Same as _Seafarers & Pirates_, but with
-  variable island shuffling. Subject to the [Min
+  variable _Far Island_ shuffling. Subject to the [Min
   Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 
 #### Rules
