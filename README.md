@@ -113,14 +113,14 @@ There are two additional scenarios provided which do not appear in the manual:
   prevent overly favorable initial settlement opportunities. There is one more
   number chit than resource-producing hex[^1], so, following the _The Wonders
   of Catan_ scenario, the second 12 chit is excluded. It is recommended to
-  increase the victory point goal for this board to 14
+  increase the victory point goal for this board to 14.
 - _New World Islands_: Same as _New World Expanded_, but with distinct and
   separately-shuffled main and foreign island areas. Following the _Through the
   Desert_ scenario, gold fields and some of the better number chits are
   reserved for the foreign island area. You can choose to allow or disallow
   initial settlements in the foreign island area, but the latter is
   recommended. Since gold fields can only appear on foreign islands, the pip
-  restriction from _New World Expanded_ is removed
+  restriction from _New World Expanded_ is removed.
 
 [^1]:
     For the curious, the extra number chit is used exclusively in the _Cloth
