@@ -200,7 +200,7 @@ Everywhere, All at Once_.
   2. Then, using the 2 two hex length and 2 one hex length border pieces from
      _SF_, further extend the long side borders by three hex lengths on each
      side.
-  3. Using _SF_ hexes and number chits, create an addition 5 islands
+  3. Using _SF_ hexes and number chits, create an addition 5[^2] islands
      (henceforth _Far Islands_) as specified on the far side of the world.
 - **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
   for _SF_). If also using _CK_, add an additional 5 points, for a grand total
@@ -284,6 +284,15 @@ Everywhere, All at Once_.
   Development Cards are used. However, since the _Seafarers & Pirates_
   scenarios exclude _CK_ and hence include Development Cards, Largest Army is
   in play.
+
+[^2]:
+    The _Variable_ [scenarios](#scenarios) may have fewer than 5 _Far Islands_,
+    depending on the value of the [Min
+    Islands](#on-scenarios-with-a-variable-number-of-islands) constraint (6
+    including the main island). While it isn't possible in the allotted space
+    with the allotted hexes to create more than 5 distinct islands, 6 single
+    hex islands could potentially be arranged if players agree to use
+    different hexes.
 
 ## Other Features
 
