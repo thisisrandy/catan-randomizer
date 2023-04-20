@@ -125,7 +125,7 @@ There are two additional scenarios provided which do not appear in the manual:
 [^1]:
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
-    east and west sides representing separate villages
+    east and west sides representing separate villages.
 
 #### On the _The Pirate Islands_ scenario
 
