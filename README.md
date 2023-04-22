@@ -208,7 +208,7 @@ Everywhere, All at Once_.
   of 27 VPs.
 - **Robber & Pirate**:
   - Only the _EP_ pirate is used. **VARIATION**: Add the robber. When any
-    action that would move the robber or pirate occurs, the initiating players
+    action that would move the robber or pirate occurs, the initiating player
     gets to choose which they will move. The robber could even do things like
     prevent spice (_EP_) retrieval when occupying a spice village. Make sure to
     agree to all rules about where the robber can occupy and what it does on
