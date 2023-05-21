@@ -284,7 +284,16 @@ Everywhere, All at Once_.
   scenarios), Largest Army is irrelevant, since Progress Cards instead of
   Development Cards are used. However, since the _Seafarers & Pirates_
   scenarios exclude _CK_ and hence include Development Cards, Largest Army is
-  in play.
+  in play. **VARIATION**: Especially when playing without the robber, _CK_
+  knights can feel under-utilized, since they're rarely in position the chase
+  the pirate away, and displacement tends to happen less often, since _EP_ road
+  networks tend to be smaller . A possible variation to the _Everything,
+  Everywhere, All at Once_ scenarios is to add Largest Army back into play.
+  To determine who to award it to, count only the _number_ of knights each
+  player has, regardless of activation status or strength (basic, strong, or
+  mighty). In this way, a new objective is added: Not only are players vying to
+  have the strongest army to defend against the barbarians, they are also
+  trying to assemble the largest army in terms of number of knights alone.
 
 [^2]:
     The _Variable_ [scenarios](#scenarios) may have fewer than 5 _Far Islands_
