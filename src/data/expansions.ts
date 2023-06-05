@@ -2556,7 +2556,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "sea", fixed: true },
         { type: "desert", group: 2 },
         { type: "sea", group: 2, port: { type: "timber", orientation: 0 } },
-        { type: "sea", group: 2 },
+        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
       [
@@ -2869,7 +2869,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "sea", fixed: true },
         { type: "desert", group: 2 },
         { type: "sea", group: 2, port: { type: "timber", orientation: 0 } },
-        { type: "sea", group: 2 },
+        { type: "sea", fixed: true },
         { type: "sea", fixed: true },
       ],
       [

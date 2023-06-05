@@ -298,10 +298,7 @@ Everywhere, All at Once_.
 [^2]:
     The _Variable_ [scenarios](#scenarios) may have fewer than 5 _Far Islands_
     (6 including the main island), depending on the value of the [Min
-    Islands](#on-scenarios-with-a-variable-number-of-islands) constraint. While
-    it isn't possible in the allotted space with the allotted hexes to create
-    more than 5 distinct islands, 6 single hex islands could potentially be
-    arranged if players agree to use different hexes.
+    Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 
 ## Other Features
 
