@@ -98,10 +98,11 @@ _New World_ is the final, fully randomized scenario for _Seafarers_.
 
 Ports are shuffled such that they are placed with both docks pointing at a
 terrain hex and no more than one total dock pointing at any given intersection.
-Within those constraints, they are allowed to appear on any sea hex in this
-scenario. However, you may feel free to ignore random placement and instead use
-the instructions from the manual (_"Shuffle... with their reverse sides facing
-up. Starting with the oldest player... each takes a [port] and places it..."_).
+Within those constraints, they are allowed to appear on any sea hex or border
+position in this scenario. However, you may feel free to ignore random
+placement and instead use the instructions from the manual (_"Shuffle... with
+their reverse sides facing up. Starting with the oldest player... each takes a
+[port] and places it..."_).
 
 ##### Expanded versions
 
