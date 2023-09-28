@@ -75,7 +75,7 @@ function getShuffledTerrain(
     // reason. the error reported to the user in that case should be about min
     // islands, so we need to track whether we successfully built a board that
     // satisfied all constraints except for the island constraint
-    encountered_island_error = false;
+    encounteredIslandError = false;
   const islandError =
     "Failed to find a board that falls within the specified constraints for" +
     " the minimum number of distinct islands. It's very likely that this" +
@@ -147,7 +147,7 @@ function getShuffledTerrain(
       // we failed to find a valid board after exhausing all tries. start over
       if (retries++ > MAX_RETRIES)
         throw new TerrainShufflingError(
-          encountered_island_error
+          encounteredIslandError
             ? islandError
             : "Failed to find a board that falls within the specified constraints for" +
               " terrain. It's very likely that this board is over-constrained. For" +
@@ -169,7 +169,7 @@ function getShuffledTerrain(
       numericConstraints.minIslandCount.active &&
       countIslands(hexes, board) < numericConstraints.minIslandCount.value
     ) {
-      encountered_island_error = true;
+      encounteredIslandError = true;
       if (retries++ > MAX_RETRIES) throw new TerrainShufflingError(islandError);
       // eslint-disable-next-line no-extra-label
       continue topLoop;
