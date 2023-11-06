@@ -141,6 +141,17 @@ which shuffles the remaining hexes and number chits as well as the ports.
 Note that this is a tightly constrained scenario; you may need to relax your
 constraint settings in order to successfully shuffle it.
 
+#### On the _The Wonders of Catan_ scenario
+
+According to the manual, for variable setup, "the two terrain hexes adjacent
+to the deserts shouldn't receive favorable numbers (neither 6 nor 8)." This is
+observed in the _Seafarers: The Wonders of Catan_ scenario. However, one can't
+help but wonder why the straight, which one must settle in order to build the
+Great Bridge, isn't similarly constrained. If this seems unfair to you, a
+_Seafarers: The Wonders of Catan (Straight Constrained)_ scenario is provided
+which disallows 6 or 8 appearing on either the desert- or straight-adjacent
+terrain hexes.
+
 ### Everything, Everywhere, All at Once
 
 The "Possible Combinations" section of both the
