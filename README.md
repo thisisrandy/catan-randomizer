@@ -20,7 +20,7 @@ While the same idea has been executed
 constraints](#supported-constraints), [Catan
 Expansions](https://www.catan.com/explore-catan/catan-core-family-games), and
 [custom](#expanded-versions)
-[scenarios](#everything%2C-everywhere%2C-all-at-once) that aren't seen
+[scenarios](#everything-everywhere-all-at-once) that aren't seen
 elsewhere.
 
 ## Supported Constraints
