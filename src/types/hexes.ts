@@ -6,8 +6,16 @@ type ResourceProducingHexType =
   | "forest"
   | "hills"
   | "fields"
-  | "gold";
-type NonResourceProducingHexType = "desert" | "sea" | "fog";
+  | "gold"
+  | "riverMountains"
+  | "riverHills"
+  | "riverPasture";
+type NonResourceProducingHexType =
+  | "desert"
+  | "sea"
+  | "fog"
+  | "riverSwamplandTop"
+  | "riverSwamplandBottom";
 type HexType = ResourceProducingHexType | NonResourceProducingHexType;
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
