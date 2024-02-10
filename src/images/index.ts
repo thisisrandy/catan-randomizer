@@ -33,8 +33,8 @@ import fogHorizontal from "./fog-horizontal.png";
 import fogVertical from "./fog-vertical.png";
 import forestHorizontal from "./forest-horizontal.png";
 import forestVertical from "./forest-vertical.png";
-import glasswordsHorizontal from "glasswords-horizontal.png";
-import glasswordsVertical from "glasswords-vertical.png";
+import glassworksHorizontal from "glassworks-horizontal.png";
+import glassworksVertical from "glassworks-vertical.png";
 import goldHorizonal from "./gold-horizontal.png";
 import goldVertical from "./gold-vertical.png";
 import hillsHorizontal from "./hills-horizontal.png";
@@ -98,8 +98,8 @@ export {
   fogVertical,
   forestHorizontal,
   forestVertical,
-  glasswordsHorizontal,
-  glasswordsVertical,
+  glassworksHorizontal,
+  glassworksVertical,
   goldHorizonal,
   goldVertical,
   hillsHorizontal,
