@@ -18,6 +18,16 @@ import {
   seaVertical,
   fogHorizontal,
   fogVertical,
+  riverHillsHorizontal,
+  riverHillsVertical,
+  riverMountainsHorizontal,
+  riverMountainsVertical,
+  riverPastureHorizontal,
+  riverPastureVertical,
+  riverSwamplandBottomHorizontal,
+  riverSwamplandBottomVertical,
+  riverSwamplandTopHorizontal,
+  riverSwamplandTopVertical,
   two,
   three,
   four,
@@ -54,6 +64,14 @@ const hexTypeToImg: { [type in HexType]: [string, string] } = {
   sea: [seaVertical, seaHorizontal],
   gold: [goldVertical, goldHorizonal],
   fog: [fogVertical, fogHorizontal],
+  riverSwamplandTop: [riverSwamplandTopVertical, riverSwamplandTopHorizontal],
+  riverSwamplandBottom: [
+    riverSwamplandBottomVertical,
+    riverSwamplandBottomHorizontal,
+  ],
+  riverMountains: [riverMountainsVertical, riverMountainsHorizontal],
+  riverHills: [riverHillsVertical, riverHillsHorizontal],
+  riverPasture: [riverPastureVertical, riverPastureHorizontal],
 };
 
 const numberValToImg = [
