@@ -47,6 +47,18 @@ are supported.
 [Cities & Knights](https://www.catan.com/cities-knights), which is identical to
 [Catan](#catan) except for the recommended beginner setup, is supported.
 
+### Traders & Barbarians
+
+This is a work in progress. All individual scenarios and some combinations and
+custom scenarios will eventually be supported. Currently supported scenarios
+are as follows:
+
+- _The Rivers & Lakes of Catan_: Combination of _Rivers_ & _Fishermen_ scenarios.
+  Fishing tiles aren't supported yet. As the 2 & 12 chits go unused, if either
+  of those numbers are rolled or drawn from the Event Card stack, distribute
+  fish to players with cities or settlements adjacent to the lake and then
+  roll/draw again until a number 3-11 comes up.
+
 ### Explorers & Pirates
 
 Shuffling of the starting island for [Explorers &
