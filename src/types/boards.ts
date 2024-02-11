@@ -217,7 +217,8 @@ export type ExpansionName =
   | "Everything, Everywhere, All at Once"
   | "Everything, Everywhere, All at Once, Variable"
   | "Seafarers & Pirates"
-  | "Seafarers & Pirates, Variable";
+  | "Seafarers & Pirates, Variable"
+  | "The Rivers & Lakes of Catan";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
