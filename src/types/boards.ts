@@ -219,6 +219,7 @@ export type ExpansionName =
   | "Seafarers & Pirates"
   | "Seafarers & Pirates, Variable"
   | "The Rivers & Lakes of Catan"
+  | "The Caravans"
   | "Barbarian Attack"
   | "Traders & Barbarians";
 

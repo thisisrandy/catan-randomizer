@@ -17,6 +17,7 @@ type NonResourceProducingHexType =
   | "riverSwamplandTop"
   | "riverSwamplandBottom"
   | "lake"
+  | "oasis"
   | "castleKnights"
   | "castleRestoration"
   | "quarry"
