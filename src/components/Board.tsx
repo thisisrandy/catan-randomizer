@@ -30,6 +30,8 @@ import {
   riverSwamplandTopVertical,
   lakeVertical,
   lakeHorizontal,
+  castleKnightsHorizontal,
+  castleKnightsVertical,
   two,
   three,
   four,
@@ -75,6 +77,7 @@ const hexTypeToImg: { [type in HexType]: [string, string] } = {
   riverHills: [riverHillsVertical, riverHillsHorizontal],
   riverPasture: [riverPastureVertical, riverPastureHorizontal],
   lake: [lakeVertical, lakeHorizontal],
+  castleKnights: [castleKnightsVertical, castleKnightsHorizontal],
 };
 
 const numberValToImg = [

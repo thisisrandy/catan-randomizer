@@ -58,6 +58,10 @@ are as follows:
   of those numbers are rolled or drawn from the Event Card stack, distribute
   fish to players with cities or settlements adjacent to the lake and then
   roll/draw again until a number 3-11 comes up.
+- _Barbarian Attack_: As described in the manual. Numbers and terrain are
+  shuffled in two separate ("inner" and "outer") groups. It isn't possible to
+  construct the inner group with fewer than 11 pips per intersection, so make
+  sure to adjust your constraints accordingly.
 
 ### Explorers & Pirates
 
