@@ -62,6 +62,7 @@ are as follows:
   shuffled in two separate ("inner" and "outer") groups. It isn't possible to
   construct the inner group with fewer than 11 pips per intersection, so make
   sure to adjust your constraints accordingly.
+- _Traders & Barbarians_: As described in the manual.
 
 ### Explorers & Pirates
 

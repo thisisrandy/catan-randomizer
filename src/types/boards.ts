@@ -219,7 +219,8 @@ export type ExpansionName =
   | "Seafarers & Pirates"
   | "Seafarers & Pirates, Variable"
   | "The Rivers & Lakes of Catan"
-  | "Barbarian Attack";
+  | "Barbarian Attack"
+  | "Traders & Barbarians";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level

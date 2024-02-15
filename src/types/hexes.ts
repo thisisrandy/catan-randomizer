@@ -17,7 +17,10 @@ type NonResourceProducingHexType =
   | "riverSwamplandTop"
   | "riverSwamplandBottom"
   | "lake"
-  | "castleKnights";
+  | "castleKnights"
+  | "castleRestoration"
+  | "quarry"
+  | "glassworks";
 type HexType = ResourceProducingHexType | NonResourceProducingHexType;
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
