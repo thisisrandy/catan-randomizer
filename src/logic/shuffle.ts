@@ -2,7 +2,7 @@ import { Hex, HexType, Port, PortOrientation } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
-import { numberToPipCount } from "../utils/catan";
+import { hexToPipCount } from "../utils/catan";
 
 // structuredClone isn't available on older devices. use this as a polyfill
 if (typeof globalThis.structuredClone === "undefined") {
@@ -417,11 +417,15 @@ function getShuffledNumbers(
           hexes[randomIndex].number,
           hexes[currentIndex].number,
         ];
+        [hexes[currentIndex].secondNumber, hexes[randomIndex].secondNumber] = [
+          hexes[randomIndex].secondNumber,
+          hexes[currentIndex].secondNumber,
+        ];
 
         // then check each constraint
 
         // min/max pip count
-        const pipCount = numberToPipCount(hexes[currentIndex].number!);
+        const pipCount = hexToPipCount(hexes[currentIndex])!;
         if (
           pipCount < (minPipsOnHexTypes[hexes[currentIndex].type] || 1) ||
           pipCount > (maxPipsOnHexTypes[hexes[currentIndex].type] || 5) ||
@@ -602,9 +606,7 @@ export function getIntersectionPipCounts({
   }
   return intersections.map((intersection) =>
     intersection
-      .map((i) => hexes[i].number)
-      .filter((num) => num !== undefined)
-      .map((num) => numberToPipCount(num!))
+      .map((i) => hexToPipCount(hexes[i]))
       .reduce((acc, n) => acc + n, 0 as number)
   );
 }

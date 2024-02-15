@@ -58,6 +58,25 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       number?: NumberChitValue;
     }
   | {
+      type: ResourceProducingHexType;
+      /**
+       * The number chit assigned to this hex
+       */
+      number: NumberChitValue;
+      /**
+       * The second number chit assigned to this hex, if any. E.g. some
+       * scenarios specify that 2 & 12 should be combined on a single hex. This
+       * number will always stay paired with the first number during shuffling.
+       * IMPORTANT: This value is *not* currently used when checking adjacent
+       * number constraints. It *is* used when checking all pip-based
+       * constraints, where the combined pip value of the two numbers is used.
+       * The assumption in play is that this is really only used to combine 2 &
+       * 12, although general support is provided in terms of display and as
+       * mentioned above.
+       */
+      secondNumber?: NumberChitValue;
+    }
+  | {
       type: "sea";
       /**
        * If this is a sea hex, it can contain a `Port`

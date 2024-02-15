@@ -53,6 +53,7 @@ This is a work in progress. All individual scenarios and some combinations and
 custom scenarios will eventually be supported. Currently supported scenarios
 are as follows:
 
+- _The Rivers of Catan_: As described in the manual.
 - _The Rivers & Lakes of Catan_: Combination of _Rivers_ & _Fishermen_ scenarios.
   Fishing tiles aren't supported yet. As the 2 & 12 chits go unused, if either
   of those numbers are rolled or drawn from the Event Card stack, distribute

@@ -161,7 +161,7 @@ export default function Board({ hexes, board }: Props) {
             transform: horizontal ? "rotate(90deg)" : "",
           }}
         >
-          {hexes.map(({ type, number, port }, i) => (
+          {hexes.map(({ type, number, secondNumber, port }, i) => (
             // NOTE: this div fixes display on some older devices. see
             // https://stackoverflow.com/a/67527395/12162258
             <div
@@ -187,7 +187,7 @@ export default function Board({ hexes, board }: Props) {
                   zIndex: 1,
                 }}
               />
-              {number && (
+              {number && secondNumber === undefined && (
                 <img
                   src={String(numberValToImg[number])}
                   alt={`${number} chit at position ${i}`}
@@ -199,6 +199,41 @@ export default function Board({ hexes, board }: Props) {
                     transform: horizontal ? "rotate(-90deg)" : "",
                   }}
                 />
+              )}
+              {number && secondNumber && (
+                <div
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    position: "relative",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gridArea: board.cssGridAreas[i],
+                  }}
+                >
+                  <img
+                    src={String(numberValToImg[number])}
+                    alt={`${number} chit at position ${i}`}
+                    style={{
+                      width: "30%",
+                      height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                      zIndex: 2,
+                      transform: horizontal ? "rotate(-90deg)" : "",
+                      marginRight: "5%",
+                    }}
+                  />
+                  <img
+                    src={String(numberValToImg[secondNumber])}
+                    alt={`${secondNumber} chit at position ${i}`}
+                    style={{
+                      width: "30%",
+                      height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                      zIndex: 2,
+                      transform: horizontal ? "rotate(-90deg)" : "",
+                    }}
+                  />
+                </div>
               )}
               {port && (
                 <img
