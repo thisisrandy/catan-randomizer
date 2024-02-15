@@ -8,7 +8,6 @@ import nine from "./9.png";
 import ten from "./10.png";
 import eleven from "./11.png";
 import twelve from "./12.png";
-import twoAndTwelve from "./2and12.png";
 import port3to1WithDocks from "./port-3-1-with-docks.png";
 import portBrickWithDocks from "./port-brick-with-docks.png";
 import portGrainWithDocks from "./port-grain-with-docks.png";
@@ -73,7 +72,6 @@ export {
   ten,
   eleven,
   twelve,
-  twoAndTwelve,
   port3to1WithDocks,
   portBrickWithDocks,
   portGrainWithDocks,
