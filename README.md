@@ -136,9 +136,9 @@ There are two additional scenarios provided which do not appear in the manual:
   terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
   and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips to
   prevent overly favorable initial settlement opportunities. There is one more
-  number chit than resource-producing hex[^1], so, following the _The Wonders
-  of Catan_ scenario, the second 12 chit is excluded. It is recommended to
-  increase the victory point goal for this board to 14.
+  number chit than resource-producing hex[^extra-number-chit], so, following
+  the _The Wonders of Catan_ scenario, the second 12 chit is excluded. It is
+  recommended to increase the victory point goal for this board to 14.
 - _New World Islands_: Same as _New World Expanded_, but with distinct and
   separately-shuffled main and foreign island areas. Following the _Through the
   Desert_ scenario, gold fields and some of the better number chits are
@@ -147,7 +147,7 @@ There are two additional scenarios provided which do not appear in the manual:
   recommended. Since gold fields can only appear on foreign islands, the pip
   restriction from _New World Expanded_ is removed.
 
-[^1]:
+[^extra-number-chit]:
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
     east and west sides representing separate villages.
@@ -237,8 +237,8 @@ Everywhere, All at Once_.
   2. Then, using the 2 two hex length and 2 one hex length border pieces from
      _SF_, further extend the long side borders by three hex lengths on each
      side.
-  3. Using _SF_ hexes and number chits, create an addition 5[^2] islands
-     (henceforth _Far Islands_) as specified on the far side of the world.
+  3. Using _SF_ hexes and number chits, create an addition 5[^variable-islands]
+     islands (henceforth _Far Islands_) as specified on the far side of the world.
 - **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
   for _SF_). If also using _CK_, add an additional 5 points, for a grand total
   of 27 VPs.
@@ -331,7 +331,7 @@ Everywhere, All at Once_.
   have the strongest army to defend against the barbarians, they are also
   trying to assemble the largest army in terms of number of knights alone.
 
-[^2]:
+[^variable-islands]:
     The _Variable_ [scenarios](#scenarios) may have fewer than 5 _Far Islands_
     (6 including the main island), depending on the value of the [Min
     Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
