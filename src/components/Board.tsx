@@ -56,6 +56,12 @@ import {
   portOreWithDocks,
   portTimberWithDocks,
   portWoolWithDocks,
+  fish4,
+  fish5,
+  fish6,
+  fish8,
+  fish9,
+  fish10,
 } from "../images/index";
 import { Hex, HexType, PortType } from "../types/hexes";
 import { CatanBoard } from "../types/boards";
@@ -117,6 +123,20 @@ const portTypeToImage: { [type in PortType]: string } = {
   wool: portWoolWithDocks,
 };
 
+const fishNumberToImg = [
+  null,
+  null,
+  null,
+  null,
+  fish4,
+  fish5,
+  fish6,
+  null,
+  fish8,
+  fish9,
+  fish10,
+];
+
 interface Props {
   hexes: Hex[];
   board: CatanBoard;
@@ -161,7 +181,7 @@ export default function Board({ hexes, board }: Props) {
             transform: horizontal ? "rotate(90deg)" : "",
           }}
         >
-          {hexes.map(({ type, number, secondNumber, port }, i) => (
+          {hexes.map(({ type, number, secondNumber, port, fishTile }, i) => (
             // NOTE: this div fixes display on some older devices. see
             // https://stackoverflow.com/a/67527395/12162258
             <div
@@ -244,6 +264,19 @@ export default function Board({ hexes, board }: Props) {
                     width: HEX_SIZE,
                     height: HEX_SIZE,
                     transform: `rotate(${port.orientation}deg)`,
+                    position: "absolute",
+                  }}
+                />
+              )}
+              {fishTile && (
+                <img
+                  src={fishNumberToImg[fishTile.number]!}
+                  alt={`${fishTile.number} fish tile at position ${i}`}
+                  style={{
+                    zIndex: 2,
+                    width: HEX_SIZE,
+                    height: HEX_SIZE,
+                    transform: `rotate(${fishTile.orientation}deg)`,
                     position: "absolute",
                   }}
                 />

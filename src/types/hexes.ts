@@ -40,6 +40,23 @@ type Port = {
   fixed?: boolean;
 };
 
+type FishTileValue = 4 | 5 | 6 | 8 | 9 | 10;
+/**
+ * Where 0 means "covering the NE and E sides of the hex" and orientation is in
+ * degrees clockwise from 0.
+ *
+ * Technically, we should probably say that fish tiles point at 30, 90, etc.
+ * degrees, but it might be simpler to write the shuffling code if it's as
+ * close as possible to the port shuffling code. Maybe revisit later if things
+ * are different enough that port code can't be modularized and reused. Also
+ * note that 0 is in degrees clockwise from west-facing for ports
+ */
+type FishTileOrientation = PortOrientation;
+type FishTile = {
+  number: FishTileValue;
+  orientation: FishTileOrientation;
+};
+
 /**
  * Container for hex information. In order to be able to inject additional
  * values into the union for {@link HexTemplate}, we make `Hex` generic as
@@ -100,6 +117,10 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       // introduced. it would reduce complexity to consider groups properly and
       // do away with this flag
       portsAllowed: false;
+    }
+  | {
+      type: "sea";
+      fishTile?: FishTile;
     }
   | {
       type: "lake";
@@ -175,4 +196,7 @@ export type {
   PortOrientation,
   Port,
   HexTemplate,
+  FishTileValue,
+  FishTileOrientation,
+  FishTile,
 };
