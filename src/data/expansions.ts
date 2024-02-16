@@ -3167,7 +3167,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "sea", fixed: true },
         { type: "fields", number: 9 },
         { type: "forest", number: 11 },
-        { type: "lake", fixed: true },
+        { type: "lake", inlandOnly: true },
         { type: "forest", number: 3 },
         { type: "mountains", number: 8 },
         { type: "sea", fixed: true, port: { type: "3:1", orientation: 0 } },
