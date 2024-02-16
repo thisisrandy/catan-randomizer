@@ -218,6 +218,7 @@ export type ExpansionName =
   | "Everything, Everywhere, All at Once, Variable"
   | "Seafarers & Pirates"
   | "Seafarers & Pirates, Variable"
+  | "The Fishermen of Catan"
   | "The Rivers of Catan"
   | "The Rivers & Lakes of Catan"
   | "The Caravans"
