@@ -89,6 +89,26 @@ const mixedPortBoardTemplate: CatanBoardTemplate = {
   ],
 };
 const mixedPortBoard = catanBoardFactory(mixedPortBoardTemplate);
+const multiNumberTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "empty" },
+      { type: "mountains", number: 3, secondNumber: 10 },
+      { type: "hills", number: 5 },
+    ],
+    [
+      { type: "pasture", number: 12, secondNumber: 4 },
+      { type: "fields", number: 2 },
+      { type: "mountains", number: 8 },
+    ],
+    [
+      { type: "empty" },
+      { type: "hills", number: 6 },
+      { type: "forest", number: 9 },
+    ],
+  ],
+};
+const multiNumberBoard = catanBoardFactory(multiNumberTemplate);
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
 const numSamples = 50;
@@ -692,6 +712,43 @@ describe("shuffle", () => {
       TerrainShufflingError
     );
   });
+
+  it("shouldn't separate paired number chits during shuffling", () => {
+    // See multiNumberTemplate. This is index by the number property to value
+    // of the secondNumber property
+    const firstToSecondNumber = [
+      null,
+      null,
+      undefined,
+      10,
+      null,
+      undefined,
+      undefined,
+      null,
+      undefined,
+      undefined,
+      null,
+      null,
+      4,
+    ];
+    const localNumericConstraints = {
+      ...numericConstraints,
+      maxIntersectionPipCount: {
+        ...numericConstraints.maxIntersectionPipCount,
+        value: 15,
+      },
+    };
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        multiNumberBoard,
+        binaryConstraints,
+        localNumericConstraints
+      );
+      for (const hex of hexes) {
+        expect(firstToSecondNumber[hex.number!]).toBe(hex.secondNumber);
+      }
+    }
+  });
 });
 
 const pipCountingTemplate: CatanBoardTemplate = {
@@ -727,6 +784,21 @@ describe("getIntersectionPipCount", () => {
         atIndex,
         onlyHigher: false,
       }).sort((a, b) => a - b);
+      expect(pipCounts).toEqual(expected);
+    }
+  });
+
+  it("should correctly report the pip counts of intersections including multiple chits per hex", () => {
+    for (const [atIndex, expected] of [
+      [0, [10, 10, 9, 9]],
+      [3, [10, 10, 10, 10, 10, 10]],
+    ] as const) {
+      const pipCounts = getIntersectionPipCounts({
+        board: multiNumberBoard,
+        hexes: multiNumberBoard.recommendedLayout,
+        atIndex,
+        onlyHigher: false,
+      });
       expect(pipCounts).toEqual(expected);
     }
   });
