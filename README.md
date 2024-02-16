@@ -55,10 +55,15 @@ are as follows:
 
 - _The Rivers of Catan_: As described in the manual.
 - _The Rivers & Lakes of Catan_: Combination of _Rivers_ & _Fishermen_ scenarios.
-  Fishing tiles aren't supported yet. As the 2 & 12 chits go unused, if either
-  of those numbers are rolled or drawn from the Event Card stack, distribute
-  fish to players with cities or settlements adjacent to the lake and then
-  roll/draw again until a number 3-11 comes up.
+  - Fishing tiles aren't supported yet.
+  - As the 2 & 12 chits go unused, if either of those numbers are rolled or
+    drawn from the Event Card stack, distribute fish to players with cities or
+    settlements adjacent to the lake and then roll/draw again until a number 3-11
+    comes up.
+  - If a 2 or 12 Event Card increases any player's resource card count, their
+    card count remains as it was at the beginning of the turn for the purposes of
+    a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
+    count increases to 8, they are not penalized if the next card is a 7.
 - _The Caravans_: As described in the manual.
 - _Barbarian Attack_: As described in the manual. Numbers and terrain are
   shuffled in two separate ("inner" and "outer") groups. It isn't possible to
