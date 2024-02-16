@@ -189,7 +189,7 @@ export default function Board({ hexes, board }: Props) {
               />
               {number && secondNumber === undefined && (
                 <img
-                  src={String(numberValToImg[number])}
+                  src={numberValToImg[number]!}
                   alt={`${number} chit at position ${i}`}
                   style={{
                     width: "35%",
@@ -213,7 +213,7 @@ export default function Board({ hexes, board }: Props) {
                   }}
                 >
                   <img
-                    src={String(numberValToImg[number])}
+                    src={numberValToImg[number]!}
                     alt={`${number} chit at position ${i}`}
                     style={{
                       width: "30%",
@@ -224,7 +224,7 @@ export default function Board({ hexes, board }: Props) {
                     }}
                   />
                   <img
-                    src={String(numberValToImg[secondNumber])}
+                    src={numberValToImg[secondNumber]!}
                     alt={`${secondNumber} chit at position ${i}`}
                     style={{
                       width: "30%",
