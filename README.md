@@ -49,13 +49,21 @@ are supported.
 
 ### Traders & Barbarians
 
-This is a work in progress. All individual scenarios and some combinations and
-custom scenarios will eventually be supported. Currently supported scenarios
-are as follows:
+All scenarios described in the manual are supported in every aspect, and
+combinations of _The Fishermen of Catan_ and other scenarios have been added
+where appropriate.
 
-- _The Fishermen of Catan_: As described in the manual.
-- _The Rivers of Catan_: As described in the manual.
-- _The Rivers & Lakes of Catan_: Combination of _Rivers_ & _Fishermen_ scenarios.
+#### On Shuffling _Barbarian Attack_
+
+Numbers and terrain are shuffled in two separate ("inner" and "outer") groups.
+It isn't possible to construct the inner group with fewer than 11 pips per
+intersection, so make sure to adjust your constraints accordingly.
+
+#### Combinations with _The Fishermen of Catan_
+
+This section is in progress.
+
+- _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_
   - Starting with the _Rivers_ setup, one grain hex and the 2 & 12 chits have
     been removed to make way for the lake.
   - As the 2 & 12 chits go unused, if either of those numbers are rolled or
@@ -69,12 +77,6 @@ are as follows:
     card count remains as it was at the beginning of the turn for the purposes of
     a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
     count increases to 8, they are not penalized if the next card is a 7.
-- _The Caravans_: As described in the manual.
-- _Barbarian Attack_: As described in the manual. Numbers and terrain are
-  shuffled in two separate ("inner" and "outer") groups. It isn't possible to
-  construct the inner group with fewer than 11 pips per intersection, so make
-  sure to adjust your constraints accordingly.
-- _Traders & Barbarians_: As described in the manual.
 
 [^two-twelve-card]:
     Since there is only one card for each of the 36 possible rolls, it would be
