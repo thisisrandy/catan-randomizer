@@ -75,12 +75,20 @@ function getShuffledTerrain(
     // reason. the error reported to the user in that case should be about min
     // islands, so we need to track whether we successfully built a board that
     // satisfied all constraints except for the island constraint
-    encounteredIslandError = false;
+    encounteredIslandError = false,
+    // samesies for inlandOnly hexes
+    encounteredInlandError = false;
   const islandError =
     "Failed to find a board that falls within the specified constraints for" +
     " the minimum number of distinct islands. It's likely that this" +
     " board is over-constrained. Please lower the minimum acceptable" +
     " island count and try again.";
+  const inlandError =
+    "Failed to find a board that places all inland-only hexes adjacent to non-sea" +
+    " hexes only. It's likely that this board doesn't contain any valid inland" +
+    " positions. If this scenario has variable islands, try lowering the minimum" +
+    " island count in order to create larger landmasses. Otherwise, please consult" +
+    " with the scenario creator, as it may be ill-specified.";
 
   topLoop: while (true) {
     hexGroups.reset();
@@ -147,7 +155,9 @@ function getShuffledTerrain(
       // we failed to find a valid board after exhausing all tries. start over
       if (retries++ > MAX_RETRIES)
         throw new TerrainShufflingError(
-          encounteredIslandError
+          encounteredInlandError
+            ? inlandError
+            : encounteredIslandError
             ? islandError
             : "Failed to find a board that falls within the specified constraints for" +
               " terrain. It's likely that this board is over-constrained. For" +
@@ -173,6 +183,25 @@ function getShuffledTerrain(
       if (retries++ > MAX_RETRIES) throw new TerrainShufflingError(islandError);
       // eslint-disable-next-line no-extra-label
       continue topLoop;
+    }
+
+    // It's also much easier to check that inlandOnly hexes were placed inland
+    // after the board is fully shuffled. A more disciplined approach would be
+    // to check placement during shuffling and then recheck each time an
+    // inlandOnly hex is in the neighbors list for the current hex (this would
+    // only be necessary for boards with non-fixed sea hexes). In practice, we
+    // can get away with trading extra computation for reduced complexity.
+    for (let i = 0; i < hexes.length; i++) {
+      if (hexes[i].inlandOnly) {
+        for (const neighbor of Object.values(board.neighbors[i])) {
+          if (hexes[neighbor].type === "sea") {
+            encounteredInlandError = true;
+            if (retries++ > MAX_RETRIES)
+              throw new TerrainShufflingError(inlandError);
+            continue topLoop;
+          }
+        }
+      }
     }
 
     // we managed to create a valid board. time to move on!

@@ -102,7 +102,18 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       portsAllowed: false;
     }
   | {
-      type: Exclude<NonResourceProducingHexType, "sea">;
+      type: "lake";
+      /**
+       * If true, this hex is not allowed to appear adjacent to any sea hex. As
+       * The Fishermen of Catan is the only known scenario which requires this,
+       * only the lake currently supports this feature. That said, note that
+       * there is nothing in the shuffling logic that imposes any such
+       * restriction
+       */
+      inlandOnly: true;
+    }
+  | {
+      type: Exclude<NonResourceProducingHexType, ["sea", "lake"]>;
     }
 > & {
   /**
