@@ -749,6 +749,66 @@ describe("shuffle", () => {
       }
     }
   });
+
+  it("should not shuffle inlandOnly hexes onto the coastline", () => {
+    const board = EXPANSIONS.get("The Fishermen of Catan")!;
+    // Rather than paste in the shuffling logic that checks this, we can
+    // instead check the all the coastal and inland indices and assert that
+    // they do not and do contain the lake, respectively
+    const coastalIndices = [5, 6, 7, 10, 13, 16, 20, 23, 26, 29, 30, 31];
+    const inlandIndices = [11, 12, 17, 18, 19, 24, 25];
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      expect(
+        coastalIndices
+          .map((i) => hexes[i].type !== "lake")
+          .reduce((acc, n) => acc && n)
+      ).toBe(true);
+      expect(
+        inlandIndices
+          .map((i) => hexes[i].type === "lake")
+          .reduce((acc, n) => acc || n)
+      ).toBe(true);
+    }
+  });
+
+  it("should fail to shuffle inlandOnly hexes only islands with only coastline", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "sea", fixed: true },
+          { type: "mountains", number: 8 },
+          { type: "pasture", number: 3 },
+          { type: "lake", inlandOnly: true },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "hills", number: 4 },
+          { type: "fields", number: 11 },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(() =>
+      shuffle(board, binaryConstraints, numericConstraints)
+    ).toThrowError(TerrainShufflingError);
+  });
 });
 
 const pipCountingTemplate: CatanBoardTemplate = {
