@@ -1,4 +1,4 @@
-import { Hex, HexType, Port, PortOrientation } from "../types/hexes";
+import { Hex, HexType, Port, PortOrientation, FishTile } from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
@@ -57,6 +57,8 @@ export function shuffle(
   );
   // and finally ports, which also depends on terrain
   hexes = getShuffledPorts(board, hexes);
+  // and finallier fish tiles, which depends on terrain and ports
+  hexes = getShuffledFishTiles(board, hexes);
 
   return hexes;
 }
@@ -333,6 +335,88 @@ function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
         " it's possible to specify a board that can't be randomized within that" +
         " constraint. Please check your board specification and try again."
     );
+
+  return hexes;
+}
+
+function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
+  // FIXME: same caveat as in getShuffledPorts about hex groups
+
+  // gather all tiles
+  const tiles = board.recommendedLayout
+    .filter(({ fishTile }) => typeof fishTile !== "undefined")
+    .map(({ fishTile }) => fishTile as FishTile);
+  // lots of boards don't have fish tiles, so we can immediately return
+  if (!tiles.length) return hexes;
+  // otherwise, shuffle them
+  fisherYates(tiles);
+
+  // fill in tiles on fixed hexes, being careful not to change their
+  // orientations
+  for (const hex of hexes) {
+    if (hex.fixed && hex.fishTile) {
+      hex.fishTile.number = tiles.pop()!.number;
+    }
+  }
+  // on most boards, all tile hexes are fixed, so check again if we're ready to
+  // return
+  if (!tiles.length) return hexes;
+
+  // TODO: This is the ports code. Modify it for fish tiles in the following ways:
+  // 1. All three points of the tile must be pointing at inhabitable intersections
+  // 2. The hex must not contain a port but may be next to one (no need to
+  //    check the latter condition). It may not contain more than one fish tile
+  // 3. No intersection may be adjacent to more than one fish tile, so
+  //    neighboring hexes will need to be checked for fish tiles in orientations
+  //    dependent upon the orientation of the tile under scrutiny
+  //
+  // // finally, it's time to place the rest of ports on valid sea hexes in valid
+  // // orientations. start by clearing ports on non-fixed hexes
+  // for (const hex of hexes) {
+  //   if (hex.port && !hex.fixed) delete hex.port;
+  // }
+  // // then, gather unassigned sea hexes. retain their indices so we can look up
+  // // their neighbors. note that we aren't excluding fixed hexes. there's no
+  // // issue with shuffling a free port onto a fixed hex, e.g. one representing
+  // // the border
+  // const seaHexes = hexes
+  //   .map((hex, i) => [hex, i] as [Hex, number])
+  //   .filter(
+  //     ([hex, _]) =>
+  //       hex.type === "sea" && !hex.port && hex.portsAllowed !== false
+  //   );
+  // // shuffle them
+  // fisherYates(seaHexes);
+  // // and test to see if there are any valid port orientations on each.
+  // for (const [seaHex, index] of seaHexes) {
+  //   const validOrientations: PortOrientation[] = getValidPortOrientations(
+  //     index,
+  //     hexes,
+  //     board
+  //   );
+  //   // if there weren't any valid orientations, keep going
+  //   if (!validOrientations.length) continue;
+  //   // otherwise, choose a random one
+  //   const orientation =
+  //     validOrientations[Math.floor(Math.random() * validOrientations.length)];
+  //   // and assign a port to this hex
+  //   seaHex.port = { type: ports.pop()!.type, orientation };
+  //   // if we've run out of ports, it's time to stop
+  //   if (!ports.length) break;
+  // }
+  //
+  // // if we still have unassigned ports, blow up. technically, we should probably
+  // // retry a few times. it's possible, for example, that different orientations
+  // // might fit within constraints. in practice, though, I don't think a board
+  // // crowded enough for this to happen should exist, so it's probably moot
+  // if (ports.length)
+  //   throw new PortShufflingError(
+  //     "Unable to assign all ports to sea hexes. This might happen if your board" +
+  //       " is specified with a large number of ports and relatively few sea hexes." +
+  //       " Since any given intersection can't have more than one dock pointed at it," +
+  //       " it's possible to specify a board that can't be randomized within that" +
+  //       " constraint. Please check your board specification and try again."
+  //   );
 
   return hexes;
 }
