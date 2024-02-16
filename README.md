@@ -56,10 +56,15 @@ are as follows:
 - _The Fishermen of Catan_: As described in the manual.
 - _The Rivers of Catan_: As described in the manual.
 - _The Rivers & Lakes of Catan_: Combination of _Rivers_ & _Fishermen_ scenarios.
+  - Starting with the _Rivers_ setup, one grain hex and the 2 & 12 chits have
+    been removed to make way for the lake.
   - As the 2 & 12 chits go unused, if either of those numbers are rolled or
-    drawn from the Event Card stack, distribute fish to players with cities or
-    settlements adjacent to the lake and then roll/draw again until a number 3-11
-    comes up.
+    drawn from the Event Card stack, resolve any events, distribute fish to
+    players with cities or settlements adjacent to the lake, and then roll/draw
+    again until a number 3-11 comes up. In the unlikely event that the other of
+    the two 2/12 Event Cards is drawn, resolve it and again distribute
+    fish[^two-twelve-card], but ignore additional 2/12 rolls if playing with
+    dice.
   - If a 2 or 12 Event Card increases any player's resource card count, their
     card count remains as it was at the beginning of the turn for the purposes of
     a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
@@ -70,6 +75,13 @@ are as follows:
   construct the inner group with fewer than 11 pips per intersection, so make
   sure to adjust your constraints accordingly.
 - _Traders & Barbarians_: As described in the manual.
+
+[^two-twelve-card]:
+    Since there is only one card for each of the 36 possible rolls, it would be
+    unfair to players settled adjacent to the lake to ignore their fish
+    production. Event resolution is perhaps more open to argument. Decide
+    amongst yourselves beforehand if you want to ignore the second/both 2/12
+    card events and just distribute fish.
 
 ### Explorers & Pirates
 
