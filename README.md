@@ -69,6 +69,9 @@ This section is in progress.
 - _The Fishy Caravans_: Combination with _The Caravans_. One forest hex has
   been removed to make way for the lake, and the 2 & 12 chits have been
   combined onto a single hex.
+- _Barbarians Attack the Fish_: Combination with _Barbarian Attack_. One of the
+  interior grain hexes and the interior 3 chit have been removed to make way
+  for the lake.[^fish-attack-details]
 - Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
   cases, one pasture hex and the 12 chit have been removed to make way for the
   lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
@@ -83,6 +86,12 @@ This section is in progress.
     Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
     forest hex. One pasture hex and the 12 chit have been removed to make way
     for the lake. See [below](#fishing-without-2-%26-12-chits).
+
+[^fish-attack-details]:
+    _Barbarian Attack_ is constructed so that every number chit is represented
+    exactly once along the coastline, so it isn't possible to remove or
+    combine the 2 & 12 chits without altering the scenario mechanics in an
+    undesirable way.
 
 ##### Fishing without 2 & 12 chits
 

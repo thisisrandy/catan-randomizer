@@ -226,6 +226,7 @@ export type ExpansionName =
   | "The Caravans"
   | "The Fishy Caravans"
   | "Barbarian Attack"
+  | "Barbarians Attack the Fish"
   | "Traders & Barbarians";
 
 /**
