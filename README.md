@@ -63,27 +63,51 @@ intersection, so make sure to adjust your constraints accordingly.
 
 This section is in progress.
 
-- _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_
-  - Starting with the _Rivers_ setup, one grain hex and the 2 & 12 chits have
-    been removed to make way for the lake.
-  - As the 2 & 12 chits go unused, if either of those numbers are rolled or
-    drawn from the Event Card stack, resolve any events, distribute fish to
-    players with cities or settlements adjacent to the lake, and then roll/draw
-    again until a number 3-11 comes up. In the unlikely event that the other of
-    the two 2/12 Event Cards is drawn, resolve it and again distribute
-    fish[^two-twelve-card], but ignore additional 2/12 rolls if playing with
-    dice.
-  - If a 2 or 12 Event Card increases any player's resource card count, their
-    card count remains as it was at the beginning of the turn for the purposes of
-    a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
-    count increases to 8, they are not penalized if the next card is a 7.
+- _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
+  One grain hex and the 2 & 12 chits have been removed to make way for the
+  lake. See [below](#fishing-without-2-%26-12-chits).
+- Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
+  cases, one pasture hex and the 12 chit have been removed to make way for the
+  lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
+  pirate's lair/goldmine chit that may come into play later in the game. Once
+  this is revealed, players may choose to add the removed 12 chit to the same
+  hex and then play normally, ignoring the recommendations below. Alternately,
+  since gold is distributed on no production rolls in _E & P_, the
+  recommendations below may be ignored from the outset.
+  - _Explorers & Pirates & Fish_: _E & P_ with fish tiles and a lake.
+  - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
+    configured as recommended for combination with [_Cities &
+    Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
+    forest hex. One pasture hex and the 12 chit have been removed to make way
+    for the lake. See [below](#fishing-without-2-%26-12-chits).
+
+#### Fishing without 2 & 12 chits
+
+Combining _The Fishermen of Catan_ with other scenarios often necessitates
+removing the 2 & 12 chits from the board. This section outlines some
+recommendations for how to handle play when those numbers are rolled or drawn
+from the Event Card stack.
+
+- If either of 2 or 12 are rolled or drawn from the Event Card stack, resolve
+  any events, distribute fish to players with cities or settlements adjacent to
+  the lake, and then roll/draw again until a number 3-11 comes up. In the
+  unlikely event that the other of the two 2/12 Event Cards is drawn, resolve
+  it and again distribute fish, but ignore additional 2/12 rolls if playing
+  with dice.[^two-twelve-card]
+- If a 2 or 12 Event Card increases any player's resource card count, their
+  card count remains as it was at the beginning of the turn for the purposes of
+  a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
+  count increases to 8, they are not penalized if the next card is a 7.
 
 [^two-twelve-card]:
     Since there is only one card for each of the 36 possible rolls, it would be
     unfair to players settled adjacent to the lake to ignore their fish
-    production. Event resolution is perhaps more open to argument. Decide
-    amongst yourselves beforehand if you want to ignore the second/both 2/12
-    card events and just distribute fish.
+    production. However, since fair die rolls are [independent and identically
+    distributed](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables)
+    events, subsequent 2/12 rolls can be ignored without compromising fairness.
+    Event resolution is perhaps more open to argument. Decide amongst
+    yourselves beforehand if you want to ignore the second/both 2/12 card
+    events and just distribute fish.
 
 ### Explorers & Pirates
 
