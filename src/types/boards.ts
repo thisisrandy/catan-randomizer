@@ -224,6 +224,7 @@ export type ExpansionName =
   | "The Rivers of Catan"
   | "The Rivers & Lakes of Catan"
   | "The Caravans"
+  | "The Fishy Caravans"
   | "Barbarian Attack"
   | "Traders & Barbarians";
 

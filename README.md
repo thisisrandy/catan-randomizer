@@ -66,6 +66,9 @@ This section is in progress.
 - _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
   One grain hex and the 2 & 12 chits have been removed to make way for the
   lake. See [below](#fishing-without-2-%26-12-chits).
+- _The Fishy Caravans_: Combination with _The Caravans_. One forest hex has
+  been removed to make way for the lake, and the 2 & 12 chits have been
+  combined onto a single hex.
 - Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
   cases, one pasture hex and the 12 chit have been removed to make way for the
   lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
