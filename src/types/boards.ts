@@ -227,7 +227,8 @@ export type ExpansionName =
   | "The Fishy Caravans"
   | "Barbarian Attack"
   | "Barbarians Attack the Fish"
-  | "Traders & Barbarians";
+  | "Traders & Barbarians"
+  | "Traders & Barbarians & Fish";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level

@@ -72,6 +72,10 @@ This section is in progress.
 - _Barbarians Attack the Fish_: Combination with _Barbarian Attack_. One of the
   interior grain hexes and the interior 3 chit have been removed to make way
   for the lake.[^fish-attack-details]
+- _Traders & Barbarians & Fish_: Combination with _Traders & Barbarians_. Since
+  the 2 & 12 chits are already not present on the board, a 3 chit along with a
+  forest hex are removed to make way for the lake. See
+  [below](#fishing-without-2-%26-12-chits).
 - Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
   cases, one pasture hex and the 12 chit have been removed to make way for the
   lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
