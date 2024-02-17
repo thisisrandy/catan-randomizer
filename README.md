@@ -93,7 +93,7 @@ Catan_ setup, so there is no additional board specified.
   hex and then play normally, ignoring the recommendations below. Alternately,
   since gold is distributed on no production rolls in _E & P_, the
   recommendations below may be ignored from the outset.
-  - _Explorers & Pirates & Fish_: _E & P_ with fish tiles and a lake.
+  - _Explorers & Pirates & Fish_: _E & P_ with fishing ground tiles and a lake.
   - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
     configured as recommended for combination with [_Cities &
     Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
