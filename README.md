@@ -61,7 +61,16 @@ intersection, so make sure to adjust your constraints accordingly.
 
 #### Combinations with _The Fishermen of Catan_
 
-This section is in progress.
+This section details ways to combine _The Fishermen of Catan_ with each of the
+other _Traders & Barbarians_ scenarios and other expansions. Note that some
+combinations differ from the [official
+combinations](https://www.catan.com/traders-barbarians). In particular, we
+always include the lake, whereas the official combinations sometimes exclude
+it, and we sometimes recommend a different choice for hex/chit removal. You
+should still read the official rules for each combination, some of which
+include additional rules. Note also that preparation for the combination with
+_Cities & Knights_ is just a matter of using the normal _The Fishermen of
+Catan_ setup, so there is no additional board specified.
 
 - _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
   One grain hex and the 2 & 12 chits have been removed to make way for the
