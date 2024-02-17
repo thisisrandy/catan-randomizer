@@ -84,8 +84,7 @@ This section is in progress.
   - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
     configured as recommended for combination with [_Cities &
     Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
-    forest hex. One pasture hex and the 12 chit have been removed to make way
-    for the lake. See [below](#fishing-without-2-%26-12-chits).
+    forest hex.
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented
