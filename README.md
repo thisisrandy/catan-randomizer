@@ -81,7 +81,7 @@ This section is in progress.
     forest hex. One pasture hex and the 12 chit have been removed to make way
     for the lake. See [below](#fishing-without-2-%26-12-chits).
 
-#### Fishing without 2 & 12 chits
+##### Fishing without 2 & 12 chits
 
 Combining _The Fishermen of Catan_ with other scenarios often necessitates
 removing the 2 & 12 chits from the board. This section outlines some
