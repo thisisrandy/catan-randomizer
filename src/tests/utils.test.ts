@@ -1,4 +1,8 @@
-import { hexToPipCount, numberToPipCount } from "../utils/catan";
+import {
+  compareHexType,
+  hexToPipCount,
+  numberToPipCount,
+} from "../utils/catan";
 
 describe("Catan utils", () => {
   it("should return the correct number of pips for every valid number", () => {
@@ -24,5 +28,40 @@ describe("Catan utils", () => {
     expect(
       hexToPipCount({ type: "mountains", number: 10, secondNumber: 10 })
     ).toBe(6);
+  });
+
+  it("should correctly compare all hex type pairs", () => {
+    expect(
+      compareHexType({ type: "mountains" }, { type: "riverMountains" })
+    ).toBe(true);
+    expect(
+      compareHexType({ type: "riverMountains" }, { type: "riverMountains" })
+    ).toBe(true);
+    expect(compareHexType({ type: "hills" }, { type: "riverHills" })).toBe(
+      true
+    );
+    expect(compareHexType({ type: "riverHills" }, { type: "riverHills" })).toBe(
+      true
+    );
+    expect(compareHexType({ type: "pasture" }, { type: "riverPasture" })).toBe(
+      true
+    );
+    expect(
+      compareHexType({ type: "riverPasture" }, { type: "riverPasture" })
+    ).toBe(true);
+    expect(compareHexType({ type: "desert" }, { type: "oasis" })).toBe(true);
+    expect(
+      compareHexType({ type: "mountains" }, { type: "riverPasture" })
+    ).toBe(false);
+    expect(compareHexType({ type: "mountains" }, { type: "riverHills" })).toBe(
+      false
+    );
+    expect(compareHexType({ type: "hills" }, { type: "riverMountains" })).toBe(
+      false
+    );
+    expect(
+      compareHexType({ type: "pasture" }, { type: "riverMountains" })
+    ).toBe(false);
+    expect(compareHexType({ type: "fields" }, { type: "fields" })).toBe(true);
   });
 });

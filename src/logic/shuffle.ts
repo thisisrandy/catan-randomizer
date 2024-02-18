@@ -1,8 +1,15 @@
-import { Hex, HexType, Port, PortOrientation, FishTile } from "../types/hexes";
+import {
+  Hex,
+  HexType,
+  Port,
+  PortOrientation,
+  FishTile,
+  FishTileOrientation,
+} from "../types/hexes";
 import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
-import { hexToPipCount } from "../utils/catan";
+import { compareHexType, hexToPipCount } from "../utils/catan";
 
 // structuredClone isn't available on older devices. use this as a polyfill
 if (typeof globalThis.structuredClone === "undefined") {
@@ -142,7 +149,7 @@ function getShuffledTerrain(
               // will still be shuffled, unless the lower neighbor is fixed
               if (
                 (neighbor > currentIndex || hexes[neighbor].fixed) &&
-                hexes[currentIndex].type === hexes[neighbor].type
+                compareHexType(hexes[currentIndex], hexes[neighbor])
               )
                 stack.push(neighbor);
             }
