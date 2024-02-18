@@ -133,6 +133,25 @@ from the Event Card stack.
     yourselves beforehand if you want to ignore the second/both 2/12 card
     events and just distribute fish.
 
+##### Rules for arranging fishing ground tiles
+
+There are no official rules for the variable placement of fishing ground tiles
+(the rules for combining with Seafarers simply state "distribute ... according
+to your personal taste"). Internally, the shuffler is enforcing the following
+constraints:
+
+1. All three points of each tile must be pointing at inhabitable intersections.
+2. The hex on which a tile is placed must not contain a port but may be next to
+   one. It may not contain more than one fish tile.
+3. As with ports, no intersection may be adjacent to more than one fish tile.
+   However, intersections adjacent to both a port and fish tile are valid.
+
+Additionally, as noted in the official rules, the lake must always be inland,
+i.e. not adjacent to any sea hex.
+
+If you are receiving an error related to fishing ground tile placement, please
+check that your board specification conforms to these rules.
+
 ### Explorers & Pirates
 
 Shuffling of the starting island for [Explorers &

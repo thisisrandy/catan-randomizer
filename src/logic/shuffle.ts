@@ -32,6 +32,7 @@ export class ShufflingError extends Error {}
 export class TerrainShufflingError extends ShufflingError {}
 export class NumberShufflingError extends ShufflingError {}
 export class PortShufflingError extends ShufflingError {}
+export class FishShufflingError extends ShufflingError {}
 
 /**
  * In a small test, large, heavily constrained boards were found to occasionally
@@ -347,7 +348,11 @@ function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
 }
 
 function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
-  // FIXME: same caveat as in getShuffledPorts about hex groups
+  // FIXME: Same caveat as in getShuffledPorts about hex groups
+
+  // NOTE: This code is modified from getShuffledPorts. It seems different
+  // enough that it can't be reused in a reasonable way, but I may want to
+  // revisit that after it's finished. Comments are retained for reading ease
 
   // gather all tiles
   const tiles = board.recommendedLayout
@@ -369,61 +374,56 @@ function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
   // return
   if (!tiles.length) return hexes;
 
-  // TODO: This is the ports code. Modify it for fish tiles in the following ways:
+  // For the remaining tiles, place within the following constraints:
   // 1. All three points of the tile must be pointing at inhabitable intersections
   // 2. The hex must not contain a port but may be next to one (no need to
   //    check the latter condition). It may not contain more than one fish tile
   // 3. No intersection may be adjacent to more than one fish tile, so
-  //    neighboring hexes will need to be checked for fish tiles in orientations
-  //    dependent upon the orientation of the tile under scrutiny
-  //
-  // // finally, it's time to place the rest of ports on valid sea hexes in valid
-  // // orientations. start by clearing ports on non-fixed hexes
-  // for (const hex of hexes) {
-  //   if (hex.port && !hex.fixed) delete hex.port;
-  // }
-  // // then, gather unassigned sea hexes. retain their indices so we can look up
-  // // their neighbors. note that we aren't excluding fixed hexes. there's no
-  // // issue with shuffling a free port onto a fixed hex, e.g. one representing
-  // // the border
-  // const seaHexes = hexes
-  //   .map((hex, i) => [hex, i] as [Hex, number])
-  //   .filter(
-  //     ([hex, _]) =>
-  //       hex.type === "sea" && !hex.port && hex.portsAllowed !== false
-  //   );
-  // // shuffle them
-  // fisherYates(seaHexes);
-  // // and test to see if there are any valid port orientations on each.
-  // for (const [seaHex, index] of seaHexes) {
-  //   const validOrientations: PortOrientation[] = getValidPortOrientations(
-  //     index,
-  //     hexes,
-  //     board
-  //   );
-  //   // if there weren't any valid orientations, keep going
-  //   if (!validOrientations.length) continue;
-  //   // otherwise, choose a random one
-  //   const orientation =
-  //     validOrientations[Math.floor(Math.random() * validOrientations.length)];
-  //   // and assign a port to this hex
-  //   seaHex.port = { type: ports.pop()!.type, orientation };
-  //   // if we've run out of ports, it's time to stop
-  //   if (!ports.length) break;
-  // }
-  //
-  // // if we still have unassigned ports, blow up. technically, we should probably
-  // // retry a few times. it's possible, for example, that different orientations
-  // // might fit within constraints. in practice, though, I don't think a board
-  // // crowded enough for this to happen should exist, so it's probably moot
-  // if (ports.length)
-  //   throw new PortShufflingError(
-  //     "Unable to assign all ports to sea hexes. This might happen if your board" +
-  //       " is specified with a large number of ports and relatively few sea hexes." +
-  //       " Since any given intersection can't have more than one dock pointed at it," +
-  //       " it's possible to specify a board that can't be randomized within that" +
-  //       " constraint. Please check your board specification and try again."
-  //   );
+  //    neighboring hexes are checked for fish tiles in orientations dependent
+  //    upon the orientation of the tile under scrutiny
+
+  // finally, it's time to place the rest of tiles on valid sea hexes in valid
+  // orientations. start by clearing tiles on non-fixed hexes
+  for (const hex of hexes) {
+    if (hex.fishTile && !hex.fixed) delete hex.fishTile;
+  }
+  // then, gather unassigned sea hexes. retain their indices so we can look up
+  // their neighbors. note that we aren't excluding fixed hexes. there's no
+  // issue with shuffling a free port onto a fixed hex, e.g. one representing
+  // the border
+  const seaHexes = hexes
+    .map((hex, i) => [hex, i] as [Hex, number])
+    .filter(([hex, _]) => hex.type === "sea" && !hex.port && !hex.fishTile);
+  // shuffle them
+  fisherYates(seaHexes);
+  // and test to see if there are any valid port orientations on each.
+  for (const [seaHex, index] of seaHexes) {
+    const validOrientations: FishTileOrientation[] =
+      getValidFishTileOrientations(index, hexes, board);
+    // if there weren't any valid orientations, keep going
+    if (!validOrientations.length) continue;
+    // otherwise, choose a random one
+    const orientation =
+      validOrientations[Math.floor(Math.random() * validOrientations.length)];
+    // and assign a tile to this hex
+    seaHex.fishTile = { number: tiles.pop()!.number, orientation };
+    // if we've run out of tiles, it's time to stop
+    if (!tiles.length) break;
+  }
+
+  // If we still have unassigned tiles, blow up. Whether we succeed is going to
+  // be mostly dependent on port placement, which is already set for this
+  // shuffling attempt, so there isn't any point in retrying in most cases.
+  if (tiles.length)
+    throw new FishShufflingError(
+      "Unable to assign all fish tiles to sea hexes. This might happen if your" +
+        " board doesn't have a very large coastal region. If the coastline is" +
+        " variable, you may want to try again, but it's also possible that there" +
+        " is no valid way to arrange all of the ports and fish tiles included" +
+        " in your board specification. Please check the rules for arranging ports" +
+        " and fish tiles and make sure that your board specification conforms to" +
+        " them before continuing."
+    );
 
   return hexes;
 }
@@ -473,7 +473,9 @@ export function getValidPortOrientations(
     if (
       // hex in heading direction must exist and be land
       neighbors[heading] !== undefined &&
-      !["sea", "fog"].includes(shuffledHexes[neighbors[heading]!].type) &&
+      !["sea", "fog", "lake"].includes(
+        shuffledHexes[neighbors[heading]!].type
+      ) &&
       // counterClockwise hex must either not exist or not have a clockwise port
       (neighbors[counterClockwise] === undefined ||
         shuffledHexes[neighbors[counterClockwise]!].port?.orientation !==
@@ -484,6 +486,87 @@ export function getValidPortOrientations(
           dirToOrientation[counterClockwise])
     ) {
       validOrientations.push(dirToOrientation[heading]);
+    }
+  }
+
+  return validOrientations;
+}
+
+/**
+ * Fish tiles actually have two orientation. We're treating the
+ * counter-clockwise-most parallelogram of the chevron to be the singular
+ * orientation. Note also that they have a different base orientation than
+ * ports
+ */
+const dirToOrientationFish: Record<keyof Neighbors, FishTileOrientation> = {
+  ne: 0,
+  e: 60,
+  se: 120,
+  sw: 180,
+  w: 240,
+  nw: 300,
+};
+
+/**
+ * Determine the valid `FishTileOrientation`s at `shuffledHexes[index]`, if
+ * any. If `shuffledHexes[index]` is not a sea hex or already has a port or
+ * fish tile assigned to it, the result is an empty list.
+ *
+ * In order to be valid, an orientation must meet the following criteria:
+ *
+ * 1. The hexes in the same direction as the tile must be known land hexes.
+ * 2. If directions are listed in order (clockwise or counter, doesn't
+ *    matter) and the orientation index is i, then the hexes at (i+5)%6 and
+ *    (i+2)%6 must not contain a tile oriented at i. Technically, there are
+ *    other tile orientations which would conflict with the one under scrutiny,
+ *    but then those orientations would have at least one side facing a sea hex
+ *    (the current hex).
+ *
+ * NOTE: This logic is pulled out of {@link getShuffledFishTiles} mostly for the
+ * purpose of testing. It shouldn't be used on its own outside of that context.
+ */
+export function getValidFishTileOrientations(
+  index: number,
+  shuffledHexes: Hex[],
+  board: CatanBoard
+): FishTileOrientation[] {
+  if (
+    shuffledHexes[index].type !== "sea" ||
+    shuffledHexes[index].port ||
+    shuffledHexes[index].fishTile
+  )
+    return [];
+
+  const validOrientations: FishTileOrientation[] = [];
+  const neighbors = board.neighbors[index];
+  for (let i = 0; i < directions.length; i++) {
+    // establish the directions which will need various sorts of testing
+    const counterClockwiseHeading = directions[i],
+      clockwiseHeading = directions[(i + 1) % directions.length],
+      counterClockwise =
+        directions[(i + directions.length - 1) % directions.length],
+      clockwise = directions[(i + 2) % directions.length];
+    if (
+      // hexes in heading directions must exist and be land
+      neighbors[counterClockwiseHeading] !== undefined &&
+      !["sea", "fog", "lake"].includes(
+        shuffledHexes[neighbors[counterClockwiseHeading]!].type
+      ) &&
+      neighbors[clockwiseHeading] !== undefined &&
+      !["sea", "fog", "lake"].includes(
+        shuffledHexes[neighbors[clockwiseHeading]!].type
+      ) &&
+      // counter clockwise hex must either not exist or not have a same-oriented
+      // fish tile
+      (neighbors[counterClockwise] === undefined ||
+        shuffledHexes[neighbors[counterClockwise]!].fishTile?.orientation !==
+          dirToOrientationFish[counterClockwiseHeading]) &&
+      // clockwise hex must either not exist or not have a same-oriented fish tile
+      (neighbors[clockwise] === undefined ||
+        shuffledHexes[neighbors[clockwise]!].fishTile?.orientation !==
+          dirToOrientationFish[counterClockwiseHeading])
+    ) {
+      validOrientations.push(dirToOrientationFish[counterClockwiseHeading]);
     }
   }
 
