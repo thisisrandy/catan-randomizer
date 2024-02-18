@@ -89,12 +89,12 @@ function getShuffledTerrain(
     encounteredInlandError = false;
   const islandError =
     "Failed to find a board that falls within the specified constraints for" +
-    " the minimum number of distinct islands. It's likely that this" +
-    " board is over-constrained. Please lower the minimum acceptable" +
+    " the minimum number of distinct islands. This board may be" +
+    " over-constrained. Please lower the minimum acceptable" +
     " island count and try again.";
   const inlandError =
-    "Failed to find a board that places all inland-only hexes adjacent to non-sea" +
-    " hexes only. It's likely that this board doesn't contain any valid inland" +
+    "Failed to find a board that places all inland-only hexes, e.g. the lake," +
+    " adjacent to non-sea hexes only. This board may not contain any valid inland" +
     " positions. If this scenario has variable islands, try lowering the minimum" +
     " island count in order to create larger landmasses. Otherwise, please consult" +
     " with the scenario creator, as it may be ill-specified.";
@@ -169,7 +169,7 @@ function getShuffledTerrain(
             : encounteredIslandError
             ? islandError
             : "Failed to find a board that falls within the specified constraints for" +
-              " terrain. It's likely that this board is over-constrained. For" +
+              " terrain. This board may be over-constrained. For" +
               " example, if there are a large number of pasture hexes and you" +
               " specify that no same type hexes may touch, it might be impossible" +
               " to construct a suitable board. Please relax constraints and try" +
@@ -625,7 +625,7 @@ function getShuffledNumbers(
       if (retries++ > MAX_RETRIES)
         throw new NumberShufflingError(
           "Failed to find a board that falls within the specified constraints for" +
-            " number chits. It's likely that this board is over-constrained." +
+            " number chits. This board may be over-constrained." +
             " For example, if there aren't very many low pip chits in a given group" +
             " and you specify a small maximum intersection pip count, it might be" +
             " impossible to construct a suitable board. Please relax constraints" +
