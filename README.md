@@ -65,9 +65,9 @@ This section details ways to combine _The Fishermen of Catan_ with each of the
 other _Traders & Barbarians_ scenarios and other expansions. Note that some
 combinations differ from the [official
 combinations](https://www.catan.com/traders-barbarians). In particular, we
-always include the lake, whereas the official combinations sometimes exclude
-it, and we sometimes recommend a different choice for hex/chit removal. You
-should still read the official rules for each combination, some of which
+almost always include the lake, whereas the official combinations frequently
+exclude it, and we sometimes recommend a different choice for hex/chit removal.
+You should still read the official rules for each combination, some of which
 include additional rules. Note also that preparation for the combination with
 _Cities & Knights_ is just a matter of using the normal _The Fishermen of
 Catan_ setup, so there is no additional board specified.
@@ -98,6 +98,9 @@ Catan_ setup, so there is no additional board specified.
     configured as recommended for combination with [_Cities &
     Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
     forest hex.
+- Combinations with [_Seafarers_](#seafarers):
+  - _Seafarers: New World of Fish_: The _New World_ scenario with fishing
+    ground tiles but no lake.
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented

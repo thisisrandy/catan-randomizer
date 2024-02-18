@@ -214,6 +214,7 @@ export type ExpansionName =
   | "Seafarers: The Wonders of Catan"
   | "Seafarers: The Wonders of Catan (Straight Constrained)"
   | "Seafarers: New World"
+  | "Seafarers: New World of Fish"
   | "Seafarers: New World Expanded"
   | "Seafarers: New World Islands"
   | "Everything, Everywhere, All at Once"

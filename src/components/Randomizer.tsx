@@ -26,6 +26,7 @@ const islandExpansions: ExpansionName[] = [
   "Seafarers: Through the Desert 3-Player Set-up",
   "Seafarers: Through the Desert 4-Player Set-up",
   "Seafarers: New World",
+  "Seafarers: New World of Fish",
   "Seafarers: New World Expanded",
   "Seafarers: New World Islands",
   "Everything, Everywhere, All at Once, Variable",
