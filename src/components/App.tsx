@@ -14,6 +14,8 @@ import {
   Tooltip,
   Popper,
   PopperProps,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
 import { CatanBoard, ExpansionName } from "../types/boards";
@@ -39,7 +41,15 @@ function App() {
     "expansion",
     "Catan"
   );
-  const [board, setBoard] = useState<CatanBoard>(EXPANSIONS.get(expansion)!);
+  // Guard against garbage in localStorage and changes in expansion names. This
+  // won't run until after board is loaded for the first time, so we need the
+  // same guard inside the useState call for board
+  if (!EXPANSIONS.has(expansion)) setExpansion("Catan");
+  const [board, setBoard] = useState<CatanBoard>(
+    EXPANSIONS.has(expansion)
+      ? EXPANSIONS.get(expansion)!
+      : EXPANSIONS.get("Catan")!
+  );
   const [hexes, setHexes] = useState<Hex[]>(board.recommendedLayout);
   const [savedBoards, setSavedBoards] = useStateWithLocalStorage<SavedBoards>(
     "savedBoards",
@@ -48,6 +58,12 @@ function App() {
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
   const [saveContext, setSaveContext] = useState<string | null>(null);
+  const [errorSnackOpen, setErrorSnackOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleErrorSnackClose = () => {
+    setErrorSnackOpen(false);
+  };
 
   /**
    * When the expansion is changed, state updates (specifically board and hexes)
@@ -75,15 +91,17 @@ function App() {
       try {
         const [sharedBoardName, sharedBoard]: [keyof SavedBoards, SavedBoard] =
           JSON.parse(sharedBoardStr, reviver);
+        if (!EXPANSIONS.has(sharedBoard.expansion))
+          throw new Error(`Unrecognized expansion "${sharedBoard.expansion}"`);
         changeExpansion(sharedBoard.expansion, sharedBoard.hexes);
         setSaveName(sharedBoardName as string);
         setSaveContext("You opened a shared board. Would you like to save it?");
         setSaveDialogOpen(true);
       } catch (error) {
-        console.log(
-          "Something went wrong trying to parse the savedBoard url param",
-          error
+        setErrorMessage(
+          `Something went wrong trying to open a shared board: ${error}`
         );
+        setErrorSnackOpen(true);
       }
     }
   }, [changeExpansion]);
@@ -188,6 +206,21 @@ function App() {
           </div>
         </Paper>
       </div>
+
+      {/* Error snackbar */}
+      <Snackbar
+        open={errorSnackOpen}
+        onClose={handleErrorSnackClose}
+        style={{ maxWidth: 400 }}
+      >
+        <Alert
+          onClose={handleErrorSnackClose}
+          severity="error"
+          style={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
