@@ -389,7 +389,7 @@ function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
   }
   // then, gather unassigned sea hexes. retain their indices so we can look up
   // their neighbors. note that we aren't excluding fixed hexes. there's no
-  // issue with shuffling a free port onto a fixed hex, e.g. one representing
+  // issue with shuffling a free tile onto a fixed hex, e.g. one representing
   // the border
   const seaHexes = hexes
     .map((hex, i) => [hex, i] as [Hex, number])
