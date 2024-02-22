@@ -26,8 +26,10 @@ type HexType = ResourceProducingHexType | NonResourceProducingHexType;
 
 type NumberChitValue = 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12;
 
+type Orientation = 0 | 60 | 120 | 180 | 240 | 300;
+
 type PortType = "3:1" | "ore" | "wool" | "timber" | "brick" | "grain";
-type PortOrientation = 0 | 60 | 120 | 180 | 240 | 300;
+type PortOrientation = Orientation;
 type Port = {
   type: PortType;
   /** Measured in degrees from west-facing */
@@ -51,7 +53,7 @@ type FishTileValue = 4 | 5 | 6 | 8 | 9 | 10;
  * are different enough that port code can't be modularized and reused. Also
  * note that 0 is in degrees clockwise from west-facing for ports
  */
-type FishTileOrientation = PortOrientation;
+type FishTileOrientation = Orientation;
 type FishTile = {
   number: FishTileValue;
   orientation: FishTileOrientation;
@@ -163,6 +165,15 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
    * should specify their group number here
    */
   group?: number;
+  /**
+   * Some hexes, namely the river hexes from The Rivers of Catan and the trade
+   * hexes from Traders & Barbarians, are directional. The images for these
+   * hexes are orientated in the same way those scenarios specify they ought to
+   * be, but the Traders & Barbarians Ultimate scenario boards have them in
+   * various other orientations. This display property provides the ability to
+   * rotate hex images to the correct orientation for any scenario
+   */
+  orientation?: Orientation;
 };
 
 /**

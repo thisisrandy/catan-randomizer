@@ -181,108 +181,116 @@ export default function Board({ hexes, board }: Props) {
             transform: horizontal ? "rotate(90deg)" : "",
           }}
         >
-          {hexes.map(({ type, number, secondNumber, port, fishTile }, i) => (
-            // NOTE: this div fixes display on some older devices. see
-            // https://stackoverflow.com/a/67527395/12162258
-            <div
-              key={i}
-              style={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gridArea: board.cssGridAreas[i],
-              }}
-            >
-              <img
-                src={hexTypeToImg[type][Number(horizontal)]}
-                alt={`${type} hex at position ${i}. Positions indices run left to
-              right, top to bottom`}
+          {hexes.map(
+            (
+              { type, number, secondNumber, orientation, port, fishTile },
+              i
+            ) => (
+              // NOTE: this div fixes display on some older devices. see
+              // https://stackoverflow.com/a/67527395/12162258
+              <div
+                key={i}
                 style={{
-                  width: HEX_SIZE,
-                  height: HEX_SIZE,
-                  position: "absolute",
-                  zIndex: 1,
+                  height: "100%",
+                  width: "100%",
+                  position: "relative",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gridArea: board.cssGridAreas[i],
                 }}
-              />
-              {number && secondNumber === undefined && (
+              >
                 <img
-                  src={numberValToImg[number]!}
-                  alt={`${number} chit at position ${i}`}
+                  src={hexTypeToImg[type][Number(horizontal)]}
+                  alt={`${type} hex at position ${i}. Positions indices run left to
+              right, top to bottom`}
                   style={{
-                    width: "35%",
-                    height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                    width: HEX_SIZE,
+                    height: HEX_SIZE,
                     position: "absolute",
-                    zIndex: 2,
-                    transform: horizontal ? "rotate(-90deg)" : "",
+                    zIndex: 1,
+                    ...(orientation && {
+                      transform: `rotate(${orientation}deg)`,
+                    }),
                   }}
                 />
-              )}
-              {number && secondNumber && (
-                <div
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    position: "relative",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gridArea: board.cssGridAreas[i],
-                  }}
-                >
+                {number && secondNumber === undefined && (
                   <img
                     src={numberValToImg[number]!}
                     alt={`${number} chit at position ${i}`}
                     style={{
-                      width: "30%",
-                      height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                      width: "35%",
+                      height: `${(35 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                      position: "absolute",
                       zIndex: 2,
                       transform: horizontal ? "rotate(-90deg)" : "",
-                      marginRight: "5%",
                     }}
                   />
-                  <img
-                    src={numberValToImg[secondNumber]!}
-                    alt={`${secondNumber} chit at position ${i}`}
+                )}
+                {number && secondNumber && (
+                  <div
                     style={{
-                      width: "30%",
-                      height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                      height: "100%",
+                      width: "100%",
+                      position: "relative",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gridArea: board.cssGridAreas[i],
+                    }}
+                  >
+                    <img
+                      src={numberValToImg[number]!}
+                      alt={`${number} chit at position ${i}`}
+                      style={{
+                        width: "30%",
+                        height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                        zIndex: 2,
+                        transform: horizontal ? "rotate(-90deg)" : "",
+                        marginRight: "5%",
+                      }}
+                    />
+                    <img
+                      src={numberValToImg[secondNumber]!}
+                      alt={`${secondNumber} chit at position ${i}`}
+                      style={{
+                        width: "30%",
+                        height: `${(30 * HEX_WIDTH) / HEX_HEIGHT}%`,
+                        zIndex: 2,
+                        transform: horizontal ? "rotate(-90deg)" : "",
+                      }}
+                    />
+                  </div>
+                )}
+                {port && (
+                  <img
+                    src={portTypeToImage[port.type]}
+                    alt={`${port.type} port at position ${i}`}
+                    style={{
                       zIndex: 2,
-                      transform: horizontal ? "rotate(-90deg)" : "",
+                      width: HEX_SIZE,
+                      height: HEX_SIZE,
+                      transform: `rotate(${port.orientation}deg)`,
+                      position: "absolute",
                     }}
                   />
-                </div>
-              )}
-              {port && (
-                <img
-                  src={portTypeToImage[port.type]}
-                  alt={`${port.type} port at position ${i}`}
-                  style={{
-                    zIndex: 2,
-                    width: HEX_SIZE,
-                    height: HEX_SIZE,
-                    transform: `rotate(${port.orientation}deg)`,
-                    position: "absolute",
-                  }}
-                />
-              )}
-              {fishTile && (
-                <img
-                  src={fishNumberToImg[fishTile.number]!}
-                  alt={`${fishTile.number} fish tile at position ${i}`}
-                  style={{
-                    zIndex: 2,
-                    width: HEX_SIZE,
-                    height: HEX_SIZE,
-                    transform: `rotate(${fishTile.orientation}deg)`,
-                    position: "absolute",
-                  }}
-                />
-              )}
-            </div>
-          ))}
+                )}
+                {fishTile && (
+                  <img
+                    src={fishNumberToImg[fishTile.number]!}
+                    alt={`${fishTile.number} fish tile at position ${i}`}
+                    style={{
+                      zIndex: 2,
+                      width: HEX_SIZE,
+                      height: HEX_SIZE,
+                      transform: `rotate(${fishTile.orientation}deg)`,
+                      position: "absolute",
+                    }}
+                  />
+                )}
+              </div>
+            )
+          )}
         </div>
       </Paper>
     </>
