@@ -520,7 +520,7 @@ describe("shuffle", () => {
     ).toThrowError(NumberShufflingError);
   });
 
-  it("shouldn't shuffle fixed number groups", () => {
+  it("shouldn't shuffle numbers in groups in which they are fixed", () => {
     const groupToFix = 2;
     const template: CatanBoardTemplate = {
       board: [
