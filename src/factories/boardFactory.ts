@@ -25,7 +25,7 @@ export default function catanBoardFactory(
     .flat()
     .filter((ht) => ht.type !== "empty");
 
-  // before we start to assemble the board, do a couple of sanity checks on the
+  // before we start to assemble the board, do a few sanity checks on the
   // template. most everything else should be covered statically by the type
   // system
   flatNoEmpties.forEach((ht) => {
@@ -47,6 +47,23 @@ export default function catanBoardFactory(
           ` belongs: ${toCheck}`
       );
     }
+  }
+  // numberGroup-related checks
+  if (
+    flatNoEmpties.some((h) => h.group !== undefined) &&
+    flatNoEmpties.some((h) => h.numberGroup !== undefined)
+  ) {
+    throw new BoardSpecError(
+      "Using group and numberGroup on the same board is not supported"
+    );
+  }
+  if (
+    flatNoEmpties.some((h) => h.numberGroup !== undefined) &&
+    flatNoEmpties.some((h) => h.number === undefined && !h.fixed)
+  ) {
+    throw new BoardSpecError(
+      "When using numberGroup, all hexes which don't include a number must be fixed"
+    );
   }
 
   // we're ready to start assembling the board. first, pull maxPipsOnChits out

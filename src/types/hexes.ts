@@ -83,6 +83,32 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
        * The number chit assigned to this hex, if any
        */
       number?: NumberChitValue;
+      /**
+       * Some scenarios, e.g. Traders & Barbarians Ultimate, need number chits
+       * to be shuffled in separate groups, e.g. for the requirement that each
+       * number appear exactly once on the coastline, but do not require that
+       * terrain be shuffled separately. Use this property to create groups for
+       * numbers only.
+       *
+       * There are two restrictions placed on boards that include hexes with
+       * this property:
+       *
+       * 1. Only one of `group` and `numberGroup` may be used anywhere on the
+       *    board. While there are valid boards that might use both, it isn't
+       *    currently supported.
+       * 2. The board must not contain any non-fixed hexes that don't have
+       *    numbers. There are no valid boards that don't follow this
+       *    constraint, because in order for number groups to make sense, each
+       *    chit from each group must be able to be placed on one of the same
+       *    spots from the group definition. If e.g. a desert gets moved from
+       *    one group to another, there will be one fewer spot for number chits
+       *    in the second group and one extra in the first, therefore we
+       *    require that all hexes which don't have a number be fixed.
+       *
+       *  Both of these are runtime checks not required by the type system. The
+       *  app will fail immediately if a bad board is specified.
+       */
+      numberGroup?: GroupNumber;
     }
   | {
       type: ResourceProducingHexType;
@@ -102,6 +128,7 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
        * mentioned above.
        */
       secondNumber?: NumberChitValue;
+      numberGroup?: GroupNumber;
     }
   | {
       type: "sea";

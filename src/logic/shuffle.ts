@@ -586,6 +586,16 @@ function getShuffledNumbers(
     board.minPipsOnHexTypes || {};
   const maxPipsOnHexTypes: { [type in HexType]?: number } =
     board.maxPipsOnHexTypes || {};
+  // If there are any number groups, we need to restore numbers and number
+  // groups to their original positions before creating HexGroups (the
+  // assumption being that hexes has already been terrain shuffled)
+  if (hexes.some((h) => typeof h.numberGroup !== "undefined")) {
+    for (const [i, h] of board.recommendedLayout.entries()) {
+      hexes[i].number = h.number;
+      hexes[i].secondNumber = h.secondNumber;
+      hexes[i].numberGroup = h.numberGroup;
+    }
+  }
   const hexGroups = new HexGroups(hexes, "numbers", board.fixNumbersInGroups);
   let randomIndex,
     retries = 0;
