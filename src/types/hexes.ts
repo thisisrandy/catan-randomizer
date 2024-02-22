@@ -1,4 +1,5 @@
 import { StrictUnion } from "./StrictUnion";
+import { Range } from "./Range";
 
 type ResourceProducingHexType =
   | "mountains"
@@ -58,6 +59,13 @@ type FishTile = {
   number: FishTileValue;
   orientation: FishTileOrientation;
 };
+
+/**
+ * There's a problem with using `0` as a group number because some logic checks
+ * its truthiness. We can avoid fixing this by restricting valid group numbers
+ * to a small range
+ */
+type GroupNumber = Range<1, 20>;
 
 /**
  * Container for hex information. In order to be able to inject additional
@@ -164,7 +172,7 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
    * group (which is just the one group which hasn't been explicitly labeled),
    * should specify their group number here
    */
-  group?: number;
+  group?: GroupNumber;
   /**
    * Some hexes, namely the river hexes from The Rivers of Catan and the trade
    * hexes from Traders & Barbarians, are directional. The images for these
