@@ -1,5 +1,5 @@
 import { EXPANSIONS } from "../data/expansions";
-import catanBoardFactory from "../factories/boardFactory";
+import catanBoardFactory, { BoardSpecError } from "../factories/boardFactory";
 import {
   countIslands,
   FishShufflingError,
@@ -495,6 +495,66 @@ describe("shuffle", () => {
         }
       }
     }
+  });
+
+  it("should shuffle number groups separately but terrain all together", () => {
+    // The terrain on this board must be shuffled every time in order to meet
+    // the maxConnectedLikeTerrain constraint
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "pasture", number: 11, numberGroup: 1 }],
+        [{ type: "empty" }, { type: "pasture", number: 12, numberGroup: 1 }],
+        [{ type: "hills", number: 2, numberGroup: 2 }],
+        [{ type: "empty" }, { type: "hills", number: 3, numberGroup: 2 }],
+        [{ type: "hills", number: 4, numberGroup: 2 }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    const startingNumbers = board.recommendedLayout.map((h) => h.number!);
+    let numbersWereShuffled = false;
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      expect(
+        hexes
+          .slice(0, 3)
+          .map((h) => [10, 11, 12].includes(h.number!))
+          .every((v) => v)
+      ).toBe(true);
+      expect(
+        hexes
+          .slice(3, -1)
+          .map((h) => [2, 3, 4].includes(h.number!))
+          .every((v) => v)
+      ).toBe(true);
+      if (hexes.map((h, i) => h.number! !== startingNumbers[i]))
+        numbersWereShuffled = true;
+      expect(
+        hexes.slice(0, 3).some((h) => h.type === "hills") &&
+          hexes.slice(3, -1).some((h) => h.type === "pasture")
+      ).toBe(true);
+    }
+    expect(numbersWereShuffled).toBe(true);
+  });
+
+  it("shouldn't allow group and numberGroup to be used on the same board", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "pasture", number: 11, group: 2 }],
+      ],
+    };
+    expect(() => catanBoardFactory(template)).toThrowError(BoardSpecError);
+  });
+
+  it("shouldn't allow hexes without numbers to be free when numberGroup is used", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "desert" }],
+      ],
+    };
+    expect(() => catanBoardFactory(template)).toThrowError(BoardSpecError);
   });
 
   it("should throw a ShufflingError when the board is over-constrained", () => {
