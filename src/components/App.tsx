@@ -157,7 +157,7 @@ function App() {
               style={{
                 margin: 10,
                 marginBottom: 0,
-                width: "min(90vw, 300px)",
+                width: "min(80vw, 400px)",
               }}
               PopperComponent={TopPopper}
               options={Array.from(EXPANSIONS.keys()).sort()}
