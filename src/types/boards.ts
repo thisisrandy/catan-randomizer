@@ -229,7 +229,25 @@ export type ExpansionName =
   | "Barbarian Attack"
   | "Barbarians Attack the Fish"
   | "Traders & Barbarians"
-  | "Traders & Barbarians & Fish";
+  | "Traders & Barbarians & Fish"
+  | "Traders & Barbarians Ultimate (green 1)"
+  | "Traders & Barbarians Ultimate (green 2)"
+  | "Traders & Barbarians Ultimate (green 3)"
+  | "Traders & Barbarians Ultimate (green 4)"
+  | "Traders & Barbarians Ultimate (green 5)"
+  | "Traders & Barbarians Ultimate (green 6)"
+  | "Traders & Barbarians Ultimate (purple 1)"
+  | "Traders & Barbarians Ultimate (purple 2)"
+  | "Traders & Barbarians Ultimate (purple 3)"
+  | "Traders & Barbarians Ultimate (purple 4)"
+  | "Traders & Barbarians Ultimate (purple 5)"
+  | "Traders & Barbarians Ultimate (purple 6)"
+  | "Traders & Barbarians Ultimate (orange 1)"
+  | "Traders & Barbarians Ultimate (orange 2)"
+  | "Traders & Barbarians Ultimate (orange 3)"
+  | "Traders & Barbarians Ultimate (orange 4)"
+  | "Traders & Barbarians Ultimate (orange 5)"
+  | "Traders & Barbarians Ultimate (orange 6)";
 
 /**
  * A map of expansion names to their board data. Meant to be the top-level
