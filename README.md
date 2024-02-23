@@ -88,11 +88,14 @@ Catan_ setup, so there is no additional board specified.
 - _Traders & Barbarians Ultimate_: [The "Ultimate" community-created _Traders &
   Barbarians_ setup that combines all five
   scenarios](https://www.catan.com/sites/default/files/2022-08/Traders%20%26%20Barbarians%20Ultimate_new.pdf).
-  There are 18 total variations on the placement of scenario hexes which the
-  authors suggest you choose by rolling a 3-color die and a number die. The map
-  names are as such suffixed with `\((green|purple|orange) [1-6]\)`. If you don't
-  speak [regex](https://en.wikipedia.org/wiki/Regular_expression), that's e.g.
-  _Traders & Barbarians Ultimate (green 1)_.
+  - There are 18 total variations on the placement of scenario hexes which the
+    authors suggest you choose by rolling a 3-color die and a number die. The
+    map names are as such suffixed with `\((green|purple|orange) [1-6]\)`. If
+    you don't speak [regex](https://en.wikipedia.org/wiki/Regular_expression),
+    that's e.g. _Traders & Barbarians Ultimate (green 1)_.
+  - There are no sea hexes in three of the corners to show where to make space
+    between the borders. However, if you have one hex length pieces from other
+    expansions, it is recommended that you use them so the border is stable.
 - Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
   cases, one pasture hex and the 12 chit have been removed to make way for the
   lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
