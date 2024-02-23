@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Hex } from "../types/hexes";
 import Board from "./Board";
 import Randomizer from "./Randomizer";
@@ -36,6 +36,16 @@ const TopPopper = function (props: PopperProps) {
   return <Popper {...props} placement="top" />;
 };
 
+/**
+ * Mimics the behavior of the old componentWillMount lifecycle method. Stolen
+ * shamelessly from https://stackoverflow.com/a/56818036/12162258
+ */
+const useComponentWillMount = (cb: () => void) => {
+  const willMount = useRef(true);
+  if (willMount.current) cb();
+  willMount.current = false;
+};
+
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
     "expansion",
@@ -44,7 +54,9 @@ function App() {
   // Guard against garbage in localStorage and changes in expansion names. This
   // won't run until after board is loaded for the first time, so we need the
   // same guard inside the useState call for board
-  if (!EXPANSIONS.has(expansion)) setExpansion("Catan");
+  useComponentWillMount(() => {
+    if (!EXPANSIONS.has(expansion)) setExpansion("Catan");
+  });
   const [board, setBoard] = useState<CatanBoard>(
     EXPANSIONS.has(expansion)
       ? EXPANSIONS.get(expansion)!
