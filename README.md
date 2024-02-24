@@ -112,6 +112,8 @@ Catan_ setup, so there is no additional board specified.
 - Combinations with [_Seafarers_](#seafarers):
   - _Seafarers: New World of Fish_: The _New World_ scenario with fishing
     ground tiles but no lake.
+  - _Seafarers: New World of Fish Expanded_: The [_New World Expanded_
+    scenario](#expanded-versions) with fishing ground tiles and a lake.
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented
@@ -200,7 +202,9 @@ The following scenarios support this constraint:
 - _Heading for New Shores_
 - _Through the Desert_
 - _New World_
+- _New World of Fish_
 - _New World Expanded_
+- _New World of Fish Expanded_
 - _New World Islands_
 - _Everything, Everywhere, All at Once, Variable_
 - _Seafarers & Pirates, Variable_
