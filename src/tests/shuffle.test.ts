@@ -4,6 +4,7 @@ import {
   countIslands,
   FishShufflingError,
   getIntersectionPipCounts,
+  getValidFishTileOrientations,
   getValidPortOrientations,
   NumberShufflingError,
   PortShufflingError,
@@ -1111,6 +1112,111 @@ describe("getValidPortOrientations", () => {
     expect(getValidPortOrientations(1, board.recommendedLayout, board)).toEqual(
       [180, 240]
     );
+  });
+});
+
+describe("getValidFishTileOrientations", () => {
+  it("should not find any valid orientations when none exist", () => {
+    const template: CatanBoardTemplate = {
+      board: [[{ type: "empty" }, { type: "pasture" }], [{ type: "sea" }]],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([]);
+    expect(
+      getValidFishTileOrientations(0, board.recommendedLayout, board)
+    ).toEqual([]);
+  });
+
+  it("should find one valid orientation when one exists", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([0]);
+  });
+
+  it("should find many valid orientations when many exist", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+        [{ type: "pasture" }, { type: "sea" }, { type: "pasture" }],
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board).sort(
+        (a, b) => a - b
+      )
+    ).toEqual([0, 60, 120, 180, 240, 300]);
+  });
+
+  it("should allow placement next to a port", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+        [
+          { type: "empty" },
+          { type: "sea", port: { type: "3:1", orientation: 120 } },
+          { type: "pasture" },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([0]);
+  });
+
+  it("should not allow placement next to another fish tile", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+        [
+          { type: "empty" },
+          { type: "sea", fishTile: { number: 6, orientation: 0 } },
+          { type: "pasture" },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([]);
+  });
+
+  it("should not allow placement on the same hex as a port or another fish tile", () => {
+    let template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+        [
+          { type: "pasture" },
+          { type: "sea", port: { type: "3:1", orientation: 0 } },
+          { type: "pasture" },
+        ],
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+      ],
+    };
+    let board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board)
+    ).toEqual([]);
+
+    delete template.board[1][1].port;
+    template.board[1][1].fishTile = { number: 6, orientation: 0 };
+    board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board)
+    ).toEqual([]);
   });
 });
 
