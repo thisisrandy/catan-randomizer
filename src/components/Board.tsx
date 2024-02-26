@@ -12,7 +12,7 @@ import {
   fieldsVertical,
   desertHorizontal,
   desertVertical,
-  goldHorizonal,
+  goldHorizontal,
   goldVertical,
   seaHorizontal,
   seaVertical,
@@ -80,7 +80,7 @@ const hexTypeToImg: { [type in HexType]: [string, string] } = {
   fields: [fieldsVertical, fieldsHorizontal],
   desert: [desertVertical, desertHorizontal],
   sea: [seaVertical, seaHorizontal],
-  gold: [goldVertical, goldHorizonal],
+  gold: [goldVertical, goldHorizontal],
   fog: [fogVertical, fogHorizontal],
   riverSwamplandTop: [riverSwamplandTopVertical, riverSwamplandTopHorizontal],
   riverSwamplandBottom: [

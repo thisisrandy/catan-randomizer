@@ -34,7 +34,7 @@ import forestHorizontal from "./forest-horizontal.png";
 import forestVertical from "./forest-vertical.png";
 import glassworksHorizontal from "./glassworks-horizontal.png";
 import glassworksVertical from "./glassworks-vertical.png";
-import goldHorizonal from "./gold-horizontal.png";
+import goldHorizontal from "./gold-horizontal.png";
 import goldVertical from "./gold-vertical.png";
 import hillsHorizontal from "./hills-horizontal.png";
 import hillsVertical from "./hills-vertical.png";
@@ -98,7 +98,7 @@ export {
   forestVertical,
   glassworksHorizontal,
   glassworksVertical,
-  goldHorizonal,
+  goldHorizontal,
   goldVertical,
   hillsHorizontal,
   hillsVertical,
