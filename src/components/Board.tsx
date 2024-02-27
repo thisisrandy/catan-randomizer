@@ -1,16 +1,10 @@
 import "../css/board.css";
 import {
-  pastureHorizontal,
   pastureVertical,
-  forestHorizontal,
   forestVertical,
-  hillsHorizontal,
   hillsVertical,
-  mountainsHorizontal,
   mountainsVertical,
-  fieldsHorizontal,
   fieldsVertical,
-  desertHorizontal,
   desertVertical,
   goldHorizontal,
   goldVertical,
@@ -18,27 +12,16 @@ import {
   seaVertical,
   fogHorizontal,
   fogVertical,
-  riverHillsHorizontal,
   riverHillsVertical,
-  riverMountainsHorizontal,
   riverMountainsVertical,
-  riverPastureHorizontal,
   riverPastureVertical,
-  riverSwamplandBottomHorizontal,
   riverSwamplandBottomVertical,
-  riverSwamplandTopHorizontal,
   riverSwamplandTopVertical,
   lakeVertical,
-  lakeHorizontal,
-  oasisHorizontal,
   oasisVertical,
-  castleKnightsHorizontal,
   castleKnightsVertical,
-  castleRestorationHorizontal,
   castleRestorationVertical,
-  quarryHorizontal,
   quarryVertical,
-  glassworksHorizontal,
   glassworksVertical,
   two,
   three,
@@ -70,32 +53,33 @@ import { HEX_HEIGHT, HEX_WIDTH } from "../constants/imageProperties";
 import ImageKeeper from "./ImageKeeper";
 
 /**
- * Values are [vertical image, horizontal image]
+ * Values are [vertical image, horizontal image]. Since very few hexes have a
+ * true horizontal image found in the game manual images, the string "auto" can
+ * also be used for the horizontal image. In this case, the vertical image is
+ * simply rotated -30° (-120° + 90° for whole board rotation for horizontal
+ * boards). See the README in src/images
  */
-const hexTypeToImg: { [type in HexType]: [string, string] } = {
-  pasture: [pastureVertical, pastureHorizontal],
-  forest: [forestVertical, forestHorizontal],
-  hills: [hillsVertical, hillsHorizontal],
-  mountains: [mountainsVertical, mountainsHorizontal],
-  fields: [fieldsVertical, fieldsHorizontal],
-  desert: [desertVertical, desertHorizontal],
+const hexTypeToImg: { [type in HexType]: [string, string | "auto"] } = {
+  pasture: [pastureVertical, "auto"],
+  forest: [forestVertical, "auto"],
+  hills: [hillsVertical, "auto"],
+  mountains: [mountainsVertical, "auto"],
+  fields: [fieldsVertical, "auto"],
+  desert: [desertVertical, "auto"],
   sea: [seaVertical, seaHorizontal],
   gold: [goldVertical, goldHorizontal],
   fog: [fogVertical, fogHorizontal],
-  riverSwamplandTop: [riverSwamplandTopVertical, riverSwamplandTopHorizontal],
-  riverSwamplandBottom: [
-    riverSwamplandBottomVertical,
-    riverSwamplandBottomHorizontal,
-  ],
-  riverMountains: [riverMountainsVertical, riverMountainsHorizontal],
-  riverHills: [riverHillsVertical, riverHillsHorizontal],
-  riverPasture: [riverPastureVertical, riverPastureHorizontal],
-  lake: [lakeVertical, lakeHorizontal],
-  oasis: [oasisVertical, oasisHorizontal],
-  castleKnights: [castleKnightsVertical, castleKnightsHorizontal],
-  castleRestoration: [castleRestorationVertical, castleRestorationHorizontal],
-  quarry: [quarryVertical, quarryHorizontal],
-  glassworks: [glassworksVertical, glassworksHorizontal],
+  riverSwamplandTop: [riverSwamplandTopVertical, "auto"],
+  riverSwamplandBottom: [riverSwamplandBottomVertical, "auto"],
+  riverMountains: [riverMountainsVertical, "auto"],
+  riverHills: [riverHillsVertical, "auto"],
+  riverPasture: [riverPastureVertical, "auto"],
+  lake: [lakeVertical, "auto"],
+  oasis: [oasisVertical, "auto"],
+  castleKnights: [castleKnightsVertical, "auto"],
+  castleRestoration: [castleRestorationVertical, "auto"],
+  quarry: [quarryVertical, "auto"],
+  glassworks: [glassworksVertical, "auto"],
 };
 
 const numberValToImg = [
@@ -201,7 +185,11 @@ export default function Board({ hexes, board }: Props) {
                 }}
               >
                 <img
-                  src={hexTypeToImg[type][Number(horizontal)]}
+                  src={
+                    hexTypeToImg[type][Number(horizontal)] === "auto"
+                      ? hexTypeToImg[type][0]
+                      : hexTypeToImg[type][Number(horizontal)]
+                  }
                   alt={`${type} hex at position ${i}. Positions indices run left to
               right, top to bottom`}
                   style={{
@@ -209,9 +197,13 @@ export default function Board({ hexes, board }: Props) {
                     height: HEX_SIZE,
                     position: "absolute",
                     zIndex: 1,
-                    ...(orientation && {
-                      transform: `rotate(${orientation}deg)`,
-                    }),
+                    transform: `rotate(${
+                      (orientation || 0) +
+                      Number(
+                        hexTypeToImg[type][Number(horizontal)] === "auto" &&
+                          -120
+                      )
+                    }deg)`,
                   }}
                 />
                 {number && secondNumber === undefined && (
