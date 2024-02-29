@@ -190,7 +190,10 @@ function getShuffledTerrain(
       countIslands(hexes, board) < numericConstraints.minIslandCount.value
     ) {
       encounteredIslandError = true;
-      if (retries++ > MAX_RETRIES) throw new TerrainShufflingError(islandError);
+      if (retries++ > MAX_RETRIES)
+        throw new TerrainShufflingError(
+          encounteredIslandError ? inlandError : islandError
+        );
       // eslint-disable-next-line no-extra-label
       continue topLoop;
     }
