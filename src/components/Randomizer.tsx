@@ -29,6 +29,7 @@ const islandExpansions: ExpansionName[] = [
   "Seafarers: New World of Fish",
   "Seafarers: New World Expanded",
   "Seafarers: New World of Fish Expanded",
+  "Seafarers: New World of Fish & Islands",
   "Seafarers: New World Islands",
   "Everything, Everywhere, All at Once, Variable",
   "Seafarers & Pirates, Variable",

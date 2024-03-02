@@ -218,6 +218,7 @@ export type ExpansionName =
   | "Seafarers: New World Expanded"
   | "Seafarers: New World of Fish Expanded"
   | "Seafarers: New World Islands"
+  | "Seafarers: New World of Fish & Islands"
   | "Everything, Everywhere, All at Once"
   | "Everything, Everywhere, All at Once, Variable"
   | "Seafarers & Pirates"

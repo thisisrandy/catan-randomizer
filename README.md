@@ -114,6 +114,8 @@ Catan_ setup, so there is no additional board specified.
     ground tiles but no lake.
   - _Seafarers: New World of Fish Expanded_: The [_New World Expanded_
     scenario](#expanded-versions) with fishing ground tiles and a lake.
+  - _Seafarers: New World of Fish & Islands_: The [_New World Islands_
+    scenario](#expanded-versions) with fishing ground tiles and a lake.
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented
