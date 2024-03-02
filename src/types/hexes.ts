@@ -35,13 +35,30 @@ type Port = {
   type: PortType;
   /** Measured in degrees from west-facing */
   orientation: PortOrientation;
-  /** Ports can be fixed in some scenarios. Use this property to indicate that
-   * this port should not be shuffled. Note that fixed ports may not appear on
-   * non-fixed hexes. The type system allows such a board to be specified, but
-   * there is a runtime check in place that will abort board creation when the
-   * board template is processed */
-  fixed?: boolean;
-};
+} & StrictUnion<
+  | {
+      /**
+       * Ports can be fixed in some scenarios. Use this property to indicate that
+       * this port should not be shuffled. Note that fixed ports may not appear on
+       * non-fixed hexes. The type system allows such a board to be specified, but
+       * there is a runtime check in place that will abort board creation when the
+       * board template is processed
+       */
+      fixed?: boolean;
+    }
+  | {
+      /**
+       * Ports can be placed on any sea hex or border piece in some scenarios,
+       * e.g. New World, provided both docks point at land and no two docks
+       * point at the same intersection. Use this flag to indicate as much.
+       * Note that non-moveable ports may not appear on non-fixed hexes. The
+       * type system allows such a board to be specified, but there is a
+       * runtime check in place that will abort board creation when the board
+       * template is processed
+       */
+      moveable?: boolean;
+    }
+>;
 
 type FishTileValue = 4 | 5 | 6 | 8 | 9 | 10;
 /**
@@ -58,6 +75,13 @@ type FishTileOrientation = Orientation;
 type FishTile = {
   number: FishTileValue;
   orientation: FishTileOrientation;
+  /**
+   * As with ports, fishing ground tiles may be placed on arbitrary sea hexes
+   * or border pieces in some scenarios, provided conditions are met. Use this
+   * flag to indicate as much. The same caveat as with ports about appearing
+   * only on fixed hexes applies
+   */
+  moveable?: boolean;
 };
 
 /**
@@ -179,19 +203,6 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
    * on the Explorers & Pirates map, it can be marked as such using this
    * property
    */
-  // FIXME: this was originally introduced to account for the fixed Explorer's
-  // & Pirates hex, but over the course of development, its meaning got a
-  // little bit muddled vis-a-vis ports. specifically, a fixed hex which
-  // includes a port in a given orientation in the recommended layout is
-  // required to always include a port, though not necessarily the same port,
-  // in the same orientation in the shuffled output. however, fixed hexes which
-  // don't have a port in the recommended layout may be later assigned a free
-  // port during shuffling. the practical consequence of this is that boards
-  // with free ports have to cram them all onto non-fixed hexes in the
-  // recommended layout so that they get shuffled instead of being stuck on a
-  // fixed hex. ideally, theses concepts should be more decoupled. I'll
-  // probably never get around to this since it hasn't blocked anything, but
-  // it's worth noting nonetheless
   fixed?: boolean;
   /**
    * Some setups, e.g. Seafarers scenarios, specify multiple groups of

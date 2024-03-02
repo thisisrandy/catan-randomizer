@@ -33,6 +33,14 @@ export default function catanBoardFactory(
       throw new BoardSpecError(
         `Fixed ports can't appear on non-fixed hexes: ${ht}`
       );
+    if (!ht.fixed && ht.port && !ht.port.moveable)
+      throw new BoardSpecError(
+        `Unmoveable ports can't appear on non-fixed hexes: ${ht}`
+      );
+    if (!ht.fixed && ht.fishTile && !ht.fishTile.moveable)
+      throw new BoardSpecError(
+        `Unmoveable fishing ground tiles can't appear on non-fixed hexes: ${ht}`
+      );
   });
   if (template.fixNumbersInGroups) {
     const toCheck = template.fixNumbersInGroups.slice();

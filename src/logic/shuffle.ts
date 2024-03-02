@@ -288,25 +288,25 @@ function getShuffledPorts(board: CatanBoard, hexes: Hex[]): Hex[] {
   // otherwise, shuffle what remains
   fisherYates(ports);
 
-  // fill in (non-fixed) ports on fixed hexes, being careful not to change their
-  // orientations
+  // shuffle non-fixed, unmoveable ports, being careful to retain each
+  // location's orientations
   for (const hex of hexes) {
-    if (hex.fixed && hex.port && !hex.port.fixed) {
+    if (hex.port && !hex.port.fixed && !hex.port.moveable) {
       hex.port.type = ports.pop()!.type;
     }
   }
-  // on most boards, all port hexes are fixed, so check again if we're ready to
+  // on most boards, all ports are unmoveable, so check again if we're ready to
   // return
   if (!ports.length) return hexes;
 
   // finally, it's time to place the rest of ports on valid sea hexes in valid
-  // orientations. start by clearing ports on non-fixed hexes
+  // orientations. start by clearing moveable ports
   for (const hex of hexes) {
-    if (hex.port && !hex.fixed) delete hex.port;
+    if (hex.port?.moveable) delete hex.port;
   }
   // then, gather unassigned sea hexes. retain their indices so we can look up
   // their neighbors. note that we aren't excluding fixed hexes. there's no
-  // issue with shuffling a free port onto a fixed hex, e.g. one representing
+  // issue with shuffling a moveable port onto a fixed hex, e.g. one representing
   // the border
   const seaHexes = hexes
     .map((hex, i) => [hex, i] as [Hex, number])
@@ -366,14 +366,14 @@ function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
   // otherwise, shuffle them
   fisherYates(tiles);
 
-  // fill in tiles on fixed hexes, being careful not to change their
-  // orientations
+  // shuffle unmoveable tiles onto the board, retaining each location's
+  // orientation
   for (const hex of hexes) {
-    if (hex.fixed && hex.fishTile) {
+    if (hex.fishTile && !hex.fishTile.moveable) {
       hex.fishTile.number = tiles.pop()!.number;
     }
   }
-  // on most boards, all tile hexes are fixed, so check again if we're ready to
+  // on most boards, all tiles are unmoveable, so check again if we're ready to
   // return
   if (!tiles.length) return hexes;
 
@@ -386,14 +386,14 @@ function getShuffledFishTiles(board: CatanBoard, hexes: Hex[]): Hex[] {
   //    upon the orientation of the tile under scrutiny
 
   // finally, it's time to place the rest of tiles on valid sea hexes in valid
-  // orientations. start by clearing tiles on non-fixed hexes
+  // orientations. start by clearing moveable tiles
   for (const hex of hexes) {
-    if (hex.fishTile && !hex.fixed) delete hex.fishTile;
+    if (hex.fishTile?.moveable) delete hex.fishTile;
   }
   // then, gather unassigned sea hexes. retain their indices so we can look up
   // their neighbors. note that we aren't excluding fixed hexes. there's no
-  // issue with shuffling a free tile onto a fixed hex, e.g. one representing
-  // the border
+  // issue with shuffling a moveable tile onto a fixed hex, e.g. one
+  // representing the border
   const seaHexes = hexes
     .map((hex, i) => [hex, i] as [Hex, number])
     .filter(([hex, _]) => hex.type === "sea" && !hex.port && !hex.fishTile);

@@ -70,8 +70,11 @@ const mixedPortBoardTemplate: CatanBoardTemplate = {
       { type: "sea", fixed: true, port: { type: "grain", orientation: 300 } },
       { type: "sea", fixed: true, port: { type: "3:1", orientation: 240 } },
       { type: "sea", fixed: true },
-      { type: "sea", port: { type: "timber", orientation: 300 } },
-      { type: "sea", port: { type: "wool", orientation: 240 } },
+      {
+        type: "sea",
+        port: { type: "timber", orientation: 300, moveable: true },
+      },
+      { type: "sea", port: { type: "wool", orientation: 240, moveable: true } },
     ],
     [
       { type: "desert", fixed: true },
@@ -97,9 +100,15 @@ const fishBoardTemplate: CatanBoardTemplate = {
       { type: "empty" },
       { type: "sea", fixed: true, fishTile: { number: 6, orientation: 120 } },
       { type: "sea", fixed: true },
-      { type: "sea", fishTile: { number: 8, orientation: 120 } },
+      {
+        type: "sea",
+        fishTile: { number: 8, orientation: 120, moveable: true },
+      },
       { type: "sea" },
-      { type: "sea", fishTile: { number: 9, orientation: 120 } },
+      {
+        type: "sea",
+        fishTile: { number: 9, orientation: 120, moveable: true },
+      },
       { type: "sea" },
       { type: "sea", fixed: true, fishTile: { number: 5, orientation: 120 } },
       { type: "sea", fixed: true, fishTile: { number: 4, orientation: 120 } },
@@ -119,7 +128,10 @@ const fishBoardTemplate: CatanBoardTemplate = {
       { type: "empty" },
       { type: "sea", fixed: true },
       { type: "sea", fixed: true },
-      { type: "sea", fishTile: { number: 10, orientation: 300 } },
+      {
+        type: "sea",
+        fishTile: { number: 10, orientation: 300, moveable: true },
+      },
       { type: "sea" },
       { type: "sea" },
       { type: "sea" },
@@ -751,8 +763,14 @@ describe("shuffle", () => {
     const badTemplate: CatanBoardTemplate = {
       board: [
         [
-          { type: "sea", port: { type: "ore", orientation: 240 } },
-          { type: "sea", port: { type: "brick", orientation: 300 } },
+          {
+            type: "sea",
+            port: { type: "ore", orientation: 240, moveable: true },
+          },
+          {
+            type: "sea",
+            port: { type: "brick", orientation: 300, moveable: true },
+          },
         ],
         [{ type: "empty" }, { type: "desert", fixed: true }],
       ],
@@ -804,8 +822,14 @@ describe("shuffle", () => {
       board: [
         [
           { type: "empty" },
-          { type: "sea", fishTile: { number: 6, orientation: 120 } },
-          { type: "sea", fishTile: { number: 6, orientation: 120 } },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
         ],
         [
           { type: "desert", fixed: true },
@@ -829,8 +853,14 @@ describe("shuffle", () => {
         ],
         [
           { type: "empty" },
-          { type: "sea", fishTile: { number: 6, orientation: 300 } },
-          { type: "sea", fishTile: { number: 6, orientation: 300 } },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 300, moveable: true },
+          },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 300, moveable: true },
+          },
         ],
       ],
     };
@@ -843,7 +873,12 @@ describe("shuffle", () => {
   it("should fail to shuffle fish tiles when there is not any suitable coastline", () => {
     const badTemplate: CatanBoardTemplate = {
       board: [
-        [{ type: "sea", fishTile: { number: 6, orientation: 120 } }],
+        [
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+        ],
         [{ type: "empty" }, { type: "desert", fixed: true }],
       ],
     };
@@ -1092,7 +1127,10 @@ describe("getValidPortOrientations", () => {
     const template: CatanBoardTemplate = {
       board: [
         [
-          { type: "sea", port: { type: "ore", orientation: 240 } },
+          {
+            type: "sea",
+            port: { type: "ore", orientation: 240, moveable: true },
+          },
           // this is the one we're testing. getValidPortOrientations expects
           // there to *not* be a port at the location being tested, because that
           // would indicate that it had already been assigned a port and
@@ -1165,7 +1203,10 @@ describe("getValidFishTileOrientations", () => {
         [{ type: "sea" }, { type: "pasture" }],
         [
           { type: "empty" },
-          { type: "sea", port: { type: "3:1", orientation: 120 } },
+          {
+            type: "sea",
+            port: { type: "3:1", orientation: 120, moveable: true },
+          },
           { type: "pasture" },
         ],
       ],
@@ -1183,7 +1224,10 @@ describe("getValidFishTileOrientations", () => {
         [{ type: "sea" }, { type: "pasture" }],
         [
           { type: "empty" },
-          { type: "sea", fishTile: { number: 6, orientation: 0 } },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 0, moveable: true },
+          },
           { type: "pasture" },
         ],
       ],
@@ -1200,7 +1244,10 @@ describe("getValidFishTileOrientations", () => {
         [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
         [
           { type: "pasture" },
-          { type: "sea", port: { type: "3:1", orientation: 0 } },
+          {
+            type: "sea",
+            port: { type: "3:1", orientation: 0, moveable: true },
+          },
           { type: "pasture" },
         ],
         [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
@@ -1212,7 +1259,11 @@ describe("getValidFishTileOrientations", () => {
     ).toEqual([]);
 
     delete template.board[1][1].port;
-    template.board[1][1].fishTile = { number: 6, orientation: 0 };
+    template.board[1][1].fishTile = {
+      number: 6,
+      orientation: 0,
+      moveable: true,
+    };
     board = catanBoardFactory(template);
     expect(
       getValidFishTileOrientations(3, board.recommendedLayout, board)
