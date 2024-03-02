@@ -1,5 +1,6 @@
 import { Tooltip, TextField } from "@mui/material";
 import { NumericConstraints } from "../types/constraints";
+
 interface Props {
   constraint: keyof NumericConstraints;
   min: number;
@@ -8,6 +9,7 @@ interface Props {
   toolTip: string;
   constraints: NumericConstraints;
   setConstraints: React.Dispatch<React.SetStateAction<NumericConstraints>>;
+  handleClose: () => void;
 }
 
 export default function NumericConstraintControl({
@@ -18,6 +20,7 @@ export default function NumericConstraintControl({
   toolTip,
   constraints,
   setConstraints,
+  handleClose,
 }: Props) {
   return (
     <Tooltip title={toolTip} placement="top" arrow disableInteractive>
@@ -44,6 +47,9 @@ export default function NumericConstraintControl({
         }
         error={!constraints[constraint].valid}
         disabled={!constraints[constraint].active}
+        onKeyUp={(e) => {
+          if (e.key === "Enter") handleClose();
+        }}
       />
     </Tooltip>
   );

@@ -193,6 +193,7 @@ export default function Randomizer({ setHexes, board, expansion }: Props) {
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
+            {...{ handleClose }}
           />
           <NumericConstraintControl
             constraint="maxIntersectionPipCount"
@@ -206,6 +207,7 @@ export default function Randomizer({ setHexes, board, expansion }: Props) {
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
+            {...{ handleClose }}
           />
           <NumericConstraintControl
             constraint="minIslandCount"
@@ -219,6 +221,7 @@ export default function Randomizer({ setHexes, board, expansion }: Props) {
             }
             constraints={numericConstraints}
             setConstraints={setNumericConstraints}
+            {...{ handleClose }}
           />
         </DialogContent>
         <DialogActions
