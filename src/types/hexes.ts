@@ -195,7 +195,7 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       inlandOnly: true;
     }
   | {
-      type: Exclude<NonResourceProducingHexType, ["sea", "lake"]>;
+      type: Exclude<NonResourceProducingHexType, "sea" | "lake">;
     }
 > & {
   /**
