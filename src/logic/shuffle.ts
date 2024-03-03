@@ -114,7 +114,7 @@ function getShuffledTerrain(
       // check constraints. we may have gotten ourself into a state from which
       // we can't meet the constraints without backtracking, so after a few
       // tries, we bail and start over. there are obviously more disciplined
-      // ways to do this (our procedure isn't necessarily comprehesive, and we
+      // ways to do this (our procedure isn't necessarily comprehensive, and we
       // may test the same state multiple times), but even an aged device can
       // blow through this very quickly, so there's no compelling reason to
       // improve it
