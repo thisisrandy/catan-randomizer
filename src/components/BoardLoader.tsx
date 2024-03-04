@@ -339,7 +339,7 @@ export default function BoardLoader({
         <Alert
           onClose={handleShareSnackClose}
           severity={shareSnackSeverity}
-          style={{ width: "100%" }}
+          style={{ maxWidth: 400 }}
         >
           {shareSnackMessage}
         </Alert>
