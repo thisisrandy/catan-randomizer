@@ -86,9 +86,9 @@ export type MaxPipsOnHexTypes = {
 
 /**
  * The number chits assigned to the hexes in the specified group(s) should not
- * be shuffled. The Seafarers: The Pirate Islands scenario, for example,
- * specifies that no number chits should be shuffled, and The Wonders of Catan
- * scenario only allows shuffling on the main island. Several notes:
+ * be shuffled. The The Pirate Islands scenario, for example, specifies that no
+ * number chits should be shuffled, and The Wonders of Catan scenario only
+ * allows shuffling on the main island. Several notes:
  *
  * 1. The default group (see {@link Hex[group]}) when none is specified is
  *    `undefined`, so in order to indicate the default group specifically, one
@@ -199,26 +199,26 @@ export type ExpansionName =
   | "Cities & Knights"
   | "Explorers & Pirates + Cities & Knights"
   | "Explorers & Pirates & Cities & Knights & Fish (Oh My!)"
-  | "Seafarers: Heading for New Shores 3-Player Set-up"
-  | "Seafarers: Heading for New Shores 4-Player Set-up"
-  | "Seafarers: The Four Islands 3-Player Set-up"
-  | "Seafarers: The Four Islands 4-Player Set-up"
-  | "Seafarers: The Fog Islands 3-Player Set-up"
-  | "Seafarers: The Fog Islands 4-Player Set-up"
-  | "Seafarers: Through the Desert 3-Player Set-up"
-  | "Seafarers: Through the Desert 4-Player Set-up"
-  | "Seafarers: The Forgotten Tribe"
-  | "Seafarers: Cloth for Catan"
-  | "Seafarers: The Pirate Islands"
-  | "Seafarers: The Pirate Islands (Shuffled)"
-  | "Seafarers: The Wonders of Catan"
-  | "Seafarers: The Wonders of Catan (Straight Constrained)"
-  | "Seafarers: New World"
-  | "Seafarers: New World of Fish"
-  | "Seafarers: New World Expanded"
-  | "Seafarers: New World of Fish Expanded"
-  | "Seafarers: New World Islands"
-  | "Seafarers: New World of Fish & Islands"
+  | "Heading for New Shores 3-Player Set-up"
+  | "Heading for New Shores 4-Player Set-up"
+  | "The Four Islands 3-Player Set-up"
+  | "The Four Islands 4-Player Set-up"
+  | "The Fog Islands 3-Player Set-up"
+  | "The Fog Islands 4-Player Set-up"
+  | "Through the Desert 3-Player Set-up"
+  | "Through the Desert 4-Player Set-up"
+  | "The Forgotten Tribe"
+  | "Cloth for Catan"
+  | "The Pirate Islands"
+  | "The Pirate Islands (Shuffled)"
+  | "The Wonders of Catan"
+  | "The Wonders of Catan (Straight Constrained)"
+  | "New World"
+  | "New World of Fish"
+  | "New World Expanded"
+  | "New World of Fish Expanded"
+  | "New World Islands"
+  | "New World of Fish & Islands"
   | "Everything, Everywhere, All at Once"
   | "Everything, Everywhere, All at Once, Variable"
   | "Seafarers & Pirates"

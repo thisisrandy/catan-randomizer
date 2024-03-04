@@ -21,16 +21,16 @@ import { useStateWithLocalStorage } from "../hooks/useStateWithLocalStorage";
 import { IncomingMessage, OutgoingMessage } from "../threading/shuffleWorker";
 
 const islandExpansions: ExpansionName[] = [
-  "Seafarers: Heading for New Shores 3-Player Set-up",
-  "Seafarers: Heading for New Shores 4-Player Set-up",
-  "Seafarers: Through the Desert 3-Player Set-up",
-  "Seafarers: Through the Desert 4-Player Set-up",
-  "Seafarers: New World",
-  "Seafarers: New World of Fish",
-  "Seafarers: New World Expanded",
-  "Seafarers: New World of Fish Expanded",
-  "Seafarers: New World of Fish & Islands",
-  "Seafarers: New World Islands",
+  "Heading for New Shores 3-Player Set-up",
+  "Heading for New Shores 4-Player Set-up",
+  "Through the Desert 3-Player Set-up",
+  "Through the Desert 4-Player Set-up",
+  "New World",
+  "New World of Fish",
+  "New World Expanded",
+  "New World of Fish Expanded",
+  "New World of Fish & Islands",
+  "New World Islands",
   "Everything, Everywhere, All at Once, Variable",
   "Seafarers & Pirates, Variable",
 ];

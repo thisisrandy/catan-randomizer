@@ -110,11 +110,11 @@ Catan_ setup, so there is no additional board specified.
     Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
     forest hex.
 - Combinations with [_Seafarers_](#seafarers):
-  - _Seafarers: New World of Fish_: The _New World_ scenario with fishing
-    ground tiles but no lake.
-  - _Seafarers: New World of Fish Expanded_: The [_New World Expanded_
+  - _New World of Fish_: The _New World_ scenario with fishing ground tiles but
+    no lake.
+  - _New World of Fish Expanded_: The [_New World Expanded_
     scenario](#expanded-versions) with fishing ground tiles and a lake.
-  - _Seafarers: New World of Fish & Islands_: The [_New World Islands_
+  - _New World of Fish & Islands_: The [_New World Islands_
     scenario](#expanded-versions) with fishing ground tiles and a lake.
 
 [^fish-attack-details]:
@@ -270,12 +270,11 @@ constraint settings in order to successfully shuffle it.
 
 According to the manual, for variable setup, "the two terrain hexes adjacent
 to the deserts shouldn't receive favorable numbers (neither 6 nor 8)." This is
-observed in the _Seafarers: The Wonders of Catan_ scenario. However, one can't
-help but wonder why the straight, which one must settle in order to build the
-Great Bridge, isn't similarly constrained. If this seems unfair to you, a
-_Seafarers: The Wonders of Catan (Straight Constrained)_ scenario is provided
-which disallows 6 or 8 appearing on either the desert- or straight-adjacent
-terrain hexes.
+observed in the _The Wonders of Catan_ scenario. However, one can't help but
+wonder why the straight, which one must settle in order to build the Great
+Bridge, isn't similarly constrained. If this seems unfair to you, a _The
+Wonders of Catan (Straight Constrained)_ scenario is provided which disallows 6
+or 8 appearing on either the desert- or straight-adjacent terrain hexes.
 
 ### Everything, Everywhere, All at Once
 

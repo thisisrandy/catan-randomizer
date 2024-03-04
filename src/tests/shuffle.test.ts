@@ -898,7 +898,7 @@ describe("shuffle", () => {
         active: true,
       },
     };
-    const board = EXPANSIONS.get("Seafarers: New World")!;
+    const board = EXPANSIONS.get("New World")!;
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(board, binaryConstraints, active);
       expect(countIslands(hexes, board)).toBeGreaterThanOrEqual(minIslands);
@@ -1277,10 +1277,8 @@ describe("countIslands", () => {
     expect(countIslands(catan.recommendedLayout, catan)).toEqual(1);
   });
 
-  it("should count four islands for Seafarers: Four Islands", () => {
-    const fourIslands = EXPANSIONS.get(
-      "Seafarers: The Four Islands 4-Player Set-up"
-    )!;
+  it("should count four islands for Four Islands", () => {
+    const fourIslands = EXPANSIONS.get("The Four Islands 4-Player Set-up")!;
     expect(countIslands(fourIslands.recommendedLayout, fourIslands)).toEqual(4);
   });
 });

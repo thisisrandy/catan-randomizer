@@ -550,7 +550,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
   },
-  "Seafarers: Heading for New Shores 3-Player Set-up": {
+  "Heading for New Shores 3-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -678,7 +678,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: Heading for New Shores 4-Player Set-up": {
+  "Heading for New Shores 4-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -787,7 +787,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: The Four Islands 3-Player Set-up": {
+  "The Four Islands 3-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -928,7 +928,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     minPipsOnHexTypes: { forest: 2, pasture: 2 },
   },
-  "Seafarers: The Four Islands 4-Player Set-up": {
+  "The Four Islands 4-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -1060,7 +1060,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     minPipsOnHexTypes: { forest: 2, pasture: 2 },
   },
-  "Seafarers: The Fog Islands 3-Player Set-up": {
+  "The Fog Islands 3-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -1189,7 +1189,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: The Fog Islands 4-Player Set-up": {
+  "The Fog Islands 4-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -1335,7 +1335,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: Through the Desert 3-Player Set-up": {
+  "Through the Desert 3-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -1435,7 +1435,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     maxPipsOnHexTypes: { gold: 4 },
   },
-  "Seafarers: Through the Desert 4-Player Set-up": {
+  "Through the Desert 4-Player Set-up": {
     board: [
       [
         { type: "empty" },
@@ -1548,7 +1548,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     maxPipsOnHexTypes: { gold: 4 },
   },
-  "Seafarers: The Forgotten Tribe": {
+  "The Forgotten Tribe": {
     board: [
       [
         { type: "empty" },
@@ -1685,7 +1685,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: Cloth for Catan": {
+  "Cloth for Catan": {
     board: [
       [
         { type: "empty" },
@@ -1789,7 +1789,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: The Pirate Islands": {
+  "The Pirate Islands": {
     board: [
       [
         { type: "empty" },
@@ -1904,7 +1904,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     fixNumbersInGroups: ["all"],
   },
-  "Seafarers: The Pirate Islands (Shuffled)": {
+  "The Pirate Islands (Shuffled)": {
     board: [
       [
         { type: "empty" },
@@ -2019,7 +2019,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     fixNumbersInGroups: [undefined],
   },
-  "Seafarers: The Wonders of Catan": {
+  "The Wonders of Catan": {
     board: [
       [
         { type: "empty" },
@@ -2137,7 +2137,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     fixNumbersInGroups: [2],
   },
-  "Seafarers: The Wonders of Catan (Straight Constrained)": {
+  "The Wonders of Catan (Straight Constrained)": {
     board: [
       [
         { type: "empty" },
@@ -2255,7 +2255,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     fixNumbersInGroups: [2],
   },
-  "Seafarers: New World": {
+  "New World": {
     board: [
       [
         { type: "empty" },
@@ -2380,7 +2380,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: New World of Fish": {
+  "New World of Fish": {
     board: [
       [
         { type: "empty" },
@@ -2523,7 +2523,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: New World Expanded": {
+  "New World Expanded": {
     board: [
       [
         { type: "empty" },
@@ -2655,7 +2655,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     maxPipsOnHexTypes: { gold: 3 },
   },
-  "Seafarers: New World of Fish Expanded": {
+  "New World of Fish Expanded": {
     board: [
       [
         { type: "empty" },
@@ -2805,7 +2805,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     horizontal: true,
     maxPipsOnHexTypes: { gold: 3 },
   },
-  "Seafarers: New World Islands": {
+  "New World Islands": {
     board: [
       [
         { type: "empty" },
@@ -2958,7 +2958,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
     ],
     horizontal: true,
   },
-  "Seafarers: New World of Fish & Islands": {
+  "New World of Fish & Islands": {
     board: [
       [
         { type: "empty" },
