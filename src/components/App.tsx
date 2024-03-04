@@ -63,9 +63,25 @@ function App() {
       : EXPANSIONS.get("Catan")!
   );
   const [hexes, setHexes] = useState<Hex[]>(board.recommendedLayout);
+  // a2b9badd removed the Seafarers: prefix from relevant expansion names. The
+  // updater below preserves boards saved with the old style naming
   const [savedBoards, setSavedBoards] = useStateWithLocalStorage<SavedBoards>(
     "savedBoards",
-    {}
+    {},
+    undefined,
+    2,
+    {
+      1: (prev: SavedBoards) => {
+        return Object.fromEntries(
+          Object.entries(prev).map(([k, v]: [string, SavedBoard]) => {
+            return [
+              k,
+              { ...v, expansion: v.expansion.replace(/^Seafarers: /, "") },
+            ];
+          })
+        );
+      },
+    }
   );
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
