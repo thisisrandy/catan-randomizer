@@ -1,8 +1,10 @@
 import { EXPANSIONS } from "../data/expansions";
-import catanBoardFactory from "../factories/boardFactory";
+import catanBoardFactory, { BoardSpecError } from "../factories/boardFactory";
 import {
   countIslands,
+  FishShufflingError,
   getIntersectionPipCounts,
+  getValidFishTileOrientations,
   getValidPortOrientations,
   NumberShufflingError,
   PortShufflingError,
@@ -68,8 +70,11 @@ const mixedPortBoardTemplate: CatanBoardTemplate = {
       { type: "sea", fixed: true, port: { type: "grain", orientation: 300 } },
       { type: "sea", fixed: true, port: { type: "3:1", orientation: 240 } },
       { type: "sea", fixed: true },
-      { type: "sea", port: { type: "timber", orientation: 300 } },
-      { type: "sea", port: { type: "wool", orientation: 240 } },
+      {
+        type: "sea",
+        port: { type: "timber", orientation: 300, moveable: true },
+      },
+      { type: "sea", port: { type: "wool", orientation: 240, moveable: true } },
     ],
     [
       { type: "desert", fixed: true },
@@ -89,6 +94,73 @@ const mixedPortBoardTemplate: CatanBoardTemplate = {
   ],
 };
 const mixedPortBoard = catanBoardFactory(mixedPortBoardTemplate);
+const fishBoardTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "empty" },
+      { type: "sea", fixed: true, fishTile: { number: 6, orientation: 120 } },
+      { type: "sea", fixed: true },
+      {
+        type: "sea",
+        fishTile: { number: 8, orientation: 120, moveable: true },
+      },
+      { type: "sea" },
+      {
+        type: "sea",
+        fishTile: { number: 9, orientation: 120, moveable: true },
+      },
+      { type: "sea" },
+      { type: "sea", fixed: true, fishTile: { number: 5, orientation: 120 } },
+      { type: "sea", fixed: true, fishTile: { number: 4, orientation: 120 } },
+    ],
+    [
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+      { type: "desert", fixed: true },
+    ],
+    [
+      { type: "empty" },
+      { type: "sea", fixed: true },
+      { type: "sea", fixed: true },
+      {
+        type: "sea",
+        fishTile: { number: 10, orientation: 300, moveable: true },
+      },
+      { type: "sea" },
+      { type: "sea" },
+      { type: "sea" },
+      { type: "sea" },
+      { type: "sea", fixed: true },
+    ],
+  ],
+};
+const fishBoard = catanBoardFactory(fishBoardTemplate);
+const multiNumberTemplate: CatanBoardTemplate = {
+  board: [
+    [
+      { type: "empty" },
+      { type: "mountains", number: 3, secondNumber: 10 },
+      { type: "hills", number: 5 },
+    ],
+    [
+      { type: "pasture", number: 12, secondNumber: 4 },
+      { type: "fields", number: 2 },
+      { type: "mountains", number: 8 },
+    ],
+    [
+      { type: "empty" },
+      { type: "hills", number: 6 },
+      { type: "forest", number: 9 },
+    ],
+  ],
+};
+const multiNumberBoard = catanBoardFactory(multiNumberTemplate);
 /** We're dealing with random shuffling here, so we need many samples to detect
  * certain behavior with high probability */
 const numSamples = 50;
@@ -438,6 +510,66 @@ describe("shuffle", () => {
     }
   });
 
+  it("should shuffle number groups separately but terrain all together", () => {
+    // The terrain on this board must be shuffled every time in order to meet
+    // the maxConnectedLikeTerrain constraint
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "pasture", number: 11, numberGroup: 1 }],
+        [{ type: "empty" }, { type: "pasture", number: 12, numberGroup: 1 }],
+        [{ type: "hills", number: 2, numberGroup: 2 }],
+        [{ type: "empty" }, { type: "hills", number: 3, numberGroup: 2 }],
+        [{ type: "hills", number: 4, numberGroup: 2 }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    const startingNumbers = board.recommendedLayout.map((h) => h.number!);
+    let numbersWereShuffled = false;
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      expect(
+        hexes
+          .slice(0, 3)
+          .map((h) => [10, 11, 12].includes(h.number!))
+          .every((v) => v)
+      ).toBe(true);
+      expect(
+        hexes
+          .slice(3, -1)
+          .map((h) => [2, 3, 4].includes(h.number!))
+          .every((v) => v)
+      ).toBe(true);
+      if (hexes.map((h, i) => h.number! !== startingNumbers[i]))
+        numbersWereShuffled = true;
+      expect(
+        hexes.slice(0, 3).some((h) => h.type === "hills") &&
+          hexes.slice(3, -1).some((h) => h.type === "pasture")
+      ).toBe(true);
+    }
+    expect(numbersWereShuffled).toBe(true);
+  });
+
+  it("shouldn't allow group and numberGroup to be used on the same board", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "pasture", number: 11, group: 2 }],
+      ],
+    };
+    expect(() => catanBoardFactory(template)).toThrowError(BoardSpecError);
+  });
+
+  it("shouldn't allow hexes without numbers to be free when numberGroup is used", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture", number: 10, numberGroup: 1 }],
+        [{ type: "desert" }],
+      ],
+    };
+    expect(() => catanBoardFactory(template)).toThrowError(BoardSpecError);
+  });
+
   it("should throw a ShufflingError when the board is over-constrained", () => {
     const template: CatanBoardTemplate = {
       board: [
@@ -461,7 +593,7 @@ describe("shuffle", () => {
     ).toThrowError(NumberShufflingError);
   });
 
-  it("shouldn't shuffle fixed number groups", () => {
+  it("shouldn't shuffle numbers in groups in which they are fixed", () => {
     const groupToFix = 2;
     const template: CatanBoardTemplate = {
       board: [
@@ -631,8 +763,14 @@ describe("shuffle", () => {
     const badTemplate: CatanBoardTemplate = {
       board: [
         [
-          { type: "sea", port: { type: "ore", orientation: 240 } },
-          { type: "sea", port: { type: "brick", orientation: 300 } },
+          {
+            type: "sea",
+            port: { type: "ore", orientation: 240, moveable: true },
+          },
+          {
+            type: "sea",
+            port: { type: "brick", orientation: 300, moveable: true },
+          },
         ],
         [{ type: "empty" }, { type: "desert", fixed: true }],
       ],
@@ -641,6 +779,113 @@ describe("shuffle", () => {
     expect(() =>
       shuffle(badBoard, binaryConstraints, numericConstraints)
     ).toThrowError(PortShufflingError);
+  });
+
+  it(
+    "should shuffle fish tiles on fixed hexes without" +
+      " changing their position or orientation",
+    () => {
+      let numDifferent = 0;
+      for (let i = 0; i < numSamples; i++) {
+        const hexes = shuffle(fishBoard, binaryConstraints, numericConstraints);
+        for (const [i, shuffledHex] of hexes.entries()) {
+          const origHex = fishBoard.recommendedLayout[i];
+          if (origHex.fixed && origHex.fishTile) {
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(shuffledHex.fishTile).toBeDefined();
+            const origTile = fishBoard.recommendedLayout[i].fishTile!,
+              shuffledTile = shuffledHex.fishTile!;
+            if (origTile.number !== shuffledTile.number) numDifferent++;
+            // eslint-disable-next-line jest/no-conditional-expect
+            expect(origTile.orientation).toEqual(shuffledTile.orientation);
+          }
+        }
+      }
+      expect(numDifferent).toBeGreaterThan(0);
+    }
+  );
+
+  it("should shuffle fish tiles originating on non-fixed hexes freely", () => {
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(fishBoard, binaryConstraints, numericConstraints);
+      for (const [i, shuffledHex] of hexes.entries()) {
+        if (shuffledHex.fishTile && !fishBoard.recommendedLayout[i].fishTile) {
+          return;
+        }
+      }
+    }
+    expect(true).toBe(false);
+  });
+
+  it("should fail to shuffle fish tiles on a crowded board", () => {
+    const badTemplate: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+        ],
+        [
+          { type: "desert", fixed: true },
+          { type: "desert", fixed: true },
+          { type: "desert", fixed: true },
+        ],
+      ],
+    };
+    const badBoard = catanBoardFactory(badTemplate);
+    expect(() =>
+      shuffle(badBoard, binaryConstraints, numericConstraints)
+    ).toThrowError(FishShufflingError);
+
+    // For good measure, orient the tiles in a different way and check again
+    const badTemplate2: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "desert", fixed: true },
+          { type: "desert", fixed: true },
+          { type: "desert", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 300, moveable: true },
+          },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 300, moveable: true },
+          },
+        ],
+      ],
+    };
+    const badBoard2 = catanBoardFactory(badTemplate2);
+    expect(() =>
+      shuffle(badBoard2, binaryConstraints, numericConstraints)
+    ).toThrowError(FishShufflingError);
+  });
+
+  it("should fail to shuffle fish tiles when there is not any suitable coastline", () => {
+    const badTemplate: CatanBoardTemplate = {
+      board: [
+        [
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+        ],
+        [{ type: "empty" }, { type: "desert", fixed: true }],
+      ],
+    };
+    const badBoard = catanBoardFactory(badTemplate);
+    expect(() =>
+      shuffle(badBoard, binaryConstraints, numericConstraints)
+    ).toThrowError(FishShufflingError);
   });
 
   it("should obey the minIslandCount constraint when active", () => {
@@ -692,6 +937,103 @@ describe("shuffle", () => {
       TerrainShufflingError
     );
   });
+
+  it("shouldn't separate paired number chits during shuffling", () => {
+    // See multiNumberTemplate. This is index by the number property to value
+    // of the secondNumber property
+    const firstToSecondNumber = [
+      null,
+      null,
+      undefined,
+      10,
+      null,
+      undefined,
+      undefined,
+      null,
+      undefined,
+      undefined,
+      null,
+      null,
+      4,
+    ];
+    const localNumericConstraints = {
+      ...numericConstraints,
+      maxIntersectionPipCount: {
+        ...numericConstraints.maxIntersectionPipCount,
+        value: 15,
+      },
+    };
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        multiNumberBoard,
+        binaryConstraints,
+        localNumericConstraints
+      );
+      for (const hex of hexes) {
+        expect(firstToSecondNumber[hex.number!]).toBe(hex.secondNumber);
+      }
+    }
+  });
+
+  it("should not shuffle inlandOnly hexes onto the coastline", () => {
+    const board = EXPANSIONS.get("The Fishermen of Catan")!;
+    // Rather than paste in the shuffling logic that checks this, we can
+    // instead check the all the coastal and inland indices and assert that
+    // they do not and do contain the lake, respectively
+    const coastalIndices = [5, 6, 7, 10, 13, 16, 20, 23, 26, 29, 30, 31];
+    const inlandIndices = [11, 12, 17, 18, 19, 24, 25];
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(board, binaryConstraints, numericConstraints);
+      expect(
+        coastalIndices
+          .map((i) => hexes[i].type !== "lake")
+          .reduce((acc, n) => acc && n)
+      ).toBe(true);
+      expect(
+        inlandIndices
+          .map((i) => hexes[i].type === "lake")
+          .reduce((acc, n) => acc || n)
+      ).toBe(true);
+    }
+  });
+
+  it("should fail to shuffle inlandOnly hexes only islands with only coastline", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "sea", fixed: true },
+          { type: "mountains", number: 8 },
+          { type: "pasture", number: 3 },
+          { type: "lake", inlandOnly: true },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "hills", number: 4 },
+          { type: "fields", number: 11 },
+          { type: "sea", fixed: true },
+        ],
+        [
+          { type: "empty" },
+          { type: "empty" },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(() =>
+      shuffle(board, binaryConstraints, numericConstraints)
+    ).toThrowError(TerrainShufflingError);
+  });
 });
 
 const pipCountingTemplate: CatanBoardTemplate = {
@@ -727,6 +1069,21 @@ describe("getIntersectionPipCount", () => {
         atIndex,
         onlyHigher: false,
       }).sort((a, b) => a - b);
+      expect(pipCounts).toEqual(expected);
+    }
+  });
+
+  it("should correctly report the pip counts of intersections including multiple chits per hex", () => {
+    for (const [atIndex, expected] of [
+      [0, [10, 10, 9, 9]],
+      [3, [10, 10, 10, 10, 10, 10]],
+    ] as const) {
+      const pipCounts = getIntersectionPipCounts({
+        board: multiNumberBoard,
+        hexes: multiNumberBoard.recommendedLayout,
+        atIndex,
+        onlyHigher: false,
+      });
       expect(pipCounts).toEqual(expected);
     }
   });
@@ -770,7 +1127,10 @@ describe("getValidPortOrientations", () => {
     const template: CatanBoardTemplate = {
       board: [
         [
-          { type: "sea", port: { type: "ore", orientation: 240 } },
+          {
+            type: "sea",
+            port: { type: "ore", orientation: 240, moveable: true },
+          },
           // this is the one we're testing. getValidPortOrientations expects
           // there to *not* be a port at the location being tested, because that
           // would indicate that it had already been assigned a port and
@@ -790,6 +1150,124 @@ describe("getValidPortOrientations", () => {
     expect(getValidPortOrientations(1, board.recommendedLayout, board)).toEqual(
       [180, 240]
     );
+  });
+});
+
+describe("getValidFishTileOrientations", () => {
+  it("should not find any valid orientations when none exist", () => {
+    const template: CatanBoardTemplate = {
+      board: [[{ type: "empty" }, { type: "pasture" }], [{ type: "sea" }]],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([]);
+    expect(
+      getValidFishTileOrientations(0, board.recommendedLayout, board)
+    ).toEqual([]);
+  });
+
+  it("should find one valid orientation when one exists", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([0]);
+  });
+
+  it("should find many valid orientations when many exist", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+        [{ type: "pasture" }, { type: "sea" }, { type: "pasture" }],
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board).sort(
+        (a, b) => a - b
+      )
+    ).toEqual([0, 60, 120, 180, 240, 300]);
+  });
+
+  it("should allow placement next to a port", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            port: { type: "3:1", orientation: 120, moveable: true },
+          },
+          { type: "pasture" },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([0]);
+  });
+
+  it("should not allow placement next to another fish tile", () => {
+    const template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }],
+        [{ type: "sea" }, { type: "pasture" }],
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            fishTile: { number: 6, orientation: 0, moveable: true },
+          },
+          { type: "pasture" },
+        ],
+      ],
+    };
+    const board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(1, board.recommendedLayout, board)
+    ).toEqual([]);
+  });
+
+  it("should not allow placement on the same hex as a port or another fish tile", () => {
+    let template: CatanBoardTemplate = {
+      board: [
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+        [
+          { type: "pasture" },
+          {
+            type: "sea",
+            port: { type: "3:1", orientation: 0, moveable: true },
+          },
+          { type: "pasture" },
+        ],
+        [{ type: "empty" }, { type: "pasture" }, { type: "pasture" }],
+      ],
+    };
+    let board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board)
+    ).toEqual([]);
+
+    delete template.board[1][1].port;
+    template.board[1][1].fishTile = {
+      number: 6,
+      orientation: 0,
+      moveable: true,
+    };
+    board = catanBoardFactory(template);
+    expect(
+      getValidFishTileOrientations(3, board.recommendedLayout, board)
+    ).toEqual([]);
   });
 });
 

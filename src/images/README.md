@@ -25,7 +25,9 @@ As some expansions are played with hexes rotated 90°, two varieties of hexes ar
      boards. The [Seafarers
      manual](https://www.catan.com/sites/prod/files/2021-06/catan-seafarers_2021_rule_book_201201.pdf)
      does this will all terrain hexes except for gold mines, for which a true
-     horizontal hex is provided, so we follow their lead here.
+     horizontal hex is provided, so we follow their lead here. UPDATE: This can
+     now be done automatically by specifying the horizontal image as `"auto"`
+     as detailed [below](#using-new-hexes).
 
 Note finally that the soft border color around hex images is slightly different
 between some of the manuals. Use a color picker tool to determine the exact

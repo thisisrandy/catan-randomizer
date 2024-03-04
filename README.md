@@ -47,6 +47,129 @@ are supported.
 [Cities & Knights](https://www.catan.com/cities-knights), which is identical to
 [Catan](#catan) except for the recommended beginner setup, is supported.
 
+### Traders & Barbarians
+
+All scenarios described in the manual are supported in every aspect, and
+combinations of _The Fishermen of Catan_ and other scenarios have been added
+where appropriate.
+
+#### On Shuffling _Barbarian Attack_
+
+Numbers and terrain are shuffled in two separate ("inner" and "outer") groups.
+It isn't possible to construct the inner group with fewer than 11 pips per
+intersection, so make sure to adjust your constraints accordingly.
+
+#### Combinations with _The Fishermen of Catan_
+
+This section details ways to combine _The Fishermen of Catan_ with each of the
+other _Traders & Barbarians_ scenarios and other expansions. Note that some
+combinations differ from the [official
+combinations](https://www.catan.com/traders-barbarians). In particular, we
+almost always include the lake, whereas the official combinations frequently
+exclude it, and we sometimes recommend a different choice for hex/chit removal.
+You should still read the official rules for each combination, some of which
+include additional rules. Note also that preparation for the combination with
+_Cities & Knights_ is just a matter of using the normal _The Fishermen of
+Catan_ setup, so there is no additional board specified.
+
+- _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
+  One grain hex and the 2 & 12 chits have been removed to make way for the
+  lake. See [below](#fishing-without-2-%26-12-chits).
+- _The Fishy Caravans_: Combination with _The Caravans_. One forest hex has
+  been removed to make way for the lake, and the 2 & 12 chits have been
+  combined onto a single hex.
+- _Barbarians Attack the Fish_: Combination with _Barbarian Attack_. One of the
+  interior grain hexes and the interior 3 chit have been removed to make way
+  for the lake.[^fish-attack-details]
+- _Traders & Barbarians & Fish_: Combination with _Traders & Barbarians_. Since
+  the 2 & 12 chits are already not present on the board, a 3 chit along with a
+  forest hex are removed to make way for the lake. See
+  [below](#fishing-without-2-%26-12-chits).
+- _Traders & Barbarians Ultimate_: [The "Ultimate" community-created _Traders &
+  Barbarians_ setup that combines all five
+  scenarios](https://www.catan.com/sites/default/files/2022-08/Traders%20%26%20Barbarians%20Ultimate_new.pdf).
+  - There are 18 total variations on the placement of scenario hexes which the
+    authors suggest you choose by rolling a 3-color die and a number die. The
+    map names are as such suffixed with `\((green|purple|orange) [1-6]\)`. If
+    you don't speak [regex](https://en.wikipedia.org/wiki/Regular_expression),
+    that's e.g. _Traders & Barbarians Ultimate (green 1)_.
+  - There are no sea hexes in three of the corners to show where to make space
+    between the borders. However, if you have one hex length pieces from other
+    expansions, it is recommended that you use them so the border is stable.
+- Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
+  cases, one pasture hex and the 12 chit have been removed to make way for the
+  lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
+  pirate's lair/goldmine chit that may come into play later in the game. Once
+  this is revealed, players may choose to add the removed 12 chit to the same
+  hex and then play normally, ignoring the recommendations below. Alternately,
+  since gold is distributed on no production rolls in _E & P_, the
+  recommendations below may be ignored from the outset.
+  - _Explorers & Pirates & Fish_: _E & P_ with fishing ground tiles and a lake.
+  - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
+    configured as recommended for combination with [_Cities &
+    Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
+    forest hex.
+- Combinations with [_Seafarers_](#seafarers):
+  - _Seafarers: New World of Fish_: The _New World_ scenario with fishing
+    ground tiles but no lake.
+  - _Seafarers: New World of Fish Expanded_: The [_New World Expanded_
+    scenario](#expanded-versions) with fishing ground tiles and a lake.
+  - _Seafarers: New World of Fish & Islands_: The [_New World Islands_
+    scenario](#expanded-versions) with fishing ground tiles and a lake.
+
+[^fish-attack-details]:
+    _Barbarian Attack_ is constructed so that every number chit is represented
+    exactly once along the coastline, so it isn't possible to remove or
+    combine the 2 & 12 chits without altering the scenario mechanics in an
+    undesirable way.
+
+##### Fishing without 2 & 12 chits
+
+Combining _The Fishermen of Catan_ with other scenarios often necessitates
+removing the 2 & 12 chits from the board. This section outlines some
+recommendations for how to handle play when those numbers are rolled or drawn
+from the Event Card stack.
+
+- If either of 2 or 12 are rolled or drawn from the Event Card stack, resolve
+  any events, distribute fish to players with cities or settlements adjacent to
+  the lake, and then roll/draw again until a number 3-11 comes up. In the
+  unlikely event that the other of the two 2/12 Event Cards is drawn, resolve
+  it and again distribute fish, but ignore additional 2/12 rolls if playing
+  with dice.[^two-twelve-card]
+- If a 2 or 12 Event Card increases any player's resource card count, their
+  card count remains as it was at the beginning of the turn for the purposes of
+  a 7 roll. For example, if _Plentiful Year_ (2) is drawn and a player's card
+  count increases to 8, they are not penalized if the next card is a 7.
+
+[^two-twelve-card]:
+    Since there is only one card for each of the 36 possible rolls, it would be
+    unfair to players settled adjacent to the lake to ignore their fish
+    production. However, since fair die rolls are [independent and identically
+    distributed](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables)
+    events, subsequent 2/12 rolls can be ignored without compromising fairness.
+    Event resolution is perhaps more open to argument. Decide amongst
+    yourselves beforehand if you want to ignore the second/both 2/12 card
+    events and just distribute fish.
+
+##### Rules for arranging fishing ground tiles
+
+There are no official rules for the variable placement of fishing ground tiles
+(the rules for combining with Seafarers simply state "distribute ... according
+to your personal taste"). Internally, the shuffler is enforcing the following
+constraints:
+
+1. All three points of each tile must be pointing at inhabitable intersections.
+2. The hex on which a tile is placed must not contain a port but may be next to
+   one. It may not contain more than one fish tile.
+3. As with ports, no intersection may be adjacent to more than one fish tile.
+   However, intersections adjacent to both a port and fish tile are valid.
+
+Additionally, as noted in the official rules, the lake must always be inland,
+i.e. not adjacent to any sea hex.
+
+If you are receiving an error related to fishing ground tile placement, please
+check that your board specification conforms to these rules.
+
 ### Explorers & Pirates
 
 Shuffling of the starting island for [Explorers &
@@ -81,7 +204,9 @@ The following scenarios support this constraint:
 - _Heading for New Shores_
 - _Through the Desert_
 - _New World_
+- _New World of Fish_
 - _New World Expanded_
+- _New World of Fish Expanded_
 - _New World Islands_
 - _Everything, Everywhere, All at Once, Variable_
 - _Seafarers & Pirates, Variable_
@@ -112,9 +237,9 @@ There are two additional scenarios provided which do not appear in the manual:
   terrain hexes, i.e. adding the 3 deserts, 2 gold fields, and remaining hill
   and mountain hexes (1 each). Gold fields are restricted to 3 or fewer pips to
   prevent overly favorable initial settlement opportunities. There is one more
-  number chit than resource-producing hex[^1], so, following the _The Wonders
-  of Catan_ scenario, the second 12 chit is excluded. It is recommended to
-  increase the victory point goal for this board to 14.
+  number chit than resource-producing hex[^extra-number-chit], so, following
+  the _The Wonders of Catan_ scenario, the second 12 chit is excluded. It is
+  recommended to increase the victory point goal for this board to 14.
 - _New World Islands_: Same as _New World Expanded_, but with distinct and
   separately-shuffled main and foreign island areas. Following the _Through the
   Desert_ scenario, gold fields and some of the better number chits are
@@ -123,7 +248,7 @@ There are two additional scenarios provided which do not appear in the manual:
   recommended. Since gold fields can only appear on foreign islands, the pip
   restriction from _New World Expanded_ is removed.
 
-[^1]:
+[^extra-number-chit]:
     For the curious, the extra number chit is used exclusively in the _Cloth
     for Catan_ scenario, where each cloth island has a number chit on both its
     east and west sides representing separate villages.
@@ -213,8 +338,8 @@ Everywhere, All at Once_.
   2. Then, using the 2 two hex length and 2 one hex length border pieces from
      _SF_, further extend the long side borders by three hex lengths on each
      side.
-  3. Using _SF_ hexes and number chits, create an addition 5[^2] islands
-     (henceforth _Far Islands_) as specified on the far side of the world.
+  3. Using _SF_ hexes and number chits, create an addition 5[^variable-islands]
+     islands (henceforth _Far Islands_) as specified on the far side of the world.
 - **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
   for _SF_). If also using _CK_, add an additional 5 points, for a grand total
   of 27 VPs.
@@ -307,7 +432,7 @@ Everywhere, All at Once_.
   have the strongest army to defend against the barbarians, they are also
   trying to assemble the largest army in terms of number of knights alone.
 
-[^2]:
+[^variable-islands]:
     The _Variable_ [scenarios](#scenarios) may have fewer than 5 _Far Islands_
     (6 including the main island), depending on the value of the [Min
     Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.

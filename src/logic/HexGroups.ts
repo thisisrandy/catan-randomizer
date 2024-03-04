@@ -98,10 +98,13 @@ export class HexGroups {
     skipGroups?: FixNumbersInGroupStrict[]
   ) {
     const groupsAndIndices: [number | undefined, number][] = hexes.map(
-      (h, i) => [h.group, i]
+      (h, i) => [
+        h.group || (shuffleType === "numbers" && h.numberGroup) || undefined,
+        i,
+      ]
     );
     const uniqueGroups = Array.from(
-      new Set(hexes.map((h) => h.group)).values()
+      new Set(groupsAndIndices.map(([g, _]) => g)).values()
     );
     this.#hexGroups = uniqueGroups
       .filter((groupId) => !(skipGroups && skipGroups.includes(groupId)))
