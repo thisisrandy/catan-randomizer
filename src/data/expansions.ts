@@ -2850,7 +2850,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
         { type: "sea", port: { type: "3:1", orientation: 0, moveable: true }, group: 2 },
         { type: "sea", fixed: true, fishTile: { number: 10, orientation: 0, moveable: true } },
         { type: "pasture", number: 10 },
-        { type: "lake", inlandOnly: true,  fixed: true },
+        { type: "lake", inlandOnly: true },
         { type: "hills", number: 6 },
         { type: "sea", fixed: true },
       ],
