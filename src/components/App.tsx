@@ -84,6 +84,8 @@ function App() {
    */
   const changeExpansion = useCallback(
     (expansion: ExpansionName, hexes?: Hex[]) => {
+      if (!EXPANSIONS.has(expansion))
+        throw new Error(`Unrecognized expansion "${expansion}"`);
       setExpansion(expansion);
       const board = EXPANSIONS.get(expansion)!;
       setBoard(board);
@@ -103,8 +105,6 @@ function App() {
       try {
         const [sharedBoardName, sharedBoard]: [keyof SavedBoards, SavedBoard] =
           JSON.parse(sharedBoardStr, reviver);
-        if (!EXPANSIONS.has(sharedBoard.expansion))
-          throw new Error(`Unrecognized expansion "${sharedBoard.expansion}"`);
         changeExpansion(sharedBoard.expansion, sharedBoard.hexes);
         setSaveName(sharedBoardName as string);
         setSaveContext("You opened a shared board. Would you like to save it?");

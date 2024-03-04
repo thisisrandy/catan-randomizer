@@ -55,9 +55,17 @@ export default function BoardLoader({
 
   const handleDialogClose = () => setDialogOpen(false);
   const handleLoad = () => {
-    const saved = savedBoards[gameToLoad!];
-    changeExpansion(saved.expansion, saved.hexes);
-    handleDialogClose();
+    try {
+      const saved = savedBoards[gameToLoad!];
+      changeExpansion(saved.expansion, saved.hexes);
+      handleDialogClose();
+    } catch (error) {
+      setShareSnackSeverity("error");
+      setShareSnackMessage(
+        `Something went wrong trying to open a saved board: ${error}`
+      );
+      setShareSnackOpen(true);
+    }
   };
 
   const handleConfirmDeletion =
