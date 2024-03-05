@@ -71,16 +71,13 @@ function App() {
     undefined,
     2,
     {
-      1: (prev: SavedBoards) => {
-        return Object.fromEntries(
-          Object.entries(prev).map(([k, v]: [string, SavedBoard]) => {
-            return [
-              k,
-              { ...v, expansion: v.expansion.replace(/^Seafarers: /, "") },
-            ];
-          })
-        );
-      },
+      1: (prev: SavedBoards) =>
+        Object.fromEntries(
+          Object.entries(prev).map(([k, v]: [string, SavedBoard]) => [
+            k,
+            { ...v, expansion: v.expansion.replace(/^Seafarers: /, "") },
+          ])
+        ),
     }
   );
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
