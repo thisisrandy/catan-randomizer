@@ -208,6 +208,7 @@ The following scenarios support this constraint:
 - _New World Expanded_
 - _New World of Fish Expanded_
 - _New World Islands_
+- _New World of Fish & Islands_
 - _Everything, Everywhere, All at Once, Variable_
 - _Seafarers & Pirates, Variable_
 
