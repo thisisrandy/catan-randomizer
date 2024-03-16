@@ -192,7 +192,7 @@ function getShuffledTerrain(
       encounteredIslandError = true;
       if (retries++ > MAX_RETRIES)
         throw new TerrainShufflingError(
-          encounteredIslandError ? inlandError : islandError
+          encounteredInlandError ? inlandError : islandError
         );
       // eslint-disable-next-line no-extra-label
       continue topLoop;
