@@ -59,6 +59,13 @@ Numbers and terrain are shuffled in two separate ("inner" and "outer") groups.
 It isn't possible to construct the inner group with fewer than 11 pips per
 intersection, so make sure to adjust your constraints accordingly.
 
+#### Spinning Oasis
+
+Wherever applicable, the Oasis hex from _The Caravans_ scenario is randomly
+spun to increase board variability. The official rules specify that it's always
+in a fixed orientation, so if you prefer that, ignore the orientation that the
+shuffler produces.
+
 #### Combinations with _The Fishermen of Catan_
 
 This section details ways to combine _The Fishermen of Catan_ with each of the

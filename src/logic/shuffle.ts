@@ -10,6 +10,7 @@ import { BinaryConstraints, NumericConstraints } from "../types/constraints";
 import { CatanBoard, Neighbors } from "../types/boards";
 import { HexGroups } from "./HexGroups";
 import { compareHexType, hexToPipCount } from "../utils/catan";
+import { select } from "../utils/random";
 
 // structuredClone isn't available on older devices. use this as a polyfill
 if (typeof globalThis.structuredClone === "undefined") {
@@ -108,6 +109,12 @@ function getShuffledTerrain(
       currentIndex >= 0;
       currentIndex--
     ) {
+      // Fixed hexes are allowed to spin, so we spin them before checking for
+      // fixity
+      if (hexes[currentIndex].spinFreely) {
+        hexes[currentIndex].orientation = select(0, 60, 120, 180, 240, 300);
+      }
+
       // if this hex is fixed, skip it
       if (hexes[currentIndex].fixed) continue;
 

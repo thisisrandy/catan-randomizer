@@ -1034,6 +1034,39 @@ describe("shuffle", () => {
       shuffle(board, binaryConstraints, numericConstraints)
     ).toThrowError(TerrainShufflingError);
   });
+
+  it("should spin the oasis to all valid orientations", () => {
+    const template: CatanBoardTemplate = {
+      board: [[{ type: "oasis", spinFreely: true }]],
+    };
+    const board = catanBoardFactory(template);
+    const seen = {
+      0: false,
+      60: false,
+      120: false,
+      180: false,
+      240: false,
+      300: false,
+    };
+    for (let i = 0; i < numSamples; i++) {
+      seen[
+        shuffle(board, binaryConstraints, numericConstraints)[0].orientation!
+      ] = true;
+    }
+    expect(Object.values(seen).reduce((acc, v) => acc && v)).toBe(true);
+  });
+
+  it("shouldn't spin hexes for which spinFreely is not specified", () => {
+    const template: CatanBoardTemplate = {
+      board: [[{ type: "mountains" }]],
+    };
+    const board = catanBoardFactory(template);
+    for (let i = 0; i < numSamples; i++) {
+      expect(
+        shuffle(board, binaryConstraints, numericConstraints)[0].orientation
+      ).toBeUndefined();
+    }
+  });
 });
 
 const pipCountingTemplate: CatanBoardTemplate = {

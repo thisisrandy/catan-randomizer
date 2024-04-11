@@ -49,7 +49,9 @@ describe("Catan utils", () => {
     expect(
       compareHexType({ type: "riverPasture" }, { type: "riverPasture" })
     ).toBe(true);
-    expect(compareHexType({ type: "desert" }, { type: "oasis" })).toBe(true);
+    expect(
+      compareHexType({ type: "desert" }, { type: "oasis", spinFreely: true })
+    ).toBe(true);
     expect(
       compareHexType({ type: "mountains" }, { type: "riverPasture" })
     ).toBe(false);

@@ -195,7 +195,17 @@ type Hex<T extends Record<string, unknown> = never> = StrictUnion<
       inlandOnly: true;
     }
   | {
-      type: Exclude<NonResourceProducingHexType, "sea" | "lake">;
+      type: "oasis";
+      /**
+       * The Oasis hex from Traders & Barbarians can be spun to increase board
+       * variability. While the code to support this is general, the type only
+       * allows for Oasis hexes to have this flag, since there are no other
+       * known examples of hexes which can be freely spun
+       */
+      spinFreely: true;
+    }
+  | {
+      type: Exclude<NonResourceProducingHexType, "sea" | "lake" | "oasis">;
     }
 > & {
   /**
