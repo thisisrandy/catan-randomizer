@@ -504,7 +504,7 @@ export function getValidPortOrientations(
 
 /**
  * Fish tiles actually have two orientation. We're treating the
- * counter-clockwise-most parallelogram of the chevron to be the singular
+ * counter-clockwise-most parallelogram of the chevron as the singular
  * orientation. Note also that they have a different base orientation than
  * ports
  */
