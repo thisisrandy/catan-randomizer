@@ -123,6 +123,15 @@ Catan_ setup, so there is no additional board specified.
     scenario](#expanded-versions) with fishing ground tiles and a lake.
   - _New World of Fish & Islands_: The [_New World Islands_
     scenario](#expanded-versions) with fishing ground tiles and a lake.
+- Combinations with [_Explorers & Pirates_](#explorers-%26-pirates) & [_Seafarers_](#seafarers):
+  - _Everything, Everywhere, All at Fish_ - [Everything, Everywhere, All at
+    Once](#everything-everywhere-all-at-once) with the same changes mentioned
+    above in "Combinations with _Explorers & Pirates_."
+  - _Everything, Everywhere, All at Fish, Variable_ - Ditto for [Everything,
+    Everywhere, All at Once, Variable](#everything-everywhere-all-at-once-variable).
+  - _Seafarers & Piratical Fish_ - Ditto for [Seafarers & Pirates](#seafarers-and-pirates).
+  - _Seafarers & Piratical Fish, Variable_ - Ditto for [Seafarers & Pirates,
+    Variable](#seafarers-and-pirates-variable).
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented
@@ -217,7 +226,9 @@ The following scenarios support this constraint:
 - _New World Islands_
 - _New World of Fish & Islands_
 - _Everything, Everywhere, All at Once, Variable_
+- _Everything, Everywhere, All at Fish, Variable_
 - _Seafarers & Pirates, Variable_
+- _Seafarers & Piratical Fish, Variable_
 
 Note that the maximum feasible number of islands is different from scenario to
 scenario. For example, the shuffler can usually find a 7 island board for _New
