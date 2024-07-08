@@ -450,8 +450,9 @@ const dirToOrientation: Record<keyof Neighbors, PortOrientation> = {
 
 /**
  * Determine the valid `PortOrientation`s at `shuffledHexes[index]`, if any. If
- * `shuffledHexes[index]` is not a sea hex or already has a port assigned to it,
- * the result is an empty list.
+ * `shuffledHexes[index]` is not a sea hex, already has a port assigned to it,
+ * or has an unmoveable fish tile associated with it, the result is an empty
+ * list.
  *
  * In order to be valid, an orientation must meet the following criteria:
  *
@@ -469,7 +470,11 @@ export function getValidPortOrientations(
   shuffledHexes: Hex[],
   board: CatanBoard
 ): PortOrientation[] {
-  if (shuffledHexes[index].type !== "sea" || shuffledHexes[index].port)
+  if (
+    shuffledHexes[index].type !== "sea" ||
+    shuffledHexes[index].port ||
+    (shuffledHexes[index].fishTile && !shuffledHexes[index].fishTile!.moveable)
+  )
     return [];
 
   const validOrientations: PortOrientation[] = [];

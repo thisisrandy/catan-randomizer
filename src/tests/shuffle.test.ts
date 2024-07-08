@@ -743,6 +743,71 @@ describe("shuffle", () => {
     }
   });
 
+  it("should not shuffle ports onto hexes containing unmoveable fish tiles", () => {
+    const fishAndPortzTemplate: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            fixed: true,
+            fishTile: { number: 6, orientation: 120 },
+          },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true, port: { type: "3:1", orientation: 300 } },
+        ],
+        [
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+        ],
+      ],
+    };
+    const fishAndPortz = catanBoardFactory(fishAndPortzTemplate);
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        fishAndPortz,
+        binaryConstraints,
+        numericConstraints
+      );
+      expect(hexes[0].fishTile).toBeDefined();
+      expect(hexes[0].port).toBeUndefined();
+    }
+  });
+
+  it("should be able to shuffle ports onto hexes with moveable fish tiles", () => {
+    const fishAndPortzTemplate: CatanBoardTemplate = {
+      board: [
+        [
+          { type: "empty" },
+          {
+            type: "sea",
+            fixed: true,
+            fishTile: { number: 6, orientation: 120, moveable: true },
+          },
+          { type: "sea", fixed: true },
+          { type: "sea", fixed: true, port: { type: "3:1", orientation: 300 } },
+        ],
+        [
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+          { type: "mountains", fixed: true },
+        ],
+      ],
+    };
+    const fishAndPortz = catanBoardFactory(fishAndPortzTemplate);
+    for (let i = 0; i < numSamples; i++) {
+      const hexes = shuffle(
+        fishAndPortz,
+        binaryConstraints,
+        numericConstraints
+      );
+      if (hexes[0].port) return;
+    }
+  });
+
   it("should shuffle non-fixed ports originating on non-fixed hexes freely", () => {
     for (let i = 0; i < numSamples; i++) {
       const hexes = shuffle(
