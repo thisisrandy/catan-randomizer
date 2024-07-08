@@ -455,6 +455,16 @@ Everywhere, All at Once_.
     (6 including the main island), depending on the value of the [Min
     Islands](#on-scenarios-with-a-variable-number-of-islands) constraint.
 
+#### Example
+
+Here's a played out board constructed using the _Everything, Everywhere, All at
+Fish_ scenario (_Everything, Everywhere, All at Once_ + _The Fishmen of Catan_
+from _Traders & Barbarians_). Hope you have a large table!
+
+<p align="center">
+  <img alt="EEAatF.png" src="EEAatF.png" />
+</p>
+
 ## Other Features
 
 - Save/load boards to/from [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
