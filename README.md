@@ -81,7 +81,7 @@ Catan_ setup, so there is no additional board specified.
 
 - _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
   One grain hex and the 2 & 12 chits have been removed to make way for the
-  lake. See [below](#fishing-without-2-%26-12-chits).
+  lake. See [below](#fishing-without-2--12-chits).
 - _The Fishy Caravans_: Combination with _The Caravans_. One forest hex has
   been removed to make way for the lake, and the 2 & 12 chits have been
   combined onto a single hex.
@@ -91,7 +91,7 @@ Catan_ setup, so there is no additional board specified.
 - _Traders & Barbarians & Fish_: Combination with _Traders & Barbarians_. Since
   the 2 & 12 chits are already not present on the board, a 3 chit along with a
   forest hex are removed to make way for the lake. See
-  [below](#fishing-without-2-%26-12-chits).
+  [below](#fishing-without-2--12-chits).
 - _Traders & Barbarians Ultimate_: [The "Ultimate" community-created _Traders &
   Barbarians_ setup that combines all five
   scenarios](https://www.catan.com/sites/default/files/2022-08/Traders%20%26%20Barbarians%20Ultimate_new.pdf).
@@ -103,9 +103,9 @@ Catan_ setup, so there is no additional board specified.
   - There are no sea hexes in three of the corners to show where to make space
     between the borders. However, if you have one hex length pieces from other
     expansions, it is recommended that you use them so the border is stable.
-- Combinations with [_Explorers & Pirates_](#explorers-%26-pirates): In both
+- Combinations with [_Explorers & Pirates_](#explorers--pirates): In both
   cases, one pasture hex and the 12 chit have been removed to make way for the
-  lake. See [below](#fishing-without-2-%26-12-chits), noting that there is a 2
+  lake. See [below](#fishing-without-2--12-chits), noting that there is a 2
   pirate's lair/goldmine chit that may come into play later in the game. Once
   this is revealed, players may choose to add the removed 12 chit to the same
   hex and then play normally, ignoring the recommendations below. Alternately,
@@ -114,7 +114,7 @@ Catan_ setup, so there is no additional board specified.
   - _Explorers & Pirates & Fish_: _E & P_ with fishing ground tiles and a lake.
   - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
     configured as recommended for combination with [_Cities &
-    Knights_](#cities-%26-knights), i.e. with a grain hex substituted for a
+    Knights_](#cities--knights), i.e. with a grain hex substituted for a
     forest hex.
 - Combinations with [_Seafarers_](#seafarers):
   - _New World of Fish_: The _New World_ scenario with fishing ground tiles but
