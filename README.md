@@ -355,7 +355,8 @@ Everywhere, All at Once_.
      [scenario](#scenarios).
   2. Then, using the 2 two hex length and 2 one hex length border pieces from
      _SF_, further extend the long side borders by three hex lengths on each
-     side.
+     side. If you're having trouble visualizing this, check out the
+     [example](#example).
   3. Using _SF_ hexes and number chits, create an addition 5[^variable-islands]
      islands (henceforth _Far Islands_) as specified on the far side of the world.
 - **Objective**: If playing with just _EP_ and _SF_, play is to 22 (17 for _EP_ + 5
