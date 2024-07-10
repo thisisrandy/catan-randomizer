@@ -133,10 +133,10 @@ below may be ignored from the outset.
 
 ##### Combinations with [_Everything, Everywhere, All at Once_](#everything-everywhere-all-at-once)
 
-- _Everything, Everywhere, All at Fish_ - _Everything, Everywhere, All at Once_
+- _Everything, Everywhere, All the Fish_ - _Everything, Everywhere, All at Once_
   with the same changes detailed in [Combinations with _Explorers &
   Pirates_](#combinations-with-explorers--pirates).
-- _Everything, Everywhere, All at Fish, Variable_ - Ditto for Everything,
+- _Everything, Everywhere, All the Fish, Variable_ - Ditto for Everything,
   Everywhere, All at Once, Variable.
 - _Seafarers & Piratical Fish_ - Ditto for _Seafarers & Pirates_.
 - _Seafarers & Piratical Fish, Variable_ - Ditto for _Seafarers & Pirates,
@@ -235,7 +235,7 @@ The following scenarios support this constraint:
 - _New World Islands_
 - _New World of Fish & Islands_
 - _Everything, Everywhere, All at Once, Variable_
-- _Everything, Everywhere, All at Fish, Variable_
+- _Everything, Everywhere, All the Fish, Variable_
 - _Seafarers & Pirates, Variable_
 - _Seafarers & Piratical Fish, Variable_
 
@@ -468,7 +468,7 @@ Everywhere, All at Once_.
 #### Example
 
 Here's a played out board constructed using the [_Everything, Everywhere, All
-at Fish_](#combinations-with-the-fishermen-of-catan) scenario (_Everything,
+the Fish_](#combinations-with-the-fishermen-of-catan) scenario (_Everything,
 Everywhere, All at Once_ + _The Fishmen of Catan_ from _Traders & Barbarians_).
 Hope you have a large table!
 

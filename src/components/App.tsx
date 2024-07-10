@@ -46,6 +46,46 @@ const useComponentWillMount = (cb: () => void) => {
   willMount.current = false;
 };
 
+// Some expansion names have changed over time. The following set of functions
+// are name update helpers to reduce repetition
+
+// a2b9badd removed the Seafarers: prefix from relevant expansion names
+const expansionNameUpdate1 = (oldName: ExpansionName) => {
+  return oldName.replace(/^Seafarers: /, "") as ExpansionName;
+};
+
+// d146a75 changed the name of one of the Fisherman of Catan combination
+// scenarios
+const expansionNameUpdate2 = (oldName: ExpansionName) => {
+  return oldName.replace(
+    /^(Everything, Everywhere, All )at Fish/,
+    "$1the Fish"
+  ) as ExpansionName;
+};
+
+// All of the name updates applied in order. Note that this is slightly different
+// than applying updates based on the current data version if there's overlap
+// between updates
+const expansionNameUpdates = (oldName: ExpansionName) => {
+  return [expansionNameUpdate1, expansionNameUpdate2].reduce(
+    (oldName, update) => update(oldName),
+    oldName
+  );
+};
+
+// Helper to create the SavedBoards updater
+const makeExpansionNameUpdater = (
+  updateFunction: (oldName: ExpansionName) => ExpansionName
+) => {
+  return (prev: SavedBoards) =>
+    Object.fromEntries(
+      Object.entries(prev).map(([k, v]: [string, SavedBoard]) => [
+        k,
+        { ...v, expansion: updateFunction(v.expansion) },
+      ])
+    );
+};
+
 function App() {
   const [expansion, setExpansion] = useStateWithLocalStorage<ExpansionName>(
     "expansion",
@@ -63,21 +103,14 @@ function App() {
       : EXPANSIONS.get("Catan")!
   );
   const [hexes, setHexes] = useState<Hex[]>(board.recommendedLayout);
-  // a2b9badd removed the Seafarers: prefix from relevant expansion names. The
-  // updater below preserves boards saved with the old style naming
   const [savedBoards, setSavedBoards] = useStateWithLocalStorage<SavedBoards>(
     "savedBoards",
     {},
     undefined,
-    2,
+    3,
     {
-      1: (prev: SavedBoards) =>
-        Object.fromEntries(
-          Object.entries(prev).map(([k, v]: [string, SavedBoard]) => [
-            k,
-            { ...v, expansion: v.expansion.replace(/^Seafarers: /, "") },
-          ])
-        ),
+      1: makeExpansionNameUpdater(expansionNameUpdate1),
+      2: makeExpansionNameUpdater(expansionNameUpdate2),
     }
   );
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
@@ -97,6 +130,7 @@ function App() {
    */
   const changeExpansion = useCallback(
     (expansion: ExpansionName, hexes?: Hex[]) => {
+      expansion = expansionNameUpdates(expansion);
       if (!EXPANSIONS.has(expansion))
         throw new Error(`Unrecognized expansion "${expansion}"`);
       setExpansion(expansion);

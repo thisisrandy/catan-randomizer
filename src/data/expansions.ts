@@ -3308,7 +3308,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
   },
-  "Everything, Everywhere, All at Fish": {
+  "Everything, Everywhere, All the Fish": {
     board: [
       [
         { type: "empty" },
@@ -3657,7 +3657,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
     ],
   },
-  "Everything, Everywhere, All at Fish, Variable": {
+  "Everything, Everywhere, All the Fish, Variable": {
     board: [
       [
         { type: "empty" },
