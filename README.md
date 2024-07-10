@@ -106,7 +106,7 @@ Catan_ setup, so there is no additional board specified.
     between the borders. However, if you have one hex length pieces from other
     expansions, it is recommended that you use them so the border is stable.
 
-##### Combinations with [_Explorers & Pirates_](#explorers--pirates)
+##### With [_Explorers & Pirates_](#explorers--pirates)
 
 In both cases, one pasture hex and the 12 chit have been removed to make way
 for the lake. See [below](#fishing-without-2--12-chits), noting that there is a
@@ -122,7 +122,7 @@ below may be ignored from the outset.
   Knights_](#cities--knights), i.e. with a grain hex substituted for a
   forest hex.
 
-##### Combinations with [_Seafarers_](#seafarers)
+##### With [_Seafarers_](#seafarers)
 
 - _New World of Fish_: [_New World_](#on-the-new-world-scenario) with fishing
   ground tiles but no lake.
@@ -131,7 +131,7 @@ below may be ignored from the outset.
 - _New World of Fish & Islands_: [_New World Islands_](#expanded-versions) with
   fishing ground tiles and a lake.
 
-##### Combinations with [_Everything, Everywhere, All at Once_](#everything-everywhere-all-at-once)
+##### With [_Everything, Everywhere, All at Once_](#everything-everywhere-all-at-once)
 
 - _Everything, Everywhere, All the Fish_ - _Everything, Everywhere, All at Once_
   with the same changes detailed in [Combinations with _Explorers &
