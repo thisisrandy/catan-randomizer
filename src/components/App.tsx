@@ -75,7 +75,7 @@ const expansionNameUpdates = (oldName: ExpansionName) => {
 
 // Helper to create the SavedBoards updater
 const makeExpansionNameUpdater = (
-  updateFunction: (oldName: ExpansionName) => ExpansionName
+  updateFunction: (_: ExpansionName) => ExpansionName
 ) => {
   return (prev: SavedBoards) =>
     Object.fromEntries(
