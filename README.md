@@ -501,6 +501,12 @@ to dive into, but here are some tips:
   [boards.ts](src/types/boards.ts) for details), adding a new board is
   just a matter of adding a new board definiton and expansion name in these two
   files.
+- If you're adding a new scenario that features a variable number of islands,
+  enable the _Min Island Count_ constraint by adding your scenario name to
+  `islandExpansions` at the top of
+  [src/components/Randomizer.tsx](src/components/Randomizer.tsx). Make sure to
+  also mention it in the [appropriate README
+  section](#on-scenarios-with-a-variable-number-of-islands).
 - All code and docs are formatted using [Prettier](https://prettier.io/) with
   default options. Any PRs should be, too.
 - All shuffling logic is thoroughly tested and fully passing. Any fixes or
