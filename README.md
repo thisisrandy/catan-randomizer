@@ -79,6 +79,8 @@ include additional rules. Note also that preparation for the combination with
 _Cities & Knights_ is just a matter of using the normal _The Fishermen of
 Catan_ setup, so there is no additional board specified.
 
+##### With Other Traders & Barbarians Scenarios
+
 - _The Rivers & Lakes of Catan_: Combination with _The Rivers of Catan_.
   One grain hex and the 2 & 12 chits have been removed to make way for the
   lake. See [below](#fishing-without-2--12-chits).
@@ -99,39 +101,46 @@ Catan_ setup, so there is no additional board specified.
     authors suggest you choose by rolling a 3-color die and a number die. The
     map names are as such suffixed with `\((green|purple|orange) [1-6]\)`. If
     you don't speak [regex](https://en.wikipedia.org/wiki/Regular_expression),
-    that's e.g. _Traders & Barbarians Ultimate (green 1)_.
+    that's e.g. _Traders & Barbarians Ultimate (green 1)_ or _... (orange 5)_.
   - There are no sea hexes in three of the corners to show where to make space
     between the borders. However, if you have one hex length pieces from other
     expansions, it is recommended that you use them so the border is stable.
-- Combinations with [_Explorers & Pirates_](#explorers--pirates): In both
-  cases, one pasture hex and the 12 chit have been removed to make way for the
-  lake. See [below](#fishing-without-2--12-chits), noting that there is a 2
-  pirate's lair/goldmine chit that may come into play later in the game. Once
-  this is revealed, players may choose to add the removed 12 chit to the same
-  hex and then play normally, ignoring the recommendations below. Alternately,
-  since gold is distributed on no production rolls in _E & P_, the
-  recommendations below may be ignored from the outset.
-  - _Explorers & Pirates & Fish_: _E & P_ with fishing ground tiles and a lake.
-  - _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
-    configured as recommended for combination with [_Cities &
-    Knights_](#cities--knights), i.e. with a grain hex substituted for a
-    forest hex.
-- Combinations with [_Seafarers_](#seafarers):
-  - _New World of Fish_: The _New World_ scenario with fishing ground tiles but
-    no lake.
-  - _New World of Fish Expanded_: The [_New World Expanded_
-    scenario](#expanded-versions) with fishing ground tiles and a lake.
-  - _New World of Fish & Islands_: The [_New World Islands_
-    scenario](#expanded-versions) with fishing ground tiles and a lake.
-- Combinations with [_Explorers & Pirates_](#explorers--pirates) & [_Seafarers_](#seafarers):
-  - _Everything, Everywhere, All at Fish_ - [_Everything, Everywhere, All at
-    Once_](#everything-everywhere-all-at-once) with the same changes mentioned
-    above in "Combinations with _Explorers & Pirates_."
-  - _Everything, Everywhere, All at Fish, Variable_ - Ditto for [Everything,
-    Everywhere, All at Once, Variable](#everything-everywhere-all-at-once).
-  - _Seafarers & Piratical Fish_ - Ditto for [_Seafarers & Pirates_](#everything-everywhere-all-at-once).
-  - _Seafarers & Piratical Fish, Variable_ - Ditto for [_Seafarers & Pirates,
-    Variable_](#everything-everywhere-all-at-once).
+
+##### Combinations with [_Explorers & Pirates_](#explorers--pirates)
+
+In both cases, one pasture hex and the 12 chit have been removed to make way
+for the lake. See [below](#fishing-without-2--12-chits), noting that there is a
+2 pirate's lair/goldmine chit that may come into play later in the game. Once
+this is revealed, players may choose to add the removed 12 chit to the same hex
+and then play normally, ignoring the recommendations below. Alternately, since
+gold is distributed on no production rolls in _E & P_, the recommendations
+below may be ignored from the outset.
+
+- _Explorers & Pirates & Fish_: _E & P_ with fishing ground tiles and a lake.
+- _Explorers & Pirates & Cities & Knights & Fish (Oh My!)_: The same, but
+  configured as recommended for combination with [_Cities &
+  Knights_](#cities--knights), i.e. with a grain hex substituted for a
+  forest hex.
+
+##### Combinations with [_Seafarers_](#seafarers)
+
+- _New World of Fish_: [_New World_](#on-the-new-world-scenario) with fishing
+  ground tiles but no lake.
+- _New World of Fish Expanded_: [_New World Expanded_](#expanded-versions) with
+  fishing ground tiles and a lake.
+- _New World of Fish & Islands_: [_New World Islands_](#expanded-versions) with
+  fishing ground tiles and a lake.
+
+##### Combinations with [_Everything, Everywhere, All at Once_](#everything-everywhere-all-at-once)
+
+- _Everything, Everywhere, All at Fish_ - _Everything, Everywhere, All at Once_
+  with the same changes detailed in [Combinations with _Explorers &
+  Pirates_](#combinations-with-explorers--pirates).
+- _Everything, Everywhere, All at Fish, Variable_ - Ditto for Everything,
+  Everywhere, All at Once, Variable.
+- _Seafarers & Piratical Fish_ - Ditto for _Seafarers & Pirates_.
+- _Seafarers & Piratical Fish, Variable_ - Ditto for _Seafarers & Pirates,
+  Variable_.
 
 [^fish-attack-details]:
     _Barbarian Attack_ is constructed so that every number chit is represented
