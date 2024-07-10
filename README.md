@@ -470,7 +470,7 @@ Everywhere, All at Once_.
 
 Here's a played out board constructed using the [_Everything, Everywhere, All
 the Fish_](#combinations-with-the-fishermen-of-catan) scenario (_Everything,
-Everywhere, All at Once_ + _The Fishmen of Catan_ from _Traders & Barbarians_).
+Everywhere, All at Once_ + _The Fishermen of Catan_ from _Traders & Barbarians_).
 Hope you have a large table!
 
 <p align="center">
