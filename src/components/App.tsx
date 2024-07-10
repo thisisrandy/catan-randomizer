@@ -130,6 +130,8 @@ function App() {
    */
   const changeExpansion = useCallback(
     (expansion: ExpansionName, hexes?: Hex[]) => {
+      // We need to run through the name updates here in case an out-of-date
+      // share link is opened
       expansion = expansionNameUpdates(expansion);
       if (!EXPANSIONS.has(expansion))
         throw new Error(`Unrecognized expansion "${expansion}"`);
