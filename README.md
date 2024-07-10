@@ -136,8 +136,8 @@ below may be ignored from the outset.
 - _Everything, Everywhere, All the Fish_ - _Everything, Everywhere, All at Once_
   with the same changes detailed in [Combinations with _Explorers &
   Pirates_](#combinations-with-explorers--pirates).
-- _Everything, Everywhere, All the Fish, Variable_ - Ditto for Everything,
-  Everywhere, All at Once, Variable.
+- _Everything, Everywhere, All the Fish, Variable_ - Ditto for _Everything,
+  Everywhere, All at Once, Variable_.
 - _Seafarers & Piratical Fish_ - Ditto for _Seafarers & Pirates_.
 - _Seafarers & Piratical Fish, Variable_ - Ditto for _Seafarers & Pirates,
   Variable_.
