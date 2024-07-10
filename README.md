@@ -18,9 +18,10 @@ While the same idea has been executed
 [times](https://catan.bunge.io/)
 [before](https://alexbeals.com/projects/catan/), this project supports [fairness
 constraints](#supported-constraints), [Catan
-Expansions](https://www.catan.com/explore-catan/catan-core-family-games), and
+expansions](#supported-expansionsextensionsscenarios), and
 [custom](#expanded-versions)
-[scenarios](#everything-everywhere-all-at-once) that aren't seen
+[scenarios](#everything-everywhere-all-at-once)
+[that](#combinations-with-the-fishermen-of-catan) aren't seen
 elsewhere.
 
 ## Supported Constraints
