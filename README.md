@@ -486,7 +486,8 @@ Hope you have a large table!
 
 Pull requests are welcome! In particular, I haven't played every expansion and
 kind of ran out of steam including the ones I don't even own, so if there's a
-board configuration you'd like to see made available, please contribute!
+board configuration you'd like to see made available (customs welcome), please
+contribute!
 
 Also, my graphic design skills are basic and uncultivated, so if something about
 the aesthetics of the project is cringe-worthy to your much more refined eye,
