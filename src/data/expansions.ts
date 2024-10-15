@@ -3407,7 +3407,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
       [
         { type: "empty" },
-        { type: "sea", fixed: true, fishTile: { number: 5, orientation: 0 } },
+        { type: "sea", fixed: true, fishTile: { number: 9, orientation: 0 } },
         { type: "fields", number: 10 },
         { type: "pasture", number: 4 },
         { type: "sea", portsAllowed: false, fixed: true },
