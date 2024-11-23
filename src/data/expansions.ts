@@ -4062,7 +4062,7 @@ const templates: { [key in ExpansionName]?: CatanBoardTemplate } = {
       ],
       [
         { type: "empty" },
-        { type: "sea", fixed: true, fishTile: { number: 5, orientation: 60 } },
+        { type: "sea", fixed: true, fishTile: { number: 9, orientation: 60 } },
         { type: "hills", number: 4 },
         { type: "mountains", number: 10 },
         { type: "sea", portsAllowed: false, fixed: true },
