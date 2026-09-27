@@ -451,7 +451,7 @@ Everywhere, All at Once_.
   Development Cards are used. However, since the _Seafarers & Pirates_
   scenarios exclude _CK_ and hence include Development Cards, Largest Army is
   in play. **VARIATION**: Especially when playing without the robber, _CK_
-  knights can feel under-utilized, since they're rarely in position the chase
+  knights can feel under-utilized, since they're rarely in position to chase
   the pirate away, and displacement tends to happen less often, since _EP_ road
   networks tend to be smaller. A possible variation to the _Everything,
   Everywhere, All at Once_ scenarios is to add Largest Army back into play.
